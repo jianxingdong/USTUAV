@@ -1,0 +1,44 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 18, 4
+  12              		.thumb
+  13              		.file	"commands.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.global	commands_failsafe
+  18              		.global	commands
+  19              		.section	.bss.commands,"aw",%nobits
+  20              		.align	2
+  23              	commands:
+  24 0000 00000000 		.space	16
+  24      00000000 
+  24      00000000 
+  24      00000000 
+  25              		.section	.rodata.commands_failsafe,"a",%progbits
+  26              		.align	2
+  29              	commands_failsafe:
+  30 0000 00000000 		.space	16
+  30      00000000 
+  30      00000000 
+  30      00000000 
+  31              		.text
+  32              	.Letext0:
+  33              		.file 1 "firmwares/rotorcraft/commands.c"
+  34              		.file 2 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 commands.c
+     /tmp/cchUX8ho.s:29     .rodata.commands_failsafe:0000000000000000 commands_failsafe
+     /tmp/cchUX8ho.s:23     .bss.commands:0000000000000000 commands
+     /tmp/cchUX8ho.s:20     .bss.commands:0000000000000000 $d
+     /tmp/cchUX8ho.s:26     .rodata.commands_failsafe:0000000000000000 $d
+
+NO UNDEFINED SYMBOLS

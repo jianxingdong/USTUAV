@@ -1,0 +1,735 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 18, 4
+  12              		.thumb
+  13              		.file	"baro_board.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.bmp085_read_reg16,"ax",%progbits
+  18              		.align	1
+  19              		.thumb
+  20              		.thumb_func
+  22              	bmp085_read_reg16:
+  23              	.LFB27:
+  24              		.file 1 "boards/lisa_m/baro_board.c"
+   1:boards/lisa_m/baro_board.c **** 
+   2:boards/lisa_m/baro_board.c **** #include "subsystems/sensors/baro.h"
+   3:boards/lisa_m/baro_board.c **** #include <stm32/gpio.h>
+   4:boards/lisa_m/baro_board.c **** 
+   5:boards/lisa_m/baro_board.c **** struct Baro baro;
+   6:boards/lisa_m/baro_board.c **** struct BaroBoard baro_board;
+   7:boards/lisa_m/baro_board.c **** struct i2c_transaction baro_trans;
+   8:boards/lisa_m/baro_board.c **** struct bmp085_baro_calibration calibration;
+   9:boards/lisa_m/baro_board.c **** 
+  10:boards/lisa_m/baro_board.c **** #define BMP085_SAMPLE_PERIOD_MS (3 + (2 << BMP085_OSS) * 3)
+  11:boards/lisa_m/baro_board.c **** #define BMP085_SAMPLE_PERIOD (BMP075_SAMPLE_PERIOD_MS >> 1)
+  12:boards/lisa_m/baro_board.c **** 
+  13:boards/lisa_m/baro_board.c **** // FIXME: BARO DRDY connected to PB0 for lisa/m
+  14:boards/lisa_m/baro_board.c **** 
+  15:boards/lisa_m/baro_board.c **** static inline void bmp085_write_reg(uint8_t addr, uint8_t value)
+  16:boards/lisa_m/baro_board.c **** {
+  17:boards/lisa_m/baro_board.c ****   baro_trans.type = I2CTransTx;
+  18:boards/lisa_m/baro_board.c ****   baro_trans.slave_addr = BMP085_ADDR;
+  19:boards/lisa_m/baro_board.c ****   baro_trans.len_w = 2;
+  20:boards/lisa_m/baro_board.c ****   baro_trans.buf[0] = addr;
+  21:boards/lisa_m/baro_board.c ****   baro_trans.buf[1] = value;
+  22:boards/lisa_m/baro_board.c ****   i2c_submit(&i2c2, &baro_trans);
+  23:boards/lisa_m/baro_board.c ****   while (baro_trans.status == I2CTransPending || baro_trans.status == I2CTransRunning);
+  24:boards/lisa_m/baro_board.c **** }
+  25:boards/lisa_m/baro_board.c **** 
+  26:boards/lisa_m/baro_board.c **** static inline void bmp085_read_reg16(uint8_t addr)
+  27:boards/lisa_m/baro_board.c **** {
+  25              		.loc 1 27 0
+  26              		.cfi_startproc
+  27              		@ args = 0, pretend = 0, frame = 0
+  28              		@ frame_needed = 0, uses_anonymous_args = 0
+  29              		@ link register save eliminated.
+  30              	.LVL0:
+  28:boards/lisa_m/baro_board.c ****   baro_trans.type = I2CTransTxRx;
+  31              		.loc 1 28 0
+  32 0000 0549     		ldr	r1, .L2
+  29:boards/lisa_m/baro_board.c ****   baro_trans.slave_addr = BMP085_ADDR;
+  33              		.loc 1 29 0
+  34 0002 EE22     		movs	r2, #238
+  30:boards/lisa_m/baro_board.c ****   baro_trans.len_w = 1;
+  31:boards/lisa_m/baro_board.c ****   baro_trans.len_r = 2;
+  32:boards/lisa_m/baro_board.c ****   baro_trans.buf[0] = addr;
+  35              		.loc 1 32 0
+  36 0004 4871     		strb	r0, [r1, #5]
+  33:boards/lisa_m/baro_board.c ****   i2c_submit(&i2c2, &baro_trans);
+  37              		.loc 1 33 0
+  38 0006 0548     		ldr	r0, .L2+4
+  39              	.LVL1:
+  28:boards/lisa_m/baro_board.c ****   baro_trans.type = I2CTransTxRx;
+  40              		.loc 1 28 0
+  41 0008 0223     		movs	r3, #2
+  29:boards/lisa_m/baro_board.c ****   baro_trans.slave_addr = BMP085_ADDR;
+  42              		.loc 1 29 0
+  43 000a 4A70     		strb	r2, [r1, #1]
+  30:boards/lisa_m/baro_board.c ****   baro_trans.len_w = 1;
+  44              		.loc 1 30 0
+  45 000c 0122     		movs	r2, #1
+  28:boards/lisa_m/baro_board.c ****   baro_trans.type = I2CTransTxRx;
+  46              		.loc 1 28 0
+  47 000e 0B70     		strb	r3, [r1, #0]
+  30:boards/lisa_m/baro_board.c ****   baro_trans.len_w = 1;
+  48              		.loc 1 30 0
+  49 0010 0A71     		strb	r2, [r1, #4]
+  31:boards/lisa_m/baro_board.c ****   baro_trans.len_r = 2;
+  50              		.loc 1 31 0
+  51 0012 4B80     		strh	r3, [r1, #2]	@ movhi
+  34:boards/lisa_m/baro_board.c **** }
+  52              		.loc 1 34 0
+  33:boards/lisa_m/baro_board.c ****   i2c_submit(&i2c2, &baro_trans);
+  53              		.loc 1 33 0
+  54 0014 FFF7FEBF 		b	i2c_submit
+  55              	.LVL2:
+  56              	.L3:
+  57              		.align	2
+  58              	.L2:
+  59 0018 00000000 		.word	.LANCHOR0
+  60 001c 00000000 		.word	i2c2
+  61              		.cfi_endproc
+  62              	.LFE27:
+  64              		.section	.text.bmp085_read_reg16_blocking,"ax",%progbits
+  65              		.align	1
+  66              		.thumb
+  67              		.thumb_func
+  69              	bmp085_read_reg16_blocking:
+  70              	.LFB28:
+  35:boards/lisa_m/baro_board.c **** 
+  36:boards/lisa_m/baro_board.c **** static inline int16_t bmp085_read_reg16_blocking(uint8_t addr)
+  37:boards/lisa_m/baro_board.c **** {
+  71              		.loc 1 37 0
+  72              		.cfi_startproc
+  73              		@ args = 0, pretend = 0, frame = 0
+  74              		@ frame_needed = 0, uses_anonymous_args = 0
+  75              	.LVL3:
+  76 0000 08B5     		push	{r3, lr}
+  77              	.LCFI0:
+  78              		.cfi_def_cfa_offset 8
+  79              		.cfi_offset 14, -4
+  80              		.cfi_offset 3, -8
+  38:boards/lisa_m/baro_board.c ****   bmp085_read_reg16(addr);
+  81              		.loc 1 38 0
+  82 0002 FFF7FEFF 		bl	bmp085_read_reg16
+  83              	.LVL4:
+  39:boards/lisa_m/baro_board.c **** 
+  40:boards/lisa_m/baro_board.c ****   while (baro_trans.status == I2CTransPending || baro_trans.status == I2CTransRunning);
+  84              		.loc 1 40 0
+  85 0006 084A     		ldr	r2, .L9
+  86              	.L8:
+  87              		.loc 1 40 0 is_stmt 0 discriminator 1
+  88 0008 92F82510 		ldrb	r1, [r2, #37]	@ zero_extendqisi2
+  89 000c 064B     		ldr	r3, .L9
+  90 000e 0029     		cmp	r1, #0
+  91 0010 FAD0     		beq	.L8
+  92              		.loc 1 40 0 discriminator 2
+  93 0012 92F82510 		ldrb	r1, [r2, #37]	@ zero_extendqisi2
+  94 0016 0129     		cmp	r1, #1
+  95 0018 F6D0     		beq	.L8
+  41:boards/lisa_m/baro_board.c **** 
+  42:boards/lisa_m/baro_board.c ****   return ((baro_trans.buf[0] << 8) | baro_trans.buf[1]);
+  96              		.loc 1 42 0 is_stmt 1
+  97 001a 5879     		ldrb	r0, [r3, #5]	@ zero_extendqisi2
+  98 001c 9B79     		ldrb	r3, [r3, #6]	@ zero_extendqisi2
+  99 001e 43EA0020 		orr	r0, r3, r0, lsl #8
+  43:boards/lisa_m/baro_board.c **** }
+ 100              		.loc 1 43 0
+ 101 0022 00B2     		sxth	r0, r0
+ 102 0024 08BD     		pop	{r3, pc}
+ 103              	.L10:
+ 104 0026 00BF     		.align	2
+ 105              	.L9:
+ 106 0028 00000000 		.word	.LANCHOR0
+ 107              		.cfi_endproc
+ 108              	.LFE28:
+ 110              		.section	.text.bmp085_write_reg.constprop.0,"ax",%progbits
+ 111              		.align	1
+ 112              		.thumb
+ 113              		.thumb_func
+ 115              	bmp085_write_reg.constprop.0:
+ 116              	.LFB39:
+  15:boards/lisa_m/baro_board.c **** static inline void bmp085_write_reg(uint8_t addr, uint8_t value)
+ 117              		.loc 1 15 0
+ 118              		.cfi_startproc
+ 119              		@ args = 0, pretend = 0, frame = 0
+ 120              		@ frame_needed = 0, uses_anonymous_args = 0
+ 121              	.LVL5:
+ 122 0000 10B5     		push	{r4, lr}
+ 123              	.LCFI1:
+ 124              		.cfi_def_cfa_offset 8
+ 125              		.cfi_offset 14, -4
+ 126              		.cfi_offset 4, -8
+  17:boards/lisa_m/baro_board.c ****   baro_trans.type = I2CTransTx;
+ 127              		.loc 1 17 0
+ 128 0002 0B4C     		ldr	r4, .L16
+ 129 0004 0023     		movs	r3, #0
+ 130 0006 2370     		strb	r3, [r4, #0]
+  18:boards/lisa_m/baro_board.c ****   baro_trans.slave_addr = BMP085_ADDR;
+ 131              		.loc 1 18 0
+ 132 0008 EE23     		movs	r3, #238
+ 133 000a 6370     		strb	r3, [r4, #1]
+  19:boards/lisa_m/baro_board.c ****   baro_trans.len_w = 2;
+ 134              		.loc 1 19 0
+ 135 000c 0223     		movs	r3, #2
+ 136 000e 2371     		strb	r3, [r4, #4]
+  20:boards/lisa_m/baro_board.c ****   baro_trans.buf[0] = addr;
+ 137              		.loc 1 20 0
+ 138 0010 F423     		movs	r3, #244
+ 139 0012 6371     		strb	r3, [r4, #5]
+  22:boards/lisa_m/baro_board.c ****   i2c_submit(&i2c2, &baro_trans);
+ 140              		.loc 1 22 0
+ 141 0014 2146     		mov	r1, r4
+  21:boards/lisa_m/baro_board.c ****   baro_trans.buf[1] = value;
+ 142              		.loc 1 21 0
+ 143 0016 A071     		strb	r0, [r4, #6]
+  22:boards/lisa_m/baro_board.c ****   i2c_submit(&i2c2, &baro_trans);
+ 144              		.loc 1 22 0
+ 145 0018 0648     		ldr	r0, .L16+4
+ 146              	.LVL6:
+ 147 001a FFF7FEFF 		bl	i2c_submit
+ 148              	.LVL7:
+ 149              	.L15:
+  23:boards/lisa_m/baro_board.c ****   while (baro_trans.status == I2CTransPending || baro_trans.status == I2CTransRunning);
+ 150              		.loc 1 23 0
+ 151 001e 94F82530 		ldrb	r3, [r4, #37]	@ zero_extendqisi2
+ 152 0022 002B     		cmp	r3, #0
+ 153 0024 FBD0     		beq	.L15
+ 154 0026 94F82530 		ldrb	r3, [r4, #37]	@ zero_extendqisi2
+ 155 002a 012B     		cmp	r3, #1
+ 156 002c F7D0     		beq	.L15
+  24:boards/lisa_m/baro_board.c **** }
+ 157              		.loc 1 24 0
+ 158 002e 10BD     		pop	{r4, pc}
+ 159              	.L17:
+ 160              		.align	2
+ 161              	.L16:
+ 162 0030 00000000 		.word	.LANCHOR0
+ 163 0034 00000000 		.word	i2c2
+ 164              		.cfi_endproc
+ 165              	.LFE39:
+ 167              		.section	.text.baro_init,"ax",%progbits
+ 168              		.align	1
+ 169              		.global	baro_init
+ 170              		.thumb
+ 171              		.thumb_func
+ 173              	baro_init:
+ 174              	.LFB31:
+  44:boards/lisa_m/baro_board.c **** 
+  45:boards/lisa_m/baro_board.c **** static inline void bmp085_read_reg24(uint8_t addr)
+  46:boards/lisa_m/baro_board.c **** {
+  47:boards/lisa_m/baro_board.c ****   baro_trans.type = I2CTransTxRx;
+  48:boards/lisa_m/baro_board.c ****   baro_trans.slave_addr = BMP085_ADDR;
+  49:boards/lisa_m/baro_board.c ****   baro_trans.len_w = 1;
+  50:boards/lisa_m/baro_board.c ****   baro_trans.len_r = 3;
+  51:boards/lisa_m/baro_board.c ****   baro_trans.buf[0] = addr;
+  52:boards/lisa_m/baro_board.c ****   i2c_submit(&i2c2, &baro_trans);
+  53:boards/lisa_m/baro_board.c **** }
+  54:boards/lisa_m/baro_board.c **** 
+  55:boards/lisa_m/baro_board.c **** static void bmp085_baro_read_calibration(void)
+  56:boards/lisa_m/baro_board.c **** {
+  57:boards/lisa_m/baro_board.c ****   calibration.ac1 = bmp085_read_reg16_blocking(0xAA); // AC1
+  58:boards/lisa_m/baro_board.c ****   calibration.ac2 = bmp085_read_reg16_blocking(0xAC); // AC2
+  59:boards/lisa_m/baro_board.c ****   calibration.ac3 = bmp085_read_reg16_blocking(0xAE); // AC3
+  60:boards/lisa_m/baro_board.c ****   calibration.ac4 = bmp085_read_reg16_blocking(0xB0); // AC4
+  61:boards/lisa_m/baro_board.c ****   calibration.ac5 = bmp085_read_reg16_blocking(0xB2); // AC5
+  62:boards/lisa_m/baro_board.c ****   calibration.ac6 = bmp085_read_reg16_blocking(0xB4); // AC6
+  63:boards/lisa_m/baro_board.c ****   calibration.b1 = bmp085_read_reg16_blocking(0xB6); // B1
+  64:boards/lisa_m/baro_board.c ****   calibration.b2 = bmp085_read_reg16_blocking(0xB8); // B2
+  65:boards/lisa_m/baro_board.c ****   calibration.mb = bmp085_read_reg16_blocking(0xBA); // MB
+  66:boards/lisa_m/baro_board.c ****   calibration.mc = bmp085_read_reg16_blocking(0xBC); // MC
+  67:boards/lisa_m/baro_board.c ****   calibration.md = bmp085_read_reg16_blocking(0xBE); // MD
+  68:boards/lisa_m/baro_board.c **** }
+  69:boards/lisa_m/baro_board.c **** 
+  70:boards/lisa_m/baro_board.c **** void baro_init(void) {
+ 175              		.loc 1 70 0
+ 176              		.cfi_startproc
+ 177              		@ args = 0, pretend = 0, frame = 8
+ 178              		@ frame_needed = 0, uses_anonymous_args = 0
+  71:boards/lisa_m/baro_board.c ****   baro.status = BS_UNINITIALIZED;
+ 179              		.loc 1 71 0
+ 180 0000 214A     		ldr	r2, .L19
+ 181 0002 0023     		movs	r3, #0
+  70:boards/lisa_m/baro_board.c **** void baro_init(void) {
+ 182              		.loc 1 70 0
+ 183 0004 13B5     		push	{r0, r1, r4, lr}
+ 184              	.LCFI2:
+ 185              		.cfi_def_cfa_offset 16
+ 186              		.cfi_offset 14, -4
+ 187              		.cfi_offset 4, -8
+ 188              		.cfi_offset 1, -12
+ 189              		.cfi_offset 0, -16
+  72:boards/lisa_m/baro_board.c ****   baro.absolute     = 0;
+ 190              		.loc 1 72 0
+ 191 0006 1360     		str	r3, [r2, #0]
+  71:boards/lisa_m/baro_board.c ****   baro.status = BS_UNINITIALIZED;
+ 192              		.loc 1 71 0
+ 193 0008 1372     		strb	r3, [r2, #8]
+  73:boards/lisa_m/baro_board.c ****   baro.differential = 0;
+ 194              		.loc 1 73 0
+ 195 000a 5360     		str	r3, [r2, #4]
+  74:boards/lisa_m/baro_board.c ****   baro_board.status = LBS_UNINITIALIZED;
+ 196              		.loc 1 74 0
+ 197 000c 1F4A     		ldr	r2, .L19+4
+ 198              	.LBB22:
+ 199              	.LBB23:
+  57:boards/lisa_m/baro_board.c ****   calibration.ac1 = bmp085_read_reg16_blocking(0xAA); // AC1
+ 200              		.loc 1 57 0
+ 201 000e AA20     		movs	r0, #170
+ 202              	.LBE23:
+ 203              	.LBE22:
+ 204              		.loc 1 74 0
+ 205 0010 1370     		strb	r3, [r2, #0]
+ 206              	.LBB26:
+ 207              	.LBB24:
+  57:boards/lisa_m/baro_board.c ****   calibration.ac1 = bmp085_read_reg16_blocking(0xAA); // AC1
+ 208              		.loc 1 57 0
+ 209 0012 FFF7FEFF 		bl	bmp085_read_reg16_blocking
+ 210 0016 1E4C     		ldr	r4, .L19+8
+ 211 0018 2080     		strh	r0, [r4, #0]	@ movhi
+  58:boards/lisa_m/baro_board.c ****   calibration.ac2 = bmp085_read_reg16_blocking(0xAC); // AC2
+ 212              		.loc 1 58 0
+ 213 001a AC20     		movs	r0, #172
+ 214 001c FFF7FEFF 		bl	bmp085_read_reg16_blocking
+ 215 0020 6080     		strh	r0, [r4, #2]	@ movhi
+  59:boards/lisa_m/baro_board.c ****   calibration.ac3 = bmp085_read_reg16_blocking(0xAE); // AC3
+ 216              		.loc 1 59 0
+ 217 0022 AE20     		movs	r0, #174
+ 218 0024 FFF7FEFF 		bl	bmp085_read_reg16_blocking
+ 219 0028 A080     		strh	r0, [r4, #4]	@ movhi
+  60:boards/lisa_m/baro_board.c ****   calibration.ac4 = bmp085_read_reg16_blocking(0xB0); // AC4
+ 220              		.loc 1 60 0
+ 221 002a B020     		movs	r0, #176
+ 222 002c FFF7FEFF 		bl	bmp085_read_reg16_blocking
+ 223 0030 E080     		strh	r0, [r4, #6]	@ movhi
+  61:boards/lisa_m/baro_board.c ****   calibration.ac5 = bmp085_read_reg16_blocking(0xB2); // AC5
+ 224              		.loc 1 61 0
+ 225 0032 B220     		movs	r0, #178
+ 226 0034 FFF7FEFF 		bl	bmp085_read_reg16_blocking
+ 227 0038 2081     		strh	r0, [r4, #8]	@ movhi
+  62:boards/lisa_m/baro_board.c ****   calibration.ac6 = bmp085_read_reg16_blocking(0xB4); // AC6
+ 228              		.loc 1 62 0
+ 229 003a B420     		movs	r0, #180
+ 230 003c FFF7FEFF 		bl	bmp085_read_reg16_blocking
+ 231 0040 6081     		strh	r0, [r4, #10]	@ movhi
+  63:boards/lisa_m/baro_board.c ****   calibration.b1 = bmp085_read_reg16_blocking(0xB6); // B1
+ 232              		.loc 1 63 0
+ 233 0042 B620     		movs	r0, #182
+ 234 0044 FFF7FEFF 		bl	bmp085_read_reg16_blocking
+ 235 0048 A081     		strh	r0, [r4, #12]	@ movhi
+  64:boards/lisa_m/baro_board.c ****   calibration.b2 = bmp085_read_reg16_blocking(0xB8); // B2
+ 236              		.loc 1 64 0
+ 237 004a B820     		movs	r0, #184
+ 238 004c FFF7FEFF 		bl	bmp085_read_reg16_blocking
+ 239 0050 E081     		strh	r0, [r4, #14]	@ movhi
+  65:boards/lisa_m/baro_board.c ****   calibration.mb = bmp085_read_reg16_blocking(0xBA); // MB
+ 240              		.loc 1 65 0
+ 241 0052 BA20     		movs	r0, #186
+ 242 0054 FFF7FEFF 		bl	bmp085_read_reg16_blocking
+ 243 0058 2082     		strh	r0, [r4, #16]	@ movhi
+  66:boards/lisa_m/baro_board.c ****   calibration.mc = bmp085_read_reg16_blocking(0xBC); // MC
+ 244              		.loc 1 66 0
+ 245 005a BC20     		movs	r0, #188
+ 246 005c FFF7FEFF 		bl	bmp085_read_reg16_blocking
+ 247 0060 6082     		strh	r0, [r4, #18]	@ movhi
+  67:boards/lisa_m/baro_board.c ****   calibration.md = bmp085_read_reg16_blocking(0xBE); // MD
+ 248              		.loc 1 67 0
+ 249 0062 BE20     		movs	r0, #190
+ 250 0064 FFF7FEFF 		bl	bmp085_read_reg16_blocking
+ 251              	.LBE24:
+ 252              	.LBE26:
+  75:boards/lisa_m/baro_board.c ****   bmp085_baro_read_calibration();
+  76:boards/lisa_m/baro_board.c **** 
+  77:boards/lisa_m/baro_board.c ****   /* STM32 specific (maybe this is a LISA/M specific driver anyway?) */
+  78:boards/lisa_m/baro_board.c ****   GPIO_InitTypeDef GPIO_InitStructure;
+  79:boards/lisa_m/baro_board.c ****   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
+ 253              		.loc 1 79 0
+ 254 0068 0123     		movs	r3, #1
+ 255 006a ADF80430 		strh	r3, [sp, #4]	@ movhi
+  80:boards/lisa_m/baro_board.c ****   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
+ 256              		.loc 1 80 0
+ 257 006e 4823     		movs	r3, #72
+ 258              	.LBB27:
+ 259              	.LBB25:
+  67:boards/lisa_m/baro_board.c ****   calibration.md = bmp085_read_reg16_blocking(0xBE); // MD
+ 260              		.loc 1 67 0
+ 261 0070 A082     		strh	r0, [r4, #20]	@ movhi
+ 262              	.LBE25:
+ 263              	.LBE27:
+ 264              		.loc 1 80 0
+ 265 0072 8DF80730 		strb	r3, [sp, #7]
+  81:boards/lisa_m/baro_board.c ****   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  82:boards/lisa_m/baro_board.c ****   GPIO_Init(GPIOB, &GPIO_InitStructure);
+ 266              		.loc 1 82 0
+ 267 0076 0748     		ldr	r0, .L19+12
+  81:boards/lisa_m/baro_board.c ****   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+ 268              		.loc 1 81 0
+ 269 0078 0323     		movs	r3, #3
+ 270              		.loc 1 82 0
+ 271 007a 01A9     		add	r1, sp, #4
+  81:boards/lisa_m/baro_board.c ****   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+ 272              		.loc 1 81 0
+ 273 007c 8DF80630 		strb	r3, [sp, #6]
+ 274              		.loc 1 82 0
+ 275 0080 FFF7FEFF 		bl	GPIO_Init
+  83:boards/lisa_m/baro_board.c **** }
+ 276              		.loc 1 83 0
+ 277 0084 1CBD     		pop	{r2, r3, r4, pc}
+ 278              	.L20:
+ 279 0086 00BF     		.align	2
+ 280              	.L19:
+ 281 0088 00000000 		.word	.LANCHOR1
+ 282 008c 00000000 		.word	.LANCHOR2
+ 283 0090 00000000 		.word	.LANCHOR3
+ 284 0094 000C0140 		.word	1073810432
+ 285              		.cfi_endproc
+ 286              	.LFE31:
+ 288              		.section	.text.baro_periodic,"ax",%progbits
+ 289              		.align	1
+ 290              		.global	baro_periodic
+ 291              		.thumb
+ 292              		.thumb_func
+ 294              	baro_periodic:
+ 295              	.LFB37:
+  84:boards/lisa_m/baro_board.c **** 
+  85:boards/lisa_m/baro_board.c **** static inline int baro_eoc(void)
+  86:boards/lisa_m/baro_board.c **** {
+  87:boards/lisa_m/baro_board.c ****   return GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_0);
+  88:boards/lisa_m/baro_board.c **** }
+  89:boards/lisa_m/baro_board.c **** 
+  90:boards/lisa_m/baro_board.c **** static inline void bmp085_request_pressure(void)
+  91:boards/lisa_m/baro_board.c **** {
+  92:boards/lisa_m/baro_board.c ****   bmp085_write_reg(0xF4, 0x34 + (BMP085_OSS << 6));
+  93:boards/lisa_m/baro_board.c **** }
+  94:boards/lisa_m/baro_board.c **** 
+  95:boards/lisa_m/baro_board.c **** static inline void bmp085_request_temp(void)
+  96:boards/lisa_m/baro_board.c **** {
+  97:boards/lisa_m/baro_board.c ****   bmp085_write_reg(0xF4, 0x2E);
+  98:boards/lisa_m/baro_board.c **** }
+  99:boards/lisa_m/baro_board.c **** 
+ 100:boards/lisa_m/baro_board.c **** static inline void bmp085_read_pressure(void)
+ 101:boards/lisa_m/baro_board.c **** {
+ 102:boards/lisa_m/baro_board.c ****   bmp085_read_reg24(0xF6);
+ 103:boards/lisa_m/baro_board.c **** }
+ 104:boards/lisa_m/baro_board.c **** 
+ 105:boards/lisa_m/baro_board.c **** static inline void bmp085_read_temp(void)
+ 106:boards/lisa_m/baro_board.c **** {
+ 107:boards/lisa_m/baro_board.c ****   bmp085_read_reg16(0xF6);
+ 108:boards/lisa_m/baro_board.c **** }
+ 109:boards/lisa_m/baro_board.c **** 
+ 110:boards/lisa_m/baro_board.c **** void baro_periodic(void) {
+ 296              		.loc 1 110 0
+ 297              		.cfi_startproc
+ 298              		@ args = 0, pretend = 0, frame = 0
+ 299              		@ frame_needed = 0, uses_anonymous_args = 0
+ 111:boards/lisa_m/baro_board.c ****   // check that nothing is in progress
+ 112:boards/lisa_m/baro_board.c ****   if (baro_trans.status == I2CTransPending) return;
+ 300              		.loc 1 112 0
+ 301 0000 254B     		ldr	r3, .L30
+ 110:boards/lisa_m/baro_board.c **** void baro_periodic(void) {
+ 302              		.loc 1 110 0
+ 303 0002 10B5     		push	{r4, lr}
+ 304              	.LCFI3:
+ 305              		.cfi_def_cfa_offset 8
+ 306              		.cfi_offset 14, -4
+ 307              		.cfi_offset 4, -8
+ 308              		.loc 1 112 0
+ 309 0004 93F82520 		ldrb	r2, [r3, #37]	@ zero_extendqisi2
+ 310 0008 002A     		cmp	r2, #0
+ 311 000a 43D0     		beq	.L21
+ 113:boards/lisa_m/baro_board.c ****   if (baro_trans.status == I2CTransRunning) return;
+ 312              		.loc 1 113 0
+ 313 000c 93F82530 		ldrb	r3, [r3, #37]	@ zero_extendqisi2
+ 314 0010 012B     		cmp	r3, #1
+ 315 0012 3FD0     		beq	.L21
+ 114:boards/lisa_m/baro_board.c ****   if (!i2c_idle(&i2c2)) return;
+ 316              		.loc 1 114 0
+ 317 0014 2148     		ldr	r0, .L30+4
+ 318 0016 FFF7FEFF 		bl	i2c_idle
+ 319 001a 0028     		cmp	r0, #0
+ 320 001c 3AD0     		beq	.L21
+ 115:boards/lisa_m/baro_board.c **** 
+ 116:boards/lisa_m/baro_board.c ****   switch (baro_board.status) {
+ 321              		.loc 1 116 0
+ 322 001e 204C     		ldr	r4, .L30+8
+ 323 0020 2378     		ldrb	r3, [r4, #0]	@ zero_extendqisi2
+ 324 0022 062B     		cmp	r3, #6
+ 325 0024 36D8     		bhi	.L21
+ 326 0026 DFE803F0 		tbb	[pc, r3]
+ 327              	.L28:
+ 328 002a 04       		.byte	(.L23-.L28)/2
+ 329 002b 09       		.byte	(.L24-.L28)/2
+ 330 002c 35       		.byte	(.L21-.L28)/2
+ 331 002d 0E       		.byte	(.L25-.L28)/2
+ 332 002e 24       		.byte	(.L26-.L28)/2
+ 333 002f 35       		.byte	(.L21-.L28)/2
+ 334 0030 2A       		.byte	(.L27-.L28)/2
+ 335 0031 00       		.align	1
+ 336              	.L23:
+ 117:boards/lisa_m/baro_board.c ****   case LBS_UNINITIALIZED:
+ 118:boards/lisa_m/baro_board.c ****     baro_board_send_reset();
+ 119:boards/lisa_m/baro_board.c ****     baro_board.status = LBS_REQUEST;
+ 120:boards/lisa_m/baro_board.c ****     baro.status = BS_RUNNING;
+ 337              		.loc 1 120 0
+ 338 0032 1C4A     		ldr	r2, .L30+12
+ 119:boards/lisa_m/baro_board.c ****     baro_board.status = LBS_REQUEST;
+ 339              		.loc 1 119 0
+ 340 0034 0123     		movs	r3, #1
+ 341 0036 2370     		strb	r3, [r4, #0]
+ 342              		.loc 1 120 0
+ 343 0038 1372     		strb	r3, [r2, #8]
+ 121:boards/lisa_m/baro_board.c ****     break;
+ 344              		.loc 1 121 0
+ 345 003a 10BD     		pop	{r4, pc}
+ 346              	.L24:
+ 347              	.LBB28:
+ 348              	.LBB29:
+  92:boards/lisa_m/baro_board.c ****   bmp085_write_reg(0xF4, 0x34 + (BMP085_OSS << 6));
+ 349              		.loc 1 92 0
+ 350 003c F420     		movs	r0, #244
+ 351 003e FFF7FEFF 		bl	bmp085_write_reg.constprop.0
+ 352              	.LBE29:
+ 353              	.LBE28:
+ 122:boards/lisa_m/baro_board.c ****   case LBS_REQUEST:
+ 123:boards/lisa_m/baro_board.c ****     bmp085_request_pressure();
+ 124:boards/lisa_m/baro_board.c ****     baro_board.status = LBS_READ;
+ 354              		.loc 1 124 0
+ 355 0042 0323     		movs	r3, #3
+ 356 0044 19E0     		b	.L29
+ 357              	.L25:
+ 358              	.LBB30:
+ 359              	.LBB31:
+  87:boards/lisa_m/baro_board.c ****   return GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_0);
+ 360              		.loc 1 87 0
+ 361 0046 1848     		ldr	r0, .L30+16
+ 362 0048 0121     		movs	r1, #1
+ 363 004a FFF7FEFF 		bl	GPIO_ReadInputDataBit
+ 364              	.LBE31:
+ 365              	.LBE30:
+ 125:boards/lisa_m/baro_board.c ****     break;
+ 126:boards/lisa_m/baro_board.c ****   case LBS_READ:
+ 127:boards/lisa_m/baro_board.c ****     if (baro_eoc()) {
+ 366              		.loc 1 127 0
+ 367 004e 08B3     		cbz	r0, .L21
+ 368              	.LVL8:
+ 369              	.LBB32:
+ 370              	.LBB33:
+ 371              	.LBB34:
+  47:boards/lisa_m/baro_board.c ****   baro_trans.type = I2CTransTxRx;
+ 372              		.loc 1 47 0
+ 373 0050 1149     		ldr	r1, .L30
+  48:boards/lisa_m/baro_board.c ****   baro_trans.slave_addr = BMP085_ADDR;
+ 374              		.loc 1 48 0
+ 375 0052 EE23     		movs	r3, #238
+ 376 0054 4B70     		strb	r3, [r1, #1]
+  49:boards/lisa_m/baro_board.c ****   baro_trans.len_w = 1;
+ 377              		.loc 1 49 0
+ 378 0056 0123     		movs	r3, #1
+ 379 0058 0B71     		strb	r3, [r1, #4]
+  50:boards/lisa_m/baro_board.c ****   baro_trans.len_r = 3;
+ 380              		.loc 1 50 0
+ 381 005a 0323     		movs	r3, #3
+  47:boards/lisa_m/baro_board.c ****   baro_trans.type = I2CTransTxRx;
+ 382              		.loc 1 47 0
+ 383 005c 0224     		movs	r4, #2
+  50:boards/lisa_m/baro_board.c ****   baro_trans.len_r = 3;
+ 384              		.loc 1 50 0
+ 385 005e 4B80     		strh	r3, [r1, #2]	@ movhi
+  51:boards/lisa_m/baro_board.c ****   baro_trans.buf[0] = addr;
+ 386              		.loc 1 51 0
+ 387 0060 F623     		movs	r3, #246
+ 388 0062 4B71     		strb	r3, [r1, #5]
+  47:boards/lisa_m/baro_board.c ****   baro_trans.type = I2CTransTxRx;
+ 389              		.loc 1 47 0
+ 390 0064 0C70     		strb	r4, [r1, #0]
+  52:boards/lisa_m/baro_board.c ****   i2c_submit(&i2c2, &baro_trans);
+ 391              		.loc 1 52 0
+ 392 0066 0D48     		ldr	r0, .L30+4
+ 393 0068 FFF7FEFF 		bl	i2c_submit
+ 394              	.LBE34:
+ 395              	.LBE33:
+ 396              	.LBE32:
+ 128:boards/lisa_m/baro_board.c ****       bmp085_read_pressure();
+ 129:boards/lisa_m/baro_board.c ****       baro_board.status = LBS_READING;
+ 397              		.loc 1 129 0
+ 398 006c 0C4B     		ldr	r3, .L30+8
+ 399 006e 1C70     		strb	r4, [r3, #0]
+ 400 0070 10BD     		pop	{r4, pc}
+ 401              	.LVL9:
+ 402              	.L26:
+ 403              	.LBB35:
+ 404              	.LBB36:
+  97:boards/lisa_m/baro_board.c ****   bmp085_write_reg(0xF4, 0x2E);
+ 405              		.loc 1 97 0
+ 406 0072 2E20     		movs	r0, #46
+ 407 0074 FFF7FEFF 		bl	bmp085_write_reg.constprop.0
+ 408              	.LBE36:
+ 409              	.LBE35:
+ 130:boards/lisa_m/baro_board.c ****     }
+ 131:boards/lisa_m/baro_board.c ****     break;
+ 132:boards/lisa_m/baro_board.c ****   case LBS_REQUEST_TEMP:
+ 133:boards/lisa_m/baro_board.c ****     bmp085_request_temp();
+ 134:boards/lisa_m/baro_board.c ****     baro_board.status = LBS_READ_TEMP;
+ 410              		.loc 1 134 0
+ 411 0078 0623     		movs	r3, #6
+ 412              	.L29:
+ 413 007a 2370     		strb	r3, [r4, #0]
+ 135:boards/lisa_m/baro_board.c ****     break;
+ 414              		.loc 1 135 0
+ 415 007c 10BD     		pop	{r4, pc}
+ 416              	.L27:
+ 417              	.LBB37:
+ 418              	.LBB38:
+  87:boards/lisa_m/baro_board.c ****   return GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_0);
+ 419              		.loc 1 87 0
+ 420 007e 0A48     		ldr	r0, .L30+16
+ 421 0080 0121     		movs	r1, #1
+ 422 0082 FFF7FEFF 		bl	GPIO_ReadInputDataBit
+ 423              	.LBE38:
+ 424              	.LBE37:
+ 136:boards/lisa_m/baro_board.c ****   case LBS_READ_TEMP:
+ 137:boards/lisa_m/baro_board.c ****     if (baro_eoc()) {
+ 425              		.loc 1 137 0
+ 426 0086 28B1     		cbz	r0, .L21
+ 427              	.LBB39:
+ 428              	.LBB40:
+ 107:boards/lisa_m/baro_board.c ****   bmp085_read_reg16(0xF6);
+ 429              		.loc 1 107 0
+ 430 0088 F620     		movs	r0, #246
+ 431 008a FFF7FEFF 		bl	bmp085_read_reg16
+ 432              	.LBE40:
+ 433              	.LBE39:
+ 138:boards/lisa_m/baro_board.c ****       bmp085_read_temp();
+ 139:boards/lisa_m/baro_board.c ****       baro_board.status = LBS_READING_TEMP;
+ 434              		.loc 1 139 0
+ 435 008e 044B     		ldr	r3, .L30+8
+ 436 0090 0522     		movs	r2, #5
+ 437 0092 1A70     		strb	r2, [r3, #0]
+ 438              	.L21:
+ 439 0094 10BD     		pop	{r4, pc}
+ 440              	.L31:
+ 441 0096 00BF     		.align	2
+ 442              	.L30:
+ 443 0098 00000000 		.word	.LANCHOR0
+ 444 009c 00000000 		.word	i2c2
+ 445 00a0 00000000 		.word	.LANCHOR2
+ 446 00a4 00000000 		.word	.LANCHOR1
+ 447 00a8 000C0140 		.word	1073810432
+ 448              		.cfi_endproc
+ 449              	.LFE37:
+ 451              		.section	.text.baro_board_send_reset,"ax",%progbits
+ 452              		.align	1
+ 453              		.global	baro_board_send_reset
+ 454              		.thumb
+ 455              		.thumb_func
+ 457              	baro_board_send_reset:
+ 458              	.LFB38:
+ 140:boards/lisa_m/baro_board.c ****     }
+ 141:boards/lisa_m/baro_board.c ****     break;
+ 142:boards/lisa_m/baro_board.c ****   default:
+ 143:boards/lisa_m/baro_board.c ****     break;
+ 144:boards/lisa_m/baro_board.c ****   }
+ 145:boards/lisa_m/baro_board.c **** 
+ 146:boards/lisa_m/baro_board.c **** }
+ 147:boards/lisa_m/baro_board.c **** 
+ 148:boards/lisa_m/baro_board.c **** void baro_board_send_reset(void) {
+ 459              		.loc 1 148 0
+ 460              		.cfi_startproc
+ 461              		@ args = 0, pretend = 0, frame = 0
+ 462              		@ frame_needed = 0, uses_anonymous_args = 0
+ 463              		@ link register save eliminated.
+ 149:boards/lisa_m/baro_board.c ****   // This is a NOP at the moment
+ 150:boards/lisa_m/baro_board.c **** }
+ 464              		.loc 1 150 0
+ 465 0000 7047     		bx	lr
+ 466              		.cfi_endproc
+ 467              	.LFE38:
+ 469              		.global	calibration
+ 470              		.global	baro_trans
+ 471              		.global	baro_board
+ 472              		.global	baro
+ 473              		.section	.bss.baro,"aw",%nobits
+ 474              		.align	2
+ 475              		.set	.LANCHOR1,. + 0
+ 478              	baro:
+ 479 0000 00000000 		.space	12
+ 479      00000000 
+ 479      00000000 
+ 480              		.section	.bss.baro_trans,"aw",%nobits
+ 481              		.align	1
+ 482              		.set	.LANCHOR0,. + 0
+ 485              	baro_trans:
+ 486 0000 00000000 		.space	38
+ 486      00000000 
+ 486      00000000 
+ 486      00000000 
+ 486      00000000 
+ 487              		.section	.bss.calibration,"aw",%nobits
+ 488              		.align	2
+ 489              		.set	.LANCHOR3,. + 0
+ 492              	calibration:
+ 493 0000 00000000 		.space	28
+ 493      00000000 
+ 493      00000000 
+ 493      00000000 
+ 493      00000000 
+ 494              		.section	.bss.baro_board,"aw",%nobits
+ 495              		.set	.LANCHOR2,. + 0
+ 498              	baro_board:
+ 499 0000 00       		.space	1
+ 500              		.text
+ 501              	.Letext0:
+ 502              		.file 2 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
+ 503              		.file 3 "./subsystems/sensors/baro.h"
+ 504              		.file 4 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
+ 505              		.file 5 "./mcu_periph/i2c.h"
+ 506              		.file 6 "boards/lisa_m/baro_board.h"
+ 507              		.file 7 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 baro_board.c
+     /tmp/ccHq1waq.s:18     .text.bmp085_read_reg16:0000000000000000 $t
+     /tmp/ccHq1waq.s:22     .text.bmp085_read_reg16:0000000000000000 bmp085_read_reg16
+     /tmp/ccHq1waq.s:59     .text.bmp085_read_reg16:0000000000000018 $d
+     /tmp/ccHq1waq.s:65     .text.bmp085_read_reg16_blocking:0000000000000000 $t
+     /tmp/ccHq1waq.s:69     .text.bmp085_read_reg16_blocking:0000000000000000 bmp085_read_reg16_blocking
+     /tmp/ccHq1waq.s:106    .text.bmp085_read_reg16_blocking:0000000000000028 $d
+     /tmp/ccHq1waq.s:111    .text.bmp085_write_reg.constprop.0:0000000000000000 $t
+     /tmp/ccHq1waq.s:115    .text.bmp085_write_reg.constprop.0:0000000000000000 bmp085_write_reg.constprop.0
+     /tmp/ccHq1waq.s:162    .text.bmp085_write_reg.constprop.0:0000000000000030 $d
+     /tmp/ccHq1waq.s:168    .text.baro_init:0000000000000000 $t
+     /tmp/ccHq1waq.s:173    .text.baro_init:0000000000000000 baro_init
+     /tmp/ccHq1waq.s:281    .text.baro_init:0000000000000088 $d
+     /tmp/ccHq1waq.s:289    .text.baro_periodic:0000000000000000 $t
+     /tmp/ccHq1waq.s:294    .text.baro_periodic:0000000000000000 baro_periodic
+     /tmp/ccHq1waq.s:328    .text.baro_periodic:000000000000002a $d
+     /tmp/ccHq1waq.s:443    .text.baro_periodic:0000000000000098 $d
+     /tmp/ccHq1waq.s:452    .text.baro_board_send_reset:0000000000000000 $t
+     /tmp/ccHq1waq.s:457    .text.baro_board_send_reset:0000000000000000 baro_board_send_reset
+     /tmp/ccHq1waq.s:492    .bss.calibration:0000000000000000 calibration
+     /tmp/ccHq1waq.s:485    .bss.baro_trans:0000000000000000 baro_trans
+     /tmp/ccHq1waq.s:498    .bss.baro_board:0000000000000000 baro_board
+     /tmp/ccHq1waq.s:478    .bss.baro:0000000000000000 baro
+     /tmp/ccHq1waq.s:474    .bss.baro:0000000000000000 $d
+     /tmp/ccHq1waq.s:481    .bss.baro_trans:0000000000000000 $d
+     /tmp/ccHq1waq.s:488    .bss.calibration:0000000000000000 $d
+     /tmp/ccHq1waq.s:499    .bss.baro_board:0000000000000000 $d
+                     .debug_frame:0000000000000010 $d
+     /tmp/ccHq1waq.s:335    .text.baro_periodic:0000000000000031 $d
+     /tmp/ccHq1waq.s:335    .text.baro_periodic:0000000000000032 $t
+
+UNDEFINED SYMBOLS
+i2c_submit
+i2c2
+GPIO_Init
+i2c_idle
+GPIO_ReadInputDataBit

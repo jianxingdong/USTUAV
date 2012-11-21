@@ -1,0 +1,1890 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 18, 4
+  12              		.thumb
+  13              		.file	"nav_line.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.nav_line_init,"ax",%progbits
+  18              		.align	1
+  19              		.global	nav_line_init
+  20              		.thumb
+  21              		.thumb_func
+  23              	nav_line_init:
+  24              	.LFB0:
+  25              		.file 1 "subsystems/navigation/nav_line.c"
+   1:subsystems/navigation/nav_line.c **** /*
+   2:subsystems/navigation/nav_line.c ****  * $Id$
+   3:subsystems/navigation/nav_line.c ****  *
+   4:subsystems/navigation/nav_line.c ****  * Copyright (C) 2007  Anton Kochevar, ENAC
+   5:subsystems/navigation/nav_line.c ****  *
+   6:subsystems/navigation/nav_line.c ****  * This file is part of paparazzi.
+   7:subsystems/navigation/nav_line.c ****  *
+   8:subsystems/navigation/nav_line.c ****  * paparazzi is free software; you can redistribute it and/or modify
+   9:subsystems/navigation/nav_line.c ****  * it under the terms of the GNU General Public License as published by
+  10:subsystems/navigation/nav_line.c ****  * the Free Software Foundation; either version 2, or (at your option)
+  11:subsystems/navigation/nav_line.c ****  * any later version.
+  12:subsystems/navigation/nav_line.c ****  *
+  13:subsystems/navigation/nav_line.c ****  * paparazzi is distributed in the hope that it will be useful,
+  14:subsystems/navigation/nav_line.c ****  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  15:subsystems/navigation/nav_line.c ****  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  16:subsystems/navigation/nav_line.c ****  * GNU General Public License for more details.
+  17:subsystems/navigation/nav_line.c ****  *
+  18:subsystems/navigation/nav_line.c ****  * You should have received a copy of the GNU General Public License
+  19:subsystems/navigation/nav_line.c ****  * along with paparazzi; see the file COPYING.  If not, write to
+  20:subsystems/navigation/nav_line.c ****  * the Free Software Foundation, 59 Temple Place - Suite 330,
+  21:subsystems/navigation/nav_line.c ****  * Boston, MA 02111-1307, USA.
+  22:subsystems/navigation/nav_line.c ****  *
+  23:subsystems/navigation/nav_line.c ****  */
+  24:subsystems/navigation/nav_line.c **** 
+  25:subsystems/navigation/nav_line.c **** /** \file nav_line.c
+  26:subsystems/navigation/nav_line.c ****  *  \brief Navigation along a line with nice U-turns
+  27:subsystems/navigation/nav_line.c ****  *
+  28:subsystems/navigation/nav_line.c ****  */
+  29:subsystems/navigation/nav_line.c **** 
+  30:subsystems/navigation/nav_line.c **** #include "generated/airframe.h"
+  31:subsystems/navigation/nav_line.c **** #include "subsystems/navigation/nav_line.h"
+  32:subsystems/navigation/nav_line.c **** #include "subsystems/nav.h"
+  33:subsystems/navigation/nav_line.c **** 
+  34:subsystems/navigation/nav_line.c **** /** Status along the pattern */
+  35:subsystems/navigation/nav_line.c **** enum line_status { LR12, LQC21, LTC2, LQC22, LR21, LQC12, LTC1, LQC11 };
+  36:subsystems/navigation/nav_line.c **** static enum line_status line_status;
+  37:subsystems/navigation/nav_line.c **** 
+  38:subsystems/navigation/nav_line.c **** bool_t nav_line_init( void ) {
+  26              		.loc 1 38 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30              		@ link register save eliminated.
+  39:subsystems/navigation/nav_line.c ****   line_status = LR12;
+  31              		.loc 1 39 0
+  32 0000 014B     		ldr	r3, .L2
+  33 0002 0020     		movs	r0, #0
+  34 0004 1870     		strb	r0, [r3, #0]
+  40:subsystems/navigation/nav_line.c ****   return FALSE;
+  41:subsystems/navigation/nav_line.c **** }
+  35              		.loc 1 41 0
+  36 0006 7047     		bx	lr
+  37              	.L3:
+  38              		.align	2
+  39              	.L2:
+  40 0008 00000000 		.word	.LANCHOR0
+  41              		.cfi_endproc
+  42              	.LFE0:
+  44              		.global	__aeabi_fsub
+  45              		.global	__aeabi_fmul
+  46              		.global	__aeabi_fadd
+  47              		.global	__aeabi_f2d
+  48              		.global	__aeabi_d2f
+  49              		.global	__aeabi_fdiv
+  50              		.global	__aeabi_dmul
+  51              		.global	__aeabi_dsub
+  52              		.global	__aeabi_fcmplt
+  53              		.global	__aeabi_fcmpge
+  54              		.global	__aeabi_fcmpgt
+  55              		.global	__aeabi_dadd
+  56              		.section	.text.nav_line,"ax",%progbits
+  57              		.align	1
+  58              		.global	nav_line
+  59              		.thumb
+  60              		.thumb_func
+  62              	nav_line:
+  63              	.LFB1:
+  42:subsystems/navigation/nav_line.c **** 
+  43:subsystems/navigation/nav_line.c **** bool_t nav_line(uint8_t l1, uint8_t l2, float radius) {
+  64              		.loc 1 43 0
+  65              		.cfi_startproc
+  66              		@ args = 0, pretend = 0, frame = 72
+  67              		@ frame_needed = 0, uses_anonymous_args = 0
+  68              	.LVL0:
+  44:subsystems/navigation/nav_line.c ****   radius = fabs(radius);
+  45:subsystems/navigation/nav_line.c ****   float alt = waypoints[l1].a;
+  69              		.loc 1 45 0
+  70 0000 4FF00C0C 		mov	ip, #12
+  43:subsystems/navigation/nav_line.c **** bool_t nav_line(uint8_t l1, uint8_t l2, float radius) {
+  71              		.loc 1 43 0
+  72 0004 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, sl, fp, lr}
+  73              	.LCFI0:
+  74              		.cfi_def_cfa_offset 36
+  75              		.cfi_offset 14, -4
+  76              		.cfi_offset 11, -8
+  77              		.cfi_offset 10, -12
+  78              		.cfi_offset 9, -16
+  79              		.cfi_offset 8, -20
+  80              		.cfi_offset 7, -24
+  81              		.cfi_offset 6, -28
+  82              		.cfi_offset 5, -32
+  83              		.cfi_offset 4, -36
+  84              		.loc 1 45 0
+  85 0008 0CFB00FA 		mul	sl, ip, r0
+  46:subsystems/navigation/nav_line.c ****   waypoints[l2].a = alt;
+  86              		.loc 1 46 0
+  87 000c 0CFB01F9 		mul	r9, ip, r1
+  45:subsystems/navigation/nav_line.c ****   float alt = waypoints[l1].a;
+  88              		.loc 1 45 0
+  89 0010 A14C     		ldr	r4, .L176+48
+  43:subsystems/navigation/nav_line.c **** bool_t nav_line(uint8_t l1, uint8_t l2, float radius) {
+  90              		.loc 1 43 0
+  91 0012 95B0     		sub	sp, sp, #84
+  92              	.LCFI1:
+  93              		.cfi_def_cfa_offset 120
+  45:subsystems/navigation/nav_line.c ****   float alt = waypoints[l1].a;
+  94              		.loc 1 45 0
+  95 0014 04EB0A05 		add	r5, r4, sl
+  96 0018 AB68     		ldr	r3, [r5, #8]	@ float
+  44:subsystems/navigation/nav_line.c ****   radius = fabs(radius);
+  97              		.loc 1 44 0
+  98 001a 22F00047 		bic	r7, r2, #-2147483648
+  99              	.LVL1:
+ 100              		.loc 1 46 0
+ 101 001e 04EB0902 		add	r2, r4, r9
+ 102 0022 0392     		str	r2, [sp, #12]
+  43:subsystems/navigation/nav_line.c **** bool_t nav_line(uint8_t l1, uint8_t l2, float radius) {
+ 103              		.loc 1 43 0
+ 104 0024 0A90     		str	r0, [sp, #40]
+ 105 0026 0B91     		str	r1, [sp, #44]
+  47:subsystems/navigation/nav_line.c **** 
+  48:subsystems/navigation/nav_line.c ****   float l2_l1_x = WaypointX(l1) - WaypointX(l2);
+ 106              		.loc 1 48 0
+ 107 0028 54F80A00 		ldr	r0, [r4, sl]	@ float
+ 108              	.LVL2:
+  46:subsystems/navigation/nav_line.c ****   waypoints[l2].a = alt;
+ 109              		.loc 1 46 0
+ 110 002c 9360     		str	r3, [r2, #8]	@ float
+ 111              		.loc 1 48 0
+ 112 002e 54F80910 		ldr	r1, [r4, r9]	@ float
+ 113              	.LVL3:
+ 114 0032 CDF808C0 		str	ip, [sp, #8]
+ 115 0036 FFF7FEFF 		bl	__aeabi_fsub
+ 116              	.LVL4:
+  49:subsystems/navigation/nav_line.c ****   float l2_l1_y = WaypointY(l1) - WaypointY(l2);
+ 117              		.loc 1 49 0
+ 118 003a 039B     		ldr	r3, [sp, #12]
+  48:subsystems/navigation/nav_line.c ****   float l2_l1_x = WaypointX(l1) - WaypointX(l2);
+ 119              		.loc 1 48 0
+ 120 003c 8046     		mov	r8, r0
+ 121              	.LVL5:
+ 122              		.loc 1 49 0
+ 123 003e 5968     		ldr	r1, [r3, #4]	@ float
+ 124 0040 6868     		ldr	r0, [r5, #4]	@ float
+ 125              	.LVL6:
+ 126 0042 FFF7FEFF 		bl	__aeabi_fsub
+  50:subsystems/navigation/nav_line.c ****   float d = sqrt(l2_l1_x*l2_l1_x+l2_l1_y*l2_l1_y);
+ 127              		.loc 1 50 0
+ 128 0046 4146     		mov	r1, r8
+  49:subsystems/navigation/nav_line.c ****   float l2_l1_y = WaypointY(l1) - WaypointY(l2);
+ 129              		.loc 1 49 0
+ 130 0048 0646     		mov	r6, r0
+ 131              	.LVL7:
+ 132              		.loc 1 50 0
+ 133 004a 4046     		mov	r0, r8
+ 134              	.LVL8:
+ 135 004c FFF7FEFF 		bl	__aeabi_fmul
+ 136 0050 3146     		mov	r1, r6
+ 137 0052 8346     		mov	fp, r0
+ 138 0054 3046     		mov	r0, r6
+ 139 0056 FFF7FEFF 		bl	__aeabi_fmul
+ 140 005a 0146     		mov	r1, r0
+ 141 005c 5846     		mov	r0, fp
+ 142 005e FFF7FEFF 		bl	__aeabi_fadd
+ 143 0062 FFF7FEFF 		bl	__aeabi_f2d
+ 144 0066 FFF7FEFF 		bl	sqrt
+ 145 006a FFF7FEFF 		bl	__aeabi_d2f
+ 146 006e 8346     		mov	fp, r0
+ 147              	.LVL9:
+  51:subsystems/navigation/nav_line.c **** 
+  52:subsystems/navigation/nav_line.c ****   /* Unit vector from l1 to l2 */
+  53:subsystems/navigation/nav_line.c ****   float u_x = l2_l1_x / d;
+ 148              		.loc 1 53 0
+ 149 0070 5946     		mov	r1, fp
+ 150 0072 4046     		mov	r0, r8
+ 151              	.LVL10:
+ 152 0074 FFF7FEFF 		bl	__aeabi_fdiv
+ 153              	.LVL11:
+  54:subsystems/navigation/nav_line.c ****   float u_y = l2_l1_y / d;
+ 154              		.loc 1 54 0
+ 155 0078 5946     		mov	r1, fp
+  53:subsystems/navigation/nav_line.c ****   float u_x = l2_l1_x / d;
+ 156              		.loc 1 53 0
+ 157 007a 8046     		mov	r8, r0
+ 158              	.LVL12:
+ 159              		.loc 1 54 0
+ 160 007c 3046     		mov	r0, r6
+ 161              	.LVL13:
+ 162 007e FFF7FEFF 		bl	__aeabi_fdiv
+ 163 0082 0646     		mov	r6, r0
+ 164              	.LVL14:
+  55:subsystems/navigation/nav_line.c **** 
+  56:subsystems/navigation/nav_line.c ****   /* The half circle centers and the other leg */
+  57:subsystems/navigation/nav_line.c ****   struct point l2_c1 = { WaypointX(l1) + radius * u_y,
+ 165              		.loc 1 57 0
+ 166 0084 3146     		mov	r1, r6
+ 167 0086 3846     		mov	r0, r7
+ 168              	.LVL15:
+ 169 0088 FFF7FEFF 		bl	__aeabi_fmul
+ 170              	.LVL16:
+  58:subsystems/navigation/nav_line.c ****              WaypointY(l1) + radius * -u_x,
+ 171              		.loc 1 58 0
+ 172 008c 08F10042 		add	r2, r8, #-2147483648
+  57:subsystems/navigation/nav_line.c ****   struct point l2_c1 = { WaypointX(l1) + radius * u_y,
+ 173              		.loc 1 57 0
+ 174 0090 54F80AA0 		ldr	sl, [r4, sl]	@ float
+ 175              		.loc 1 58 0
+ 176 0094 D5F804B0 		ldr	fp, [r5, #4]	@ float
+ 177              	.LVL17:
+ 178 0098 0D92     		str	r2, [sp, #52]
+ 179 009a 0D99     		ldr	r1, [sp, #52]	@ float
+  57:subsystems/navigation/nav_line.c ****   struct point l2_c1 = { WaypointX(l1) + radius * u_y,
+ 180              		.loc 1 57 0
+ 181 009c 0C90     		str	r0, [sp, #48]	@ float
+ 182              	.LVL18:
+ 183              		.loc 1 58 0
+ 184 009e 3846     		mov	r0, r7
+ 185              	.LVL19:
+ 186 00a0 FFF7FEFF 		bl	__aeabi_fmul
+ 187              	.LVL20:
+ 188 00a4 0E90     		str	r0, [sp, #56]	@ float
+ 189              	.LVL21:
+  59:subsystems/navigation/nav_line.c ****              alt  };
+  60:subsystems/navigation/nav_line.c ****   struct point l2_c2 = { WaypointX(l1) + 1.732*radius * u_x,
+ 190              		.loc 1 60 0
+ 191 00a6 3846     		mov	r0, r7
+ 192              	.LVL22:
+ 193 00a8 FFF7FEFF 		bl	__aeabi_f2d
+ 194 00ac 6EA3     		adr	r3, .L176
+ 195 00ae D3E90023 		ldrd	r2, [r3]
+ 196 00b2 FFF7FEFF 		bl	__aeabi_dmul
+ 197 00b6 CDE90401 		strd	r0, [sp, #16]
+ 198 00ba 4046     		mov	r0, r8
+ 199 00bc FFF7FEFF 		bl	__aeabi_f2d
+ 200 00c0 CDE90601 		strd	r0, [sp, #24]
+ 201              	.LVL23:
+  61:subsystems/navigation/nav_line.c ****              WaypointY(l1) + 1.732*radius * u_y,
+ 202              		.loc 1 61 0
+ 203 00c4 3046     		mov	r0, r6
+ 204              	.LVL24:
+ 205 00c6 FFF7FEFF 		bl	__aeabi_f2d
+  62:subsystems/navigation/nav_line.c ****              alt  };
+  63:subsystems/navigation/nav_line.c ****   struct point l2_c3 = { WaypointX(l1) + radius * -u_y,
+ 206              		.loc 1 63 0
+ 207 00ca 06F10046 		add	r6, r6, #-2147483648
+ 208              	.LVL25:
+ 209 00ce 0F96     		str	r6, [sp, #60]
+  61:subsystems/navigation/nav_line.c ****              WaypointY(l1) + 1.732*radius * u_y,
+ 210              		.loc 1 61 0
+ 211 00d0 CDE90801 		strd	r0, [sp, #32]
+ 212              	.LVL26:
+ 213              		.loc 1 63 0
+ 214 00d4 0F99     		ldr	r1, [sp, #60]	@ float
+ 215 00d6 3846     		mov	r0, r7
+ 216              	.LVL27:
+ 217 00d8 FFF7FEFF 		bl	__aeabi_fmul
+  64:subsystems/navigation/nav_line.c ****              WaypointY(l1) + radius * u_x,
+ 218              		.loc 1 64 0
+ 219 00dc 4146     		mov	r1, r8
+  63:subsystems/navigation/nav_line.c ****   struct point l2_c3 = { WaypointX(l1) + radius * -u_y,
+ 220              		.loc 1 63 0
+ 221 00de 1090     		str	r0, [sp, #64]	@ float
+ 222              	.LVL28:
+ 223              		.loc 1 64 0
+ 224 00e0 3846     		mov	r0, r7
+ 225              	.LVL29:
+ 226 00e2 FFF7FEFF 		bl	__aeabi_fmul
+  65:subsystems/navigation/nav_line.c ****              alt  };
+  66:subsystems/navigation/nav_line.c **** 
+  67:subsystems/navigation/nav_line.c ****   struct point l1_c1 = { WaypointX(l2) + radius * -u_y,
+  68:subsystems/navigation/nav_line.c ****              WaypointY(l2) + radius * u_x,
+ 227              		.loc 1 68 0
+ 228 00e6 039B     		ldr	r3, [sp, #12]
+  67:subsystems/navigation/nav_line.c ****   struct point l1_c1 = { WaypointX(l2) + radius * -u_y,
+ 229              		.loc 1 67 0
+ 230 00e8 54F80980 		ldr	r8, [r4, r9]	@ float
+ 231              	.LVL30:
+ 232              		.loc 1 68 0
+ 233 00ec 5B68     		ldr	r3, [r3, #4]	@ float
+  64:subsystems/navigation/nav_line.c ****              WaypointY(l1) + radius * u_x,
+ 234              		.loc 1 64 0
+ 235 00ee 1190     		str	r0, [sp, #68]	@ float
+ 236              	.LVL31:
+ 237              		.loc 1 68 0
+ 238 00f0 0393     		str	r3, [sp, #12]	@ float
+ 239              	.LVL32:
+  69:subsystems/navigation/nav_line.c ****              alt  };
+  70:subsystems/navigation/nav_line.c ****   struct point l1_c2 = { WaypointX(l2) +1.732*radius * -u_x,
+  71:subsystems/navigation/nav_line.c ****              WaypointY(l2) + 1.732*radius * -u_y,
+  72:subsystems/navigation/nav_line.c ****              alt  };
+  73:subsystems/navigation/nav_line.c ****   struct point l1_c3 = { WaypointX(l2) + radius * u_y,
+  74:subsystems/navigation/nav_line.c ****              WaypointY(l2) + radius * -u_x,
+  75:subsystems/navigation/nav_line.c ****              alt  };
+  76:subsystems/navigation/nav_line.c ****   float qdr_out_2_1 = M_PI/3. - atan2(u_y, u_x);
+ 240              		.loc 1 76 0
+ 241 00f2 DDE90801 		ldrd	r0, [sp, #32]
+ 242              	.LVL33:
+ 243 00f6 DDE90623 		ldrd	r2, [sp, #24]
+ 244 00fa FFF7FEFF 		bl	atan2
+ 245              	.LVL34:
+ 246 00fe 0246     		mov	r2, r0
+ 247 0100 0B46     		mov	r3, r1
+ 248 0102 5BA1     		adr	r1, .L176+8
+ 249 0104 D1E90001 		ldrd	r0, [r1]
+ 250 0108 FFF7FEFF 		bl	__aeabi_dsub
+ 251 010c FFF7FEFF 		bl	__aeabi_d2f
+  77:subsystems/navigation/nav_line.c **** 
+  78:subsystems/navigation/nav_line.c ****   float qdr_out_2_2 = -M_PI/3. - atan2(u_y, u_x);
+ 252              		.loc 1 78 0
+ 253 0110 DDE90623 		ldrd	r2, [sp, #24]
+  76:subsystems/navigation/nav_line.c ****   float qdr_out_2_1 = M_PI/3. - atan2(u_y, u_x);
+ 254              		.loc 1 76 0
+ 255 0114 1290     		str	r0, [sp, #72]	@ float
+ 256              	.LVL35:
+ 257              		.loc 1 78 0
+ 258 0116 DDE90801 		ldrd	r0, [sp, #32]
+ 259              	.LVL36:
+ 260 011a FFF7FEFF 		bl	atan2
+ 261 011e 0246     		mov	r2, r0
+ 262 0120 0B46     		mov	r3, r1
+ 263 0122 55A1     		adr	r1, .L176+16
+ 264 0124 D1E90001 		ldrd	r0, [r1]
+ 265 0128 FFF7FEFF 		bl	__aeabi_dsub
+ 266 012c FFF7FEFF 		bl	__aeabi_d2f
+  79:subsystems/navigation/nav_line.c ****   float qdr_out_2_3 = M_PI - atan2(u_y, u_x);
+ 267              		.loc 1 79 0
+ 268 0130 DDE90623 		ldrd	r2, [sp, #24]
+  78:subsystems/navigation/nav_line.c ****   float qdr_out_2_2 = -M_PI/3. - atan2(u_y, u_x);
+ 269              		.loc 1 78 0
+ 270 0134 1390     		str	r0, [sp, #76]	@ float
+ 271              	.LVL37:
+ 272              		.loc 1 79 0
+ 273 0136 DDE90801 		ldrd	r0, [sp, #32]
+ 274              	.LVL38:
+ 275 013a FFF7FEFF 		bl	atan2
+ 276 013e 0246     		mov	r2, r0
+ 277 0140 0B46     		mov	r3, r1
+ 278 0142 4FA1     		adr	r1, .L176+24
+ 279 0144 D1E90001 		ldrd	r0, [r1]
+ 280 0148 FFF7FEFF 		bl	__aeabi_dsub
+ 281 014c FFF7FEFF 		bl	__aeabi_d2f
+  80:subsystems/navigation/nav_line.c **** 
+  81:subsystems/navigation/nav_line.c ****   /* Vertical target */
+  82:subsystems/navigation/nav_line.c ****   NavVerticalAutoThrottleMode(0); /* No pitch */
+ 282              		.loc 1 82 0
+ 283 0150 524B     		ldr	r3, .L176+52
+ 284 0152 0022     		movs	r2, #0
+ 285 0154 1A70     		strb	r2, [r3, #0]
+ 286 0156 524A     		ldr	r2, .L176+56
+ 287 0158 0023     		movs	r3, #0
+ 288 015a 1360     		str	r3, [r2, #0]	@ float
+  83:subsystems/navigation/nav_line.c ****   NavVerticalAltitudeMode(WaypointAlt(l1), 0.);
+ 289              		.loc 1 83 0
+ 290 015c 514A     		ldr	r2, .L176+60
+ 291 015e 0321     		movs	r1, #3
+ 292 0160 1170     		strb	r1, [r2, #0]
+ 293 0162 A968     		ldr	r1, [r5, #8]	@ float
+ 294 0164 504A     		ldr	r2, .L176+64
+ 295 0166 DDF808C0 		ldr	ip, [sp, #8]
+ 296 016a 1160     		str	r1, [r2, #0]	@ float
+ 297 016c 4F4A     		ldr	r2, .L176+68
+  79:subsystems/navigation/nav_line.c ****   float qdr_out_2_3 = M_PI - atan2(u_y, u_x);
+ 298              		.loc 1 79 0
+ 299 016e 8146     		mov	r9, r0
+ 300              	.LVL39:
+ 301              		.loc 1 83 0
+ 302 0170 1360     		str	r3, [r2, #0]	@ float
+  84:subsystems/navigation/nav_line.c **** 
+  85:subsystems/navigation/nav_line.c ****   switch (line_status) {
+ 303              		.loc 1 85 0
+ 304 0172 4F4B     		ldr	r3, .L176+72
+ 305 0174 6646     		mov	r6, ip
+ 306 0176 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
+ 307 0178 072B     		cmp	r3, #7
+ 308 017a 00F24E84 		bhi	.L123
+ 309 017e DFE813F0 		tbh	[pc, r3, lsl #1]
+ 310              	.L14:
+ 311 0182 0800     		.2byte	(.L6-.L14)/2
+ 312 0184 2B00     		.2byte	(.L7-.L14)/2
+ 313 0186 E800     		.2byte	(.L8-.L14)/2
+ 314 0188 9501     		.2byte	(.L9-.L14)/2
+ 315 018a 3A02     		.2byte	(.L10-.L14)/2
+ 316 018c 5802     		.2byte	(.L11-.L14)/2
+ 317 018e 0303     		.2byte	(.L12-.L14)/2
+ 318 0190 BB03     		.2byte	(.L13-.L14)/2
+ 319              	.L6:
+  86:subsystems/navigation/nav_line.c ****   case LR12: /* From wp l2 to wp l1 */
+  87:subsystems/navigation/nav_line.c ****     NavSegment(l2, l1);
+ 320              		.loc 1 87 0
+ 321 0192 0B9B     		ldr	r3, [sp, #44]
+ 322 0194 0A9A     		ldr	r2, [sp, #40]
+ 323 0196 0CFB03F5 		mul	r5, ip, r3
+ 324 019a 5643     		muls	r6, r2, r6
+ 325 019c 04EB0508 		add	r8, r4, r5
+ 326              	.LVL40:
+ 327 01a0 A719     		adds	r7, r4, r6
+ 328              	.LVL41:
+ 329 01a2 6059     		ldr	r0, [r4, r5]	@ float
+ 330              	.LVL42:
+ 331 01a4 A259     		ldr	r2, [r4, r6]	@ float
+ 332 01a6 D8F80410 		ldr	r1, [r8, #4]	@ float
+ 333 01aa 7B68     		ldr	r3, [r7, #4]	@ float
+ 334 01ac FFF7FEFF 		bl	nav_route_xy
+  88:subsystems/navigation/nav_line.c ****     if (NavApproachingFrom(l1, l2, CARROT)) {
+ 335              		.loc 1 88 0
+ 336 01b0 4FF08143 		mov	r3, #1082130432
+ 337 01b4 0093     		str	r3, [sp, #0]	@ float
+ 338 01b6 A059     		ldr	r0, [r4, r6]	@ float
+ 339 01b8 6259     		ldr	r2, [r4, r5]	@ float
+ 340 01ba 7968     		ldr	r1, [r7, #4]	@ float
+ 341 01bc D8F80430 		ldr	r3, [r8, #4]	@ float
+ 342 01c0 FFF7FEFF 		bl	nav_approaching_xy
+ 343 01c4 0124     		movs	r4, #1
+ 344 01c6 0028     		cmp	r0, #0
+ 345 01c8 00F02984 		beq	.L124
+  89:subsystems/navigation/nav_line.c ****       line_status = LQC21;
+ 346              		.loc 1 89 0
+ 347 01cc 384B     		ldr	r3, .L176+72
+ 348 01ce 1C70     		strb	r4, [r3, #0]
+  90:subsystems/navigation/nav_line.c ****       nav_init_stage();
+ 349              		.loc 1 90 0
+ 350 01d0 FFF7FEFF 		bl	nav_init_stage
+ 351 01d4 00F023BC 		b	.L124
+ 352              	.LVL43:
+ 353              	.L7:
+  57:subsystems/navigation/nav_line.c ****   struct point l2_c1 = { WaypointX(l1) + radius * u_y,
+ 354              		.loc 1 57 0
+ 355 01d8 0C99     		ldr	r1, [sp, #48]	@ float
+ 356 01da 5046     		mov	r0, sl
+ 357 01dc FFF7FEFF 		bl	__aeabi_fadd
+  58:subsystems/navigation/nav_line.c ****              WaypointY(l1) + radius * -u_x,
+ 358              		.loc 1 58 0
+ 359 01e0 0E99     		ldr	r1, [sp, #56]	@ float
+  57:subsystems/navigation/nav_line.c ****   struct point l2_c1 = { WaypointX(l1) + radius * u_y,
+ 360              		.loc 1 57 0
+ 361 01e2 0446     		mov	r4, r0
+  58:subsystems/navigation/nav_line.c ****              WaypointY(l1) + radius * -u_x,
+ 362              		.loc 1 58 0
+ 363 01e4 5846     		mov	r0, fp
+ 364 01e6 FFF7FEFF 		bl	__aeabi_fadd
+  91:subsystems/navigation/nav_line.c ****     }
+  92:subsystems/navigation/nav_line.c ****     break;
+  93:subsystems/navigation/nav_line.c ****   case LQC21:
+  94:subsystems/navigation/nav_line.c ****     nav_circle_XY(l2_c1.x, l2_c1.y, radius);
+ 365              		.loc 1 94 0
+ 366 01ea 3A46     		mov	r2, r7
+  58:subsystems/navigation/nav_line.c ****              WaypointY(l1) + radius * -u_x,
+ 367              		.loc 1 58 0
+ 368 01ec 0146     		mov	r1, r0
+ 369              		.loc 1 94 0
+ 370 01ee 2046     		mov	r0, r4
+ 371 01f0 FFF7FEFF 		bl	nav_circle_XY
+ 372              	.LBB2:
+  95:subsystems/navigation/nav_line.c ****     if (NavQdrCloseTo(DegOfRad(qdr_out_2_1)-10)) {
+ 373              		.loc 1 95 0
+ 374 01f4 1298     		ldr	r0, [sp, #72]	@ float
+ 375 01f6 FFF7FEFF 		bl	__aeabi_f2d
+ 376 01fa 23A3     		adr	r3, .L176+32
+ 377 01fc D3E90023 		ldrd	r2, [r3]
+ 378 0200 FFF7FEFF 		bl	__aeabi_dmul
+ 379 0204 0022     		movs	r2, #0
+ 380 0206 2B4B     		ldr	r3, .L176+76
+ 381 0208 FFF7FEFF 		bl	__aeabi_dsub
+ 382              	.LBB3:
+ 383 020c 2A4B     		ldr	r3, .L176+80
+ 384              	.LBE3:
+ 385 020e 0446     		mov	r4, r0
+ 386              	.LBB6:
+ 387 0210 1868     		ldr	r0, [r3, #0]	@ float
+ 388              	.LBE6:
+ 389 0212 0D46     		mov	r5, r1
+ 390              	.LBB7:
+ 391 0214 FFF7FEFF 		bl	__aeabi_f2d
+ 392 0218 0246     		mov	r2, r0
+ 393 021a 0B46     		mov	r3, r1
+ 394 021c 1CA1     		adr	r1, .L176+40
+ 395 021e D1E90001 		ldrd	r0, [r1]
+ 396 0222 FFF7FEFF 		bl	__aeabi_dsub
+ 397 0226 18A3     		adr	r3, .L176+32
+ 398 0228 D3E90023 		ldrd	r2, [r3]
+ 399 022c FFF7FEFF 		bl	__aeabi_dmul
+ 400 0230 FFF7FEFF 		bl	__aeabi_d2f
+ 401              	.LBB4:
+ 402 0234 4FF00008 		mov	r8, #0
+ 403              	.LVL44:
+ 404              	.LBE4:
+ 405 0238 0646     		mov	r6, r0
+ 406              	.LVL45:
+ 407              	.LBB5:
+ 408 023a 04E0     		b	.L15
+ 409              	.LVL46:
+ 410              	.L18:
+ 411              		.loc 1 95 0 is_stmt 0 discriminator 4
+ 412 023c 3046     		mov	r0, r6
+ 413 023e 1F49     		ldr	r1, .L176+84
+ 414 0240 FFF7FEFF 		bl	__aeabi_fadd
+ 415 0244 0646     		mov	r6, r0
+ 416              	.LVL47:
+ 417              	.L15:
+ 418              		.loc 1 95 0 discriminator 1
+ 419 0246 3046     		mov	r0, r6
+ 420              	.LVL48:
+ 421 0248 0021     		movs	r1, #0
+ 422 024a 5FFA88F7 		uxtb	r7, r8
+ 423 024e FFF7FEFF 		bl	__aeabi_fcmplt
+ 424 0252 D0B3     		cbz	r0, .L144
+ 425              		.loc 1 95 0 discriminator 2
+ 426 0254 08F10108 		add	r8, r8, #1
+ 427 0258 B8F5807F 		cmp	r8, #256
+ 428 025c EED1     		bne	.L18
+ 429              		.loc 1 95 0
+ 430 025e 0027     		movs	r7, #0
+ 431 0260 33E0     		b	.L144
+ 432              	.L177:
+ 433 0262 00BFAFF3 		.align	3
+ 433      0080
+ 434              	.L176:
+ 435 0268 83C0CAA1 		.word	2714419331
+ 436 026c 45B6FB3F 		.word	1073460805
+ 437 0270 65732D38 		.word	942502757
+ 438 0274 52C1F03F 		.word	1072742738
+ 439 0278 65732D38 		.word	942502757
+ 440 027c 52C1F0BF 		.word	-1074740910
+ 441 0280 182D4454 		.word	1413754136
+ 442 0284 FB210940 		.word	1074340347
+ 443 0288 F8C1631A 		.word	442745336
+ 444 028c DCA54C40 		.word	1078765020
+ 445 0290 182D4454 		.word	1413754136
+ 446 0294 FB21F93F 		.word	1073291771
+ 447 0298 00000000 		.word	waypoints
+ 448 029c 00000000 		.word	v_ctl_climb_mode
+ 449 02a0 00000000 		.word	nav_pitch
+ 450 02a4 00000000 		.word	v_ctl_mode
+ 451 02a8 00000000 		.word	nav_altitude
+ 452 02ac 00000000 		.word	v_ctl_altitude_pre_climb
+ 453 02b0 00000000 		.word	.LANCHOR0
+ 454 02b4 00002440 		.word	1076101120
+ 455 02b8 00000000 		.word	nav_circle_trigo_qdr
+ 456 02bc 0000B443 		.word	1135869952
+ 457              	.LVL49:
+ 458              	.L22:
+ 459              		.loc 1 95 0 discriminator 8
+ 460 02c0 3046     		mov	r0, r6
+ 461 02c2 A149     		ldr	r1, .L178+16
+ 462 02c4 FFF7FEFF 		bl	__aeabi_fsub
+ 463 02c8 0646     		mov	r6, r0
+ 464              	.LVL50:
+ 465              	.L144:
+ 466              		.loc 1 95 0 discriminator 5
+ 467 02ca 3046     		mov	r0, r6
+ 468 02cc 9E49     		ldr	r1, .L178+16
+ 469 02ce FFF7FEFF 		bl	__aeabi_fcmpge
+ 470 02d2 18B1     		cbz	r0, .L20
+ 471              		.loc 1 95 0 discriminator 6
+ 472 02d4 0137     		adds	r7, r7, #1
+ 473              	.LVL51:
+ 474 02d6 FFB2     		uxtb	r7, r7
+ 475              	.LVL52:
+ 476 02d8 002F     		cmp	r7, #0
+ 477 02da F1D1     		bne	.L22
+ 478              	.LVL53:
+ 479              	.L20:
+ 480              	.LBE5:
+ 481              	.LBE7:
+ 482              		.loc 1 95 0 discriminator 7
+ 483 02dc 3046     		mov	r0, r6
+ 484 02de FFF7FEFF 		bl	__aeabi_f2d
+ 485 02e2 0246     		mov	r2, r0
+ 486 02e4 0B46     		mov	r3, r1
+ 487 02e6 2046     		mov	r0, r4
+ 488 02e8 2946     		mov	r1, r5
+ 489 02ea FFF7FEFF 		bl	__aeabi_dsub
+ 490 02ee FFF7FEFF 		bl	__aeabi_d2f
+ 491              	.LBB8:
+ 492 02f2 0026     		movs	r6, #0
+ 493              	.LVL54:
+ 494              	.LBE8:
+ 495 02f4 0446     		mov	r4, r0
+ 496              	.LVL55:
+ 497              	.LBB9:
+ 498 02f6 04E0     		b	.L23
+ 499              	.LVL56:
+ 500              	.L26:
+ 501              		.loc 1 95 0 discriminator 12
+ 502 02f8 2046     		mov	r0, r4
+ 503 02fa 9349     		ldr	r1, .L178+16
+ 504 02fc FFF7FEFF 		bl	__aeabi_fadd
+ 505 0300 0446     		mov	r4, r0
+ 506              	.LVL57:
+ 507              	.L23:
+ 508              		.loc 1 95 0 discriminator 9
+ 509 0302 2046     		mov	r0, r4
+ 510              	.LVL58:
+ 511 0304 0021     		movs	r1, #0
+ 512 0306 F5B2     		uxtb	r5, r6
+ 513 0308 FFF7FEFF 		bl	__aeabi_fcmplt
+ 514 030c 50B1     		cbz	r0, .L145
+ 515              		.loc 1 95 0 discriminator 10
+ 516 030e 0136     		adds	r6, r6, #1
+ 517 0310 B6F5807F 		cmp	r6, #256
+ 518 0314 F0D1     		bne	.L26
+ 519              		.loc 1 95 0
+ 520 0316 0025     		movs	r5, #0
+ 521 0318 04E0     		b	.L145
+ 522              	.LVL59:
+ 523              	.L30:
+ 524              		.loc 1 95 0 discriminator 16
+ 525 031a 2046     		mov	r0, r4
+ 526 031c 8A49     		ldr	r1, .L178+16
+ 527 031e FFF7FEFF 		bl	__aeabi_fsub
+ 528 0322 0446     		mov	r4, r0
+ 529              	.LVL60:
+ 530              	.L145:
+ 531              		.loc 1 95 0 discriminator 13
+ 532 0324 2046     		mov	r0, r4
+ 533 0326 8849     		ldr	r1, .L178+16
+ 534 0328 FFF7FEFF 		bl	__aeabi_fcmpge
+ 535 032c 18B1     		cbz	r0, .L28
+ 536              		.loc 1 95 0 discriminator 14
+ 537 032e 0135     		adds	r5, r5, #1
+ 538              	.LVL61:
+ 539 0330 EDB2     		uxtb	r5, r5
+ 540              	.LVL62:
+ 541 0332 002D     		cmp	r5, #0
+ 542 0334 F1D1     		bne	.L30
+ 543              	.LVL63:
+ 544              	.L28:
+ 545              	.LBE9:
+ 546              		.loc 1 95 0 discriminator 15
+ 547 0336 2046     		mov	r0, r4
+ 548 0338 8449     		ldr	r1, .L178+20
+ 549 033a FFF7FEFF 		bl	__aeabi_fcmpgt
+ 550 033e 30B9     		cbnz	r0, .L31
+ 551              		.loc 1 95 0 discriminator 18
+ 552 0340 2046     		mov	r0, r4
+ 553 0342 8349     		ldr	r1, .L178+24
+ 554 0344 FFF7FEFF 		bl	__aeabi_fcmplt
+ 555 0348 0028     		cmp	r0, #0
+ 556 034a 00F06A83 		beq	.L161
+ 557              	.L31:
+ 558              	.LBE2:
+  96:subsystems/navigation/nav_line.c ****       line_status = LTC2;
+ 559              		.loc 1 96 0 is_stmt 1 discriminator 20
+ 560 034e 0222     		movs	r2, #2
+ 561 0350 4CE1     		b	.L175
+ 562              	.LVL64:
+ 563              	.L8:
+  60:subsystems/navigation/nav_line.c ****   struct point l2_c2 = { WaypointX(l1) + 1.732*radius * u_x,
+ 564              		.loc 1 60 0
+ 565 0352 5046     		mov	r0, sl
+ 566 0354 FFF7FEFF 		bl	__aeabi_f2d
+ 567 0358 DDE90623 		ldrd	r2, [sp, #24]
+ 568 035c 0446     		mov	r4, r0
+ 569 035e 0D46     		mov	r5, r1
+ 570 0360 DDE90401 		ldrd	r0, [sp, #16]
+ 571 0364 FFF7FEFF 		bl	__aeabi_dmul
+ 572 0368 0246     		mov	r2, r0
+ 573 036a 0B46     		mov	r3, r1
+ 574 036c 2046     		mov	r0, r4
+ 575 036e 2946     		mov	r1, r5
+ 576 0370 FFF7FEFF 		bl	__aeabi_dadd
+ 577 0374 FFF7FEFF 		bl	__aeabi_d2f
+ 578 0378 0446     		mov	r4, r0
+  61:subsystems/navigation/nav_line.c ****              WaypointY(l1) + 1.732*radius * u_y,
+ 579              		.loc 1 61 0
+ 580 037a 5846     		mov	r0, fp
+ 581 037c FFF7FEFF 		bl	__aeabi_f2d
+ 582 0380 DDE90823 		ldrd	r2, [sp, #32]
+ 583 0384 8046     		mov	r8, r0
+ 584              	.LVL65:
+ 585 0386 8946     		mov	r9, r1
+ 586              	.LVL66:
+ 587 0388 DDE90401 		ldrd	r0, [sp, #16]
+ 588 038c FFF7FEFF 		bl	__aeabi_dmul
+ 589 0390 0B46     		mov	r3, r1
+ 590 0392 0246     		mov	r2, r0
+ 591 0394 4946     		mov	r1, r9
+ 592 0396 4046     		mov	r0, r8
+ 593 0398 FFF7FEFF 		bl	__aeabi_dadd
+  60:subsystems/navigation/nav_line.c ****   struct point l2_c2 = { WaypointX(l1) + 1.732*radius * u_x,
+ 594              		.loc 1 60 0
+ 595 039c FFF7FEFF 		bl	__aeabi_d2f
+  97:subsystems/navigation/nav_line.c ****       nav_init_stage();
+  98:subsystems/navigation/nav_line.c ****     }
+  99:subsystems/navigation/nav_line.c ****     break;
+ 100:subsystems/navigation/nav_line.c ****   case LTC2:
+ 101:subsystems/navigation/nav_line.c ****     nav_circle_XY(l2_c2.x, l2_c2.y, -radius);
+ 596              		.loc 1 101 0
+ 597 03a0 07F10042 		add	r2, r7, #-2147483648
+  60:subsystems/navigation/nav_line.c ****   struct point l2_c2 = { WaypointX(l1) + 1.732*radius * u_x,
+ 598              		.loc 1 60 0
+ 599 03a4 0146     		mov	r1, r0
+ 600              		.loc 1 101 0
+ 601 03a6 2046     		mov	r0, r4
+ 602 03a8 FFF7FEFF 		bl	nav_circle_XY
+ 603              	.LBB10:
+ 102:subsystems/navigation/nav_line.c ****     if (NavQdrCloseTo(DegOfRad(qdr_out_2_2)+10)) {
+ 604              		.loc 1 102 0
+ 605 03ac 1398     		ldr	r0, [sp, #76]	@ float
+ 606 03ae FFF7FEFF 		bl	__aeabi_f2d
+ 607 03b2 61A3     		adr	r3, .L178
+ 608 03b4 D3E90023 		ldrd	r2, [r3]
+ 609 03b8 FFF7FEFF 		bl	__aeabi_dmul
+ 610 03bc 0022     		movs	r2, #0
+ 611 03be 654B     		ldr	r3, .L178+28
+ 612 03c0 FFF7FEFF 		bl	__aeabi_dadd
+ 613              	.LBB11:
+ 614 03c4 644B     		ldr	r3, .L178+32
+ 615              	.LBE11:
+ 616 03c6 0446     		mov	r4, r0
+ 617              	.LBB14:
+ 618 03c8 1868     		ldr	r0, [r3, #0]	@ float
+ 619              	.LBE14:
+ 620 03ca 0D46     		mov	r5, r1
+ 621              	.LBB15:
+ 622 03cc FFF7FEFF 		bl	__aeabi_f2d
+ 623 03d0 0246     		mov	r2, r0
+ 624 03d2 0B46     		mov	r3, r1
+ 625 03d4 5AA1     		adr	r1, .L178+8
+ 626 03d6 D1E90001 		ldrd	r0, [r1]
+ 627 03da FFF7FEFF 		bl	__aeabi_dsub
+ 628 03de 56A3     		adr	r3, .L178
+ 629 03e0 D3E90023 		ldrd	r2, [r3]
+ 630 03e4 FFF7FEFF 		bl	__aeabi_dmul
+ 631 03e8 FFF7FEFF 		bl	__aeabi_d2f
+ 632              	.LBB12:
+ 633 03ec 4FF00008 		mov	r8, #0
+ 634              	.LBE12:
+ 635 03f0 0646     		mov	r6, r0
+ 636              	.LVL67:
+ 637              	.LBB13:
+ 638 03f2 04E0     		b	.L33
+ 639              	.LVL68:
+ 640              	.L36:
+ 641              		.loc 1 102 0 is_stmt 0 discriminator 4
+ 642 03f4 3046     		mov	r0, r6
+ 643 03f6 5449     		ldr	r1, .L178+16
+ 644 03f8 FFF7FEFF 		bl	__aeabi_fadd
+ 645 03fc 0646     		mov	r6, r0
+ 646              	.LVL69:
+ 647              	.L33:
+ 648              		.loc 1 102 0 discriminator 1
+ 649 03fe 3046     		mov	r0, r6
+ 650              	.LVL70:
+ 651 0400 0021     		movs	r1, #0
+ 652 0402 5FFA88F7 		uxtb	r7, r8
+ 653 0406 FFF7FEFF 		bl	__aeabi_fcmplt
+ 654 040a 58B1     		cbz	r0, .L147
+ 655              		.loc 1 102 0 discriminator 2
+ 656 040c 08F10108 		add	r8, r8, #1
+ 657 0410 B8F5807F 		cmp	r8, #256
+ 658 0414 EED1     		bne	.L36
+ 659              		.loc 1 102 0
+ 660 0416 0027     		movs	r7, #0
+ 661 0418 04E0     		b	.L147
+ 662              	.LVL71:
+ 663              	.L40:
+ 664              		.loc 1 102 0 discriminator 8
+ 665 041a 3046     		mov	r0, r6
+ 666 041c 4A49     		ldr	r1, .L178+16
+ 667 041e FFF7FEFF 		bl	__aeabi_fsub
+ 668 0422 0646     		mov	r6, r0
+ 669              	.LVL72:
+ 670              	.L147:
+ 671              		.loc 1 102 0 discriminator 5
+ 672 0424 3046     		mov	r0, r6
+ 673 0426 4849     		ldr	r1, .L178+16
+ 674 0428 FFF7FEFF 		bl	__aeabi_fcmpge
+ 675 042c 18B1     		cbz	r0, .L38
+ 676              		.loc 1 102 0 discriminator 6
+ 677 042e 0137     		adds	r7, r7, #1
+ 678              	.LVL73:
+ 679 0430 FFB2     		uxtb	r7, r7
+ 680              	.LVL74:
+ 681 0432 002F     		cmp	r7, #0
+ 682 0434 F1D1     		bne	.L40
+ 683              	.LVL75:
+ 684              	.L38:
+ 685              	.LBE13:
+ 686              	.LBE15:
+ 687              		.loc 1 102 0 discriminator 7
+ 688 0436 3046     		mov	r0, r6
+ 689 0438 FFF7FEFF 		bl	__aeabi_f2d
+ 690 043c 0246     		mov	r2, r0
+ 691 043e 0B46     		mov	r3, r1
+ 692 0440 2046     		mov	r0, r4
+ 693 0442 2946     		mov	r1, r5
+ 694 0444 FFF7FEFF 		bl	__aeabi_dsub
+ 695 0448 FFF7FEFF 		bl	__aeabi_d2f
+ 696              	.LBB16:
+ 697 044c 0026     		movs	r6, #0
+ 698              	.LVL76:
+ 699              	.LBE16:
+ 700 044e 0446     		mov	r4, r0
+ 701              	.LVL77:
+ 702              	.LBB17:
+ 703 0450 04E0     		b	.L41
+ 704              	.LVL78:
+ 705              	.L44:
+ 706              		.loc 1 102 0 discriminator 12
+ 707 0452 2046     		mov	r0, r4
+ 708 0454 3C49     		ldr	r1, .L178+16
+ 709 0456 FFF7FEFF 		bl	__aeabi_fadd
+ 710 045a 0446     		mov	r4, r0
+ 711              	.LVL79:
+ 712              	.L41:
+ 713              		.loc 1 102 0 discriminator 9
+ 714 045c 2046     		mov	r0, r4
+ 715              	.LVL80:
+ 716 045e 0021     		movs	r1, #0
+ 717 0460 F5B2     		uxtb	r5, r6
+ 718 0462 FFF7FEFF 		bl	__aeabi_fcmplt
+ 719 0466 50B1     		cbz	r0, .L148
+ 720              		.loc 1 102 0 discriminator 10
+ 721 0468 0136     		adds	r6, r6, #1
+ 722 046a B6F5807F 		cmp	r6, #256
+ 723 046e F0D1     		bne	.L44
+ 724              		.loc 1 102 0
+ 725 0470 0025     		movs	r5, #0
+ 726 0472 04E0     		b	.L148
+ 727              	.LVL81:
+ 728              	.L48:
+ 729              		.loc 1 102 0 discriminator 16
+ 730 0474 2046     		mov	r0, r4
+ 731 0476 3449     		ldr	r1, .L178+16
+ 732 0478 FFF7FEFF 		bl	__aeabi_fsub
+ 733 047c 0446     		mov	r4, r0
+ 734              	.LVL82:
+ 735              	.L148:
+ 736              		.loc 1 102 0 discriminator 13
+ 737 047e 2046     		mov	r0, r4
+ 738 0480 3149     		ldr	r1, .L178+16
+ 739 0482 FFF7FEFF 		bl	__aeabi_fcmpge
+ 740 0486 18B1     		cbz	r0, .L46
+ 741              		.loc 1 102 0 discriminator 14
+ 742 0488 0135     		adds	r5, r5, #1
+ 743              	.LVL83:
+ 744 048a EDB2     		uxtb	r5, r5
+ 745              	.LVL84:
+ 746 048c 002D     		cmp	r5, #0
+ 747 048e F1D1     		bne	.L48
+ 748              	.LVL85:
+ 749              	.L46:
+ 750              	.LBE17:
+ 751              		.loc 1 102 0 discriminator 15
+ 752 0490 2046     		mov	r0, r4
+ 753 0492 2E49     		ldr	r1, .L178+20
+ 754 0494 FFF7FEFF 		bl	__aeabi_fcmpgt
+ 755 0498 30B9     		cbnz	r0, .L49
+ 756              		.loc 1 102 0 discriminator 18
+ 757 049a 2046     		mov	r0, r4
+ 758 049c 2C49     		ldr	r1, .L178+24
+ 759 049e FFF7FEFF 		bl	__aeabi_fcmplt
+ 760 04a2 0028     		cmp	r0, #0
+ 761 04a4 00F0BD82 		beq	.L161
+ 762              	.L49:
+ 763              	.LBE10:
+ 103:subsystems/navigation/nav_line.c ****       line_status = LQC22;
+ 764              		.loc 1 103 0 is_stmt 1 discriminator 20
+ 765 04a8 0322     		movs	r2, #3
+ 766 04aa 9FE0     		b	.L175
+ 767              	.LVL86:
+ 768              	.L9:
+  63:subsystems/navigation/nav_line.c ****   struct point l2_c3 = { WaypointX(l1) + radius * -u_y,
+ 769              		.loc 1 63 0
+ 770 04ac 1099     		ldr	r1, [sp, #64]	@ float
+ 771 04ae 5046     		mov	r0, sl
+ 772              	.LVL87:
+ 773 04b0 FFF7FEFF 		bl	__aeabi_fadd
+  64:subsystems/navigation/nav_line.c ****              WaypointY(l1) + radius * u_x,
+ 774              		.loc 1 64 0
+ 775 04b4 1199     		ldr	r1, [sp, #68]	@ float
+  63:subsystems/navigation/nav_line.c ****   struct point l2_c3 = { WaypointX(l1) + radius * -u_y,
+ 776              		.loc 1 63 0
+ 777 04b6 0446     		mov	r4, r0
+  64:subsystems/navigation/nav_line.c ****              WaypointY(l1) + radius * u_x,
+ 778              		.loc 1 64 0
+ 779 04b8 5846     		mov	r0, fp
+ 780 04ba FFF7FEFF 		bl	__aeabi_fadd
+ 104:subsystems/navigation/nav_line.c ****       nav_init_stage();
+ 105:subsystems/navigation/nav_line.c ****     }
+ 106:subsystems/navigation/nav_line.c ****     break;
+ 107:subsystems/navigation/nav_line.c ****   case LQC22:
+ 108:subsystems/navigation/nav_line.c ****     nav_circle_XY(l2_c3.x, l2_c3.y, radius);
+ 781              		.loc 1 108 0
+ 782 04be 3A46     		mov	r2, r7
+  64:subsystems/navigation/nav_line.c ****              WaypointY(l1) + radius * u_x,
+ 783              		.loc 1 64 0
+ 784 04c0 0146     		mov	r1, r0
+ 785              		.loc 1 108 0
+ 786 04c2 2046     		mov	r0, r4
+ 787 04c4 FFF7FEFF 		bl	nav_circle_XY
+ 788              	.LBB18:
+ 109:subsystems/navigation/nav_line.c ****     if (NavQdrCloseTo(DegOfRad(qdr_out_2_3)-10)) {
+ 789              		.loc 1 109 0
+ 790 04c8 4846     		mov	r0, r9
+ 791 04ca FFF7FEFF 		bl	__aeabi_f2d
+ 792 04ce 1AA3     		adr	r3, .L178
+ 793 04d0 D3E90023 		ldrd	r2, [r3]
+ 794 04d4 FFF7FEFF 		bl	__aeabi_dmul
+ 795 04d8 0022     		movs	r2, #0
+ 796 04da 1E4B     		ldr	r3, .L178+28
+ 797 04dc FFF7FEFF 		bl	__aeabi_dsub
+ 798              	.LBB19:
+ 799 04e0 1D4B     		ldr	r3, .L178+32
+ 800              	.LBE19:
+ 801 04e2 0446     		mov	r4, r0
+ 802              	.LBB22:
+ 803 04e4 1868     		ldr	r0, [r3, #0]	@ float
+ 804              	.LBE22:
+ 805 04e6 0D46     		mov	r5, r1
+ 806              	.LBB23:
+ 807 04e8 FFF7FEFF 		bl	__aeabi_f2d
+ 808 04ec 0246     		mov	r2, r0
+ 809 04ee 0B46     		mov	r3, r1
+ 810 04f0 13A1     		adr	r1, .L178+8
+ 811 04f2 D1E90001 		ldrd	r0, [r1]
+ 812 04f6 FFF7FEFF 		bl	__aeabi_dsub
+ 813 04fa 0FA3     		adr	r3, .L178
+ 814 04fc D3E90023 		ldrd	r2, [r3]
+ 815 0500 FFF7FEFF 		bl	__aeabi_dmul
+ 816 0504 FFF7FEFF 		bl	__aeabi_d2f
+ 817              	.LBB20:
+ 818 0508 4FF00008 		mov	r8, #0
+ 819              	.LVL88:
+ 820              	.LBE20:
+ 821 050c 0646     		mov	r6, r0
+ 822              	.LVL89:
+ 823              	.LBB21:
+ 824 050e 04E0     		b	.L51
+ 825              	.LVL90:
+ 826              	.L54:
+ 827              		.loc 1 109 0 is_stmt 0 discriminator 4
+ 828 0510 3046     		mov	r0, r6
+ 829 0512 0D49     		ldr	r1, .L178+16
+ 830 0514 FFF7FEFF 		bl	__aeabi_fadd
+ 831 0518 0646     		mov	r6, r0
+ 832              	.LVL91:
+ 833              	.L51:
+ 834              		.loc 1 109 0 discriminator 1
+ 835 051a 3046     		mov	r0, r6
+ 836              	.LVL92:
+ 837 051c 0021     		movs	r1, #0
+ 838 051e 5FFA88F7 		uxtb	r7, r8
+ 839 0522 FFF7FEFF 		bl	__aeabi_fcmplt
+ 840 0526 F0B1     		cbz	r0, .L150
+ 841              		.loc 1 109 0 discriminator 2
+ 842 0528 08F10108 		add	r8, r8, #1
+ 843 052c B8F5807F 		cmp	r8, #256
+ 844 0530 EED1     		bne	.L54
+ 845              		.loc 1 109 0
+ 846 0532 0027     		movs	r7, #0
+ 847 0534 17E0     		b	.L150
+ 848              	.L179:
+ 849 0536 00BF     		.align	3
+ 850              	.L178:
+ 851 0538 F8C1631A 		.word	442745336
+ 852 053c DCA54C40 		.word	1078765020
+ 853 0540 182D4454 		.word	1413754136
+ 854 0544 FB21F93F 		.word	1073291771
+ 855 0548 0000B443 		.word	1135869952
+ 856 054c 0000AF43 		.word	1135542272
+ 857 0550 00002041 		.word	1092616192
+ 858 0554 00002440 		.word	1076101120
+ 859 0558 00000000 		.word	nav_circle_trigo_qdr
+ 860              	.LVL93:
+ 861              	.L58:
+ 862              		.loc 1 109 0 discriminator 8
+ 863 055c 3046     		mov	r0, r6
+ 864 055e 8449     		ldr	r1, .L180+24
+ 865 0560 FFF7FEFF 		bl	__aeabi_fsub
+ 866 0564 0646     		mov	r6, r0
+ 867              	.LVL94:
+ 868              	.L150:
+ 869              		.loc 1 109 0 discriminator 5
+ 870 0566 3046     		mov	r0, r6
+ 871 0568 8149     		ldr	r1, .L180+24
+ 872 056a FFF7FEFF 		bl	__aeabi_fcmpge
+ 873 056e 18B1     		cbz	r0, .L56
+ 874              		.loc 1 109 0 discriminator 6
+ 875 0570 0137     		adds	r7, r7, #1
+ 876              	.LVL95:
+ 877 0572 FFB2     		uxtb	r7, r7
+ 878              	.LVL96:
+ 879 0574 002F     		cmp	r7, #0
+ 880 0576 F1D1     		bne	.L58
+ 881              	.LVL97:
+ 882              	.L56:
+ 883              	.LBE21:
+ 884              	.LBE23:
+ 885              		.loc 1 109 0 discriminator 7
+ 886 0578 3046     		mov	r0, r6
+ 887 057a FFF7FEFF 		bl	__aeabi_f2d
+ 888 057e 0246     		mov	r2, r0
+ 889 0580 0B46     		mov	r3, r1
+ 890 0582 2046     		mov	r0, r4
+ 891 0584 2946     		mov	r1, r5
+ 892 0586 FFF7FEFF 		bl	__aeabi_dsub
+ 893 058a FFF7FEFF 		bl	__aeabi_d2f
+ 894              	.LBB24:
+ 895 058e 0026     		movs	r6, #0
+ 896              	.LVL98:
+ 897              	.LBE24:
+ 898 0590 0446     		mov	r4, r0
+ 899              	.LVL99:
+ 900              	.LBB25:
+ 901 0592 04E0     		b	.L59
+ 902              	.LVL100:
+ 903              	.L62:
+ 904              		.loc 1 109 0 discriminator 12
+ 905 0594 2046     		mov	r0, r4
+ 906 0596 7649     		ldr	r1, .L180+24
+ 907 0598 FFF7FEFF 		bl	__aeabi_fadd
+ 908 059c 0446     		mov	r4, r0
+ 909              	.LVL101:
+ 910              	.L59:
+ 911              		.loc 1 109 0 discriminator 9
+ 912 059e 2046     		mov	r0, r4
+ 913              	.LVL102:
+ 914 05a0 0021     		movs	r1, #0
+ 915 05a2 F5B2     		uxtb	r5, r6
+ 916 05a4 FFF7FEFF 		bl	__aeabi_fcmplt
+ 917 05a8 50B1     		cbz	r0, .L151
+ 918              		.loc 1 109 0 discriminator 10
+ 919 05aa 0136     		adds	r6, r6, #1
+ 920 05ac B6F5807F 		cmp	r6, #256
+ 921 05b0 F0D1     		bne	.L62
+ 922              		.loc 1 109 0
+ 923 05b2 0025     		movs	r5, #0
+ 924 05b4 04E0     		b	.L151
+ 925              	.LVL103:
+ 926              	.L66:
+ 927              		.loc 1 109 0 discriminator 16
+ 928 05b6 2046     		mov	r0, r4
+ 929 05b8 6D49     		ldr	r1, .L180+24
+ 930 05ba FFF7FEFF 		bl	__aeabi_fsub
+ 931 05be 0446     		mov	r4, r0
+ 932              	.LVL104:
+ 933              	.L151:
+ 934              		.loc 1 109 0 discriminator 13
+ 935 05c0 2046     		mov	r0, r4
+ 936 05c2 6B49     		ldr	r1, .L180+24
+ 937 05c4 FFF7FEFF 		bl	__aeabi_fcmpge
+ 938 05c8 18B1     		cbz	r0, .L64
+ 939              		.loc 1 109 0 discriminator 14
+ 940 05ca 0135     		adds	r5, r5, #1
+ 941              	.LVL105:
+ 942 05cc EDB2     		uxtb	r5, r5
+ 943              	.LVL106:
+ 944 05ce 002D     		cmp	r5, #0
+ 945 05d0 F1D1     		bne	.L66
+ 946              	.LVL107:
+ 947              	.L64:
+ 948              	.LBE25:
+ 949              		.loc 1 109 0 discriminator 15
+ 950 05d2 2046     		mov	r0, r4
+ 951 05d4 6749     		ldr	r1, .L180+28
+ 952 05d6 FFF7FEFF 		bl	__aeabi_fcmpgt
+ 953 05da 30B9     		cbnz	r0, .L67
+ 954              		.loc 1 109 0 discriminator 18
+ 955 05dc 2046     		mov	r0, r4
+ 956 05de 6649     		ldr	r1, .L180+32
+ 957 05e0 FFF7FEFF 		bl	__aeabi_fcmplt
+ 958 05e4 0028     		cmp	r0, #0
+ 959 05e6 00F01C82 		beq	.L161
+ 960              	.L67:
+ 961              	.LBE18:
+ 110:subsystems/navigation/nav_line.c ****       line_status = LR21;
+ 962              		.loc 1 110 0 is_stmt 1 discriminator 20
+ 963 05ea 0422     		movs	r2, #4
+ 964              	.LVL108:
+ 965              	.L175:
+ 966 05ec 634B     		ldr	r3, .L180+36
+ 967 05ee 1A70     		strb	r2, [r3, #0]
+ 111:subsystems/navigation/nav_line.c ****       nav_init_stage();
+ 968              		.loc 1 111 0 discriminator 20
+ 969 05f0 FFF7FEFF 		bl	nav_init_stage
+ 970 05f4 15E2     		b	.L161
+ 971              	.LVL109:
+ 972              	.L10:
+ 112:subsystems/navigation/nav_line.c ****     }
+ 113:subsystems/navigation/nav_line.c ****     break;
+ 114:subsystems/navigation/nav_line.c ****   case LR21: /* From wp l1 to wp l2 */
+ 115:subsystems/navigation/nav_line.c ****     NavSegment(l1, l2);
+ 973              		.loc 1 115 0
+ 974 05f6 0A9B     		ldr	r3, [sp, #40]
+ 975 05f8 0B9A     		ldr	r2, [sp, #44]
+ 976 05fa 0CFB03F7 		mul	r7, ip, r3
+ 977              	.LVL110:
+ 978 05fe 5643     		muls	r6, r2, r6
+ 979 0600 04EB0708 		add	r8, r4, r7
+ 980              	.LVL111:
+ 981 0604 A519     		adds	r5, r4, r6
+ 982 0606 E059     		ldr	r0, [r4, r7]	@ float
+ 983              	.LVL112:
+ 984 0608 D8F80410 		ldr	r1, [r8, #4]	@ float
+ 985 060c A259     		ldr	r2, [r4, r6]	@ float
+ 986 060e 6B68     		ldr	r3, [r5, #4]	@ float
+ 987 0610 FFF7FEFF 		bl	nav_route_xy
+ 116:subsystems/navigation/nav_line.c ****     if (NavApproachingFrom(l2, l1, CARROT)) {
+ 988              		.loc 1 116 0
+ 989 0614 4FF08143 		mov	r3, #1082130432
+ 990 0618 0093     		str	r3, [sp, #0]	@ float
+ 991 061a A059     		ldr	r0, [r4, r6]	@ float
+ 992 061c 6968     		ldr	r1, [r5, #4]	@ float
+ 993 061e E259     		ldr	r2, [r4, r7]	@ float
+ 994 0620 D8F80430 		ldr	r3, [r8, #4]	@ float
+ 995 0624 FFF7FEFF 		bl	nav_approaching_xy
+ 996 0628 0028     		cmp	r0, #0
+ 997 062a 00F0FA81 		beq	.L161
+ 117:subsystems/navigation/nav_line.c ****       line_status = LQC12;
+ 998              		.loc 1 117 0
+ 999 062e 0522     		movs	r2, #5
+ 1000 0630 DCE7     		b	.L175
+ 1001              	.LVL113:
+ 1002              	.L11:
+  67:subsystems/navigation/nav_line.c ****   struct point l1_c1 = { WaypointX(l2) + radius * -u_y,
+ 1003              		.loc 1 67 0
+ 1004 0632 1099     		ldr	r1, [sp, #64]	@ float
+ 1005 0634 4046     		mov	r0, r8
+ 1006 0636 FFF7FEFF 		bl	__aeabi_fadd
+  68:subsystems/navigation/nav_line.c ****              WaypointY(l2) + radius * u_x,
+ 1007              		.loc 1 68 0
+ 1008 063a 1199     		ldr	r1, [sp, #68]	@ float
+  67:subsystems/navigation/nav_line.c ****   struct point l1_c1 = { WaypointX(l2) + radius * -u_y,
+ 1009              		.loc 1 67 0
+ 1010 063c 0446     		mov	r4, r0
+  68:subsystems/navigation/nav_line.c ****              WaypointY(l2) + radius * u_x,
+ 1011              		.loc 1 68 0
+ 1012 063e 0398     		ldr	r0, [sp, #12]	@ float
+ 1013 0640 FFF7FEFF 		bl	__aeabi_fadd
+ 118:subsystems/navigation/nav_line.c ****       nav_init_stage();
+ 119:subsystems/navigation/nav_line.c ****     }
+ 120:subsystems/navigation/nav_line.c ****     break;
+ 121:subsystems/navigation/nav_line.c ****   case LQC12:
+ 122:subsystems/navigation/nav_line.c ****     nav_circle_XY(l1_c1.x, l1_c1.y, radius);
+ 1014              		.loc 1 122 0
+ 1015 0644 3A46     		mov	r2, r7
+  68:subsystems/navigation/nav_line.c ****              WaypointY(l2) + radius * u_x,
+ 1016              		.loc 1 68 0
+ 1017 0646 0146     		mov	r1, r0
+ 1018              		.loc 1 122 0
+ 1019 0648 2046     		mov	r0, r4
+ 1020 064a FFF7FEFF 		bl	nav_circle_XY
+ 1021              	.LBB26:
+ 123:subsystems/navigation/nav_line.c ****     if (NavQdrCloseTo(DegOfRad(qdr_out_2_1 + M_PI)-10)) {
+ 1022              		.loc 1 123 0
+ 1023 064e 1298     		ldr	r0, [sp, #72]	@ float
+ 1024 0650 FFF7FEFF 		bl	__aeabi_f2d
+ 1025 0654 40A3     		adr	r3, .L180
+ 1026 0656 D3E90023 		ldrd	r2, [r3]
+ 1027 065a FFF7FEFF 		bl	__aeabi_dadd
+ 1028 065e 40A3     		adr	r3, .L180+8
+ 1029 0660 D3E90023 		ldrd	r2, [r3]
+ 1030 0664 FFF7FEFF 		bl	__aeabi_dmul
+ 1031 0668 0022     		movs	r2, #0
+ 1032 066a 454B     		ldr	r3, .L180+40
+ 1033 066c FFF7FEFF 		bl	__aeabi_dsub
+ 1034              	.LBB27:
+ 1035 0670 444B     		ldr	r3, .L180+44
+ 1036              	.LBE27:
+ 1037 0672 0446     		mov	r4, r0
+ 1038              	.LBB30:
+ 1039 0674 1868     		ldr	r0, [r3, #0]	@ float
+ 1040              	.LBE30:
+ 1041 0676 0D46     		mov	r5, r1
+ 1042              	.LBB31:
+ 1043 0678 FFF7FEFF 		bl	__aeabi_f2d
+ 1044 067c 0246     		mov	r2, r0
+ 1045 067e 0B46     		mov	r3, r1
+ 1046 0680 39A1     		adr	r1, .L180+16
+ 1047 0682 D1E90001 		ldrd	r0, [r1]
+ 1048 0686 FFF7FEFF 		bl	__aeabi_dsub
+ 1049 068a 35A3     		adr	r3, .L180+8
+ 1050 068c D3E90023 		ldrd	r2, [r3]
+ 1051 0690 FFF7FEFF 		bl	__aeabi_dmul
+ 1052 0694 FFF7FEFF 		bl	__aeabi_d2f
+ 1053              	.LBB28:
+ 1054 0698 4FF00008 		mov	r8, #0
+ 1055              	.LVL114:
+ 1056              	.LBE28:
+ 1057 069c 0646     		mov	r6, r0
+ 1058              	.LVL115:
+ 1059              	.LBB29:
+ 1060 069e 04E0     		b	.L69
+ 1061              	.LVL116:
+ 1062              	.L72:
+ 1063              		.loc 1 123 0 is_stmt 0 discriminator 4
+ 1064 06a0 3046     		mov	r0, r6
+ 1065 06a2 3349     		ldr	r1, .L180+24
+ 1066 06a4 FFF7FEFF 		bl	__aeabi_fadd
+ 1067 06a8 0646     		mov	r6, r0
+ 1068              	.LVL117:
+ 1069              	.L69:
+ 1070              		.loc 1 123 0 discriminator 1
+ 1071 06aa 3046     		mov	r0, r6
+ 1072              	.LVL118:
+ 1073 06ac 0021     		movs	r1, #0
+ 1074 06ae 5FFA88F7 		uxtb	r7, r8
+ 1075 06b2 FFF7FEFF 		bl	__aeabi_fcmplt
+ 1076 06b6 58B1     		cbz	r0, .L153
+ 1077              		.loc 1 123 0 discriminator 2
+ 1078 06b8 08F10108 		add	r8, r8, #1
+ 1079 06bc B8F5807F 		cmp	r8, #256
+ 1080 06c0 EED1     		bne	.L72
+ 1081              		.loc 1 123 0
+ 1082 06c2 0027     		movs	r7, #0
+ 1083 06c4 04E0     		b	.L153
+ 1084              	.LVL119:
+ 1085              	.L76:
+ 1086              		.loc 1 123 0 discriminator 8
+ 1087 06c6 3046     		mov	r0, r6
+ 1088 06c8 2949     		ldr	r1, .L180+24
+ 1089 06ca FFF7FEFF 		bl	__aeabi_fsub
+ 1090 06ce 0646     		mov	r6, r0
+ 1091              	.LVL120:
+ 1092              	.L153:
+ 1093              		.loc 1 123 0 discriminator 5
+ 1094 06d0 3046     		mov	r0, r6
+ 1095 06d2 2749     		ldr	r1, .L180+24
+ 1096 06d4 FFF7FEFF 		bl	__aeabi_fcmpge
+ 1097 06d8 18B1     		cbz	r0, .L74
+ 1098              		.loc 1 123 0 discriminator 6
+ 1099 06da 0137     		adds	r7, r7, #1
+ 1100              	.LVL121:
+ 1101 06dc FFB2     		uxtb	r7, r7
+ 1102              	.LVL122:
+ 1103 06de 002F     		cmp	r7, #0
+ 1104 06e0 F1D1     		bne	.L76
+ 1105              	.LVL123:
+ 1106              	.L74:
+ 1107              	.LBE29:
+ 1108              	.LBE31:
+ 1109              		.loc 1 123 0 discriminator 7
+ 1110 06e2 3046     		mov	r0, r6
+ 1111 06e4 FFF7FEFF 		bl	__aeabi_f2d
+ 1112 06e8 0246     		mov	r2, r0
+ 1113 06ea 0B46     		mov	r3, r1
+ 1114 06ec 2046     		mov	r0, r4
+ 1115 06ee 2946     		mov	r1, r5
+ 1116 06f0 FFF7FEFF 		bl	__aeabi_dsub
+ 1117 06f4 FFF7FEFF 		bl	__aeabi_d2f
+ 1118              	.LBB32:
+ 1119 06f8 0026     		movs	r6, #0
+ 1120              	.LVL124:
+ 1121              	.LBE32:
+ 1122 06fa 0446     		mov	r4, r0
+ 1123              	.LVL125:
+ 1124              	.LBB33:
+ 1125 06fc 04E0     		b	.L77
+ 1126              	.LVL126:
+ 1127              	.L80:
+ 1128              		.loc 1 123 0 discriminator 12
+ 1129 06fe 2046     		mov	r0, r4
+ 1130 0700 1B49     		ldr	r1, .L180+24
+ 1131 0702 FFF7FEFF 		bl	__aeabi_fadd
+ 1132 0706 0446     		mov	r4, r0
+ 1133              	.LVL127:
+ 1134              	.L77:
+ 1135              		.loc 1 123 0 discriminator 9
+ 1136 0708 2046     		mov	r0, r4
+ 1137              	.LVL128:
+ 1138 070a 0021     		movs	r1, #0
+ 1139 070c F5B2     		uxtb	r5, r6
+ 1140 070e FFF7FEFF 		bl	__aeabi_fcmplt
+ 1141 0712 50B1     		cbz	r0, .L154
+ 1142              		.loc 1 123 0 discriminator 10
+ 1143 0714 0136     		adds	r6, r6, #1
+ 1144 0716 B6F5807F 		cmp	r6, #256
+ 1145 071a F0D1     		bne	.L80
+ 1146              		.loc 1 123 0
+ 1147 071c 0025     		movs	r5, #0
+ 1148 071e 04E0     		b	.L154
+ 1149              	.LVL129:
+ 1150              	.L84:
+ 1151              		.loc 1 123 0 discriminator 16
+ 1152 0720 2046     		mov	r0, r4
+ 1153 0722 1349     		ldr	r1, .L180+24
+ 1154 0724 FFF7FEFF 		bl	__aeabi_fsub
+ 1155 0728 0446     		mov	r4, r0
+ 1156              	.LVL130:
+ 1157              	.L154:
+ 1158              		.loc 1 123 0 discriminator 13
+ 1159 072a 2046     		mov	r0, r4
+ 1160 072c 1049     		ldr	r1, .L180+24
+ 1161 072e FFF7FEFF 		bl	__aeabi_fcmpge
+ 1162 0732 18B1     		cbz	r0, .L82
+ 1163              		.loc 1 123 0 discriminator 14
+ 1164 0734 0135     		adds	r5, r5, #1
+ 1165              	.LVL131:
+ 1166 0736 EDB2     		uxtb	r5, r5
+ 1167              	.LVL132:
+ 1168 0738 002D     		cmp	r5, #0
+ 1169 073a F1D1     		bne	.L84
+ 1170              	.LVL133:
+ 1171              	.L82:
+ 1172              	.LBE33:
+ 1173              		.loc 1 123 0 discriminator 15
+ 1174 073c 2046     		mov	r0, r4
+ 1175 073e 0D49     		ldr	r1, .L180+28
+ 1176 0740 FFF7FEFF 		bl	__aeabi_fcmpgt
+ 1177 0744 30B9     		cbnz	r0, .L85
+ 1178              		.loc 1 123 0 discriminator 18
+ 1179 0746 2046     		mov	r0, r4
+ 1180 0748 0B49     		ldr	r1, .L180+32
+ 1181 074a FFF7FEFF 		bl	__aeabi_fcmplt
+ 1182 074e 0028     		cmp	r0, #0
+ 1183 0750 00F06781 		beq	.L161
+ 1184              	.L85:
+ 1185              	.LBE26:
+ 124:subsystems/navigation/nav_line.c ****       line_status = LTC1;
+ 1186              		.loc 1 124 0 is_stmt 1 discriminator 20
+ 1187 0754 0622     		movs	r2, #6
+ 1188 0756 49E7     		b	.L175
+ 1189              	.L181:
+ 1190              		.align	3
+ 1191              	.L180:
+ 1192 0758 182D4454 		.word	1413754136
+ 1193 075c FB210940 		.word	1074340347
+ 1194 0760 F8C1631A 		.word	442745336
+ 1195 0764 DCA54C40 		.word	1078765020
+ 1196 0768 182D4454 		.word	1413754136
+ 1197 076c FB21F93F 		.word	1073291771
+ 1198 0770 0000B443 		.word	1135869952
+ 1199 0774 0000AF43 		.word	1135542272
+ 1200 0778 00002041 		.word	1092616192
+ 1201 077c 00000000 		.word	.LANCHOR0
+ 1202 0780 00002440 		.word	1076101120
+ 1203 0784 00000000 		.word	nav_circle_trigo_qdr
+ 1204              	.LVL134:
+ 1205              	.L12:
+  70:subsystems/navigation/nav_line.c ****   struct point l1_c2 = { WaypointX(l2) +1.732*radius * -u_x,
+ 1206              		.loc 1 70 0
+ 1207 0788 4046     		mov	r0, r8
+ 1208 078a FFF7FEFF 		bl	__aeabi_f2d
+ 1209 078e 0446     		mov	r4, r0
+ 1210 0790 0D98     		ldr	r0, [sp, #52]	@ float
+ 1211 0792 0D46     		mov	r5, r1
+ 1212 0794 FFF7FEFF 		bl	__aeabi_f2d
+ 1213 0798 0246     		mov	r2, r0
+ 1214 079a 0B46     		mov	r3, r1
+ 1215 079c DDE90401 		ldrd	r0, [sp, #16]
+ 1216 07a0 FFF7FEFF 		bl	__aeabi_dmul
+ 1217 07a4 0246     		mov	r2, r0
+ 1218 07a6 0B46     		mov	r3, r1
+ 1219 07a8 2046     		mov	r0, r4
+ 1220 07aa 2946     		mov	r1, r5
+ 1221 07ac FFF7FEFF 		bl	__aeabi_dadd
+ 1222 07b0 FFF7FEFF 		bl	__aeabi_d2f
+ 1223 07b4 0446     		mov	r4, r0
+  71:subsystems/navigation/nav_line.c ****              WaypointY(l2) + 1.732*radius * -u_y,
+ 1224              		.loc 1 71 0
+ 1225 07b6 0398     		ldr	r0, [sp, #12]	@ float
+ 1226 07b8 FFF7FEFF 		bl	__aeabi_f2d
+ 1227 07bc 8046     		mov	r8, r0
+ 1228              	.LVL135:
+ 1229 07be 0F98     		ldr	r0, [sp, #60]	@ float
+ 1230 07c0 8946     		mov	r9, r1
+ 1231              	.LVL136:
+ 1232 07c2 FFF7FEFF 		bl	__aeabi_f2d
+ 1233 07c6 0246     		mov	r2, r0
+ 1234 07c8 0B46     		mov	r3, r1
+ 1235 07ca DDE90401 		ldrd	r0, [sp, #16]
+ 1236 07ce FFF7FEFF 		bl	__aeabi_dmul
+ 1237 07d2 0B46     		mov	r3, r1
+ 1238 07d4 0246     		mov	r2, r0
+ 1239 07d6 4946     		mov	r1, r9
+ 1240 07d8 4046     		mov	r0, r8
+ 1241 07da FFF7FEFF 		bl	__aeabi_dadd
+  70:subsystems/navigation/nav_line.c ****   struct point l1_c2 = { WaypointX(l2) +1.732*radius * -u_x,
+ 1242              		.loc 1 70 0
+ 1243 07de FFF7FEFF 		bl	__aeabi_d2f
+ 125:subsystems/navigation/nav_line.c ****       nav_init_stage();
+ 126:subsystems/navigation/nav_line.c ****     }
+ 127:subsystems/navigation/nav_line.c ****     break;
+ 128:subsystems/navigation/nav_line.c ****   case LTC1:
+ 129:subsystems/navigation/nav_line.c ****     nav_circle_XY(l1_c2.x, l1_c2.y, -radius);
+ 1244              		.loc 1 129 0
+ 1245 07e2 07F10042 		add	r2, r7, #-2147483648
+  70:subsystems/navigation/nav_line.c ****   struct point l1_c2 = { WaypointX(l2) +1.732*radius * -u_x,
+ 1246              		.loc 1 70 0
+ 1247 07e6 0146     		mov	r1, r0
+ 1248              		.loc 1 129 0
+ 1249 07e8 2046     		mov	r0, r4
+ 1250 07ea FFF7FEFF 		bl	nav_circle_XY
+ 1251              	.LBB34:
+ 130:subsystems/navigation/nav_line.c ****     if (NavQdrCloseTo(DegOfRad(qdr_out_2_2 + M_PI)+10)) {
+ 1252              		.loc 1 130 0
+ 1253 07ee 1398     		ldr	r0, [sp, #76]	@ float
+ 1254 07f0 FFF7FEFF 		bl	__aeabi_f2d
+ 1255 07f4 8EA3     		adr	r3, .L182
+ 1256 07f6 D3E90023 		ldrd	r2, [r3]
+ 1257 07fa FFF7FEFF 		bl	__aeabi_dadd
+ 1258 07fe 8EA3     		adr	r3, .L182+8
+ 1259 0800 D3E90023 		ldrd	r2, [r3]
+ 1260 0804 FFF7FEFF 		bl	__aeabi_dmul
+ 1261 0808 0022     		movs	r2, #0
+ 1262 080a 8F4B     		ldr	r3, .L182+24
+ 1263 080c FFF7FEFF 		bl	__aeabi_dadd
+ 1264              	.LBB35:
+ 1265 0810 8E4B     		ldr	r3, .L182+28
+ 1266              	.LBE35:
+ 1267 0812 0446     		mov	r4, r0
+ 1268              	.LBB38:
+ 1269 0814 1868     		ldr	r0, [r3, #0]	@ float
+ 1270              	.LBE38:
+ 1271 0816 0D46     		mov	r5, r1
+ 1272              	.LBB39:
+ 1273 0818 FFF7FEFF 		bl	__aeabi_f2d
+ 1274 081c 0246     		mov	r2, r0
+ 1275 081e 0B46     		mov	r3, r1
+ 1276 0820 87A1     		adr	r1, .L182+16
+ 1277 0822 D1E90001 		ldrd	r0, [r1]
+ 1278 0826 FFF7FEFF 		bl	__aeabi_dsub
+ 1279 082a 83A3     		adr	r3, .L182+8
+ 1280 082c D3E90023 		ldrd	r2, [r3]
+ 1281 0830 FFF7FEFF 		bl	__aeabi_dmul
+ 1282 0834 FFF7FEFF 		bl	__aeabi_d2f
+ 1283              	.LBB36:
+ 1284 0838 4FF00008 		mov	r8, #0
+ 1285              	.LBE36:
+ 1286 083c 0646     		mov	r6, r0
+ 1287              	.LVL137:
+ 1288              	.LBB37:
+ 1289 083e 04E0     		b	.L87
+ 1290              	.LVL138:
+ 1291              	.L90:
+ 1292              		.loc 1 130 0 is_stmt 0 discriminator 4
+ 1293 0840 3046     		mov	r0, r6
+ 1294 0842 8349     		ldr	r1, .L182+32
+ 1295 0844 FFF7FEFF 		bl	__aeabi_fadd
+ 1296 0848 0646     		mov	r6, r0
+ 1297              	.LVL139:
+ 1298              	.L87:
+ 1299              		.loc 1 130 0 discriminator 1
+ 1300 084a 3046     		mov	r0, r6
+ 1301              	.LVL140:
+ 1302 084c 0021     		movs	r1, #0
+ 1303 084e 5FFA88F7 		uxtb	r7, r8
+ 1304 0852 FFF7FEFF 		bl	__aeabi_fcmplt
+ 1305 0856 58B1     		cbz	r0, .L156
+ 1306              		.loc 1 130 0 discriminator 2
+ 1307 0858 08F10108 		add	r8, r8, #1
+ 1308 085c B8F5807F 		cmp	r8, #256
+ 1309 0860 EED1     		bne	.L90
+ 1310              		.loc 1 130 0
+ 1311 0862 0027     		movs	r7, #0
+ 1312 0864 04E0     		b	.L156
+ 1313              	.LVL141:
+ 1314              	.L94:
+ 1315              		.loc 1 130 0 discriminator 8
+ 1316 0866 3046     		mov	r0, r6
+ 1317 0868 7949     		ldr	r1, .L182+32
+ 1318 086a FFF7FEFF 		bl	__aeabi_fsub
+ 1319 086e 0646     		mov	r6, r0
+ 1320              	.LVL142:
+ 1321              	.L156:
+ 1322              		.loc 1 130 0 discriminator 5
+ 1323 0870 3046     		mov	r0, r6
+ 1324 0872 7749     		ldr	r1, .L182+32
+ 1325 0874 FFF7FEFF 		bl	__aeabi_fcmpge
+ 1326 0878 18B1     		cbz	r0, .L92
+ 1327              		.loc 1 130 0 discriminator 6
+ 1328 087a 0137     		adds	r7, r7, #1
+ 1329              	.LVL143:
+ 1330 087c FFB2     		uxtb	r7, r7
+ 1331              	.LVL144:
+ 1332 087e 002F     		cmp	r7, #0
+ 1333 0880 F1D1     		bne	.L94
+ 1334              	.LVL145:
+ 1335              	.L92:
+ 1336              	.LBE37:
+ 1337              	.LBE39:
+ 1338              		.loc 1 130 0 discriminator 7
+ 1339 0882 3046     		mov	r0, r6
+ 1340 0884 FFF7FEFF 		bl	__aeabi_f2d
+ 1341 0888 0246     		mov	r2, r0
+ 1342 088a 0B46     		mov	r3, r1
+ 1343 088c 2046     		mov	r0, r4
+ 1344 088e 2946     		mov	r1, r5
+ 1345 0890 FFF7FEFF 		bl	__aeabi_dsub
+ 1346 0894 FFF7FEFF 		bl	__aeabi_d2f
+ 1347              	.LBB40:
+ 1348 0898 0026     		movs	r6, #0
+ 1349              	.LVL146:
+ 1350              	.LBE40:
+ 1351 089a 0446     		mov	r4, r0
+ 1352              	.LVL147:
+ 1353              	.LBB41:
+ 1354 089c 04E0     		b	.L95
+ 1355              	.LVL148:
+ 1356              	.L98:
+ 1357              		.loc 1 130 0 discriminator 12
+ 1358 089e 2046     		mov	r0, r4
+ 1359 08a0 6B49     		ldr	r1, .L182+32
+ 1360 08a2 FFF7FEFF 		bl	__aeabi_fadd
+ 1361 08a6 0446     		mov	r4, r0
+ 1362              	.LVL149:
+ 1363              	.L95:
+ 1364              		.loc 1 130 0 discriminator 9
+ 1365 08a8 2046     		mov	r0, r4
+ 1366              	.LVL150:
+ 1367 08aa 0021     		movs	r1, #0
+ 1368 08ac F5B2     		uxtb	r5, r6
+ 1369 08ae FFF7FEFF 		bl	__aeabi_fcmplt
+ 1370 08b2 50B1     		cbz	r0, .L157
+ 1371              		.loc 1 130 0 discriminator 10
+ 1372 08b4 0136     		adds	r6, r6, #1
+ 1373 08b6 B6F5807F 		cmp	r6, #256
+ 1374 08ba F0D1     		bne	.L98
+ 1375              		.loc 1 130 0
+ 1376 08bc 0025     		movs	r5, #0
+ 1377 08be 04E0     		b	.L157
+ 1378              	.LVL151:
+ 1379              	.L102:
+ 1380              		.loc 1 130 0 discriminator 16
+ 1381 08c0 2046     		mov	r0, r4
+ 1382 08c2 6349     		ldr	r1, .L182+32
+ 1383 08c4 FFF7FEFF 		bl	__aeabi_fsub
+ 1384 08c8 0446     		mov	r4, r0
+ 1385              	.LVL152:
+ 1386              	.L157:
+ 1387              		.loc 1 130 0 discriminator 13
+ 1388 08ca 2046     		mov	r0, r4
+ 1389 08cc 6049     		ldr	r1, .L182+32
+ 1390 08ce FFF7FEFF 		bl	__aeabi_fcmpge
+ 1391 08d2 18B1     		cbz	r0, .L100
+ 1392              		.loc 1 130 0 discriminator 14
+ 1393 08d4 0135     		adds	r5, r5, #1
+ 1394              	.LVL153:
+ 1395 08d6 EDB2     		uxtb	r5, r5
+ 1396              	.LVL154:
+ 1397 08d8 002D     		cmp	r5, #0
+ 1398 08da F1D1     		bne	.L102
+ 1399              	.LVL155:
+ 1400              	.L100:
+ 1401              	.LBE41:
+ 1402              		.loc 1 130 0 discriminator 15
+ 1403 08dc 2046     		mov	r0, r4
+ 1404 08de 5D49     		ldr	r1, .L182+36
+ 1405 08e0 FFF7FEFF 		bl	__aeabi_fcmpgt
+ 1406 08e4 30B9     		cbnz	r0, .L103
+ 1407              		.loc 1 130 0 discriminator 18
+ 1408 08e6 2046     		mov	r0, r4
+ 1409 08e8 5B49     		ldr	r1, .L182+40
+ 1410 08ea FFF7FEFF 		bl	__aeabi_fcmplt
+ 1411 08ee 0028     		cmp	r0, #0
+ 1412 08f0 00F09780 		beq	.L161
+ 1413              	.L103:
+ 1414              	.LBE34:
+ 131:subsystems/navigation/nav_line.c ****       line_status = LQC11;
+ 1415              		.loc 1 131 0 is_stmt 1 discriminator 20
+ 1416 08f4 0722     		movs	r2, #7
+ 1417 08f6 79E6     		b	.L175
+ 1418              	.LVL156:
+ 1419              	.L13:
+  73:subsystems/navigation/nav_line.c ****   struct point l1_c3 = { WaypointX(l2) + radius * u_y,
+ 1420              		.loc 1 73 0
+ 1421 08f8 0C99     		ldr	r1, [sp, #48]	@ float
+ 1422 08fa 4046     		mov	r0, r8
+ 1423              	.LVL157:
+ 1424 08fc FFF7FEFF 		bl	__aeabi_fadd
+  74:subsystems/navigation/nav_line.c ****              WaypointY(l2) + radius * -u_x,
+ 1425              		.loc 1 74 0
+ 1426 0900 0E99     		ldr	r1, [sp, #56]	@ float
+  73:subsystems/navigation/nav_line.c ****   struct point l1_c3 = { WaypointX(l2) + radius * u_y,
+ 1427              		.loc 1 73 0
+ 1428 0902 0446     		mov	r4, r0
+  74:subsystems/navigation/nav_line.c ****              WaypointY(l2) + radius * -u_x,
+ 1429              		.loc 1 74 0
+ 1430 0904 0398     		ldr	r0, [sp, #12]	@ float
+ 1431 0906 FFF7FEFF 		bl	__aeabi_fadd
+ 132:subsystems/navigation/nav_line.c ****       nav_init_stage();
+ 133:subsystems/navigation/nav_line.c ****     }
+ 134:subsystems/navigation/nav_line.c ****     break;
+ 135:subsystems/navigation/nav_line.c ****   case LQC11:
+ 136:subsystems/navigation/nav_line.c ****     nav_circle_XY(l1_c3.x, l1_c3.y, radius);
+ 1432              		.loc 1 136 0
+ 1433 090a 3A46     		mov	r2, r7
+  74:subsystems/navigation/nav_line.c ****              WaypointY(l2) + radius * -u_x,
+ 1434              		.loc 1 74 0
+ 1435 090c 0146     		mov	r1, r0
+ 1436              		.loc 1 136 0
+ 1437 090e 2046     		mov	r0, r4
+ 1438 0910 FFF7FEFF 		bl	nav_circle_XY
+ 1439              	.LBB42:
+ 137:subsystems/navigation/nav_line.c ****     if (NavQdrCloseTo(DegOfRad(qdr_out_2_3 + M_PI)-10)) {
+ 1440              		.loc 1 137 0
+ 1441 0914 4846     		mov	r0, r9
+ 1442 0916 FFF7FEFF 		bl	__aeabi_f2d
+ 1443 091a 45A3     		adr	r3, .L182
+ 1444 091c D3E90023 		ldrd	r2, [r3]
+ 1445 0920 FFF7FEFF 		bl	__aeabi_dadd
+ 1446 0924 44A3     		adr	r3, .L182+8
+ 1447 0926 D3E90023 		ldrd	r2, [r3]
+ 1448 092a FFF7FEFF 		bl	__aeabi_dmul
+ 1449 092e 0022     		movs	r2, #0
+ 1450 0930 454B     		ldr	r3, .L182+24
+ 1451 0932 FFF7FEFF 		bl	__aeabi_dsub
+ 1452              	.LBB43:
+ 1453 0936 454B     		ldr	r3, .L182+28
+ 1454              	.LBE43:
+ 1455 0938 0446     		mov	r4, r0
+ 1456              	.LBB46:
+ 1457 093a 1868     		ldr	r0, [r3, #0]	@ float
+ 1458              	.LBE46:
+ 1459 093c 0D46     		mov	r5, r1
+ 1460              	.LBB47:
+ 1461 093e FFF7FEFF 		bl	__aeabi_f2d
+ 1462 0942 0246     		mov	r2, r0
+ 1463 0944 0B46     		mov	r3, r1
+ 1464 0946 3EA1     		adr	r1, .L182+16
+ 1465 0948 D1E90001 		ldrd	r0, [r1]
+ 1466 094c FFF7FEFF 		bl	__aeabi_dsub
+ 1467 0950 39A3     		adr	r3, .L182+8
+ 1468 0952 D3E90023 		ldrd	r2, [r3]
+ 1469 0956 FFF7FEFF 		bl	__aeabi_dmul
+ 1470 095a FFF7FEFF 		bl	__aeabi_d2f
+ 1471              	.LBB44:
+ 1472 095e 4FF00008 		mov	r8, #0
+ 1473              	.LVL158:
+ 1474              	.LBE44:
+ 1475 0962 0646     		mov	r6, r0
+ 1476              	.LVL159:
+ 1477              	.LBB45:
+ 1478 0964 04E0     		b	.L105
+ 1479              	.LVL160:
+ 1480              	.L108:
+ 1481              		.loc 1 137 0 is_stmt 0 discriminator 4
+ 1482 0966 3046     		mov	r0, r6
+ 1483 0968 3949     		ldr	r1, .L182+32
+ 1484 096a FFF7FEFF 		bl	__aeabi_fadd
+ 1485 096e 0646     		mov	r6, r0
+ 1486              	.LVL161:
+ 1487              	.L105:
+ 1488              		.loc 1 137 0 discriminator 1
+ 1489 0970 3046     		mov	r0, r6
+ 1490              	.LVL162:
+ 1491 0972 0021     		movs	r1, #0
+ 1492 0974 5FFA88F7 		uxtb	r7, r8
+ 1493 0978 FFF7FEFF 		bl	__aeabi_fcmplt
+ 1494 097c 58B1     		cbz	r0, .L159
+ 1495              		.loc 1 137 0 discriminator 2
+ 1496 097e 08F10108 		add	r8, r8, #1
+ 1497 0982 B8F5807F 		cmp	r8, #256
+ 1498 0986 EED1     		bne	.L108
+ 1499              		.loc 1 137 0
+ 1500 0988 0027     		movs	r7, #0
+ 1501 098a 04E0     		b	.L159
+ 1502              	.LVL163:
+ 1503              	.L112:
+ 1504              		.loc 1 137 0 discriminator 8
+ 1505 098c 3046     		mov	r0, r6
+ 1506 098e 3049     		ldr	r1, .L182+32
+ 1507 0990 FFF7FEFF 		bl	__aeabi_fsub
+ 1508 0994 0646     		mov	r6, r0
+ 1509              	.LVL164:
+ 1510              	.L159:
+ 1511              		.loc 1 137 0 discriminator 5
+ 1512 0996 3046     		mov	r0, r6
+ 1513 0998 2D49     		ldr	r1, .L182+32
+ 1514 099a FFF7FEFF 		bl	__aeabi_fcmpge
+ 1515 099e 18B1     		cbz	r0, .L110
+ 1516              		.loc 1 137 0 discriminator 6
+ 1517 09a0 0137     		adds	r7, r7, #1
+ 1518              	.LVL165:
+ 1519 09a2 FFB2     		uxtb	r7, r7
+ 1520              	.LVL166:
+ 1521 09a4 002F     		cmp	r7, #0
+ 1522 09a6 F1D1     		bne	.L112
+ 1523              	.LVL167:
+ 1524              	.L110:
+ 1525              	.LBE45:
+ 1526              	.LBE47:
+ 1527              		.loc 1 137 0 discriminator 7
+ 1528 09a8 3046     		mov	r0, r6
+ 1529 09aa FFF7FEFF 		bl	__aeabi_f2d
+ 1530 09ae 0246     		mov	r2, r0
+ 1531 09b0 0B46     		mov	r3, r1
+ 1532 09b2 2046     		mov	r0, r4
+ 1533 09b4 2946     		mov	r1, r5
+ 1534 09b6 FFF7FEFF 		bl	__aeabi_dsub
+ 1535 09ba FFF7FEFF 		bl	__aeabi_d2f
+ 1536              	.LBB48:
+ 1537 09be 0026     		movs	r6, #0
+ 1538              	.LVL168:
+ 1539              	.LBE48:
+ 1540 09c0 0446     		mov	r4, r0
+ 1541              	.LVL169:
+ 1542              	.LBB49:
+ 1543 09c2 04E0     		b	.L113
+ 1544              	.LVL170:
+ 1545              	.L116:
+ 1546              		.loc 1 137 0 discriminator 12
+ 1547 09c4 2046     		mov	r0, r4
+ 1548 09c6 2249     		ldr	r1, .L182+32
+ 1549 09c8 FFF7FEFF 		bl	__aeabi_fadd
+ 1550 09cc 0446     		mov	r4, r0
+ 1551              	.LVL171:
+ 1552              	.L113:
+ 1553              		.loc 1 137 0 discriminator 9
+ 1554 09ce 2046     		mov	r0, r4
+ 1555              	.LVL172:
+ 1556 09d0 0021     		movs	r1, #0
+ 1557 09d2 F5B2     		uxtb	r5, r6
+ 1558 09d4 FFF7FEFF 		bl	__aeabi_fcmplt
+ 1559 09d8 50B1     		cbz	r0, .L160
+ 1560              		.loc 1 137 0 discriminator 10
+ 1561 09da 0136     		adds	r6, r6, #1
+ 1562 09dc B6F5807F 		cmp	r6, #256
+ 1563 09e0 F0D1     		bne	.L116
+ 1564              		.loc 1 137 0
+ 1565 09e2 0025     		movs	r5, #0
+ 1566 09e4 04E0     		b	.L160
+ 1567              	.LVL173:
+ 1568              	.L120:
+ 1569              		.loc 1 137 0 discriminator 16
+ 1570 09e6 2046     		mov	r0, r4
+ 1571 09e8 1949     		ldr	r1, .L182+32
+ 1572 09ea FFF7FEFF 		bl	__aeabi_fsub
+ 1573 09ee 0446     		mov	r4, r0
+ 1574              	.LVL174:
+ 1575              	.L160:
+ 1576              		.loc 1 137 0 discriminator 13
+ 1577 09f0 2046     		mov	r0, r4
+ 1578 09f2 1749     		ldr	r1, .L182+32
+ 1579 09f4 FFF7FEFF 		bl	__aeabi_fcmpge
+ 1580 09f8 18B1     		cbz	r0, .L118
+ 1581              		.loc 1 137 0 discriminator 14
+ 1582 09fa 0135     		adds	r5, r5, #1
+ 1583              	.LVL175:
+ 1584 09fc EDB2     		uxtb	r5, r5
+ 1585              	.LVL176:
+ 1586 09fe 002D     		cmp	r5, #0
+ 1587 0a00 F1D1     		bne	.L120
+ 1588              	.LVL177:
+ 1589              	.L118:
+ 1590              	.LBE49:
+ 1591              		.loc 1 137 0 discriminator 15
+ 1592 0a02 2046     		mov	r0, r4
+ 1593 0a04 1349     		ldr	r1, .L182+36
+ 1594 0a06 FFF7FEFF 		bl	__aeabi_fcmpgt
+ 1595 0a0a 20B9     		cbnz	r0, .L121
+ 1596              		.loc 1 137 0 discriminator 18
+ 1597 0a0c 2046     		mov	r0, r4
+ 1598 0a0e 1249     		ldr	r1, .L182+40
+ 1599 0a10 FFF7FEFF 		bl	__aeabi_fcmplt
+ 1600 0a14 28B1     		cbz	r0, .L161
+ 1601              	.L121:
+ 1602              	.LBE42:
+ 138:subsystems/navigation/nav_line.c ****       line_status = LR12;
+ 1603              		.loc 1 138 0 is_stmt 1 discriminator 20
+ 1604 0a16 0022     		movs	r2, #0
+ 1605 0a18 E8E5     		b	.L175
+ 1606              	.LVL178:
+ 1607              	.L123:
+ 139:subsystems/navigation/nav_line.c ****       nav_init_stage();
+ 140:subsystems/navigation/nav_line.c ****     }
+ 141:subsystems/navigation/nav_line.c ****     break;
+ 142:subsystems/navigation/nav_line.c ****   default: /* Should not occur !!! End the pattern */
+ 143:subsystems/navigation/nav_line.c ****     return FALSE;
+ 1608              		.loc 1 143 0
+ 1609 0a1a 0020     		movs	r0, #0
+ 1610 0a1c 02E0     		b	.L5
+ 1611              	.LVL179:
+ 1612              	.L124:
+ 144:subsystems/navigation/nav_line.c ****   }
+ 145:subsystems/navigation/nav_line.c ****   return TRUE; /* This pattern never ends */
+ 1613              		.loc 1 145 0
+ 1614 0a1e 2046     		mov	r0, r4
+ 1615 0a20 00E0     		b	.L5
+ 1616              	.LVL180:
+ 1617              	.L161:
+ 1618              	.LBB50:
+ 1619 0a22 0120     		movs	r0, #1
+ 1620              	.L5:
+ 1621              	.LBE50:
+ 146:subsystems/navigation/nav_line.c **** }
+ 1622              		.loc 1 146 0
+ 1623 0a24 15B0     		add	sp, sp, #84
+ 1624 0a26 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, sl, fp, pc}
+ 1625              	.L183:
+ 1626 0a2a 00BFAFF3 		.align	3
+ 1626      0080
+ 1627              	.L182:
+ 1628 0a30 182D4454 		.word	1413754136
+ 1629 0a34 FB210940 		.word	1074340347
+ 1630 0a38 F8C1631A 		.word	442745336
+ 1631 0a3c DCA54C40 		.word	1078765020
+ 1632 0a40 182D4454 		.word	1413754136
+ 1633 0a44 FB21F93F 		.word	1073291771
+ 1634 0a48 00002440 		.word	1076101120
+ 1635 0a4c 00000000 		.word	nav_circle_trigo_qdr
+ 1636 0a50 0000B443 		.word	1135869952
+ 1637 0a54 0000AF43 		.word	1135542272
+ 1638 0a58 00002041 		.word	1092616192
+ 1639              		.cfi_endproc
+ 1640              	.LFE1:
+ 1642 0a5c AFF30080 		.section	.bss.line_status,"aw",%nobits
+ 1643              		.set	.LANCHOR0,. + 0
+ 1646              	line_status:
+ 1647 0000 00       		.space	1
+ 1648              		.text
+ 1649              	.Letext0:
+ 1650              		.file 2 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
+ 1651              		.file 3 "/home/uav/paparazzi/sw/include/std.h"
+ 1652              		.file 4 "./subsystems/navigation/common_nav.h"
+ 1653              		.file 5 "./firmwares/fixedwing/guidance/guidance_v.h"
+ 1654              		.file 6 "./subsystems/nav.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 nav_line.c
+     /tmp/ccs527DM.s:18     .text.nav_line_init:0000000000000000 $t
+     /tmp/ccs527DM.s:23     .text.nav_line_init:0000000000000000 nav_line_init
+     /tmp/ccs527DM.s:40     .text.nav_line_init:0000000000000008 $d
+     /tmp/ccs527DM.s:57     .text.nav_line:0000000000000000 $t
+     /tmp/ccs527DM.s:62     .text.nav_line:0000000000000000 nav_line
+     /tmp/ccs527DM.s:311    .text.nav_line:0000000000000182 $d
+     /tmp/ccs527DM.s:321    .text.nav_line:0000000000000192 $t
+     /tmp/ccs527DM.s:435    .text.nav_line:0000000000000268 $d
+     /tmp/ccs527DM.s:460    .text.nav_line:00000000000002c0 $t
+     /tmp/ccs527DM.s:851    .text.nav_line:0000000000000538 $d
+     /tmp/ccs527DM.s:863    .text.nav_line:000000000000055c $t
+     /tmp/ccs527DM.s:1192   .text.nav_line:0000000000000758 $d
+     /tmp/ccs527DM.s:1207   .text.nav_line:0000000000000788 $t
+     /tmp/ccs527DM.s:1628   .text.nav_line:0000000000000a30 $d
+     /tmp/ccs527DM.s:1646   .bss.line_status:0000000000000000 line_status
+     /tmp/ccs527DM.s:1647   .bss.line_status:0000000000000000 $d
+                     .debug_frame:0000000000000010 $d
+     /tmp/ccs527DM.s:1642   .text.nav_line:0000000000000a5c $t
+
+UNDEFINED SYMBOLS
+__aeabi_fsub
+__aeabi_fmul
+__aeabi_fadd
+__aeabi_f2d
+__aeabi_d2f
+__aeabi_fdiv
+__aeabi_dmul
+__aeabi_dsub
+__aeabi_fcmplt
+__aeabi_fcmpge
+__aeabi_fcmpgt
+__aeabi_dadd
+sqrt
+atan2
+nav_route_xy
+nav_approaching_xy
+nav_init_stage
+nav_circle_XY
+waypoints
+v_ctl_climb_mode
+nav_pitch
+v_ctl_mode
+nav_altitude
+v_ctl_altitude_pre_climb
+nav_circle_trigo_qdr

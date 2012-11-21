@@ -1,0 +1,16 @@
+<settings>
+  <rc_settings/>
+  <dl_settings>
+    <dl_settings name="Telemetry"/>
+    <dl_settings name="Actuators">
+      <dl_setting step="1" shortname="chan0" module="firmwares/fixedwing/actuators" min="900" var="actuators[0]" max="2100"/>
+      <dl_setting step="1" shortname="chan1" min="900" var="actuators[1]" max="2100"/>
+      <dl_setting step="1" shortname="chan2" min="900" var="actuators[2]" max="2100"/>
+      <dl_setting step="1" shortname="chan3" min="900" var="actuators[3]" max="2100"/>
+      <dl_setting step="1" shortname="chan4" min="900" var="actuators[4]" max="2100"/>
+      <dl_setting step="1" shortname="chan5" min="900" var="actuators[5]" max="2100"/>
+      <dl_setting step="1" shortname="chan6" min="900" var="actuators[6]" max="2100"/>
+      <dl_setting step="1" shortname="chan7" min="900" var="actuators[7]" max="2100"/>
+    </dl_settings>
+  </dl_settings>
+</settings>

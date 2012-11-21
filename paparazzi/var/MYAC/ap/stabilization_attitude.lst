@@ -1,0 +1,1309 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 18, 4
+  12              		.thumb
+  13              		.file	"stabilization_attitude.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.h_ctl_init,"ax",%progbits
+  18              		.align	1
+  19              		.global	h_ctl_init
+  20              		.thumb
+  21              		.thumb_func
+  23              	h_ctl_init:
+  24              	.LFB27:
+  25              		.file 1 "firmwares/fixedwing/stabilization/stabilization_attitude.c"
+   1:firmwares/fixedwing/stabilization/stabilization_attitude.c **** /*
+   2:firmwares/fixedwing/stabilization/stabilization_attitude.c ****  * Paparazzi $Id$
+   3:firmwares/fixedwing/stabilization/stabilization_attitude.c ****  *
+   4:firmwares/fixedwing/stabilization/stabilization_attitude.c ****  * Copyright (C) 2006  Pascal Brisset, Antoine Drouin, Michel Gorraz
+   5:firmwares/fixedwing/stabilization/stabilization_attitude.c ****  *
+   6:firmwares/fixedwing/stabilization/stabilization_attitude.c ****  * This file is part of paparazzi.
+   7:firmwares/fixedwing/stabilization/stabilization_attitude.c ****  *
+   8:firmwares/fixedwing/stabilization/stabilization_attitude.c ****  * paparazzi is free software; you can redistribute it and/or modify
+   9:firmwares/fixedwing/stabilization/stabilization_attitude.c ****  * it under the terms of the GNU General Public License as published by
+  10:firmwares/fixedwing/stabilization/stabilization_attitude.c ****  * the Free Software Foundation; either version 2, or (at your option)
+  11:firmwares/fixedwing/stabilization/stabilization_attitude.c ****  * any later version.
+  12:firmwares/fixedwing/stabilization/stabilization_attitude.c ****  *
+  13:firmwares/fixedwing/stabilization/stabilization_attitude.c ****  * paparazzi is distributed in the hope that it will be useful,
+  14:firmwares/fixedwing/stabilization/stabilization_attitude.c ****  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  15:firmwares/fixedwing/stabilization/stabilization_attitude.c ****  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  16:firmwares/fixedwing/stabilization/stabilization_attitude.c ****  * GNU General Public License for more details.
+  17:firmwares/fixedwing/stabilization/stabilization_attitude.c ****  *
+  18:firmwares/fixedwing/stabilization/stabilization_attitude.c ****  * You should have received a copy of the GNU General Public License
+  19:firmwares/fixedwing/stabilization/stabilization_attitude.c ****  * along with paparazzi; see the file COPYING.  If not, write to
+  20:firmwares/fixedwing/stabilization/stabilization_attitude.c ****  * the Free Software Foundation, 59 Temple Place - Suite 330,
+  21:firmwares/fixedwing/stabilization/stabilization_attitude.c ****  * Boston, MA 02111-1307, USA.
+  22:firmwares/fixedwing/stabilization/stabilization_attitude.c ****  *
+  23:firmwares/fixedwing/stabilization/stabilization_attitude.c ****  */
+  24:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+  25:firmwares/fixedwing/stabilization/stabilization_attitude.c **** /**
+  26:firmwares/fixedwing/stabilization/stabilization_attitude.c ****  *
+  27:firmwares/fixedwing/stabilization/stabilization_attitude.c ****  * fixed wing horizontal control
+  28:firmwares/fixedwing/stabilization/stabilization_attitude.c ****  *
+  29:firmwares/fixedwing/stabilization/stabilization_attitude.c ****  */
+  30:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+  31:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #include "firmwares/fixedwing/stabilization/stabilization_attitude.h"
+  32:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #include "std.h"
+  33:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #include "led.h"
+  34:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #include "estimator.h"
+  35:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #include "subsystems/nav.h"
+  36:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #include "generated/airframe.h"
+  37:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #include "firmwares/fixedwing/guidance/guidance_v.h"
+  38:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #include "firmwares/fixedwing/autopilot.h"
+  39:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+  40:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #pragma message "CAUTION! ALL control gains have to be positive now!"
+  41:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+  42:firmwares/fixedwing/stabilization/stabilization_attitude.c **** /* outer loop parameters */
+  43:firmwares/fixedwing/stabilization/stabilization_attitude.c **** float h_ctl_course_setpoint; /* rad, CW/north */
+  44:firmwares/fixedwing/stabilization/stabilization_attitude.c **** float h_ctl_course_pre_bank;
+  45:firmwares/fixedwing/stabilization/stabilization_attitude.c **** float h_ctl_course_pre_bank_correction;
+  46:firmwares/fixedwing/stabilization/stabilization_attitude.c **** float h_ctl_course_pgain;
+  47:firmwares/fixedwing/stabilization/stabilization_attitude.c **** float h_ctl_course_dgain;
+  48:firmwares/fixedwing/stabilization/stabilization_attitude.c **** float h_ctl_roll_max_setpoint;
+  49:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+  50:firmwares/fixedwing/stabilization/stabilization_attitude.c **** /* roll and pitch disabling */
+  51:firmwares/fixedwing/stabilization/stabilization_attitude.c **** bool_t h_ctl_disabled;
+  52:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+  53:firmwares/fixedwing/stabilization/stabilization_attitude.c **** /* AUTO1 rate mode */
+  54:firmwares/fixedwing/stabilization/stabilization_attitude.c **** bool_t h_ctl_auto1_rate;
+  55:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+  56:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+  57:firmwares/fixedwing/stabilization/stabilization_attitude.c **** /* inner roll loop parameters */
+  58:firmwares/fixedwing/stabilization/stabilization_attitude.c **** float  h_ctl_roll_setpoint;
+  59:firmwares/fixedwing/stabilization/stabilization_attitude.c **** float  h_ctl_roll_pgain;
+  60:firmwares/fixedwing/stabilization/stabilization_attitude.c **** pprz_t h_ctl_aileron_setpoint;
+  61:firmwares/fixedwing/stabilization/stabilization_attitude.c **** float  h_ctl_roll_slew;
+  62:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+  63:firmwares/fixedwing/stabilization/stabilization_attitude.c **** /* inner pitch loop parameters */
+  64:firmwares/fixedwing/stabilization/stabilization_attitude.c **** float  h_ctl_pitch_setpoint;
+  65:firmwares/fixedwing/stabilization/stabilization_attitude.c **** float  h_ctl_pitch_loop_setpoint;
+  66:firmwares/fixedwing/stabilization/stabilization_attitude.c **** float  h_ctl_pitch_pgain;
+  67:firmwares/fixedwing/stabilization/stabilization_attitude.c **** float  h_ctl_pitch_dgain;
+  68:firmwares/fixedwing/stabilization/stabilization_attitude.c **** pprz_t h_ctl_elevator_setpoint;
+  69:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+  70:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #ifdef USE_AOA
+  71:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   uint8_t h_ctl_pitch_mode;
+  72:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #endif
+  73:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+  74:firmwares/fixedwing/stabilization/stabilization_attitude.c **** /* inner loop pre-command */
+  75:firmwares/fixedwing/stabilization/stabilization_attitude.c **** float h_ctl_aileron_of_throttle;
+  76:firmwares/fixedwing/stabilization/stabilization_attitude.c **** float h_ctl_elevator_of_roll;
+  77:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+  78:firmwares/fixedwing/stabilization/stabilization_attitude.c **** /* rate loop */
+  79:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #ifdef H_CTL_RATE_LOOP
+  80:firmwares/fixedwing/stabilization/stabilization_attitude.c **** float h_ctl_roll_rate_setpoint;
+  81:firmwares/fixedwing/stabilization/stabilization_attitude.c **** float h_ctl_roll_rate_mode;
+  82:firmwares/fixedwing/stabilization/stabilization_attitude.c **** float h_ctl_roll_rate_setpoint_pgain;
+  83:firmwares/fixedwing/stabilization/stabilization_attitude.c **** float h_ctl_hi_throttle_roll_rate_pgain;
+  84:firmwares/fixedwing/stabilization/stabilization_attitude.c **** float h_ctl_lo_throttle_roll_rate_pgain;
+  85:firmwares/fixedwing/stabilization/stabilization_attitude.c **** float h_ctl_roll_rate_igain;
+  86:firmwares/fixedwing/stabilization/stabilization_attitude.c **** float h_ctl_roll_rate_dgain;
+  87:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #endif
+  88:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+  89:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #ifdef H_CTL_COURSE_SLEW_INCREMENT
+  90:firmwares/fixedwing/stabilization/stabilization_attitude.c **** float h_ctl_course_slew_increment;
+  91:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #endif
+  92:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+  93:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+  94:firmwares/fixedwing/stabilization/stabilization_attitude.c **** inline static void h_ctl_roll_loop( void );
+  95:firmwares/fixedwing/stabilization/stabilization_attitude.c **** inline static void h_ctl_pitch_loop( void );
+  96:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #ifdef H_CTL_RATE_LOOP
+  97:firmwares/fixedwing/stabilization/stabilization_attitude.c **** static inline void h_ctl_roll_rate_loop( void );
+  98:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #endif
+  99:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 100:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #ifndef H_CTL_COURSE_PRE_BANK_CORRECTION
+ 101:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #define H_CTL_COURSE_PRE_BANK_CORRECTION 1.
+ 102:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #endif
+ 103:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 104:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #ifndef H_CTL_COURSE_DGAIN
+ 105:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #define H_CTL_COURSE_DGAIN 0.
+ 106:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #endif
+ 107:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 108:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #ifndef H_CTL_ROLL_RATE_GAIN
+ 109:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #define H_CTL_ROLL_RATE_GAIN 0.
+ 110:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #endif
+ 111:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 112:firmwares/fixedwing/stabilization/stabilization_attitude.c **** float h_ctl_roll_attitude_gain;
+ 113:firmwares/fixedwing/stabilization/stabilization_attitude.c **** float h_ctl_roll_rate_gain;
+ 114:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 115:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #ifdef AGR_CLIMB
+ 116:firmwares/fixedwing/stabilization/stabilization_attitude.c **** static float nav_ratio;
+ 117:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #endif
+ 118:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 119:firmwares/fixedwing/stabilization/stabilization_attitude.c **** void h_ctl_init( void ) {
+  26              		.loc 1 119 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30              		@ link register save eliminated.
+ 120:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_course_setpoint = 0.;
+  31              		.loc 1 120 0
+  32 0000 174A     		ldr	r2, .L2
+  33 0002 0023     		movs	r3, #0
+  34 0004 1360     		str	r3, [r2, #0]	@ float
+ 121:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_course_pre_bank = 0.;
+  35              		.loc 1 121 0
+  36 0006 174A     		ldr	r2, .L2+4
+ 122:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_course_pre_bank_correction = H_CTL_COURSE_PRE_BANK_CORRECTION;
+  37              		.loc 1 122 0
+  38 0008 1749     		ldr	r1, .L2+8
+ 121:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_course_pre_bank = 0.;
+  39              		.loc 1 121 0
+  40 000a 1360     		str	r3, [r2, #0]	@ float
+  41              		.loc 1 122 0
+  42 000c 4FF07E52 		mov	r2, #1065353216
+  43 0010 0A60     		str	r2, [r1, #0]	@ float
+ 123:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_course_pgain = H_CTL_COURSE_PGAIN;
+  44              		.loc 1 123 0
+  45 0012 1649     		ldr	r1, .L2+12
+  46 0014 0A60     		str	r2, [r1, #0]	@ float
+ 124:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_course_dgain = H_CTL_COURSE_DGAIN;
+  47              		.loc 1 124 0
+  48 0016 1649     		ldr	r1, .L2+16
+  49 0018 164A     		ldr	r2, .L2+20
+  50 001a 1160     		str	r1, [r2, #0]	@ float
+ 125:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_roll_max_setpoint = H_CTL_ROLL_MAX_SETPOINT;
+  51              		.loc 1 125 0
+  52 001c 1649     		ldr	r1, .L2+24
+  53 001e 174A     		ldr	r2, .L2+28
+  54 0020 1160     		str	r1, [r2, #0]	@ float
+ 126:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 127:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #ifdef USE_AOA
+ 128:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_pitch_mode = 0;
+ 129:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #endif
+ 130:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 131:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_disabled = FALSE;
+  55              		.loc 1 131 0
+  56 0022 1749     		ldr	r1, .L2+32
+  57 0024 0022     		movs	r2, #0
+  58 0026 0A70     		strb	r2, [r1, #0]
+ 132:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 133:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_roll_setpoint = 0.;
+  59              		.loc 1 133 0
+  60 0028 1649     		ldr	r1, .L2+36
+  61 002a 0B60     		str	r3, [r1, #0]	@ float
+ 134:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #ifdef H_CTL_ROLL_PGAIN
+ 135:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_roll_pgain = H_CTL_ROLL_PGAIN;
+ 136:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #endif
+ 137:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_aileron_setpoint = 0;
+  62              		.loc 1 137 0
+  63 002c 1649     		ldr	r1, .L2+40
+  64 002e 0A80     		strh	r2, [r1, #0]	@ movhi
+ 138:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #ifdef H_CTL_AILERON_OF_THROTTLE
+ 139:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_aileron_of_throttle = H_CTL_AILERON_OF_THROTTLE;
+ 140:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #endif
+ 141:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 142:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_pitch_setpoint = 0.;
+  65              		.loc 1 142 0
+  66 0030 1649     		ldr	r1, .L2+44
+  67 0032 0B60     		str	r3, [r1, #0]	@ float
+ 143:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_pitch_loop_setpoint = 0.;
+  68              		.loc 1 143 0
+  69 0034 1649     		ldr	r1, .L2+48
+  70 0036 0B60     		str	r3, [r1, #0]	@ float
+ 144:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_pitch_pgain = H_CTL_PITCH_PGAIN;
+  71              		.loc 1 144 0
+  72 0038 1649     		ldr	r1, .L2+52
+  73 003a 174B     		ldr	r3, .L2+56
+  74 003c 1960     		str	r1, [r3, #0]	@ float
+ 145:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_pitch_dgain = H_CTL_PITCH_DGAIN;
+  75              		.loc 1 145 0
+  76 003e 174B     		ldr	r3, .L2+60
+  77 0040 4FF07F51 		mov	r1, #1069547520
+  78 0044 1960     		str	r1, [r3, #0]	@ float
+ 146:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_elevator_setpoint = 0;
+  79              		.loc 1 146 0
+  80 0046 164B     		ldr	r3, .L2+64
+  81 0048 1A80     		strh	r2, [r3, #0]	@ movhi
+ 147:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_elevator_of_roll = H_CTL_ELEVATOR_OF_ROLL;
+  82              		.loc 1 147 0
+  83 004a 164A     		ldr	r2, .L2+68
+  84 004c 164B     		ldr	r3, .L2+72
+  85 004e 1A60     		str	r2, [r3, #0]	@ float
+ 148:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 149:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #ifdef H_CTL_RATE_LOOP
+ 150:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_roll_rate_mode = H_CTL_ROLL_RATE_MODE_DEFAULT;
+ 151:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_roll_rate_setpoint_pgain = H_CTL_ROLL_RATE_SETPOINT_PGAIN;
+ 152:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_hi_throttle_roll_rate_pgain = H_CTL_HI_THROTTLE_ROLL_RATE_PGAIN;
+ 153:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_lo_throttle_roll_rate_pgain = H_CTL_LO_THROTTLE_ROLL_RATE_PGAIN;
+ 154:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_roll_rate_igain = H_CTL_ROLL_RATE_IGAIN;
+ 155:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_roll_rate_dgain = H_CTL_ROLL_RATE_DGAIN;
+ 156:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #endif
+ 157:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 158:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #ifdef H_CTL_ROLL_SLEW
+ 159:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_roll_slew = H_CTL_ROLL_SLEW;
+ 160:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #endif
+ 161:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 162:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #ifdef H_CTL_COURSE_SLEW_INCREMENT
+ 163:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_course_slew_increment = H_CTL_COURSE_SLEW_INCREMENT;
+ 164:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #endif
+ 165:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 166:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #ifdef H_CTL_ROLL_ATTITUDE_GAIN
+ 167:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_roll_attitude_gain = H_CTL_ROLL_ATTITUDE_GAIN;
+  86              		.loc 1 167 0
+  87 0050 164A     		ldr	r2, .L2+76
+  88 0052 174B     		ldr	r3, .L2+80
+  89 0054 1A60     		str	r2, [r3, #0]	@ float
+ 168:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_roll_rate_gain = H_CTL_ROLL_RATE_GAIN;
+  90              		.loc 1 168 0
+  91 0056 174A     		ldr	r2, .L2+84
+  92 0058 174B     		ldr	r3, .L2+88
+  93 005a 1A60     		str	r2, [r3, #0]	@ float
+ 169:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #endif
+ 170:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 171:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #ifdef AGR_CLIMB
+ 172:firmwares/fixedwing/stabilization/stabilization_attitude.c **** nav_ratio=0;
+ 173:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #endif
+ 174:firmwares/fixedwing/stabilization/stabilization_attitude.c **** }
+  94              		.loc 1 174 0
+  95 005c 7047     		bx	lr
+  96              	.L3:
+  97 005e 00BF     		.align	2
+  98              	.L2:
+  99 0060 00000000 		.word	.LANCHOR0
+ 100 0064 00000000 		.word	.LANCHOR1
+ 101 0068 00000000 		.word	.LANCHOR2
+ 102 006c 00000000 		.word	.LANCHOR3
+ 103 0070 CDCCCC3E 		.word	1053609165
+ 104 0074 00000000 		.word	.LANCHOR4
+ 105 0078 AA611C3F 		.word	1058824618
+ 106 007c 00000000 		.word	.LANCHOR5
+ 107 0080 00000000 		.word	.LANCHOR6
+ 108 0084 00000000 		.word	.LANCHOR7
+ 109 0088 00000000 		.word	.LANCHOR8
+ 110 008c 00000000 		.word	.LANCHOR9
+ 111 0090 00000000 		.word	.LANCHOR10
+ 112 0094 00409C46 		.word	1184645120
+ 113 0098 00000000 		.word	.LANCHOR11
+ 114 009c 00000000 		.word	.LANCHOR12
+ 115 00a0 00000000 		.word	.LANCHOR13
+ 116 00a4 00401C45 		.word	1159479296
+ 117 00a8 00000000 		.word	.LANCHOR14
+ 118 00ac 0040E745 		.word	1172783104
+ 119 00b0 00000000 		.word	.LANCHOR15
+ 120 00b4 00004843 		.word	1128792064
+ 121 00b8 00000000 		.word	.LANCHOR16
+ 122              		.cfi_endproc
+ 123              	.LFE27:
+ 125              		.global	__aeabi_fsub
+ 126              		.global	__aeabi_dsub
+ 127              		.global	__aeabi_d2f
+ 128              		.global	__aeabi_f2d
+ 129              		.global	__aeabi_dcmpgt
+ 130              		.global	__aeabi_dadd
+ 131              		.global	__aeabi_dcmplt
+ 132              		.global	__aeabi_fdiv
+ 133              		.global	__aeabi_fcmpgt
+ 134              		.global	__aeabi_fmul
+ 135              		.global	__aeabi_fadd
+ 136              		.global	__aeabi_fcmplt
+ 137              		.section	.text.h_ctl_course_loop,"ax",%progbits
+ 138              		.align	1
+ 139              		.global	h_ctl_course_loop
+ 140              		.thumb
+ 141              		.thumb_func
+ 143              	h_ctl_course_loop:
+ 144              	.LFB28:
+ 175:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 176:firmwares/fixedwing/stabilization/stabilization_attitude.c **** /**
+ 177:firmwares/fixedwing/stabilization/stabilization_attitude.c ****  * \brief
+ 178:firmwares/fixedwing/stabilization/stabilization_attitude.c ****  *
+ 179:firmwares/fixedwing/stabilization/stabilization_attitude.c ****  */
+ 180:firmwares/fixedwing/stabilization/stabilization_attitude.c **** void h_ctl_course_loop ( void ) {
+ 145              		.loc 1 180 0
+ 146              		.cfi_startproc
+ 147              		@ args = 0, pretend = 0, frame = 0
+ 148              		@ frame_needed = 0, uses_anonymous_args = 0
+ 149 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 150              	.LCFI0:
+ 151              		.cfi_def_cfa_offset 24
+ 152              		.cfi_offset 14, -4
+ 153              		.cfi_offset 7, -8
+ 154              		.cfi_offset 6, -12
+ 155              		.cfi_offset 5, -16
+ 156              		.cfi_offset 4, -20
+ 157              		.cfi_offset 3, -24
+ 181:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   static float last_err;
+ 182:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 183:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   // Ground path error
+ 184:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   float err = estimator_hspeed_dir - h_ctl_course_setpoint;
+ 158              		.loc 1 184 0
+ 159 0002 634B     		ldr	r3, .L26+32
+ 160 0004 1868     		ldr	r0, [r3, #0]	@ float
+ 161 0006 634B     		ldr	r3, .L26+36
+ 162 0008 1968     		ldr	r1, [r3, #0]	@ float
+ 163 000a FFF7FEFF 		bl	__aeabi_fsub
+ 164 000e 08E0     		b	.L25
+ 165              	.LVL0:
+ 166              	.L6:
+ 185:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   NormRadAngle(err);
+ 167              		.loc 1 185 0 discriminator 2
+ 168 0010 57A3     		adr	r3, .L26
+ 169 0012 D3E90023 		ldrd	r2, [r3]
+ 170 0016 3046     		mov	r0, r6
+ 171 0018 3946     		mov	r1, r7
+ 172 001a FFF7FEFF 		bl	__aeabi_dsub
+ 173 001e FFF7FEFF 		bl	__aeabi_d2f
+ 174              	.LVL1:
+ 175              	.L25:
+ 176 0022 0546     		mov	r5, r0
+ 177              	.LVL2:
+ 178 0024 FFF7FEFF 		bl	__aeabi_f2d
+ 179              	.LVL3:
+ 180 0028 53A3     		adr	r3, .L26+8
+ 181 002a D3E90023 		ldrd	r2, [r3]
+ 182 002e 0646     		mov	r6, r0
+ 183 0030 0F46     		mov	r7, r1
+ 184 0032 FFF7FEFF 		bl	__aeabi_dcmpgt
+ 185 0036 0028     		cmp	r0, #0
+ 186 0038 EAD1     		bne	.L6
+ 187 003a 09E0     		b	.L22
+ 188              	.L8:
+ 189              		.loc 1 185 0 is_stmt 0 discriminator 5
+ 190 003c 4CA3     		adr	r3, .L26
+ 191 003e D3E90023 		ldrd	r2, [r3]
+ 192 0042 3046     		mov	r0, r6
+ 193 0044 3946     		mov	r1, r7
+ 194 0046 FFF7FEFF 		bl	__aeabi_dadd
+ 195 004a FFF7FEFF 		bl	__aeabi_d2f
+ 196 004e 0546     		mov	r5, r0
+ 197              	.LVL4:
+ 198              	.L22:
+ 199              		.loc 1 185 0 discriminator 4
+ 200 0050 2846     		mov	r0, r5
+ 201 0052 FFF7FEFF 		bl	__aeabi_f2d
+ 202 0056 4AA3     		adr	r3, .L26+16
+ 203 0058 D3E90023 		ldrd	r2, [r3]
+ 204 005c 0646     		mov	r6, r0
+ 205 005e 0F46     		mov	r7, r1
+ 206 0060 FFF7FEFF 		bl	__aeabi_dcmplt
+ 207 0064 0028     		cmp	r0, #0
+ 208 0066 E9D1     		bne	.L8
+ 186:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 187:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #ifdef STRONG_WIND
+ 188:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   // Usefull path speed
+ 189:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   const float reference_advance = (NOMINAL_AIRSPEED / 2.);
+ 190:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   float advance = cos(err) * estimator_hspeed_mod / reference_advance;
+ 191:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 192:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   if (
+ 193:firmwares/fixedwing/stabilization/stabilization_attitude.c ****        (advance < 1.)  &&                          // Path speed is small
+ 194:firmwares/fixedwing/stabilization/stabilization_attitude.c ****        (estimator_hspeed_mod < reference_advance)  // Small path speed is due to wind (small ground
+ 195:firmwares/fixedwing/stabilization/stabilization_attitude.c ****      )
+ 196:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   {
+ 197:firmwares/fixedwing/stabilization/stabilization_attitude.c **** /*
+ 198:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     // rough crabangle approximation
+ 199:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     float wind_mod = sqrt(wind_east*wind_east + wind_north*wind_north);
+ 200:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     float wind_dir = atan2(wind_east,wind_north);
+ 201:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 202:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     float wind_course = h_ctl_course_setpoint - wind_dir;
+ 203:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     NormRadAngle(wind_course);
+ 204:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 205:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     estimator_hspeed_dir = estimator_psi;
+ 206:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 207:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     float crab = sin(wind_dir-estimator_psi) * atan2(wind_mod,NOMINAL_AIRSPEED);
+ 208:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     //crab = estimator_hspeed_mod - estimator_psi;
+ 209:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     NormRadAngle(crab);
+ 210:firmwares/fixedwing/stabilization/stabilization_attitude.c **** */
+ 211:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 212:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     // Heading error
+ 213:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     float herr = estimator_psi - h_ctl_course_setpoint; //+crab);
+ 214:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     NormRadAngle(herr);
+ 215:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 216:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     if (advance < -0.5)              //<! moving in the wrong direction / big > 90 degree turn
+ 217:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     {
+ 218:firmwares/fixedwing/stabilization/stabilization_attitude.c ****       err = herr;
+ 219:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     }
+ 220:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     else if (advance < 0.)           //<!
+ 221:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     {
+ 222:firmwares/fixedwing/stabilization/stabilization_attitude.c ****       err = (-advance)*2. * herr;
+ 223:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     }
+ 224:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     else
+ 225:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     {
+ 226:firmwares/fixedwing/stabilization/stabilization_attitude.c ****       err = advance * err;
+ 227:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     }
+ 228:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 229:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     // Reset differentiator when switching mode
+ 230:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     //if (h_ctl_course_heading_mode == 0)
+ 231:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     //  last_err = err;
+ 232:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     //h_ctl_course_heading_mode = 1;
+ 233:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   }
+ 234:firmwares/fixedwing/stabilization/stabilization_attitude.c **** /*  else
+ 235:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   {
+ 236:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     // Reset differentiator when switching mode
+ 237:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     if (h_ctl_course_heading_mode == 1)
+ 238:firmwares/fixedwing/stabilization/stabilization_attitude.c ****       last_err = err;
+ 239:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     h_ctl_course_heading_mode = 0;
+ 240:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   }
+ 241:firmwares/fixedwing/stabilization/stabilization_attitude.c **** */
+ 242:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #endif //STRONG_WIND
+ 243:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 244:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   float d_err = err - last_err;
+ 209              		.loc 1 244 0 is_stmt 1
+ 210 0068 4B4E     		ldr	r6, .L26+40
+ 211 006a 2846     		mov	r0, r5
+ 212 006c 3168     		ldr	r1, [r6, #0]	@ float
+ 213 006e FFF7FEFF 		bl	__aeabi_fsub
+ 245:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   last_err = err;
+ 214              		.loc 1 245 0
+ 215 0072 3560     		str	r5, [r6, #0]	@ float
+ 244:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   float d_err = err - last_err;
+ 216              		.loc 1 244 0
+ 217 0074 0446     		mov	r4, r0
+ 218              	.LVL5:
+ 246:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 247:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   NormRadAngle(d_err);
+ 219              		.loc 1 247 0
+ 220 0076 09E0     		b	.L9
+ 221              	.LVL6:
+ 222              	.L10:
+ 223              		.loc 1 247 0 is_stmt 0 discriminator 2
+ 224 0078 3DA3     		adr	r3, .L26
+ 225 007a D3E90023 		ldrd	r2, [r3]
+ 226 007e 3046     		mov	r0, r6
+ 227 0080 3946     		mov	r1, r7
+ 228 0082 FFF7FEFF 		bl	__aeabi_dsub
+ 229 0086 FFF7FEFF 		bl	__aeabi_d2f
+ 230 008a 0446     		mov	r4, r0
+ 231              	.LVL7:
+ 232              	.L9:
+ 233              		.loc 1 247 0 discriminator 1
+ 234 008c 2046     		mov	r0, r4
+ 235              	.LVL8:
+ 236 008e FFF7FEFF 		bl	__aeabi_f2d
+ 237 0092 39A3     		adr	r3, .L26+8
+ 238 0094 D3E90023 		ldrd	r2, [r3]
+ 239 0098 0646     		mov	r6, r0
+ 240 009a 0F46     		mov	r7, r1
+ 241 009c FFF7FEFF 		bl	__aeabi_dcmpgt
+ 242 00a0 0028     		cmp	r0, #0
+ 243 00a2 E9D1     		bne	.L10
+ 244 00a4 09E0     		b	.L23
+ 245              	.L12:
+ 246              		.loc 1 247 0 discriminator 5
+ 247 00a6 32A3     		adr	r3, .L26
+ 248 00a8 D3E90023 		ldrd	r2, [r3]
+ 249 00ac 3046     		mov	r0, r6
+ 250 00ae 3946     		mov	r1, r7
+ 251 00b0 FFF7FEFF 		bl	__aeabi_dadd
+ 252 00b4 FFF7FEFF 		bl	__aeabi_d2f
+ 253 00b8 0446     		mov	r4, r0
+ 254              	.LVL9:
+ 255              	.L23:
+ 256              		.loc 1 247 0 discriminator 4
+ 257 00ba 2046     		mov	r0, r4
+ 258 00bc FFF7FEFF 		bl	__aeabi_f2d
+ 259 00c0 2FA3     		adr	r3, .L26+16
+ 260 00c2 D3E90023 		ldrd	r2, [r3]
+ 261 00c6 0646     		mov	r6, r0
+ 262 00c8 0F46     		mov	r7, r1
+ 263 00ca FFF7FEFF 		bl	__aeabi_dcmplt
+ 264 00ce 0028     		cmp	r0, #0
+ 265 00d0 E9D1     		bne	.L12
+ 248:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 249:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #ifdef H_CTL_COURSE_SLEW_INCREMENT
+ 250:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   /* slew severe course changes (i.e. waypoint moves, block changes or perpendicular routes) */
+ 251:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   static float h_ctl_course_slew_rate = 0.;
+ 252:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   float nav_angle_saturation = h_ctl_roll_max_setpoint/h_ctl_course_pgain;  /* heading error corres
+ 253:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   float half_nav_angle_saturation = nav_angle_saturation / 2.;
+ 254:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   if (launch) {  /* prevent accumulator run-up on the ground */
+ 255:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     if (err > half_nav_angle_saturation) {
+ 256:firmwares/fixedwing/stabilization/stabilization_attitude.c ****       h_ctl_course_slew_rate = Max(h_ctl_course_slew_rate, 0.);
+ 257:firmwares/fixedwing/stabilization/stabilization_attitude.c ****       err = Min(err,(half_nav_angle_saturation + h_ctl_course_slew_rate));
+ 258:firmwares/fixedwing/stabilization/stabilization_attitude.c ****       h_ctl_course_slew_rate +=h_ctl_course_slew_increment;
+ 259:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     }
+ 260:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     else if ( err < -half_nav_angle_saturation) {
+ 261:firmwares/fixedwing/stabilization/stabilization_attitude.c ****       h_ctl_course_slew_rate = Min(h_ctl_course_slew_rate, 0.);
+ 262:firmwares/fixedwing/stabilization/stabilization_attitude.c ****       err = Max(err,(-half_nav_angle_saturation + h_ctl_course_slew_rate));
+ 263:firmwares/fixedwing/stabilization/stabilization_attitude.c ****       h_ctl_course_slew_rate -=h_ctl_course_slew_increment;
+ 264:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     }
+ 265:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     else {
+ 266:firmwares/fixedwing/stabilization/stabilization_attitude.c ****       h_ctl_course_slew_rate = 0.;
+ 267:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     }
+ 268:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   }
+ 269:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #endif
+ 270:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 271:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   float speed_depend_nav = estimator_hspeed_mod/NOMINAL_AIRSPEED;
+ 266              		.loc 1 271 0 is_stmt 1
+ 267 00d2 324B     		ldr	r3, .L26+44
+ 268 00d4 3249     		ldr	r1, .L26+48
+ 269 00d6 1868     		ldr	r0, [r3, #0]	@ float
+ 270 00d8 FFF7FEFF 		bl	__aeabi_fdiv
+ 272:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   Bound(speed_depend_nav, 0.66, 1.5);
+ 271              		.loc 1 272 0
+ 272 00dc 4FF07F51 		mov	r1, #1069547520
+ 271:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   float speed_depend_nav = estimator_hspeed_mod/NOMINAL_AIRSPEED;
+ 273              		.loc 1 271 0
+ 274 00e0 0646     		mov	r6, r0
+ 275              	.LVL10:
+ 276              		.loc 1 272 0
+ 277 00e2 FFF7FEFF 		bl	__aeabi_fcmpgt
+ 278              	.LVL11:
+ 279 00e6 48B9     		cbnz	r0, .L18
+ 280              		.loc 1 272 0 is_stmt 0 discriminator 2
+ 281 00e8 3046     		mov	r0, r6
+ 282 00ea FFF7FEFF 		bl	__aeabi_f2d
+ 283 00ee 26A3     		adr	r3, .L26+24
+ 284 00f0 D3E90023 		ldrd	r2, [r3]
+ 285 00f4 FFF7FEFF 		bl	__aeabi_dcmplt
+ 286 00f8 18B9     		cbnz	r0, .L19
+ 287 00fa 03E0     		b	.L13
+ 288              	.L18:
+ 289              		.loc 1 272 0
+ 290 00fc 4FF07F56 		mov	r6, #1069547520
+ 291              	.LVL12:
+ 292 0100 00E0     		b	.L13
+ 293              	.LVL13:
+ 294              	.L19:
+ 295 0102 284E     		ldr	r6, .L26+52
+ 296              	.LVL14:
+ 297              	.L13:
+ 273:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 274:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   float cmd = -h_ctl_course_pgain * speed_depend_nav * (err + d_err * h_ctl_course_dgain);
+ 298              		.loc 1 274 0 is_stmt 1
+ 299 0104 284B     		ldr	r3, .L26+56
+ 300 0106 3146     		mov	r1, r6
+ 301 0108 1868     		ldr	r0, [r3, #0]
+ 302 010a 00F10040 		add	r0, r0, #-2147483648
+ 303 010e FFF7FEFF 		bl	__aeabi_fmul
+ 304              	.LVL15:
+ 305 0112 264B     		ldr	r3, .L26+60
+ 306 0114 0646     		mov	r6, r0
+ 307              	.LVL16:
+ 308 0116 1968     		ldr	r1, [r3, #0]	@ float
+ 309 0118 2046     		mov	r0, r4
+ 310 011a FFF7FEFF 		bl	__aeabi_fmul
+ 311 011e 0146     		mov	r1, r0
+ 312 0120 2846     		mov	r0, r5
+ 313 0122 FFF7FEFF 		bl	__aeabi_fadd
+ 314 0126 0146     		mov	r1, r0
+ 315 0128 3046     		mov	r0, r6
+ 316 012a FFF7FEFF 		bl	__aeabi_fmul
+ 275:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 276:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 277:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 278:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #if defined(AGR_CLIMB) && !USE_AIRSPEED
+ 279:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   /** limit navigation during extreme altitude changes */
+ 280:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   if (AGR_BLEND_START > AGR_BLEND_END && AGR_BLEND_END > 0) { /* prevent divide by zero, reversed o
+ 281:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     if (v_ctl_auto_throttle_submode == V_CTL_AUTO_THROTTLE_AGRESSIVE || V_CTL_AUTO_THROTTLE_BLENDED
+ 282:firmwares/fixedwing/stabilization/stabilization_attitude.c ****       BoundAbs(cmd, h_ctl_roll_max_setpoint); /* bound cmd before NAV_RATIO and again after */
+ 283:firmwares/fixedwing/stabilization/stabilization_attitude.c ****       /* altitude: z-up is positive -> positive error -> too low */
+ 284:firmwares/fixedwing/stabilization/stabilization_attitude.c ****       if (v_ctl_altitude_error > 0) {
+ 285:firmwares/fixedwing/stabilization/stabilization_attitude.c ****         nav_ratio = AGR_CLIMB_NAV_RATIO + (1 - AGR_CLIMB_NAV_RATIO) * (1 - (fabs(v_ctl_altitude_err
+ 286:firmwares/fixedwing/stabilization/stabilization_attitude.c ****         Bound (nav_ratio, AGR_CLIMB_NAV_RATIO, 1);
+ 287:firmwares/fixedwing/stabilization/stabilization_attitude.c ****       } else {
+ 288:firmwares/fixedwing/stabilization/stabilization_attitude.c ****         nav_ratio = AGR_DESCENT_NAV_RATIO + (1 - AGR_DESCENT_NAV_RATIO) * (1 - (fabs(v_ctl_altitude
+ 289:firmwares/fixedwing/stabilization/stabilization_attitude.c ****         Bound (nav_ratio, AGR_DESCENT_NAV_RATIO, 1);
+ 290:firmwares/fixedwing/stabilization/stabilization_attitude.c ****       }
+ 291:firmwares/fixedwing/stabilization/stabilization_attitude.c ****       cmd *= nav_ratio;
+ 292:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     }
+ 293:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   }
+ 294:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #endif
+ 295:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 296:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   float roll_setpoint = cmd + h_ctl_course_pre_bank_correction * h_ctl_course_pre_bank;
+ 317              		.loc 1 296 0
+ 318 012e 204B     		ldr	r3, .L26+64
+ 274:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   float cmd = -h_ctl_course_pgain * speed_depend_nav * (err + d_err * h_ctl_course_dgain);
+ 319              		.loc 1 274 0
+ 320 0130 0446     		mov	r4, r0
+ 321              	.LVL17:
+ 322              		.loc 1 296 0
+ 323 0132 1868     		ldr	r0, [r3, #0]	@ float
+ 324 0134 1F4B     		ldr	r3, .L26+68
+ 325 0136 1968     		ldr	r1, [r3, #0]	@ float
+ 326 0138 FFF7FEFF 		bl	__aeabi_fmul
+ 327 013c 0146     		mov	r1, r0
+ 328 013e 2046     		mov	r0, r4
+ 329 0140 FFF7FEFF 		bl	__aeabi_fadd
+ 297:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 298:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #ifdef H_CTL_ROLL_SLEW
+ 299:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   float diff_roll = roll_setpoint - h_ctl_roll_setpoint;
+ 300:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   BoundAbs(diff_roll, h_ctl_roll_slew);
+ 301:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_roll_setpoint += diff_roll;
+ 302:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #else
+ 303:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_roll_setpoint = roll_setpoint;
+ 304:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #endif
+ 305:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 306:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   BoundAbs(h_ctl_roll_setpoint, h_ctl_roll_max_setpoint);
+ 330              		.loc 1 306 0
+ 331 0144 1C4B     		ldr	r3, .L26+72
+ 303:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_roll_setpoint = roll_setpoint;
+ 332              		.loc 1 303 0
+ 333 0146 1D4C     		ldr	r4, .L26+76
+ 334              		.loc 1 306 0
+ 335 0148 1D68     		ldr	r5, [r3, #0]	@ float
+ 336              	.LVL18:
+ 303:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_roll_setpoint = roll_setpoint;
+ 337              		.loc 1 303 0
+ 338 014a 2060     		str	r0, [r4, #0]	@ float
+ 339              		.loc 1 306 0
+ 340 014c 2946     		mov	r1, r5
+ 296:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   float roll_setpoint = cmd + h_ctl_course_pre_bank_correction * h_ctl_course_pre_bank;
+ 341              		.loc 1 296 0
+ 342 014e 0646     		mov	r6, r0
+ 343              	.LVL19:
+ 344              		.loc 1 306 0
+ 345 0150 FFF7FEFF 		bl	__aeabi_fcmpgt
+ 346              	.LVL20:
+ 347 0154 08B1     		cbz	r0, .L24
+ 348              		.loc 1 306 0 is_stmt 0 discriminator 1
+ 349 0156 2560     		str	r5, [r4, #0]	@ float
+ 350 0158 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 351              	.L24:
+ 352              		.loc 1 306 0 discriminator 2
+ 353 015a 05F10045 		add	r5, r5, #-2147483648
+ 354 015e 3046     		mov	r0, r6
+ 355 0160 2946     		mov	r1, r5
+ 356 0162 FFF7FEFF 		bl	__aeabi_fcmplt
+ 357 0166 00B1     		cbz	r0, .L4
+ 358              		.loc 1 306 0 discriminator 3
+ 359 0168 2560     		str	r5, [r4, #0]	@ float
+ 360              	.L4:
+ 361 016a F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 362              	.L27:
+ 363 016c AFF30080 		.align	3
+ 364              	.L26:
+ 365 0170 182D4454 		.word	1413754136
+ 366 0174 FB211940 		.word	1075388923
+ 367 0178 182D4454 		.word	1413754136
+ 368 017c FB210940 		.word	1074340347
+ 369 0180 182D4454 		.word	1413754136
+ 370 0184 FB2109C0 		.word	-1073143301
+ 371 0188 1F85EB51 		.word	1374389535
+ 372 018c B81EE53F 		.word	1071980216
+ 373 0190 00000000 		.word	estimator_hspeed_dir
+ 374 0194 00000000 		.word	.LANCHOR0
+ 375 0198 00000000 		.word	.LANCHOR17
+ 376 019c 00000000 		.word	estimator_hspeed_mod
+ 377 01a0 00007041 		.word	1097859072
+ 378 01a4 C3F5283F 		.word	1059648963
+ 379 01a8 00000000 		.word	.LANCHOR3
+ 380 01ac 00000000 		.word	.LANCHOR4
+ 381 01b0 00000000 		.word	.LANCHOR2
+ 382 01b4 00000000 		.word	.LANCHOR1
+ 383 01b8 00000000 		.word	.LANCHOR5
+ 384 01bc 00000000 		.word	.LANCHOR7
+ 385              		.cfi_endproc
+ 386              	.LFE28:
+ 388              		.global	__aeabi_i2f
+ 389              		.global	__aeabi_f2iz
+ 390              		.global	__aeabi_dmul
+ 391              		.section	.text.h_ctl_attitude_loop,"ax",%progbits
+ 392              		.align	1
+ 393              		.global	h_ctl_attitude_loop
+ 394              		.thumb
+ 395              		.thumb_func
+ 397              	h_ctl_attitude_loop:
+ 398              	.LFB29:
+ 307:firmwares/fixedwing/stabilization/stabilization_attitude.c **** }
+ 308:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 309:firmwares/fixedwing/stabilization/stabilization_attitude.c **** void h_ctl_attitude_loop ( void ) {
+ 399              		.loc 1 309 0 is_stmt 1
+ 400              		.cfi_startproc
+ 401              		@ args = 0, pretend = 0, frame = 0
+ 402              		@ frame_needed = 0, uses_anonymous_args = 0
+ 403 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+ 404              	.LCFI1:
+ 405              		.cfi_def_cfa_offset 32
+ 406              		.cfi_offset 14, -4
+ 407              		.cfi_offset 9, -8
+ 408              		.cfi_offset 8, -12
+ 409              		.cfi_offset 7, -16
+ 410              		.cfi_offset 6, -20
+ 411              		.cfi_offset 5, -24
+ 412              		.cfi_offset 4, -28
+ 413              		.cfi_offset 3, -32
+ 310:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   if (!h_ctl_disabled) {
+ 414              		.loc 1 310 0
+ 415 0004 4D4B     		ldr	r3, .L39
+ 416 0006 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
+ 417 0008 002B     		cmp	r3, #0
+ 418 000a 40F09580 		bne	.L28
+ 419              	.LBB6:
+ 420              	.LBB7:
+ 311:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     h_ctl_roll_loop();
+ 312:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     h_ctl_pitch_loop();
+ 313:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   }
+ 314:firmwares/fixedwing/stabilization/stabilization_attitude.c **** }
+ 315:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 316:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 317:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #ifdef H_CTL_ROLL_ATTITUDE_GAIN
+ 318:firmwares/fixedwing/stabilization/stabilization_attitude.c **** inline static void h_ctl_roll_loop( void ) {
+ 319:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   float err = estimator_phi - h_ctl_roll_setpoint;
+ 421              		.loc 1 319 0
+ 422 000e 4C4B     		ldr	r3, .L39+4
+ 423 0010 1D68     		ldr	r5, [r3, #0]	@ float
+ 424              	.LVL21:
+ 425 0012 4C4B     		ldr	r3, .L39+8
+ 426              	.LVL22:
+ 427 0014 2846     		mov	r0, r5
+ 428 0016 1968     		ldr	r1, [r3, #0]	@ float
+ 429 0018 FFF7FEFF 		bl	__aeabi_fsub
+ 430              	.LVL23:
+ 320:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #ifdef SITL
+ 321:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   static float last_err = 0;
+ 322:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   estimator_p = (err - last_err)/(1/60.);
+ 323:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   last_err = err;
+ 324:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #endif
+ 325:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   float cmd = h_ctl_roll_attitude_gain * err
+ 431              		.loc 1 325 0
+ 432 001c 4A4B     		ldr	r3, .L39+12
+ 433 001e 1968     		ldr	r1, [r3, #0]	@ float
+ 434 0020 FFF7FEFF 		bl	__aeabi_fmul
+ 326:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     + h_ctl_roll_rate_gain * estimator_p
+ 435              		.loc 1 326 0
+ 436 0024 494B     		ldr	r3, .L39+16
+ 325:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   float cmd = h_ctl_roll_attitude_gain * err
+ 437              		.loc 1 325 0
+ 438 0026 0446     		mov	r4, r0
+ 439              		.loc 1 326 0
+ 440 0028 1868     		ldr	r0, [r3, #0]	@ float
+ 441 002a 494B     		ldr	r3, .L39+20
+ 442 002c 1968     		ldr	r1, [r3, #0]	@ float
+ 443 002e FFF7FEFF 		bl	__aeabi_fmul
+ 444 0032 0146     		mov	r1, r0
+ 445 0034 2046     		mov	r0, r4
+ 446 0036 FFF7FEFF 		bl	__aeabi_fadd
+ 327:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     + v_ctl_throttle_setpoint * h_ctl_aileron_of_throttle;
+ 447              		.loc 1 327 0
+ 448 003a 464B     		ldr	r3, .L39+24
+ 326:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     + h_ctl_roll_rate_gain * estimator_p
+ 449              		.loc 1 326 0
+ 450 003c 0446     		mov	r4, r0
+ 451              		.loc 1 327 0
+ 452 003e B3F90000 		ldrsh	r0, [r3, #0]
+ 453 0042 FFF7FEFF 		bl	__aeabi_i2f
+ 454 0046 444B     		ldr	r3, .L39+28
+ 455 0048 1968     		ldr	r1, [r3, #0]	@ float
+ 456 004a FFF7FEFF 		bl	__aeabi_fmul
+ 457 004e 0146     		mov	r1, r0
+ 325:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   float cmd = h_ctl_roll_attitude_gain * err
+ 458              		.loc 1 325 0
+ 459 0050 2046     		mov	r0, r4
+ 460 0052 FFF7FEFF 		bl	__aeabi_fadd
+ 328:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 329:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_aileron_setpoint = TRIM_PPRZ(cmd);
+ 461              		.loc 1 329 0
+ 462 0056 4149     		ldr	r1, .L39+32
+ 325:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   float cmd = h_ctl_roll_attitude_gain * err
+ 463              		.loc 1 325 0
+ 464 0058 0446     		mov	r4, r0
+ 465              	.LVL24:
+ 466              		.loc 1 329 0
+ 467 005a FFF7FEFF 		bl	__aeabi_fcmplt
+ 468              	.LVL25:
+ 469 005e 48B9     		cbnz	r0, .L34
+ 470 0060 2046     		mov	r0, r4
+ 471 0062 3F49     		ldr	r1, .L39+36
+ 472 0064 FFF7FEFF 		bl	__aeabi_fcmpgt
+ 473 0068 38B9     		cbnz	r0, .L35
+ 474 006a 2046     		mov	r0, r4
+ 475 006c FFF7FEFF 		bl	__aeabi_f2iz
+ 476 0070 80B2     		uxth	r0, r0
+ 477 0072 04E0     		b	.L30
+ 478              	.L34:
+ 479 0074 4DF68020 		movw	r0, #55936
+ 480 0078 01E0     		b	.L30
+ 481              	.L35:
+ 482 007a 4FF41650 		mov	r0, #9600
+ 483              	.L30:
+ 484 007e 394B     		ldr	r3, .L39+40
+ 485              	.LBE7:
+ 486              	.LBE6:
+ 487              	.LBB9:
+ 488              	.LBB10:
+ 330:firmwares/fixedwing/stabilization/stabilization_attitude.c **** }
+ 331:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 332:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #else // H_CTL_ROLL_ATTITUDE_GAIN
+ 333:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 334:firmwares/fixedwing/stabilization/stabilization_attitude.c **** /** Computes h_ctl_aileron_setpoint from h_ctl_roll_setpoint */
+ 335:firmwares/fixedwing/stabilization/stabilization_attitude.c **** inline static void h_ctl_roll_loop( void ) {
+ 336:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   float err = estimator_phi - h_ctl_roll_setpoint;
+ 337:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   float cmd = h_ctl_roll_pgain * err
+ 338:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     + v_ctl_throttle_setpoint * h_ctl_aileron_of_throttle;
+ 339:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_aileron_setpoint = TRIM_PPRZ(cmd);
+ 340:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 341:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #ifdef H_CTL_RATE_LOOP
+ 342:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   if (h_ctl_auto1_rate) {
+ 343:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     /** Runs only the roll rate loop */
+ 344:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     h_ctl_roll_rate_setpoint = h_ctl_roll_setpoint * 10.;
+ 345:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     h_ctl_roll_rate_loop();
+ 346:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   } else {
+ 347:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     h_ctl_roll_rate_setpoint = h_ctl_roll_rate_setpoint_pgain * err;
+ 348:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     BoundAbs(h_ctl_roll_rate_setpoint, H_CTL_ROLL_RATE_MAX_SETPOINT);
+ 349:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 350:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     float saved_aileron_setpoint = h_ctl_aileron_setpoint;
+ 351:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     h_ctl_roll_rate_loop();
+ 352:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     h_ctl_aileron_setpoint = Blend(h_ctl_aileron_setpoint, saved_aileron_setpoint, h_ctl_roll_rate_
+ 353:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   }
+ 354:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #endif
+ 355:firmwares/fixedwing/stabilization/stabilization_attitude.c **** }
+ 356:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 357:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #ifdef H_CTL_RATE_LOOP
+ 358:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 359:firmwares/fixedwing/stabilization/stabilization_attitude.c **** static inline void h_ctl_roll_rate_loop() {
+ 360:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   float err = estimator_p - h_ctl_roll_rate_setpoint;
+ 361:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 362:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   /* I term calculation */
+ 363:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   static float roll_rate_sum_err = 0.;
+ 364:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   static uint8_t roll_rate_sum_idx = 0;
+ 365:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   static float roll_rate_sum_values[H_CTL_ROLL_RATE_SUM_NB_SAMPLES];
+ 366:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 367:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   roll_rate_sum_err -= roll_rate_sum_values[roll_rate_sum_idx];
+ 368:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   roll_rate_sum_values[roll_rate_sum_idx] = err;
+ 369:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   roll_rate_sum_err += err;
+ 370:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   roll_rate_sum_idx++;
+ 371:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   if (roll_rate_sum_idx >= H_CTL_ROLL_RATE_SUM_NB_SAMPLES) roll_rate_sum_idx = 0;
+ 372:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 373:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   /* D term calculations */
+ 374:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   static float last_err = 0;
+ 375:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   float d_err = err - last_err;
+ 376:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   last_err = err;
+ 377:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 378:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   float throttle_dep_pgain =
+ 379:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     Blend(h_ctl_hi_throttle_roll_rate_pgain, h_ctl_lo_throttle_roll_rate_pgain, v_ctl_throttle_setp
+ 380:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   float cmd = throttle_dep_pgain * ( err + h_ctl_roll_rate_igain * roll_rate_sum_err / H_CTL_ROLL_R
+ 381:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 382:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_aileron_setpoint = TRIM_PPRZ(cmd);
+ 383:firmwares/fixedwing/stabilization/stabilization_attitude.c **** }
+ 384:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #endif /* H_CTL_RATE_LOOP */
+ 385:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 386:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #endif /* !H_CTL_ROLL_ATTITUDE_GAIN */
+ 387:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 388:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 389:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 390:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 391:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 392:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 393:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #ifdef LOITER_TRIM
+ 394:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 395:firmwares/fixedwing/stabilization/stabilization_attitude.c **** float v_ctl_auto_throttle_loiter_trim = V_CTL_AUTO_THROTTLE_LOITER_TRIM;
+ 396:firmwares/fixedwing/stabilization/stabilization_attitude.c **** float v_ctl_auto_throttle_dash_trim = V_CTL_AUTO_THROTTLE_DASH_TRIM;
+ 397:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 398:firmwares/fixedwing/stabilization/stabilization_attitude.c **** inline static float loiter(void) {
+ 399:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   static float last_elevator_trim;
+ 400:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   float elevator_trim;
+ 401:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 402:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   float throttle_dif = v_ctl_auto_throttle_cruise_throttle - v_ctl_auto_throttle_nominal_cruise_thr
+ 403:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   if (throttle_dif > 0) {
+ 404:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     float max_dif = Max(V_CTL_AUTO_THROTTLE_MAX_CRUISE_THROTTLE - v_ctl_auto_throttle_nominal_cruis
+ 405:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     elevator_trim = throttle_dif / max_dif * v_ctl_auto_throttle_dash_trim;
+ 406:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   } else {
+ 407:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     float max_dif = Max(v_ctl_auto_throttle_nominal_cruise_throttle - V_CTL_AUTO_THROTTLE_MIN_CRUIS
+ 408:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     elevator_trim = - throttle_dif / max_dif * v_ctl_auto_throttle_loiter_trim;
+ 409:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   }
+ 410:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 411:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   float max_change = (v_ctl_auto_throttle_loiter_trim - v_ctl_auto_throttle_dash_trim) / 80.;
+ 412:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   Bound(elevator_trim, last_elevator_trim - max_change, last_elevator_trim + max_change);
+ 413:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 414:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   last_elevator_trim = elevator_trim;
+ 415:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   return elevator_trim;
+ 416:firmwares/fixedwing/stabilization/stabilization_attitude.c **** }
+ 417:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #endif
+ 418:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 419:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 420:firmwares/fixedwing/stabilization/stabilization_attitude.c **** inline static void h_ctl_pitch_loop( void ) {
+ 421:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   static float last_err;
+ 422:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   /* sanity check */
+ 423:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   if (h_ctl_elevator_of_roll <0.)
+ 489              		.loc 1 423 0
+ 490 0080 394E     		ldr	r6, .L39+44
+ 491 0082 0024     		movs	r4, #0
+ 492              	.LVL26:
+ 493              	.LBE10:
+ 494              	.LBE9:
+ 495              	.LBB12:
+ 496              	.LBB8:
+ 329:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_aileron_setpoint = TRIM_PPRZ(cmd);
+ 497              		.loc 1 329 0
+ 498 0084 1880     		strh	r0, [r3, #0]	@ movhi
+ 499              	.LBE8:
+ 500              	.LBE12:
+ 501              	.LBB13:
+ 502              	.LBB11:
+ 503              		.loc 1 423 0
+ 504 0086 2146     		mov	r1, r4
+ 505 0088 3068     		ldr	r0, [r6, #0]	@ float
+ 506 008a FFF7FEFF 		bl	__aeabi_fcmplt
+ 507 008e 00B1     		cbz	r0, .L31
+ 424:firmwares/fixedwing/stabilization/stabilization_attitude.c ****     h_ctl_elevator_of_roll = 0.;
+ 508              		.loc 1 424 0
+ 509 0090 3460     		str	r4, [r6, #0]	@ float
+ 510              	.L31:
+ 425:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 426:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_pitch_loop_setpoint =  h_ctl_pitch_setpoint + h_ctl_elevator_of_roll / h_ctl_pitch_pgain * 
+ 511              		.loc 1 426 0
+ 512 0092 364B     		ldr	r3, .L39+48
+ 513 0094 1C68     		ldr	r4, [r3, #0]	@ float
+ 514 0096 364B     		ldr	r3, .L39+52
+ 515 0098 1868     		ldr	r0, [r3, #0]	@ float
+ 516 009a FFF7FEFF 		bl	__aeabi_f2d
+ 517 009e 8046     		mov	r8, r0
+ 518 00a0 8946     		mov	r9, r1
+ 519 00a2 3068     		ldr	r0, [r6, #0]	@ float
+ 520 00a4 2146     		mov	r1, r4
+ 521 00a6 FFF7FEFF 		bl	__aeabi_fdiv
+ 522 00aa FFF7FEFF 		bl	__aeabi_f2d
+ 523 00ae 0646     		mov	r6, r0
+ 524 00b0 25F00040 		bic	r0, r5, #-2147483648
+ 525 00b4 0F46     		mov	r7, r1
+ 526 00b6 FFF7FEFF 		bl	__aeabi_f2d
+ 527 00ba 0246     		mov	r2, r0
+ 528 00bc 0B46     		mov	r3, r1
+ 529 00be 3046     		mov	r0, r6
+ 530 00c0 3946     		mov	r1, r7
+ 531 00c2 FFF7FEFF 		bl	__aeabi_dmul
+ 532 00c6 0246     		mov	r2, r0
+ 533 00c8 0B46     		mov	r3, r1
+ 534 00ca 4046     		mov	r0, r8
+ 535 00cc 4946     		mov	r1, r9
+ 536 00ce FFF7FEFF 		bl	__aeabi_dadd
+ 537 00d2 FFF7FEFF 		bl	__aeabi_d2f
+ 538 00d6 274B     		ldr	r3, .L39+56
+ 539 00d8 0146     		mov	r1, r0
+ 540 00da 1860     		str	r0, [r3, #0]	@ float
+ 541              	.LVL27:
+ 427:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 428:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 	float err = 0;
+ 429:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 430:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #ifdef USE_AOA
+ 431:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 	switch (h_ctl_pitch_mode){
+ 432:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 		case H_CTL_PITCH_MODE_THETA:
+ 433:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 			err = estimator_theta - h_ctl_pitch_loop_setpoint;
+ 434:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 		break;
+ 435:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 		case H_CTL_PITCH_MODE_AOA:
+ 436:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 			err = estimator_AOA - h_ctl_pitch_loop_setpoint;
+ 437:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 		break;
+ 438:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 		default:
+ 439:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 			err = estimator_theta - h_ctl_pitch_loop_setpoint;
+ 440:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 		break;
+ 441:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 	}
+ 442:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #else //NO_AOA
+ 443:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 	err = estimator_theta - h_ctl_pitch_loop_setpoint;
+ 542              		.loc 1 443 0
+ 543 00dc 264B     		ldr	r3, .L39+60
+ 444:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #endif
+ 445:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 446:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 
+ 447:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   float d_err = err - last_err;
+ 544              		.loc 1 447 0
+ 545 00de 274E     		ldr	r6, .L39+64
+ 443:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 	err = estimator_theta - h_ctl_pitch_loop_setpoint;
+ 546              		.loc 1 443 0
+ 547 00e0 1868     		ldr	r0, [r3, #0]	@ float
+ 548 00e2 FFF7FEFF 		bl	__aeabi_fsub
+ 549              		.loc 1 447 0
+ 550 00e6 3168     		ldr	r1, [r6, #0]	@ float
+ 443:firmwares/fixedwing/stabilization/stabilization_attitude.c **** 	err = estimator_theta - h_ctl_pitch_loop_setpoint;
+ 551              		.loc 1 443 0
+ 552 00e8 0546     		mov	r5, r0
+ 553              	.LVL28:
+ 554              		.loc 1 447 0
+ 555 00ea FFF7FEFF 		bl	__aeabi_fsub
+ 556              	.LVL29:
+ 448:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   last_err = err;
+ 449:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   float cmd = -h_ctl_pitch_pgain * (err + h_ctl_pitch_dgain * d_err);
+ 557              		.loc 1 449 0
+ 558 00ee 244B     		ldr	r3, .L39+68
+ 448:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   last_err = err;
+ 559              		.loc 1 448 0
+ 560 00f0 3560     		str	r5, [r6, #0]	@ float
+ 561              		.loc 1 449 0
+ 562 00f2 1968     		ldr	r1, [r3, #0]	@ float
+ 563 00f4 FFF7FEFF 		bl	__aeabi_fmul
+ 564 00f8 0146     		mov	r1, r0
+ 565 00fa 2846     		mov	r0, r5
+ 566 00fc FFF7FEFF 		bl	__aeabi_fadd
+ 567 0100 04F10044 		add	r4, r4, #-2147483648
+ 568 0104 0146     		mov	r1, r0
+ 569 0106 2046     		mov	r0, r4
+ 570 0108 FFF7FEFF 		bl	__aeabi_fmul
+ 450:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #ifdef LOITER_TRIM
+ 451:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   cmd += loiter();
+ 452:firmwares/fixedwing/stabilization/stabilization_attitude.c **** #endif
+ 453:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   h_ctl_elevator_setpoint = TRIM_PPRZ(cmd);
+ 571              		.loc 1 453 0
+ 572 010c 1349     		ldr	r1, .L39+32
+ 449:firmwares/fixedwing/stabilization/stabilization_attitude.c ****   float cmd = -h_ctl_pitch_pgain * (err + h_ctl_pitch_dgain * d_err);
+ 573              		.loc 1 449 0
+ 574 010e 0446     		mov	r4, r0
+ 575              	.LVL30:
+ 576              		.loc 1 453 0
+ 577 0110 FFF7FEFF 		bl	__aeabi_fcmplt
+ 578              	.LVL31:
+ 579 0114 48B9     		cbnz	r0, .L36
+ 580 0116 2046     		mov	r0, r4
+ 581 0118 1149     		ldr	r1, .L39+36
+ 582 011a FFF7FEFF 		bl	__aeabi_fcmpgt
+ 583 011e 38B9     		cbnz	r0, .L37
+ 584 0120 2046     		mov	r0, r4
+ 585 0122 FFF7FEFF 		bl	__aeabi_f2iz
+ 586 0126 80B2     		uxth	r0, r0
+ 587 0128 04E0     		b	.L33
+ 588              	.L36:
+ 589 012a 4DF68020 		movw	r0, #55936
+ 590 012e 01E0     		b	.L33
+ 591              	.L37:
+ 592 0130 4FF41650 		mov	r0, #9600
+ 593              	.L33:
+ 594 0134 134B     		ldr	r3, .L39+72
+ 595 0136 1880     		strh	r0, [r3, #0]	@ movhi
+ 596              	.LVL32:
+ 597              	.L28:
+ 598 0138 BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 599              	.L40:
+ 600              		.align	2
+ 601              	.L39:
+ 602 013c 00000000 		.word	.LANCHOR6
+ 603 0140 00000000 		.word	estimator_phi
+ 604 0144 00000000 		.word	.LANCHOR7
+ 605 0148 00000000 		.word	.LANCHOR15
+ 606 014c 00000000 		.word	.LANCHOR16
+ 607 0150 00000000 		.word	estimator_p
+ 608 0154 00000000 		.word	v_ctl_throttle_setpoint
+ 609 0158 00000000 		.word	.LANCHOR18
+ 610 015c 000016C6 		.word	-971636736
+ 611 0160 00001646 		.word	1175846912
+ 612 0164 00000000 		.word	.LANCHOR8
+ 613 0168 00000000 		.word	.LANCHOR14
+ 614 016c 00000000 		.word	.LANCHOR11
+ 615 0170 00000000 		.word	.LANCHOR9
+ 616 0174 00000000 		.word	.LANCHOR10
+ 617 0178 00000000 		.word	estimator_theta
+ 618 017c 00000000 		.word	.LANCHOR19
+ 619 0180 00000000 		.word	.LANCHOR12
+ 620 0184 00000000 		.word	.LANCHOR13
+ 621              	.LBE11:
+ 622              	.LBE13:
+ 623              		.cfi_endproc
+ 624              	.LFE29:
+ 626              		.global	h_ctl_roll_rate_gain
+ 627              		.global	h_ctl_roll_attitude_gain
+ 628              		.global	h_ctl_elevator_of_roll
+ 629              		.global	h_ctl_aileron_of_throttle
+ 630              		.global	h_ctl_elevator_setpoint
+ 631              		.global	h_ctl_pitch_dgain
+ 632              		.global	h_ctl_pitch_pgain
+ 633              		.global	h_ctl_pitch_loop_setpoint
+ 634              		.global	h_ctl_pitch_setpoint
+ 635              		.global	h_ctl_roll_slew
+ 636              		.global	h_ctl_aileron_setpoint
+ 637              		.global	h_ctl_roll_pgain
+ 638              		.global	h_ctl_roll_setpoint
+ 639              		.global	h_ctl_auto1_rate
+ 640              		.global	h_ctl_disabled
+ 641              		.global	h_ctl_roll_max_setpoint
+ 642              		.global	h_ctl_course_dgain
+ 643              		.global	h_ctl_course_pgain
+ 644              		.global	h_ctl_course_pre_bank_correction
+ 645              		.global	h_ctl_course_pre_bank
+ 646              		.global	h_ctl_course_setpoint
+ 647              		.section	.bss.h_ctl_elevator_setpoint,"aw",%nobits
+ 648              		.align	1
+ 649              		.set	.LANCHOR13,. + 0
+ 652              	h_ctl_elevator_setpoint:
+ 653 0000 0000     		.space	2
+ 654              		.section	.bss.h_ctl_pitch_pgain,"aw",%nobits
+ 655              		.align	2
+ 656              		.set	.LANCHOR11,. + 0
+ 659              	h_ctl_pitch_pgain:
+ 660 0000 00000000 		.space	4
+ 661              		.section	.bss.h_ctl_roll_max_setpoint,"aw",%nobits
+ 662              		.align	2
+ 663              		.set	.LANCHOR5,. + 0
+ 666              	h_ctl_roll_max_setpoint:
+ 667 0000 00000000 		.space	4
+ 668              		.section	.bss.h_ctl_roll_setpoint,"aw",%nobits
+ 669              		.align	2
+ 670              		.set	.LANCHOR7,. + 0
+ 673              	h_ctl_roll_setpoint:
+ 674 0000 00000000 		.space	4
+ 675              		.section	.bss.h_ctl_course_setpoint,"aw",%nobits
+ 676              		.align	2
+ 677              		.set	.LANCHOR0,. + 0
+ 680              	h_ctl_course_setpoint:
+ 681 0000 00000000 		.space	4
+ 682              		.section	.bss.h_ctl_auto1_rate,"aw",%nobits
+ 685              	h_ctl_auto1_rate:
+ 686 0000 00       		.space	1
+ 687              		.section	.bss.h_ctl_aileron_setpoint,"aw",%nobits
+ 688              		.align	1
+ 689              		.set	.LANCHOR8,. + 0
+ 692              	h_ctl_aileron_setpoint:
+ 693 0000 0000     		.space	2
+ 694              		.section	.bss.h_ctl_roll_attitude_gain,"aw",%nobits
+ 695              		.align	2
+ 696              		.set	.LANCHOR15,. + 0
+ 699              	h_ctl_roll_attitude_gain:
+ 700 0000 00000000 		.space	4
+ 701              		.section	.bss.h_ctl_pitch_setpoint,"aw",%nobits
+ 702              		.align	2
+ 703              		.set	.LANCHOR9,. + 0
+ 706              	h_ctl_pitch_setpoint:
+ 707 0000 00000000 		.space	4
+ 708              		.section	.bss.h_ctl_aileron_of_throttle,"aw",%nobits
+ 709              		.align	2
+ 710              		.set	.LANCHOR18,. + 0
+ 713              	h_ctl_aileron_of_throttle:
+ 714 0000 00000000 		.space	4
+ 715              		.section	.bss.h_ctl_roll_slew,"aw",%nobits
+ 716              		.align	2
+ 719              	h_ctl_roll_slew:
+ 720 0000 00000000 		.space	4
+ 721              		.section	.bss.h_ctl_roll_rate_gain,"aw",%nobits
+ 722              		.align	2
+ 723              		.set	.LANCHOR16,. + 0
+ 726              	h_ctl_roll_rate_gain:
+ 727 0000 00000000 		.space	4
+ 728              		.section	.bss.h_ctl_disabled,"aw",%nobits
+ 729              		.set	.LANCHOR6,. + 0
+ 732              	h_ctl_disabled:
+ 733 0000 00       		.space	1
+ 734              		.section	.bss.h_ctl_pitch_loop_setpoint,"aw",%nobits
+ 735              		.align	2
+ 736              		.set	.LANCHOR10,. + 0
+ 739              	h_ctl_pitch_loop_setpoint:
+ 740 0000 00000000 		.space	4
+ 741              		.section	.bss.h_ctl_course_pgain,"aw",%nobits
+ 742              		.align	2
+ 743              		.set	.LANCHOR3,. + 0
+ 746              	h_ctl_course_pgain:
+ 747 0000 00000000 		.space	4
+ 748              		.section	.bss.h_ctl_elevator_of_roll,"aw",%nobits
+ 749              		.align	2
+ 750              		.set	.LANCHOR14,. + 0
+ 753              	h_ctl_elevator_of_roll:
+ 754 0000 00000000 		.space	4
+ 755              		.section	.bss.h_ctl_course_dgain,"aw",%nobits
+ 756              		.align	2
+ 757              		.set	.LANCHOR4,. + 0
+ 760              	h_ctl_course_dgain:
+ 761 0000 00000000 		.space	4
+ 762              		.section	.bss.h_ctl_course_pre_bank_correction,"aw",%nobits
+ 763              		.align	2
+ 764              		.set	.LANCHOR2,. + 0
+ 767              	h_ctl_course_pre_bank_correction:
+ 768 0000 00000000 		.space	4
+ 769              		.section	.bss.last_err.3580,"aw",%nobits
+ 770              		.align	2
+ 771              		.set	.LANCHOR17,. + 0
+ 774              	last_err.3580:
+ 775 0000 00000000 		.space	4
+ 776              		.section	.bss.h_ctl_course_pre_bank,"aw",%nobits
+ 777              		.align	2
+ 778              		.set	.LANCHOR1,. + 0
+ 781              	h_ctl_course_pre_bank:
+ 782 0000 00000000 		.space	4
+ 783              		.section	.bss.last_err.3609,"aw",%nobits
+ 784              		.align	2
+ 785              		.set	.LANCHOR19,. + 0
+ 788              	last_err.3609:
+ 789 0000 00000000 		.space	4
+ 790              		.section	.bss.h_ctl_roll_pgain,"aw",%nobits
+ 791              		.align	2
+ 794              	h_ctl_roll_pgain:
+ 795 0000 00000000 		.space	4
+ 796              		.section	.bss.h_ctl_pitch_dgain,"aw",%nobits
+ 797              		.align	2
+ 798              		.set	.LANCHOR12,. + 0
+ 801              	h_ctl_pitch_dgain:
+ 802 0000 00000000 		.space	4
+ 803              		.text
+ 804              	.Letext0:
+ 805              		.file 2 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
+ 806              		.file 3 "/home/uav/paparazzi/sw/include/std.h"
+ 807              		.file 4 "./paparazzi.h"
+ 808              		.file 5 "./mcu_periph/sys_time.h"
+ 809              		.file 6 "./firmwares/fixedwing/stabilization/stabilization_attitude.h"
+ 810              		.file 7 "./estimator.h"
+ 811              		.file 8 "./firmwares/fixedwing/guidance/guidance_v.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 stabilization_attitude.c
+     /tmp/ccCGuNk8.s:18     .text.h_ctl_init:0000000000000000 $t
+     /tmp/ccCGuNk8.s:23     .text.h_ctl_init:0000000000000000 h_ctl_init
+     /tmp/ccCGuNk8.s:99     .text.h_ctl_init:0000000000000060 $d
+     /tmp/ccCGuNk8.s:138    .text.h_ctl_course_loop:0000000000000000 $t
+     /tmp/ccCGuNk8.s:143    .text.h_ctl_course_loop:0000000000000000 h_ctl_course_loop
+     /tmp/ccCGuNk8.s:365    .text.h_ctl_course_loop:0000000000000170 $d
+     /tmp/ccCGuNk8.s:392    .text.h_ctl_attitude_loop:0000000000000000 $t
+     /tmp/ccCGuNk8.s:397    .text.h_ctl_attitude_loop:0000000000000000 h_ctl_attitude_loop
+     /tmp/ccCGuNk8.s:602    .text.h_ctl_attitude_loop:000000000000013c $d
+     /tmp/ccCGuNk8.s:726    .bss.h_ctl_roll_rate_gain:0000000000000000 h_ctl_roll_rate_gain
+     /tmp/ccCGuNk8.s:699    .bss.h_ctl_roll_attitude_gain:0000000000000000 h_ctl_roll_attitude_gain
+     /tmp/ccCGuNk8.s:753    .bss.h_ctl_elevator_of_roll:0000000000000000 h_ctl_elevator_of_roll
+     /tmp/ccCGuNk8.s:713    .bss.h_ctl_aileron_of_throttle:0000000000000000 h_ctl_aileron_of_throttle
+     /tmp/ccCGuNk8.s:652    .bss.h_ctl_elevator_setpoint:0000000000000000 h_ctl_elevator_setpoint
+     /tmp/ccCGuNk8.s:801    .bss.h_ctl_pitch_dgain:0000000000000000 h_ctl_pitch_dgain
+     /tmp/ccCGuNk8.s:659    .bss.h_ctl_pitch_pgain:0000000000000000 h_ctl_pitch_pgain
+     /tmp/ccCGuNk8.s:739    .bss.h_ctl_pitch_loop_setpoint:0000000000000000 h_ctl_pitch_loop_setpoint
+     /tmp/ccCGuNk8.s:706    .bss.h_ctl_pitch_setpoint:0000000000000000 h_ctl_pitch_setpoint
+     /tmp/ccCGuNk8.s:719    .bss.h_ctl_roll_slew:0000000000000000 h_ctl_roll_slew
+     /tmp/ccCGuNk8.s:692    .bss.h_ctl_aileron_setpoint:0000000000000000 h_ctl_aileron_setpoint
+     /tmp/ccCGuNk8.s:794    .bss.h_ctl_roll_pgain:0000000000000000 h_ctl_roll_pgain
+     /tmp/ccCGuNk8.s:673    .bss.h_ctl_roll_setpoint:0000000000000000 h_ctl_roll_setpoint
+     /tmp/ccCGuNk8.s:685    .bss.h_ctl_auto1_rate:0000000000000000 h_ctl_auto1_rate
+     /tmp/ccCGuNk8.s:732    .bss.h_ctl_disabled:0000000000000000 h_ctl_disabled
+     /tmp/ccCGuNk8.s:666    .bss.h_ctl_roll_max_setpoint:0000000000000000 h_ctl_roll_max_setpoint
+     /tmp/ccCGuNk8.s:760    .bss.h_ctl_course_dgain:0000000000000000 h_ctl_course_dgain
+     /tmp/ccCGuNk8.s:746    .bss.h_ctl_course_pgain:0000000000000000 h_ctl_course_pgain
+     /tmp/ccCGuNk8.s:767    .bss.h_ctl_course_pre_bank_correction:0000000000000000 h_ctl_course_pre_bank_correction
+     /tmp/ccCGuNk8.s:781    .bss.h_ctl_course_pre_bank:0000000000000000 h_ctl_course_pre_bank
+     /tmp/ccCGuNk8.s:680    .bss.h_ctl_course_setpoint:0000000000000000 h_ctl_course_setpoint
+     /tmp/ccCGuNk8.s:648    .bss.h_ctl_elevator_setpoint:0000000000000000 $d
+     /tmp/ccCGuNk8.s:655    .bss.h_ctl_pitch_pgain:0000000000000000 $d
+     /tmp/ccCGuNk8.s:662    .bss.h_ctl_roll_max_setpoint:0000000000000000 $d
+     /tmp/ccCGuNk8.s:669    .bss.h_ctl_roll_setpoint:0000000000000000 $d
+     /tmp/ccCGuNk8.s:676    .bss.h_ctl_course_setpoint:0000000000000000 $d
+     /tmp/ccCGuNk8.s:686    .bss.h_ctl_auto1_rate:0000000000000000 $d
+     /tmp/ccCGuNk8.s:688    .bss.h_ctl_aileron_setpoint:0000000000000000 $d
+     /tmp/ccCGuNk8.s:695    .bss.h_ctl_roll_attitude_gain:0000000000000000 $d
+     /tmp/ccCGuNk8.s:702    .bss.h_ctl_pitch_setpoint:0000000000000000 $d
+     /tmp/ccCGuNk8.s:709    .bss.h_ctl_aileron_of_throttle:0000000000000000 $d
+     /tmp/ccCGuNk8.s:716    .bss.h_ctl_roll_slew:0000000000000000 $d
+     /tmp/ccCGuNk8.s:722    .bss.h_ctl_roll_rate_gain:0000000000000000 $d
+     /tmp/ccCGuNk8.s:733    .bss.h_ctl_disabled:0000000000000000 $d
+     /tmp/ccCGuNk8.s:735    .bss.h_ctl_pitch_loop_setpoint:0000000000000000 $d
+     /tmp/ccCGuNk8.s:742    .bss.h_ctl_course_pgain:0000000000000000 $d
+     /tmp/ccCGuNk8.s:749    .bss.h_ctl_elevator_of_roll:0000000000000000 $d
+     /tmp/ccCGuNk8.s:756    .bss.h_ctl_course_dgain:0000000000000000 $d
+     /tmp/ccCGuNk8.s:763    .bss.h_ctl_course_pre_bank_correction:0000000000000000 $d
+     /tmp/ccCGuNk8.s:770    .bss.last_err.3580:0000000000000000 $d
+     /tmp/ccCGuNk8.s:774    .bss.last_err.3580:0000000000000000 last_err.3580
+     /tmp/ccCGuNk8.s:777    .bss.h_ctl_course_pre_bank:0000000000000000 $d
+     /tmp/ccCGuNk8.s:784    .bss.last_err.3609:0000000000000000 $d
+     /tmp/ccCGuNk8.s:788    .bss.last_err.3609:0000000000000000 last_err.3609
+     /tmp/ccCGuNk8.s:791    .bss.h_ctl_roll_pgain:0000000000000000 $d
+     /tmp/ccCGuNk8.s:797    .bss.h_ctl_pitch_dgain:0000000000000000 $d
+                     .debug_frame:0000000000000010 $d
+
+UNDEFINED SYMBOLS
+__aeabi_fsub
+__aeabi_dsub
+__aeabi_d2f
+__aeabi_f2d
+__aeabi_dcmpgt
+__aeabi_dadd
+__aeabi_dcmplt
+__aeabi_fdiv
+__aeabi_fcmpgt
+__aeabi_fmul
+__aeabi_fadd
+__aeabi_fcmplt
+estimator_hspeed_dir
+estimator_hspeed_mod
+__aeabi_i2f
+__aeabi_f2iz
+__aeabi_dmul
+estimator_phi
+estimator_p
+v_ctl_throttle_setpoint
+estimator_theta

@@ -1,0 +1,1817 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 18, 4
+  12              		.thumb
+  13              		.file	"datalink.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.global	__aeabi_f2uiz
+  18              		.global	__aeabi_fcmpeq
+  19              		.global	__aeabi_ui2f
+  20              		.global	__aeabi_f2iz
+  21              		.global	__aeabi_i2f
+  22              		.global	__aeabi_fmul
+  23              		.global	__aeabi_fsub
+  24              		.global	__aeabi_ldivmod
+  25              		.section	.text.dl_parse_msg,"ax",%progbits
+  26              		.align	1
+  27              		.global	dl_parse_msg
+  28              		.thumb
+  29              		.thumb_func
+  31              	dl_parse_msg:
+  32              	.LFB37:
+  33              		.file 1 "firmwares/rotorcraft/datalink.c"
+   1:firmwares/rotorcraft/datalink.c **** /*
+   2:firmwares/rotorcraft/datalink.c ****  * $Id$
+   3:firmwares/rotorcraft/datalink.c ****  *
+   4:firmwares/rotorcraft/datalink.c ****  * Copyright (C) 2008-2009 Antoine Drouin <poinix@gmail.com>
+   5:firmwares/rotorcraft/datalink.c ****  *
+   6:firmwares/rotorcraft/datalink.c ****  * This file is part of paparazzi.
+   7:firmwares/rotorcraft/datalink.c ****  *
+   8:firmwares/rotorcraft/datalink.c ****  * paparazzi is free software; you can redistribute it and/or modify
+   9:firmwares/rotorcraft/datalink.c ****  * it under the terms of the GNU General Public License as published by
+  10:firmwares/rotorcraft/datalink.c ****  * the Free Software Foundation; either version 2, or (at your option)
+  11:firmwares/rotorcraft/datalink.c ****  * any later version.
+  12:firmwares/rotorcraft/datalink.c ****  *
+  13:firmwares/rotorcraft/datalink.c ****  * paparazzi is distributed in the hope that it will be useful,
+  14:firmwares/rotorcraft/datalink.c ****  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  15:firmwares/rotorcraft/datalink.c ****  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  16:firmwares/rotorcraft/datalink.c ****  * GNU General Public License for more details.
+  17:firmwares/rotorcraft/datalink.c ****  *
+  18:firmwares/rotorcraft/datalink.c ****  * You should have received a copy of the GNU General Public License
+  19:firmwares/rotorcraft/datalink.c ****  * along with paparazzi; see the file COPYING.  If not, write to
+  20:firmwares/rotorcraft/datalink.c ****  * the Free Software Foundation, 59 Temple Place - Suite 330,
+  21:firmwares/rotorcraft/datalink.c ****  * Boston, MA 02111-1307, USA.
+  22:firmwares/rotorcraft/datalink.c ****  */
+  23:firmwares/rotorcraft/datalink.c **** 
+  24:firmwares/rotorcraft/datalink.c **** #define DATALINK_C
+  25:firmwares/rotorcraft/datalink.c **** #define MODULES_DATALINK_C
+  26:firmwares/rotorcraft/datalink.c **** 
+  27:firmwares/rotorcraft/datalink.c **** #include "subsystems/datalink/datalink.h"
+  28:firmwares/rotorcraft/datalink.c **** 
+  29:firmwares/rotorcraft/datalink.c **** #include "generated/modules.h"
+  30:firmwares/rotorcraft/datalink.c **** 
+  31:firmwares/rotorcraft/datalink.c **** #include "generated/settings.h"
+  32:firmwares/rotorcraft/datalink.c **** #include "subsystems/datalink/downlink.h"
+  33:firmwares/rotorcraft/datalink.c **** #include "messages.h"
+  34:firmwares/rotorcraft/datalink.c **** #include "dl_protocol.h"
+  35:firmwares/rotorcraft/datalink.c **** #include "mcu_periph/uart.h"
+  36:firmwares/rotorcraft/datalink.c **** 
+  37:firmwares/rotorcraft/datalink.c **** #ifdef BOOZ_FMS_TYPE
+  38:firmwares/rotorcraft/datalink.c **** #include "booz_fms.h"
+  39:firmwares/rotorcraft/datalink.c **** #endif
+  40:firmwares/rotorcraft/datalink.c **** 
+  41:firmwares/rotorcraft/datalink.c **** #include "firmwares/rotorcraft/navigation.h"
+  42:firmwares/rotorcraft/datalink.c **** 
+  43:firmwares/rotorcraft/datalink.c **** #include "math/pprz_geodetic_int.h"
+  44:firmwares/rotorcraft/datalink.c **** #include "subsystems/ins.h"
+  45:firmwares/rotorcraft/datalink.c **** 
+  46:firmwares/rotorcraft/datalink.c **** #define IdOfMsg(x) (x[1])
+  47:firmwares/rotorcraft/datalink.c **** 
+  48:firmwares/rotorcraft/datalink.c **** void dl_parse_msg(void) {
+  34              		.loc 1 48 0
+  35              		.cfi_startproc
+  36              		@ args = 0, pretend = 0, frame = 32
+  37              		@ frame_needed = 0, uses_anonymous_args = 0
+  38 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+  39              	.LCFI0:
+  40              		.cfi_def_cfa_offset 20
+  41              		.cfi_offset 14, -4
+  42              		.cfi_offset 7, -8
+  43              		.cfi_offset 6, -12
+  44              		.cfi_offset 5, -16
+  45              		.cfi_offset 4, -20
+  49:firmwares/rotorcraft/datalink.c **** 
+  50:firmwares/rotorcraft/datalink.c ****   datalink_time = 0;
+  46              		.loc 1 50 0
+  47 0002 994B     		ldr	r3, .L126
+  48 0004 0022     		movs	r2, #0
+  49 0006 1A80     		strh	r2, [r3, #0]	@ movhi
+  50              	.LVL0:
+  51:firmwares/rotorcraft/datalink.c **** 
+  52:firmwares/rotorcraft/datalink.c ****   uint8_t msg_id = IdOfMsg(dl_buffer);
+  51              		.loc 1 52 0
+  52 0008 984A     		ldr	r2, .L126+4
+  48:firmwares/rotorcraft/datalink.c **** void dl_parse_msg(void) {
+  53              		.loc 1 48 0
+  54 000a 89B0     		sub	sp, sp, #36
+  55              	.LCFI1:
+  56              		.cfi_def_cfa_offset 56
+  53:firmwares/rotorcraft/datalink.c ****   switch (msg_id) {
+  57              		.loc 1 53 0
+  58 000c 5378     		ldrb	r3, [r2, #1]	@ zero_extendqisi2
+  59 000e 023B     		subs	r3, r3, #2
+  60 0010 0E2B     		cmp	r3, #14
+  61 0012 00F22584 		bhi	.L1
+  62 0016 DFE813F0 		tbh	[pc, r3, lsl #1]
+  63              	.L8:
+  64 001a FD02     		.2byte	(.L3-.L8)/2
+  65 001c 2304     		.2byte	(.L1-.L8)/2
+  66 001e 3A00     		.2byte	(.L4-.L8)/2
+  67 0020 F402     		.2byte	(.L5-.L8)/2
+  68 0022 2304     		.2byte	(.L1-.L8)/2
+  69 0024 2304     		.2byte	(.L1-.L8)/2
+  70 0026 0F00     		.2byte	(.L6-.L8)/2
+  71 0028 2304     		.2byte	(.L1-.L8)/2
+  72 002a 2304     		.2byte	(.L1-.L8)/2
+  73 002c 2304     		.2byte	(.L1-.L8)/2
+  74 002e 2304     		.2byte	(.L1-.L8)/2
+  75 0030 2304     		.2byte	(.L1-.L8)/2
+  76 0032 2304     		.2byte	(.L1-.L8)/2
+  77 0034 2304     		.2byte	(.L1-.L8)/2
+  78 0036 FC01     		.2byte	(.L7-.L8)/2
+  79              	.L6:
+  54:firmwares/rotorcraft/datalink.c **** 
+  55:firmwares/rotorcraft/datalink.c ****   case  DL_PING:
+  56:firmwares/rotorcraft/datalink.c ****     {
+  57:firmwares/rotorcraft/datalink.c ****       DOWNLINK_SEND_PONG(DefaultChannel, DefaultDevice);
+  80              		.loc 1 57 0
+  81 0038 8D48     		ldr	r0, .L126+8
+  82 003a 0621     		movs	r1, #6
+  83 003c FFF7FEFF 		bl	uart_check_free_space
+  84              	.LVL1:
+  85 0040 0028     		cmp	r0, #0
+  86 0042 00F00984 		beq	.L101
+  87              		.loc 1 57 0 is_stmt 0 discriminator 1
+  88 0046 8B4B     		ldr	r3, .L126+12
+  89              	.LBB37:
+  90 0048 8948     		ldr	r0, .L126+8
+  91              	.LBE37:
+  92 004a 1A88     		ldrh	r2, [r3, #0]
+  93              	.LBB38:
+  94 004c 9921     		movs	r1, #153
+  95              	.LBE38:
+  96 004e 0632     		adds	r2, r2, #6
+  97 0050 1A80     		strh	r2, [r3, #0]	@ movhi
+  98 0052 894B     		ldr	r3, .L126+16
+  99 0054 894D     		ldr	r5, .L126+20
+ 100 0056 1A88     		ldrh	r2, [r3, #0]
+ 101 0058 894C     		ldr	r4, .L126+24
+ 102 005a 0132     		adds	r2, r2, #1
+ 103 005c 1A80     		strh	r2, [r3, #0]	@ movhi
+ 104              	.LBB39:
+ 105 005e FFF7FEFF 		bl	uart_transmit
+ 106              	.LVL2:
+ 107 0062 8348     		ldr	r0, .L126+8
+ 108 0064 0621     		movs	r1, #6
+ 109 0066 FFF7FEFF 		bl	uart_transmit
+ 110              	.LBE39:
+ 111 006a A823     		movs	r3, #168
+ 112 006c 2B70     		strb	r3, [r5, #0]
+ 113 006e AE23     		movs	r3, #174
+ 114 0070 2370     		strb	r3, [r4, #0]
+ 115 0072 7F48     		ldr	r0, .L126+8
+ 116 0074 A221     		movs	r1, #162
+ 117 0076 FFF7FEFF 		bl	uart_transmit
+ 118 007a 2B78     		ldrb	r3, [r5, #0]	@ zero_extendqisi2
+ 119 007c 2278     		ldrb	r2, [r4, #0]	@ zero_extendqisi2
+ 120 007e 0333     		adds	r3, r3, #3
+ 121 0080 DBB2     		uxtb	r3, r3
+ 122              	.LVL3:
+ 123 0082 2B70     		strb	r3, [r5, #0]
+ 124 0084 9B18     		adds	r3, r3, r2
+ 125              	.LVL4:
+ 126 0086 2370     		strb	r3, [r4, #0]
+ 127 0088 7948     		ldr	r0, .L126+8
+ 128 008a 0321     		movs	r1, #3
+ 129 008c B6E1     		b	.L116
+ 130              	.LVL5:
+ 131              	.L4:
+ 132              	.LBB40:
+  58:firmwares/rotorcraft/datalink.c ****     }
+  59:firmwares/rotorcraft/datalink.c ****     break;
+  60:firmwares/rotorcraft/datalink.c **** 
+  61:firmwares/rotorcraft/datalink.c ****   case DL_SETTING :
+  62:firmwares/rotorcraft/datalink.c ****     {
+  63:firmwares/rotorcraft/datalink.c ****       if (DL_SETTING_ac_id(dl_buffer) != AC_ID) break;
+ 133              		.loc 1 63 0 is_stmt 1
+ 134 008e D278     		ldrb	r2, [r2, #3]	@ zero_extendqisi2
+ 135 0090 764B     		ldr	r3, .L126+4
+ 136 0092 A22A     		cmp	r2, #162
+ 137 0094 40F0E483 		bne	.L1
+ 138              	.LBB41:
+  64:firmwares/rotorcraft/datalink.c ****       uint8_t i = DL_SETTING_index(dl_buffer);
+  65:firmwares/rotorcraft/datalink.c ****       float var = DL_SETTING_value(dl_buffer);
+ 139              		.loc 1 65 0
+ 140 0098 9879     		ldrb	r0, [r3, #6]	@ zero_extendqisi2
+ 141 009a DA79     		ldrb	r2, [r3, #7]	@ zero_extendqisi2
+ 142 009c 0004     		lsls	r0, r0, #16
+ 143 009e 40EA0260 		orr	r0, r0, r2, lsl #24
+ 144              	.LBE41:
+  64:firmwares/rotorcraft/datalink.c ****       uint8_t i = DL_SETTING_index(dl_buffer);
+ 145              		.loc 1 64 0
+ 146 00a2 9E78     		ldrb	r6, [r3, #2]	@ zero_extendqisi2
+ 147              	.LVL6:
+ 148              	.LBB42:
+ 149              		.loc 1 65 0
+ 150 00a4 5A79     		ldrb	r2, [r3, #5]	@ zero_extendqisi2
+ 151 00a6 1B79     		ldrb	r3, [r3, #4]	@ zero_extendqisi2
+ 152 00a8 43EA0223 		orr	r3, r3, r2, lsl #8
+ 153              	.LBE42:
+ 154 00ac 1843     		orrs	r0, r0, r3
+ 155              	.LVL7:
+ 156 00ae 0790     		str	r0, [sp, #28]	@ float
+ 157              	.LVL8:
+  66:firmwares/rotorcraft/datalink.c ****       DlSetting(i, var);
+ 158              		.loc 1 66 0
+ 159 00b0 282E     		cmp	r6, #40
+ 160 00b2 00F23E81 		bhi	.L10
+ 161 00b6 DFE816F0 		tbh	[pc, r6, lsl #1]
+ 162              	.L52:
+ 163 00ba 2900     		.2byte	(.L11-.L52)/2
+ 164 00bc 2D00     		.2byte	(.L12-.L52)/2
+ 165 00be 3200     		.2byte	(.L13-.L52)/2
+ 166 00c0 3B00     		.2byte	(.L14-.L52)/2
+ 167 00c2 4400     		.2byte	(.L15-.L52)/2
+ 168 00c4 4800     		.2byte	(.L16-.L52)/2
+ 169 00c6 4D00     		.2byte	(.L17-.L52)/2
+ 170 00c8 5400     		.2byte	(.L18-.L52)/2
+ 171 00ca 5600     		.2byte	(.L19-.L52)/2
+ 172 00cc 5A00     		.2byte	(.L20-.L52)/2
+ 173 00ce 5E00     		.2byte	(.L21-.L52)/2
+ 174 00d0 6200     		.2byte	(.L22-.L52)/2
+ 175 00d2 6600     		.2byte	(.L23-.L52)/2
+ 176 00d4 7100     		.2byte	(.L24-.L52)/2
+ 177 00d6 7500     		.2byte	(.L25-.L52)/2
+ 178 00d8 7900     		.2byte	(.L26-.L52)/2
+ 179 00da 7D00     		.2byte	(.L27-.L52)/2
+ 180 00dc 8100     		.2byte	(.L28-.L52)/2
+ 181 00de 9400     		.2byte	(.L29-.L52)/2
+ 182 00e0 9800     		.2byte	(.L30-.L52)/2
+ 183 00e2 9B00     		.2byte	(.L31-.L52)/2
+ 184 00e4 9F00     		.2byte	(.L32-.L52)/2
+ 185 00e6 A400     		.2byte	(.L33-.L52)/2
+ 186 00e8 AC00     		.2byte	(.L34-.L52)/2
+ 187 00ea B100     		.2byte	(.L35-.L52)/2
+ 188 00ec B500     		.2byte	(.L36-.L52)/2
+ 189 00ee BA00     		.2byte	(.L37-.L52)/2
+ 190 00f0 BF00     		.2byte	(.L38-.L52)/2
+ 191 00f2 C400     		.2byte	(.L39-.L52)/2
+ 192 00f4 C800     		.2byte	(.L40-.L52)/2
+ 193 00f6 CD00     		.2byte	(.L41-.L52)/2
+ 194 00f8 D200     		.2byte	(.L42-.L52)/2
+ 195 00fa 1701     		.2byte	(.L43-.L52)/2
+ 196 00fc 1B01     		.2byte	(.L44-.L52)/2
+ 197 00fe 1F01     		.2byte	(.L45-.L52)/2
+ 198 0100 2301     		.2byte	(.L46-.L52)/2
+ 199 0102 2701     		.2byte	(.L47-.L52)/2
+ 200 0104 2B01     		.2byte	(.L48-.L52)/2
+ 201 0106 2F01     		.2byte	(.L49-.L52)/2
+ 202 0108 3301     		.2byte	(.L50-.L52)/2
+ 203 010a 3801     		.2byte	(.L51-.L52)/2
+ 204              	.L11:
+ 205              		.loc 1 66 0 is_stmt 0 discriminator 2
+ 206 010c FFF7FEFF 		bl	__aeabi_f2uiz
+ 207              	.LVL9:
+ 208 0110 5C4B     		ldr	r3, .L126+28
+ 209 0112 02E0     		b	.L106
+ 210              	.LVL10:
+ 211              	.L12:
+ 212              		.loc 1 66 0 discriminator 3
+ 213 0114 FFF7FEFF 		bl	__aeabi_f2uiz
+ 214              	.LVL11:
+ 215 0118 5B4B     		ldr	r3, .L126+32
+ 216              	.L106:
+ 217 011a 1870     		strb	r0, [r3, #0]
+ 218 011c 09E1     		b	.L10
+ 219              	.LVL12:
+ 220              	.L13:
+ 221              		.loc 1 66 0 discriminator 4
+ 222 011e 0021     		movs	r1, #0
+ 223 0120 FFF7FEFF 		bl	__aeabi_fcmpeq
+ 224              	.LVL13:
+ 225 0124 00B1     		cbz	r0, .L105
+ 226              	.L104:
+ 227              		.loc 1 66 0 discriminator 44
+ 228 0126 0120     		movs	r0, #1
+ 229              	.L105:
+ 230 0128 FFF7FEFF 		bl	autopilot_set_motors_on
+ 231              	.LVL14:
+ 232              	.L125:
+ 233 012c 574B     		ldr	r3, .L126+36
+ 234 012e D2E1     		b	.L114
+ 235              	.LVL15:
+ 236              	.L14:
+ 237              		.loc 1 66 0 discriminator 5
+ 238 0130 FFF7FEFF 		bl	__aeabi_f2uiz
+ 239              	.LVL16:
+ 240 0134 564B     		ldr	r3, .L126+40
+ 241 0136 1870     		strb	r0, [r3, #0]
+ 242 0138 C0B2     		uxtb	r0, r0
+ 243              	.LVL17:
+ 244              	.L107:
+ 245 013a FFF7FEFF 		bl	__aeabi_ui2f
+ 246              	.L111:
+ 247 013e 0790     		str	r0, [sp, #28]	@ float
+ 248 0140 F7E0     		b	.L10
+ 249              	.LVL18:
+ 250              	.L15:
+ 251              		.loc 1 66 0 discriminator 6
+ 252 0142 FFF7FEFF 		bl	__aeabi_f2iz
+ 253              	.LVL19:
+ 254 0146 534B     		ldr	r3, .L126+44
+ 255 0148 02E0     		b	.L108
+ 256              	.LVL20:
+ 257              	.L16:
+ 258              		.loc 1 66 0 discriminator 7
+ 259 014a FFF7FEFF 		bl	__aeabi_f2iz
+ 260              	.LVL21:
+ 261 014e 524B     		ldr	r3, .L126+48
+ 262              	.L108:
+ 263 0150 1860     		str	r0, [r3, #0]
+ 264 0152 EEE0     		b	.L10
+ 265              	.LVL22:
+ 266              	.L17:
+ 267              		.loc 1 66 0 discriminator 8
+ 268 0154 FFF7FEFF 		bl	__aeabi_f2iz
+ 269              	.LVL23:
+ 270 0158 504B     		ldr	r3, .L126+52
+ 271 015a 0022     		movs	r2, #0
+ 272 015c 1860     		str	r0, [r3, #0]
+ 273 015e 504B     		ldr	r3, .L126+56
+ 274 0160 55E0     		b	.L119
+ 275              	.LVL24:
+ 276              	.L18:
+ 277              		.loc 1 66 0 discriminator 9
+ 278 0162 504B     		ldr	r3, .L126+60
+ 279 0164 42E0     		b	.L112
+ 280              	.L19:
+ 281              		.loc 1 66 0 discriminator 10
+ 282 0166 FFF7FEFF 		bl	__aeabi_f2iz
+ 283              	.LVL25:
+ 284 016a 4F4B     		ldr	r3, .L126+64
+ 285 016c F0E7     		b	.L108
+ 286              	.LVL26:
+ 287              	.L20:
+ 288              		.loc 1 66 0 discriminator 11
+ 289 016e FFF7FEFF 		bl	__aeabi_f2uiz
+ 290              	.LVL27:
+ 291 0172 4E4B     		ldr	r3, .L126+68
+ 292 0174 D1E7     		b	.L106
+ 293              	.LVL28:
+ 294              	.L21:
+ 295              		.loc 1 66 0 discriminator 12
+ 296 0176 FFF7FEFF 		bl	__aeabi_f2iz
+ 297              	.LVL29:
+ 298 017a 4D4B     		ldr	r3, .L126+72
+ 299 017c E8E7     		b	.L108
+ 300              	.LVL30:
+ 301              	.L22:
+ 302              		.loc 1 66 0 discriminator 13
+ 303 017e FFF7FEFF 		bl	__aeabi_f2iz
+ 304              	.LVL31:
+ 305 0182 4C4B     		ldr	r3, .L126+76
+ 306 0184 E4E7     		b	.L108
+ 307              	.LVL32:
+ 308              	.L23:
+ 309              		.loc 1 66 0 discriminator 14
+ 310 0186 FFF7FEFF 		bl	__aeabi_f2iz
+ 311              	.LVL33:
+ 312 018a 4B4B     		ldr	r3, .L126+80
+ 313 018c 0022     		movs	r2, #0
+ 314 018e 1860     		str	r0, [r3, #0]
+ 315 0190 4A4B     		ldr	r3, .L126+84
+ 316 0192 1A60     		str	r2, [r3, #0]
+ 317 0194 5A60     		str	r2, [r3, #4]
+ 318              	.LVL34:
+ 319              	.L118:
+ 320 0196 FFF7FEFF 		bl	__aeabi_i2f
+ 321 019a D0E7     		b	.L111
+ 322              	.LVL35:
+ 323              	.L24:
+ 324              		.loc 1 66 0 discriminator 15
+ 325 019c FFF7FEFF 		bl	__aeabi_f2iz
+ 326              	.LVL36:
+ 327 01a0 474B     		ldr	r3, .L126+88
+ 328 01a2 D5E7     		b	.L108
+ 329              	.LVL37:
+ 330              	.L25:
+ 331              		.loc 1 66 0 discriminator 16
+ 332 01a4 FFF7FEFF 		bl	__aeabi_f2iz
+ 333              	.LVL38:
+ 334 01a8 464B     		ldr	r3, .L126+92
+ 335 01aa D1E7     		b	.L108
+ 336              	.LVL39:
+ 337              	.L26:
+ 338              		.loc 1 66 0 discriminator 17
+ 339 01ac FFF7FEFF 		bl	__aeabi_f2iz
+ 340              	.LVL40:
+ 341 01b0 444B     		ldr	r3, .L126+92
+ 342 01b2 B8E0     		b	.L110
+ 343              	.LVL41:
+ 344              	.L27:
+ 345              		.loc 1 66 0 discriminator 18
+ 346 01b4 FFF7FEFF 		bl	__aeabi_f2uiz
+ 347              	.LVL42:
+ 348 01b8 434B     		ldr	r3, .L126+96
+ 349 01ba AEE7     		b	.L106
+ 350              	.LVL43:
+ 351              	.L28:
+ 352              		.loc 1 66 0 discriminator 19
+ 353 01bc 434B     		ldr	r3, .L126+100
+ 354 01be 4FF08741 		mov	r1, #1132462080
+ 355 01c2 1860     		str	r0, [r3, #0]	@ float
+ 356 01c4 FFF7FEFF 		bl	__aeabi_fmul
+ 357              	.LVL44:
+ 358 01c8 414B     		ldr	r3, .L126+104
+ 359 01ca 0446     		mov	r4, r0
+ 360 01cc 1868     		ldr	r0, [r3, #0]
+ 361 01ce FFF7FEFF 		bl	__aeabi_i2f
+ 362 01d2 0146     		mov	r1, r0
+ 363 01d4 2046     		mov	r0, r4
+ 364 01d6 FFF7FEFF 		bl	__aeabi_fsub
+ 365 01da FFF7FEFF 		bl	__aeabi_f2iz
+ 366 01de 3D4B     		ldr	r3, .L126+108
+ 367 01e0 B6E7     		b	.L108
+ 368              	.LVL45:
+ 369              	.L29:
+ 370              		.loc 1 66 0 discriminator 20
+ 371 01e2 FFF7FEFF 		bl	__aeabi_f2iz
+ 372              	.LVL46:
+ 373 01e6 3C4B     		ldr	r3, .L126+112
+ 374 01e8 B2E7     		b	.L108
+ 375              	.LVL47:
+ 376              	.L30:
+ 377              		.loc 1 66 0 discriminator 21
+ 378 01ea 3C4B     		ldr	r3, .L126+116
+ 379              	.L112:
+ 380 01ec 1860     		str	r0, [r3, #0]	@ float
+ 381 01ee A0E0     		b	.L10
+ 382              	.L31:
+ 383              		.loc 1 66 0 discriminator 22
+ 384 01f0 FFF7FEFF 		bl	__aeabi_f2iz
+ 385              	.LVL48:
+ 386 01f4 3A4B     		ldr	r3, .L126+120
+ 387 01f6 ABE7     		b	.L108
+ 388              	.LVL49:
+ 389              	.L32:
+ 390              		.loc 1 66 0 discriminator 23
+ 391 01f8 FFF7FEFF 		bl	__aeabi_f2iz
+ 392              	.LVL50:
+ 393 01fc 384B     		ldr	r3, .L126+120
+ 394 01fe D860     		str	r0, [r3, #12]
+ 395 0200 97E0     		b	.L10
+ 396              	.LVL51:
+ 397              	.L33:
+ 398              		.loc 1 66 0 discriminator 24
+ 399 0202 FFF7FEFF 		bl	__aeabi_f2iz
+ 400              	.LVL52:
+ 401 0206 364B     		ldr	r3, .L126+120
+ 402 0208 0022     		movs	r2, #0
+ 403 020a 5862     		str	r0, [r3, #36]
+ 404 020c 354B     		ldr	r3, .L126+124
+ 405              	.L119:
+ 406 020e 1A60     		str	r2, [r3, #0]
+ 407 0210 C1E7     		b	.L118
+ 408              	.LVL53:
+ 409              	.L34:
+ 410              		.loc 1 66 0 discriminator 25
+ 411 0212 FFF7FEFF 		bl	__aeabi_f2iz
+ 412              	.LVL54:
+ 413 0216 324B     		ldr	r3, .L126+120
+ 414 0218 9861     		str	r0, [r3, #24]
+ 415 021a 8AE0     		b	.L10
+ 416              	.LVL55:
+ 417              	.L35:
+ 418              		.loc 1 66 0 discriminator 26
+ 419 021c FFF7FEFF 		bl	__aeabi_f2iz
+ 420              	.LVL56:
+ 421 0220 2F4B     		ldr	r3, .L126+120
+ 422 0222 80E0     		b	.L110
+ 423              	.LVL57:
+ 424              	.L36:
+ 425              		.loc 1 66 0 discriminator 27
+ 426 0224 FFF7FEFF 		bl	__aeabi_f2iz
+ 427              	.LVL58:
+ 428 0228 2D4B     		ldr	r3, .L126+120
+ 429 022a 1861     		str	r0, [r3, #16]
+ 430 022c 81E0     		b	.L10
+ 431              	.LVL59:
+ 432              	.L37:
+ 433              		.loc 1 66 0 discriminator 28
+ 434 022e FFF7FEFF 		bl	__aeabi_f2iz
+ 435              	.LVL60:
+ 436 0232 2B4B     		ldr	r3, .L126+120
+ 437 0234 9862     		str	r0, [r3, #40]
+ 438 0236 7CE0     		b	.L10
+ 439              	.LVL61:
+ 440              	.L38:
+ 441              		.loc 1 66 0 discriminator 29
+ 442 0238 FFF7FEFF 		bl	__aeabi_f2iz
+ 443              	.LVL62:
+ 444 023c 284B     		ldr	r3, .L126+120
+ 445 023e D861     		str	r0, [r3, #28]
+ 446 0240 77E0     		b	.L10
+ 447              	.LVL63:
+ 448              	.L39:
+ 449              		.loc 1 66 0 discriminator 30
+ 450 0242 FFF7FEFF 		bl	__aeabi_f2iz
+ 451              	.LVL64:
+ 452 0246 264B     		ldr	r3, .L126+120
+ 453 0248 72E0     		b	.L109
+ 454              	.LVL65:
+ 455              	.L40:
+ 456              		.loc 1 66 0 discriminator 31
+ 457 024a FFF7FEFF 		bl	__aeabi_f2iz
+ 458              	.LVL66:
+ 459 024e 244B     		ldr	r3, .L126+120
+ 460 0250 5861     		str	r0, [r3, #20]
+ 461 0252 6EE0     		b	.L10
+ 462              	.LVL67:
+ 463              	.L41:
+ 464              		.loc 1 66 0 discriminator 32
+ 465 0254 FFF7FEFF 		bl	__aeabi_f2iz
+ 466              	.LVL68:
+ 467 0258 214B     		ldr	r3, .L126+120
+ 468 025a D862     		str	r0, [r3, #44]
+ 469 025c 69E0     		b	.L10
+ 470              	.LVL69:
+ 471              	.L42:
+ 472              		.loc 1 66 0 discriminator 33
+ 473 025e FFF7FEFF 		bl	__aeabi_f2iz
+ 474              	.LVL70:
+ 475 0262 1F4B     		ldr	r3, .L126+120
+ 476 0264 1862     		str	r0, [r3, #32]
+ 477 0266 64E0     		b	.L10
+ 478              	.L127:
+ 479              		.align	2
+ 480              	.L126:
+ 481 0268 00000000 		.word	.LANCHOR0
+ 482 026c 00000000 		.word	.LANCHOR1
+ 483 0270 00000000 		.word	uart2
+ 484 0274 00000000 		.word	downlink_nb_bytes
+ 485 0278 00000000 		.word	downlink_nb_msgs
+ 486 027c 00000000 		.word	ck_a
+ 487 0280 00000000 		.word	ck_b
+ 488 0284 00000000 		.word	telemetry_mode_Main
+ 489 0288 00000000 		.word	autopilot_mode_auto2
+ 490 028c 00000000 		.word	kill_throttle
+ 491 0290 00000000 		.word	autopilot_power_switch
+ 492 0294 00000000 		.word	guidance_v_kp
+ 493 0298 00000000 		.word	guidance_v_kd
+ 494 029c 00000000 		.word	guidance_v_ki
+ 495 02a0 00000000 		.word	guidance_v_z_sum_err
+ 496 02a4 00000000 		.word	guidance_v_nominal_throttle
+ 497 02a8 00000000 		.word	guidance_v_z_sp
+ 498 02ac 00000000 		.word	ins_vf_realign
+ 499 02b0 00000000 		.word	guidance_h_pgain
+ 500 02b4 00000000 		.word	guidance_h_dgain
+ 501 02b8 00000000 		.word	guidance_h_igain
+ 502 02bc 00000000 		.word	guidance_h_pos_err_sum
+ 503 02c0 00000000 		.word	guidance_h_again
+ 504 02c4 00000000 		.word	guidance_h_pos_sp
+ 505 02c8 00000000 		.word	ins_hf_realign
+ 506 02cc 00000000 		.word	flight_altitude
+ 507 02d0 00000000 		.word	ground_alt
+ 508 02d4 00000000 		.word	nav_flight_altitude
+ 509 02d8 00000000 		.word	nav_heading
+ 510 02dc 00000000 		.word	nav_radius
+ 511 02e0 00000000 		.word	stabilization_gains
+ 512 02e4 00000000 		.word	stabilization_att_sum_err
+ 513              	.LVL71:
+ 514              	.L43:
+ 515              		.loc 1 66 0 discriminator 34
+ 516 02e8 FFF7FEFF 		bl	__aeabi_f2iz
+ 517              	.LVL72:
+ 518 02ec A64B     		ldr	r3, .L128
+ 519 02ee 2FE7     		b	.L108
+ 520              	.LVL73:
+ 521              	.L44:
+ 522              		.loc 1 66 0 discriminator 35
+ 523 02f0 FFF7FEFF 		bl	__aeabi_f2iz
+ 524              	.LVL74:
+ 525 02f4 A44B     		ldr	r3, .L128
+ 526 02f6 16E0     		b	.L110
+ 527              	.LVL75:
+ 528              	.L45:
+ 529              		.loc 1 66 0 discriminator 36
+ 530 02f8 FFF7FEFF 		bl	__aeabi_f2iz
+ 531              	.LVL76:
+ 532 02fc A24B     		ldr	r3, .L128
+ 533 02fe 17E0     		b	.L109
+ 534              	.LVL77:
+ 535              	.L46:
+ 536              		.loc 1 66 0 discriminator 37
+ 537 0300 FFF7FEFF 		bl	__aeabi_f2iz
+ 538              	.LVL78:
+ 539 0304 A14B     		ldr	r3, .L128+4
+ 540 0306 23E7     		b	.L108
+ 541              	.LVL79:
+ 542              	.L47:
+ 543              		.loc 1 66 0 discriminator 38
+ 544 0308 FFF7FEFF 		bl	__aeabi_f2iz
+ 545              	.LVL80:
+ 546 030c 9F4B     		ldr	r3, .L128+4
+ 547 030e 0AE0     		b	.L110
+ 548              	.LVL81:
+ 549              	.L48:
+ 550              		.loc 1 66 0 discriminator 39
+ 551 0310 FFF7FEFF 		bl	__aeabi_f2iz
+ 552              	.LVL82:
+ 553 0314 9D4B     		ldr	r3, .L128+4
+ 554 0316 0BE0     		b	.L109
+ 555              	.LVL83:
+ 556              	.L49:
+ 557              		.loc 1 66 0 discriminator 40
+ 558 0318 FFF7FEFF 		bl	__aeabi_f2iz
+ 559              	.LVL84:
+ 560 031c 9C4B     		ldr	r3, .L128+8
+ 561 031e 17E7     		b	.L108
+ 562              	.LVL85:
+ 563              	.L50:
+ 564              		.loc 1 66 0 discriminator 41
+ 565 0320 FFF7FEFF 		bl	__aeabi_f2iz
+ 566              	.LVL86:
+ 567 0324 9A4B     		ldr	r3, .L128+8
+ 568              	.L110:
+ 569 0326 5860     		str	r0, [r3, #4]
+ 570 0328 03E0     		b	.L10
+ 571              	.LVL87:
+ 572              	.L51:
+ 573              		.loc 1 66 0 discriminator 42
+ 574 032a FFF7FEFF 		bl	__aeabi_f2iz
+ 575              	.LVL88:
+ 576 032e 984B     		ldr	r3, .L128+8
+ 577              	.L109:
+ 578 0330 9860     		str	r0, [r3, #8]
+ 579              	.LVL89:
+ 580              	.L10:
+  67:firmwares/rotorcraft/datalink.c ****       DOWNLINK_SEND_DL_VALUE(DefaultChannel, DefaultDevice, &i, &var);
+ 581              		.loc 1 67 0 is_stmt 1
+ 582 0332 9848     		ldr	r0, .L128+12
+ 583 0334 0B21     		movs	r1, #11
+ 584 0336 FFF7FEFF 		bl	uart_check_free_space
+ 585 033a 0028     		cmp	r0, #0
+ 586 033c 00F08C82 		beq	.L101
+ 587              		.loc 1 67 0 is_stmt 0 discriminator 1
+ 588 0340 954B     		ldr	r3, .L128+16
+ 589              	.LBB43:
+ 590 0342 9448     		ldr	r0, .L128+12
+ 591              	.LBE43:
+ 592 0344 1A88     		ldrh	r2, [r3, #0]
+ 593              	.LBB44:
+ 594 0346 9921     		movs	r1, #153
+ 595              	.LBE44:
+ 596 0348 0B32     		adds	r2, r2, #11
+ 597 034a 1A80     		strh	r2, [r3, #0]	@ movhi
+ 598 034c 934B     		ldr	r3, .L128+20
+ 599 034e 944D     		ldr	r5, .L128+24
+ 600 0350 1A88     		ldrh	r2, [r3, #0]
+ 601 0352 944C     		ldr	r4, .L128+28
+ 602 0354 0132     		adds	r2, r2, #1
+ 603 0356 1A80     		strh	r2, [r3, #0]	@ movhi
+ 604              	.LBB45:
+ 605 0358 FFF7FEFF 		bl	uart_transmit
+ 606              	.LVL90:
+ 607 035c 8D48     		ldr	r0, .L128+12
+ 608 035e 0B21     		movs	r1, #11
+ 609 0360 FFF7FEFF 		bl	uart_transmit
+ 610              	.LBE45:
+ 611 0364 AD23     		movs	r3, #173
+ 612 0366 2B70     		strb	r3, [r5, #0]
+ 613 0368 B823     		movs	r3, #184
+ 614 036a 2370     		strb	r3, [r4, #0]
+ 615 036c 8948     		ldr	r0, .L128+12
+ 616 036e A221     		movs	r1, #162
+ 617 0370 FFF7FEFF 		bl	uart_transmit
+ 618 0374 2B78     		ldrb	r3, [r5, #0]	@ zero_extendqisi2
+ 619 0376 2278     		ldrb	r2, [r4, #0]	@ zero_extendqisi2
+ 620 0378 1F33     		adds	r3, r3, #31
+ 621 037a DBB2     		uxtb	r3, r3
+ 622 037c 2B70     		strb	r3, [r5, #0]
+ 623 037e 9B18     		adds	r3, r3, r2
+ 624 0380 2370     		strb	r3, [r4, #0]
+ 625 0382 8448     		ldr	r0, .L128+12
+ 626 0384 1F21     		movs	r1, #31
+ 627 0386 FFF7FEFF 		bl	uart_transmit
+ 628              	.LVL91:
+ 629              	.LBB46:
+ 630 038a 2B78     		ldrb	r3, [r5, #0]	@ zero_extendqisi2
+ 631 038c 2278     		ldrb	r2, [r4, #0]	@ zero_extendqisi2
+ 632 038e F318     		adds	r3, r6, r3
+ 633 0390 DBB2     		uxtb	r3, r3
+ 634              	.LVL92:
+ 635 0392 2B70     		strb	r3, [r5, #0]
+ 636 0394 9B18     		adds	r3, r3, r2
+ 637              	.LVL93:
+ 638 0396 2370     		strb	r3, [r4, #0]
+ 639 0398 7E48     		ldr	r0, .L128+12
+ 640 039a 3146     		mov	r1, r6
+ 641 039c FFF7FEFF 		bl	uart_transmit
+ 642              	.LBE46:
+ 643              	.LBB47:
+ 644 03a0 9DF81C10 		ldrb	r1, [sp, #28]	@ zero_extendqisi2
+ 645              	.LVL94:
+ 646 03a4 2B78     		ldrb	r3, [r5, #0]	@ zero_extendqisi2
+ 647 03a6 2278     		ldrb	r2, [r4, #0]	@ zero_extendqisi2
+ 648 03a8 CB18     		adds	r3, r1, r3
+ 649 03aa DBB2     		uxtb	r3, r3
+ 650              	.LVL95:
+ 651 03ac 2B70     		strb	r3, [r5, #0]
+ 652 03ae 9B18     		adds	r3, r3, r2
+ 653              	.LVL96:
+ 654 03b0 2370     		strb	r3, [r4, #0]
+ 655 03b2 7848     		ldr	r0, .L128+12
+ 656 03b4 FFF7FEFF 		bl	uart_transmit
+ 657              	.LVL97:
+ 658              	.LBE47:
+ 659              	.LBB48:
+ 660 03b8 9DF81D10 		ldrb	r1, [sp, #29]	@ zero_extendqisi2
+ 661              	.LVL98:
+ 662 03bc 2B78     		ldrb	r3, [r5, #0]	@ zero_extendqisi2
+ 663 03be 2278     		ldrb	r2, [r4, #0]	@ zero_extendqisi2
+ 664 03c0 CB18     		adds	r3, r1, r3
+ 665 03c2 DBB2     		uxtb	r3, r3
+ 666              	.LVL99:
+ 667 03c4 2B70     		strb	r3, [r5, #0]
+ 668 03c6 9B18     		adds	r3, r3, r2
+ 669              	.LVL100:
+ 670 03c8 2370     		strb	r3, [r4, #0]
+ 671 03ca 7248     		ldr	r0, .L128+12
+ 672 03cc FFF7FEFF 		bl	uart_transmit
+ 673              	.LVL101:
+ 674              	.LBE48:
+ 675              	.LBB49:
+ 676 03d0 9DF81E10 		ldrb	r1, [sp, #30]	@ zero_extendqisi2
+ 677              	.LVL102:
+ 678 03d4 2B78     		ldrb	r3, [r5, #0]	@ zero_extendqisi2
+ 679 03d6 2278     		ldrb	r2, [r4, #0]	@ zero_extendqisi2
+ 680 03d8 CB18     		adds	r3, r1, r3
+ 681 03da DBB2     		uxtb	r3, r3
+ 682              	.LVL103:
+ 683 03dc 2B70     		strb	r3, [r5, #0]
+ 684 03de 9B18     		adds	r3, r3, r2
+ 685              	.LVL104:
+ 686 03e0 2370     		strb	r3, [r4, #0]
+ 687 03e2 6C48     		ldr	r0, .L128+12
+ 688 03e4 FFF7FEFF 		bl	uart_transmit
+ 689              	.LVL105:
+ 690              	.LBE49:
+ 691              	.LBB50:
+ 692 03e8 9DF81F10 		ldrb	r1, [sp, #31]	@ zero_extendqisi2
+ 693              	.LVL106:
+ 694 03ec 2B78     		ldrb	r3, [r5, #0]	@ zero_extendqisi2
+ 695 03ee 2278     		ldrb	r2, [r4, #0]	@ zero_extendqisi2
+ 696 03f0 CB18     		adds	r3, r1, r3
+ 697 03f2 DBB2     		uxtb	r3, r3
+ 698              	.LVL107:
+ 699 03f4 2B70     		strb	r3, [r5, #0]
+ 700 03f6 6748     		ldr	r0, .L128+12
+ 701 03f8 9B18     		adds	r3, r3, r2
+ 702              	.LVL108:
+ 703 03fa 2370     		strb	r3, [r4, #0]
+ 704              	.LVL109:
+ 705              	.L116:
+ 706 03fc FFF7FEFF 		bl	uart_transmit
+ 707              	.LBE50:
+ 708 0400 6448     		ldr	r0, .L128+12
+ 709 0402 2978     		ldrb	r1, [r5, #0]	@ zero_extendqisi2
+ 710              	.L117:
+ 711 0404 FFF7FEFF 		bl	uart_transmit
+ 712 0408 6248     		ldr	r0, .L128+12
+ 713 040a 2178     		ldrb	r1, [r4, #0]	@ zero_extendqisi2
+ 714 040c FFF7FEFF 		bl	uart_transmit
+ 715 0410 26E2     		b	.L1
+ 716              	.LVL110:
+ 717              	.L7:
+ 718              	.LBE40:
+ 719              	.LBB51:
+  68:firmwares/rotorcraft/datalink.c ****     }
+  69:firmwares/rotorcraft/datalink.c ****     break;
+  70:firmwares/rotorcraft/datalink.c **** 
+  71:firmwares/rotorcraft/datalink.c ****   case DL_GET_SETTING :
+  72:firmwares/rotorcraft/datalink.c ****     {
+  73:firmwares/rotorcraft/datalink.c ****       if (DL_GET_SETTING_ac_id(dl_buffer) != AC_ID) break;
+ 720              		.loc 1 73 0 is_stmt 1
+ 721 0412 D378     		ldrb	r3, [r2, #3]	@ zero_extendqisi2
+ 722 0414 A22B     		cmp	r3, #162
+ 723 0416 40F02382 		bne	.L1
+  74:firmwares/rotorcraft/datalink.c ****       uint8_t i = DL_GET_SETTING_index(dl_buffer);
+ 724              		.loc 1 74 0
+ 725 041a 634B     		ldr	r3, .L128+32
+ 726 041c 9E78     		ldrb	r6, [r3, #2]	@ zero_extendqisi2
+ 727              	.LVL111:
+ 728              	.LBB52:
+ 729              	.LBB53:
+ 730              		.file 2 "/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h"
+   1:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h **** /* This file has been generated from /home/uav/paparazzi/var/Quad_LisaM_2/settings_modules.xml /hom
+   2:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h **** /* Please DO NOT EDIT */
+   3:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h **** 
+   4:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h **** #ifndef SETTINGS_H
+   5:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h **** #define SETTINGS_H
+   6:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h **** 
+   7:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h **** #define RCSettings(mode_changed) { \
+   8:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h **** }
+   9:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h **** 
+  10:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h **** #include "autopilot.h"
+  11:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h **** #include "guidance/guidance_h.h"
+  12:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h **** #include "guidance/guidance_v.h"
+  13:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h **** #include "navigation.h"
+  14:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h **** #include "stabilization/stabilization_attitude.h"
+  15:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h **** #include "stabilization/stabilization_rate.h"
+  16:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h **** #include "subsystems/ins.h"
+  17:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h **** #include "generated/modules.h"
+  18:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h **** #include "generated/periodic_telemetry.h"
+  19:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h **** 
+  20:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h **** #define DlSetting(_idx, _value) { \
+  21:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****   switch (_idx) { \
+  22:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 0: telemetry_mode_Main = _value; break;\
+  23:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 1: autopilot_mode_auto2 = _value; break;\
+  24:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 2: autopilot_KillThrottle( _value ); _value = kill_throttle; break;\
+  25:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 3: autopilot_SetPowerSwitch( _value ); _value = autopilot_power_switch; break;\
+  26:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 4: guidance_v_kp = _value; break;\
+  27:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 5: guidance_v_kd = _value; break;\
+  28:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 6: guidance_v_SetKi( _value ); _value = guidance_v_ki; break;\
+  29:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 7: guidance_v_nominal_throttle = _value; break;\
+  30:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 8: guidance_v_z_sp = _value; break;\
+  31:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 9: ins_vf_realign = _value; break;\
+  32:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 10: guidance_h_pgain = _value; break;\
+  33:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 11: guidance_h_dgain = _value; break;\
+  34:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 12: guidance_h_SetKi( _value ); _value = guidance_h_igain; break;\
+  35:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 13: guidance_h_again = _value; break;\
+  36:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 14: guidance_h_pos_sp.x = _value; break;\
+  37:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 15: guidance_h_pos_sp.y = _value; break;\
+  38:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 16: ins_hf_realign = _value; break;\
+  39:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 17: navigation_SetFlightAltitude( _value ); _value = flight_altitude; break;\
+  40:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 18: nav_heading = _value; break;\
+  41:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 19: nav_radius = _value; break;\
+  42:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 20: stabilization_gains.p.x = _value; break;\
+  43:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 21: stabilization_gains.d.x = _value; break;\
+  44:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 22: stabilization_attitude_SetKiPhi( _value ); _value = stabilization_gains.i.x; break;\
+  45:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 23: stabilization_gains.dd.x = _value; break;\
+  46:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 24: stabilization_gains.p.y = _value; break;\
+  47:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 25: stabilization_gains.d.y = _value; break;\
+  48:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 26: stabilization_gains.i.y = _value; break;\
+  49:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 27: stabilization_gains.dd.y = _value; break;\
+  50:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 28: stabilization_gains.p.z = _value; break;\
+  51:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 29: stabilization_gains.d.z = _value; break;\
+  52:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 30: stabilization_gains.i.z = _value; break;\
+  53:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 31: stabilization_gains.dd.z = _value; break;\
+  54:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 32: stabilization_rate_gain.p = _value; break;\
+  55:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 33: stabilization_rate_gain.q = _value; break;\
+  56:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 34: stabilization_rate_gain.r = _value; break;\
+  57:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 35: stabilization_rate_igain.p = _value; break;\
+  58:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 36: stabilization_rate_igain.q = _value; break;\
+  59:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 37: stabilization_rate_igain.r = _value; break;\
+  60:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 38: stabilization_rate_ddgain.p = _value; break;\
+  61:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 39: stabilization_rate_ddgain.q = _value; break;\
+  62:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 40: stabilization_rate_ddgain.r = _value; break;\
+  63:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     default: break;\
+  64:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****   }\
+  65:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h **** }
+  66:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h **** #define PeriodicSendDlValue(_trans, _dev) { \
+  67:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****   static uint8_t i;\
+  68:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****   float var;\
+  69:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****   if (i >= 41) i = 0;\
+  70:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****   switch (i) { \
+  71:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 0: var = telemetry_mode_Main; break;\
+  72:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 1: var = autopilot_mode_auto2; break;\
+  73:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 2: var = kill_throttle; break;\
+  74:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 3: var = autopilot_power_switch; break;\
+  75:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 4: var = guidance_v_kp; break;\
+  76:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 5: var = guidance_v_kd; break;\
+  77:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 6: var = guidance_v_ki; break;\
+  78:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 7: var = guidance_v_nominal_throttle; break;\
+  79:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 8: var = guidance_v_z_sp; break;\
+  80:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 9: var = ins_vf_realign; break;\
+  81:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 10: var = guidance_h_pgain; break;\
+  82:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 11: var = guidance_h_dgain; break;\
+  83:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 12: var = guidance_h_igain; break;\
+  84:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 13: var = guidance_h_again; break;\
+  85:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 14: var = guidance_h_pos_sp.x; break;\
+  86:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 15: var = guidance_h_pos_sp.y; break;\
+  87:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 16: var = ins_hf_realign; break;\
+  88:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 17: var = flight_altitude; break;\
+  89:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 18: var = nav_heading; break;\
+  90:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 19: var = nav_radius; break;\
+  91:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 20: var = stabilization_gains.p.x; break;\
+  92:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 21: var = stabilization_gains.d.x; break;\
+  93:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 22: var = stabilization_gains.i.x; break;\
+  94:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 23: var = stabilization_gains.dd.x; break;\
+  95:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 24: var = stabilization_gains.p.y; break;\
+  96:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 25: var = stabilization_gains.d.y; break;\
+  97:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 26: var = stabilization_gains.i.y; break;\
+  98:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 27: var = stabilization_gains.dd.y; break;\
+  99:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 28: var = stabilization_gains.p.z; break;\
+ 100:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 29: var = stabilization_gains.d.z; break;\
+ 101:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 30: var = stabilization_gains.i.z; break;\
+ 102:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 31: var = stabilization_gains.dd.z; break;\
+ 103:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 32: var = stabilization_rate_gain.p; break;\
+ 104:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 33: var = stabilization_rate_gain.q; break;\
+ 105:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 34: var = stabilization_rate_gain.r; break;\
+ 106:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 35: var = stabilization_rate_igain.p; break;\
+ 107:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 36: var = stabilization_rate_igain.q; break;\
+ 108:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 37: var = stabilization_rate_igain.r; break;\
+ 109:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 38: var = stabilization_rate_ddgain.p; break;\
+ 110:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 39: var = stabilization_rate_ddgain.q; break;\
+ 111:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 40: var = stabilization_rate_ddgain.r; break;\
+ 112:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     default: var = 0.; break;\
+ 113:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****   }\
+ 114:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****   DOWNLINK_SEND_DL_VALUE(_trans, _dev, &i, &var);\
+ 115:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****   i++;\
+ 116:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h **** }
+ 117:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h **** static inline float settings_get_value(uint8_t i) {
+ 118:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****   switch (i) { \
+ 731              		.loc 2 118 0
+ 732 041e 282E     		cmp	r6, #40
+ 733 0420 00F2ED80 		bhi	.L102
+ 734 0424 01A1     		adr	r1, .L99
+ 735 0426 51F826F0 		ldr	pc, [r1, r6, lsl #2]
+ 736 042a 00BF     		.align	2
+ 737              	.L99:
+ 738 042c D1040000 		.word	.L58+1
+ 739 0430 D5040000 		.word	.L59+1
+ 740 0434 2D010000 		.word	.L125+1
+ 741 0438 DB040000 		.word	.L61+1
+ 742 043c DF040000 		.word	.L62+1
+ 743 0440 E3040000 		.word	.L63+1
+ 744 0444 E7040000 		.word	.L64+1
+ 745 0448 EB040000 		.word	.L65+1
+ 746 044c EF040000 		.word	.L66+1
+ 747 0450 F3040000 		.word	.L67+1
+ 748 0454 F7040000 		.word	.L68+1
+ 749 0458 FB040000 		.word	.L69+1
+ 750 045c FF040000 		.word	.L70+1
+ 751 0460 03050000 		.word	.L71+1
+ 752 0464 07050000 		.word	.L72+1
+ 753 0468 0B050000 		.word	.L73+1
+ 754 046c 0F050000 		.word	.L74+1
+ 755 0470 13050000 		.word	.L75+1
+ 756 0474 17050000 		.word	.L76+1
+ 757 0478 1B050000 		.word	.L77+1
+ 758 047c 21050000 		.word	.L78+1
+ 759 0480 25050000 		.word	.L79+1
+ 760 0484 2B050000 		.word	.L80+1
+ 761 0488 31050000 		.word	.L81+1
+ 762 048c 37050000 		.word	.L82+1
+ 763 0490 3B050000 		.word	.L83+1
+ 764 0494 41050000 		.word	.L84+1
+ 765 0498 47050000 		.word	.L85+1
+ 766 049c 4D050000 		.word	.L86+1
+ 767 04a0 51050000 		.word	.L87+1
+ 768 04a4 57050000 		.word	.L88+1
+ 769 04a8 5D050000 		.word	.L89+1
+ 770 04ac 63050000 		.word	.L90+1
+ 771 04b0 67050000 		.word	.L91+1
+ 772 04b4 6B050000 		.word	.L92+1
+ 773 04b8 6F050000 		.word	.L93+1
+ 774 04bc 73050000 		.word	.L94+1
+ 775 04c0 77050000 		.word	.L95+1
+ 776 04c4 7B050000 		.word	.L96+1
+ 777 04c8 81050000 		.word	.L97+1
+ 778 04cc F9050000 		.word	.L98+1
+ 779              	.L58:
+ 119:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 0: return telemetry_mode_Main;
+ 780              		.loc 2 119 0
+ 781 04d0 364B     		ldr	r3, .L128+36
+ 782 04d2 00E0     		b	.L114
+ 783              	.L59:
+ 120:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 1: return autopilot_mode_auto2;
+ 784              		.loc 2 120 0
+ 785 04d4 364B     		ldr	r3, .L128+40
+ 786              	.LVL112:
+ 787              	.L114:
+ 788 04d6 1878     		ldrb	r0, [r3, #0]	@ zero_extendqisi2
+ 789 04d8 2FE6     		b	.L107
+ 790              	.LVL113:
+ 791              	.L61:
+ 121:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 2: return kill_throttle;
+ 122:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 3: return autopilot_power_switch;
+ 792              		.loc 2 122 0
+ 793 04da 364B     		ldr	r3, .L128+44
+ 794 04dc FBE7     		b	.L114
+ 795              	.L62:
+ 123:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 4: return guidance_v_kp;
+ 796              		.loc 2 123 0
+ 797 04de 364B     		ldr	r3, .L128+48
+ 798 04e0 4CE0     		b	.L121
+ 799              	.L63:
+ 124:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 5: return guidance_v_kd;
+ 800              		.loc 2 124 0
+ 801 04e2 364B     		ldr	r3, .L128+52
+ 802 04e4 4AE0     		b	.L121
+ 803              	.L64:
+ 125:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 6: return guidance_v_ki;
+ 804              		.loc 2 125 0
+ 805 04e6 364B     		ldr	r3, .L128+56
+ 806 04e8 48E0     		b	.L121
+ 807              	.L65:
+ 126:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 7: return guidance_v_nominal_throttle;
+ 808              		.loc 2 126 0
+ 809 04ea 364B     		ldr	r3, .L128+60
+ 810 04ec 16E0     		b	.L115
+ 811              	.L66:
+ 127:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 8: return guidance_v_z_sp;
+ 812              		.loc 2 127 0
+ 813 04ee 364B     		ldr	r3, .L128+64
+ 814 04f0 44E0     		b	.L121
+ 815              	.L67:
+ 128:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 9: return ins_vf_realign;
+ 816              		.loc 2 128 0
+ 817 04f2 364B     		ldr	r3, .L128+68
+ 818 04f4 EFE7     		b	.L114
+ 819              	.L68:
+ 129:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 10: return guidance_h_pgain;
+ 820              		.loc 2 129 0
+ 821 04f6 364B     		ldr	r3, .L128+72
+ 822 04f8 40E0     		b	.L121
+ 823              	.L69:
+ 130:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 11: return guidance_h_dgain;
+ 824              		.loc 2 130 0
+ 825 04fa 364B     		ldr	r3, .L128+76
+ 826 04fc 3EE0     		b	.L121
+ 827              	.L70:
+ 131:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 12: return guidance_h_igain;
+ 828              		.loc 2 131 0
+ 829 04fe 364B     		ldr	r3, .L128+80
+ 830 0500 3CE0     		b	.L121
+ 831              	.L71:
+ 132:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 13: return guidance_h_again;
+ 832              		.loc 2 132 0
+ 833 0502 364B     		ldr	r3, .L128+84
+ 834 0504 3AE0     		b	.L121
+ 835              	.L72:
+ 133:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 14: return guidance_h_pos_sp.x;
+ 836              		.loc 2 133 0
+ 837 0506 364B     		ldr	r3, .L128+88
+ 838 0508 38E0     		b	.L121
+ 839              	.L73:
+ 134:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 15: return guidance_h_pos_sp.y;
+ 840              		.loc 2 134 0
+ 841 050a 354B     		ldr	r3, .L128+88
+ 842 050c 39E0     		b	.L122
+ 843              	.L74:
+ 135:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 16: return ins_hf_realign;
+ 844              		.loc 2 135 0
+ 845 050e 354B     		ldr	r3, .L128+92
+ 846 0510 E1E7     		b	.L114
+ 847              	.L75:
+ 136:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 17: return flight_altitude;
+ 848              		.loc 2 136 0
+ 849 0512 354B     		ldr	r3, .L128+96
+ 850 0514 02E0     		b	.L115
+ 851              	.L76:
+ 137:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 18: return nav_heading;
+ 852              		.loc 2 137 0
+ 853 0516 354B     		ldr	r3, .L128+100
+ 854 0518 30E0     		b	.L121
+ 855              	.L77:
+ 138:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 19: return nav_radius;
+ 856              		.loc 2 138 0
+ 857 051a 354B     		ldr	r3, .L128+104
+ 858              	.L115:
+ 859 051c 1868     		ldr	r0, [r3, #0]	@ float
+ 860 051e 0EE6     		b	.L111
+ 861              	.L78:
+ 139:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 20: return stabilization_gains.p.x;
+ 862              		.loc 2 139 0
+ 863 0520 344B     		ldr	r3, .L128+108
+ 864 0522 2BE0     		b	.L121
+ 865              	.L79:
+ 140:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 21: return stabilization_gains.d.x;
+ 866              		.loc 2 140 0
+ 867 0524 334B     		ldr	r3, .L128+108
+ 868 0526 D868     		ldr	r0, [r3, #12]
+ 869 0528 35E6     		b	.L118
+ 870              	.L80:
+ 141:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 22: return stabilization_gains.i.x;
+ 871              		.loc 2 141 0
+ 872 052a 324B     		ldr	r3, .L128+108
+ 873 052c 586A     		ldr	r0, [r3, #36]
+ 874 052e 32E6     		b	.L118
+ 875              	.L81:
+ 142:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 23: return stabilization_gains.dd.x;
+ 876              		.loc 2 142 0
+ 877 0530 304B     		ldr	r3, .L128+108
+ 878 0532 9869     		ldr	r0, [r3, #24]
+ 879 0534 2FE6     		b	.L118
+ 880              	.L82:
+ 143:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 24: return stabilization_gains.p.y;
+ 881              		.loc 2 143 0
+ 882 0536 2F4B     		ldr	r3, .L128+108
+ 883 0538 23E0     		b	.L122
+ 884              	.L83:
+ 144:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 25: return stabilization_gains.d.y;
+ 885              		.loc 2 144 0
+ 886 053a 2E4B     		ldr	r3, .L128+108
+ 887 053c 1869     		ldr	r0, [r3, #16]
+ 888 053e 2AE6     		b	.L118
+ 889              	.L84:
+ 145:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 26: return stabilization_gains.i.y;
+ 890              		.loc 2 145 0
+ 891 0540 2C4B     		ldr	r3, .L128+108
+ 892 0542 986A     		ldr	r0, [r3, #40]
+ 893 0544 27E6     		b	.L118
+ 894              	.L85:
+ 146:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 27: return stabilization_gains.dd.y;
+ 895              		.loc 2 146 0
+ 896 0546 2B4B     		ldr	r3, .L128+108
+ 897 0548 D869     		ldr	r0, [r3, #28]
+ 898 054a 24E6     		b	.L118
+ 899              	.L86:
+ 147:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 28: return stabilization_gains.p.z;
+ 900              		.loc 2 147 0
+ 901 054c 294B     		ldr	r3, .L128+108
+ 902 054e 54E0     		b	.L120
+ 903              	.L87:
+ 148:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 29: return stabilization_gains.d.z;
+ 904              		.loc 2 148 0
+ 905 0550 284B     		ldr	r3, .L128+108
+ 906 0552 5869     		ldr	r0, [r3, #20]
+ 907 0554 1FE6     		b	.L118
+ 908              	.L88:
+ 149:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 30: return stabilization_gains.i.z;
+ 909              		.loc 2 149 0
+ 910 0556 274B     		ldr	r3, .L128+108
+ 911 0558 D86A     		ldr	r0, [r3, #44]
+ 912 055a 1CE6     		b	.L118
+ 913              	.L89:
+ 150:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 31: return stabilization_gains.dd.z;
+ 914              		.loc 2 150 0
+ 915 055c 254B     		ldr	r3, .L128+108
+ 916 055e 186A     		ldr	r0, [r3, #32]
+ 917 0560 19E6     		b	.L118
+ 918              	.L90:
+ 151:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 32: return stabilization_rate_gain.p;
+ 919              		.loc 2 151 0
+ 920 0562 094B     		ldr	r3, .L128
+ 921 0564 0AE0     		b	.L121
+ 922              	.L91:
+ 152:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 33: return stabilization_rate_gain.q;
+ 923              		.loc 2 152 0
+ 924 0566 084B     		ldr	r3, .L128
+ 925 0568 0BE0     		b	.L122
+ 926              	.L92:
+ 153:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 34: return stabilization_rate_gain.r;
+ 927              		.loc 2 153 0
+ 928 056a 074B     		ldr	r3, .L128
+ 929 056c 45E0     		b	.L120
+ 930              	.L93:
+ 154:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 35: return stabilization_rate_igain.p;
+ 931              		.loc 2 154 0
+ 932 056e 074B     		ldr	r3, .L128+4
+ 933 0570 04E0     		b	.L121
+ 934              	.L94:
+ 155:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 36: return stabilization_rate_igain.q;
+ 935              		.loc 2 155 0
+ 936 0572 064B     		ldr	r3, .L128+4
+ 937 0574 05E0     		b	.L122
+ 938              	.L95:
+ 156:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 37: return stabilization_rate_igain.r;
+ 939              		.loc 2 156 0
+ 940 0576 054B     		ldr	r3, .L128+4
+ 941 0578 3FE0     		b	.L120
+ 942              	.L96:
+ 157:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 38: return stabilization_rate_ddgain.p;
+ 943              		.loc 2 157 0
+ 944 057a 054B     		ldr	r3, .L128+8
+ 945              	.L121:
+ 946 057c 1868     		ldr	r0, [r3, #0]
+ 947 057e 0AE6     		b	.L118
+ 948              	.L97:
+ 158:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 39: return stabilization_rate_ddgain.q;
+ 949              		.loc 2 158 0
+ 950 0580 034B     		ldr	r3, .L128+8
+ 951              	.L122:
+ 952 0582 5868     		ldr	r0, [r3, #4]
+ 953 0584 07E6     		b	.L118
+ 954              	.L129:
+ 955 0586 00BF     		.align	2
+ 956              	.L128:
+ 957 0588 00000000 		.word	stabilization_rate_gain
+ 958 058c 00000000 		.word	stabilization_rate_igain
+ 959 0590 00000000 		.word	stabilization_rate_ddgain
+ 960 0594 00000000 		.word	uart2
+ 961 0598 00000000 		.word	downlink_nb_bytes
+ 962 059c 00000000 		.word	downlink_nb_msgs
+ 963 05a0 00000000 		.word	ck_a
+ 964 05a4 00000000 		.word	ck_b
+ 965 05a8 00000000 		.word	.LANCHOR1
+ 966 05ac 00000000 		.word	telemetry_mode_Main
+ 967 05b0 00000000 		.word	autopilot_mode_auto2
+ 968 05b4 00000000 		.word	autopilot_power_switch
+ 969 05b8 00000000 		.word	guidance_v_kp
+ 970 05bc 00000000 		.word	guidance_v_kd
+ 971 05c0 00000000 		.word	guidance_v_ki
+ 972 05c4 00000000 		.word	guidance_v_nominal_throttle
+ 973 05c8 00000000 		.word	guidance_v_z_sp
+ 974 05cc 00000000 		.word	ins_vf_realign
+ 975 05d0 00000000 		.word	guidance_h_pgain
+ 976 05d4 00000000 		.word	guidance_h_dgain
+ 977 05d8 00000000 		.word	guidance_h_igain
+ 978 05dc 00000000 		.word	guidance_h_again
+ 979 05e0 00000000 		.word	guidance_h_pos_sp
+ 980 05e4 00000000 		.word	ins_hf_realign
+ 981 05e8 00000000 		.word	flight_altitude
+ 982 05ec 00000000 		.word	nav_heading
+ 983 05f0 00000000 		.word	nav_radius
+ 984 05f4 00000000 		.word	stabilization_gains
+ 985              	.L98:
+ 159:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     case 40: return stabilization_rate_ddgain.r;
+ 986              		.loc 2 159 0
+ 987 05f8 9D4B     		ldr	r3, .L130+8
+ 988              	.L120:
+ 989 05fa 9868     		ldr	r0, [r3, #8]
+ 990 05fc CBE5     		b	.L118
+ 991              	.L102:
+ 160:/home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h ****     default: return 0.;
+ 992              		.loc 2 160 0
+ 993 05fe 0020     		movs	r0, #0
+ 994 0600 9DE5     		b	.L111
+ 995              	.LVL114:
+ 996              	.L5:
+ 997              	.LBE53:
+ 998              	.LBE52:
+ 999              	.LBE51:
+  75:firmwares/rotorcraft/datalink.c ****       float val = settings_get_value(i);
+  76:firmwares/rotorcraft/datalink.c ****       DOWNLINK_SEND_DL_VALUE(DefaultChannel, DefaultDevice, &i, &val);
+  77:firmwares/rotorcraft/datalink.c ****     }
+  78:firmwares/rotorcraft/datalink.c ****     break;
+  79:firmwares/rotorcraft/datalink.c **** 
+  80:firmwares/rotorcraft/datalink.c **** #if defined USE_NAVIGATION
+  81:firmwares/rotorcraft/datalink.c ****   case DL_BLOCK :
+  82:firmwares/rotorcraft/datalink.c ****     {
+  83:firmwares/rotorcraft/datalink.c ****       if (DL_BLOCK_ac_id(dl_buffer) != AC_ID) break;
+ 1000              		.loc 1 83 0
+ 1001 0602 D378     		ldrb	r3, [r2, #3]	@ zero_extendqisi2
+ 1002 0604 A22B     		cmp	r3, #162
+ 1003 0606 40F02B81 		bne	.L1
+  84:firmwares/rotorcraft/datalink.c ****       nav_goto_block(DL_BLOCK_block_id(dl_buffer));
+ 1004              		.loc 1 84 0
+ 1005 060a 9A4B     		ldr	r3, .L130+12
+ 1006 060c 9878     		ldrb	r0, [r3, #2]	@ zero_extendqisi2
+ 1007 060e FFF7FEFF 		bl	nav_goto_block
+ 1008              	.LVL115:
+  85:firmwares/rotorcraft/datalink.c ****     }
+  86:firmwares/rotorcraft/datalink.c ****     break;
+ 1009              		.loc 1 86 0
+ 1010 0612 25E1     		b	.L1
+ 1011              	.LVL116:
+ 1012              	.L3:
+ 1013              	.LBB54:
+  87:firmwares/rotorcraft/datalink.c **** 
+  88:firmwares/rotorcraft/datalink.c ****   case DL_MOVE_WP :
+  89:firmwares/rotorcraft/datalink.c ****     {
+  90:firmwares/rotorcraft/datalink.c ****       uint8_t ac_id = DL_MOVE_WP_ac_id(dl_buffer);
+  91:firmwares/rotorcraft/datalink.c ****       if (ac_id != AC_ID) break;
+ 1014              		.loc 1 91 0
+ 1015 0614 D678     		ldrb	r6, [r2, #3]	@ zero_extendqisi2
+  90:firmwares/rotorcraft/datalink.c ****       uint8_t ac_id = DL_MOVE_WP_ac_id(dl_buffer);
+ 1016              		.loc 1 90 0
+ 1017 0616 974C     		ldr	r4, .L130+12
+ 1018              		.loc 1 91 0
+ 1019 0618 A22E     		cmp	r6, #162
+ 1020 061a 40F02181 		bne	.L1
+  92:firmwares/rotorcraft/datalink.c ****       uint8_t wp_id = DL_MOVE_WP_wp_id(dl_buffer);
+  93:firmwares/rotorcraft/datalink.c ****       struct LlaCoor_i lla;
+  94:firmwares/rotorcraft/datalink.c ****       struct EnuCoor_i enu;
+  95:firmwares/rotorcraft/datalink.c ****       lla.lat = INT32_RAD_OF_DEG(DL_MOVE_WP_lat(dl_buffer));
+ 1021              		.loc 1 95 0
+ 1022 061e A079     		ldrb	r0, [r4, #6]	@ zero_extendqisi2
+ 1023 0620 E379     		ldrb	r3, [r4, #7]	@ zero_extendqisi2
+ 1024 0622 0004     		lsls	r0, r0, #16
+ 1025 0624 6279     		ldrb	r2, [r4, #5]	@ zero_extendqisi2
+ 1026 0626 40EA0360 		orr	r0, r0, r3, lsl #24
+ 1027 062a 2379     		ldrb	r3, [r4, #4]	@ zero_extendqisi2
+ 1028 062c 924F     		ldr	r7, .L130+16
+ 1029 062e 43EA0223 		orr	r3, r3, r2, lsl #8
+ 1030 0632 1843     		orrs	r0, r0, r3
+ 1031 0634 80FB0701 		smull	r0, r1, r0, r7
+ 1032 0638 8BA3     		adr	r3, .L130
+ 1033 063a D3E90023 		ldrd	r2, [r3]
+ 1034 063e FFF7FEFF 		bl	__aeabi_ldivmod
+ 1035              	.LVL117:
+ 1036 0642 0290     		str	r0, [sp, #8]
+  96:firmwares/rotorcraft/datalink.c ****       lla.lon = INT32_RAD_OF_DEG(DL_MOVE_WP_lon(dl_buffer));
+ 1037              		.loc 1 96 0
+ 1038 0644 A07A     		ldrb	r0, [r4, #10]	@ zero_extendqisi2
+ 1039 0646 E37A     		ldrb	r3, [r4, #11]	@ zero_extendqisi2
+ 1040 0648 0004     		lsls	r0, r0, #16
+ 1041 064a 627A     		ldrb	r2, [r4, #9]	@ zero_extendqisi2
+ 1042 064c 40EA0360 		orr	r0, r0, r3, lsl #24
+ 1043 0650 237A     		ldrb	r3, [r4, #8]	@ zero_extendqisi2
+  92:firmwares/rotorcraft/datalink.c ****       uint8_t wp_id = DL_MOVE_WP_wp_id(dl_buffer);
+ 1044              		.loc 1 92 0
+ 1045 0652 A578     		ldrb	r5, [r4, #2]	@ zero_extendqisi2
+ 1046              	.LVL118:
+ 1047              		.loc 1 96 0
+ 1048 0654 43EA0223 		orr	r3, r3, r2, lsl #8
+ 1049 0658 1843     		orrs	r0, r0, r3
+ 1050 065a 80FB0701 		smull	r0, r1, r0, r7
+ 1051 065e 82A3     		adr	r3, .L130
+ 1052 0660 D3E90023 		ldrd	r2, [r3]
+ 1053 0664 FFF7FEFF 		bl	__aeabi_ldivmod
+  97:firmwares/rotorcraft/datalink.c ****       /* WP_alt is in cm, lla.alt in mm */
+  98:firmwares/rotorcraft/datalink.c ****       lla.alt = DL_MOVE_WP_alt(dl_buffer)*10 - ins_ltp_def.hmsl + ins_ltp_def.lla.alt;
+ 1054              		.loc 1 98 0
+ 1055 0668 A27B     		ldrb	r2, [r4, #14]	@ zero_extendqisi2
+ 1056 066a E37B     		ldrb	r3, [r4, #15]	@ zero_extendqisi2
+ 1057 066c 1204     		lsls	r2, r2, #16
+ 1058 066e 617B     		ldrb	r1, [r4, #13]	@ zero_extendqisi2
+ 1059 0670 42EA0362 		orr	r2, r2, r3, lsl #24
+ 1060 0674 237B     		ldrb	r3, [r4, #12]	@ zero_extendqisi2
+  96:firmwares/rotorcraft/datalink.c ****       lla.lon = INT32_RAD_OF_DEG(DL_MOVE_WP_lon(dl_buffer));
+ 1061              		.loc 1 96 0
+ 1062 0676 0190     		str	r0, [sp, #4]
+ 1063              		.loc 1 98 0
+ 1064 0678 43EA0123 		orr	r3, r3, r1, lsl #8
+ 1065 067c 1343     		orrs	r3, r3, r2
+ 1066 067e 0A22     		movs	r2, #10
+ 1067 0680 7E49     		ldr	r1, .L130+20
+ 1068 0682 5343     		muls	r3, r2, r3
+ 1069 0684 CA6B     		ldr	r2, [r1, #60]
+  99:firmwares/rotorcraft/datalink.c ****       enu_of_lla_point_i(&enu,&ins_ltp_def,&lla);
+ 1070              		.loc 1 99 0
+ 1071 0686 04A8     		add	r0, sp, #16
+  98:firmwares/rotorcraft/datalink.c ****       lla.alt = DL_MOVE_WP_alt(dl_buffer)*10 - ins_ltp_def.hmsl + ins_ltp_def.lla.alt;
+ 1072              		.loc 1 98 0
+ 1073 0688 9B1A     		subs	r3, r3, r2
+ 1074 068a 4A69     		ldr	r2, [r1, #20]
+ 100:firmwares/rotorcraft/datalink.c ****       enu.x = POS_BFP_OF_REAL(enu.x)/100;
+ 101:firmwares/rotorcraft/datalink.c ****       enu.y = POS_BFP_OF_REAL(enu.y)/100;
+ 102:firmwares/rotorcraft/datalink.c ****       enu.z = POS_BFP_OF_REAL(enu.z)/100;
+ 103:firmwares/rotorcraft/datalink.c ****       VECT3_ASSIGN(waypoints[wp_id], enu.x, enu.y, enu.z);
+ 1075              		.loc 1 103 0
+ 1076 068c 7C4C     		ldr	r4, .L130+24
+  98:firmwares/rotorcraft/datalink.c ****       lla.alt = DL_MOVE_WP_alt(dl_buffer)*10 - ins_ltp_def.hmsl + ins_ltp_def.lla.alt;
+ 1077              		.loc 1 98 0
+ 1078 068e 9B18     		adds	r3, r3, r2
+  99:firmwares/rotorcraft/datalink.c ****       enu_of_lla_point_i(&enu,&ins_ltp_def,&lla);
+ 1079              		.loc 1 99 0
+ 1080 0690 01AA     		add	r2, sp, #4
+  98:firmwares/rotorcraft/datalink.c ****       lla.alt = DL_MOVE_WP_alt(dl_buffer)*10 - ins_ltp_def.hmsl + ins_ltp_def.lla.alt;
+ 1081              		.loc 1 98 0
+ 1082 0692 0393     		str	r3, [sp, #12]
+  99:firmwares/rotorcraft/datalink.c ****       enu_of_lla_point_i(&enu,&ins_ltp_def,&lla);
+ 1083              		.loc 1 99 0
+ 1084 0694 FFF7FEFF 		bl	enu_of_lla_point_i
+ 1085              		.loc 1 103 0
+ 1086 0698 0C20     		movs	r0, #12
+ 1087 069a 6843     		muls	r0, r5, r0
+ 100:firmwares/rotorcraft/datalink.c ****       enu.x = POS_BFP_OF_REAL(enu.x)/100;
+ 1088              		.loc 1 100 0
+ 1089 069c 049F     		ldr	r7, [sp, #16]
+ 101:firmwares/rotorcraft/datalink.c ****       enu.y = POS_BFP_OF_REAL(enu.y)/100;
+ 1090              		.loc 1 101 0
+ 1091 069e 0599     		ldr	r1, [sp, #20]
+ 102:firmwares/rotorcraft/datalink.c ****       enu.z = POS_BFP_OF_REAL(enu.z)/100;
+ 1092              		.loc 1 102 0
+ 1093 06a0 069A     		ldr	r2, [sp, #24]
+ 100:firmwares/rotorcraft/datalink.c ****       enu.x = POS_BFP_OF_REAL(enu.x)/100;
+ 1094              		.loc 1 100 0
+ 1095 06a2 6423     		movs	r3, #100
+ 102:firmwares/rotorcraft/datalink.c ****       enu.z = POS_BFP_OF_REAL(enu.z)/100;
+ 1096              		.loc 1 102 0
+ 1097 06a4 1202     		lsls	r2, r2, #8
+ 100:firmwares/rotorcraft/datalink.c ****       enu.x = POS_BFP_OF_REAL(enu.x)/100;
+ 1098              		.loc 1 100 0
+ 1099 06a6 3F02     		lsls	r7, r7, #8
+ 101:firmwares/rotorcraft/datalink.c ****       enu.y = POS_BFP_OF_REAL(enu.y)/100;
+ 1100              		.loc 1 101 0
+ 1101 06a8 0902     		lsls	r1, r1, #8
+ 1102 06aa 91FBF3F1 		sdiv	r1, r1, r3
+ 100:firmwares/rotorcraft/datalink.c ****       enu.x = POS_BFP_OF_REAL(enu.x)/100;
+ 1103              		.loc 1 100 0
+ 1104 06ae 97FBF3F7 		sdiv	r7, r7, r3
+ 102:firmwares/rotorcraft/datalink.c ****       enu.z = POS_BFP_OF_REAL(enu.z)/100;
+ 1105              		.loc 1 102 0
+ 1106 06b2 92FBF3F3 		sdiv	r3, r2, r3
+ 1107              		.loc 1 103 0
+ 1108 06b6 2218     		adds	r2, r4, r0
+ 101:firmwares/rotorcraft/datalink.c ****       enu.y = POS_BFP_OF_REAL(enu.y)/100;
+ 1109              		.loc 1 101 0
+ 1110 06b8 0591     		str	r1, [sp, #20]
+ 100:firmwares/rotorcraft/datalink.c ****       enu.x = POS_BFP_OF_REAL(enu.x)/100;
+ 1111              		.loc 1 100 0
+ 1112 06ba 0497     		str	r7, [sp, #16]
+ 102:firmwares/rotorcraft/datalink.c ****       enu.z = POS_BFP_OF_REAL(enu.z)/100;
+ 1113              		.loc 1 102 0
+ 1114 06bc 0693     		str	r3, [sp, #24]
+ 1115              		.loc 1 103 0
+ 1116 06be 2750     		str	r7, [r4, r0]
+ 1117 06c0 5160     		str	r1, [r2, #4]
+ 1118 06c2 9360     		str	r3, [r2, #8]
+ 104:firmwares/rotorcraft/datalink.c ****       DOWNLINK_SEND_WP_MOVED_ENU(DefaultChannel, DefaultDevice, &wp_id, &enu.x, &enu.y, &enu.z);
+ 1119              		.loc 1 104 0
+ 1120 06c4 6F48     		ldr	r0, .L130+28
+ 1121 06c6 1321     		movs	r1, #19
+ 1122 06c8 FFF7FEFF 		bl	uart_check_free_space
+ 1123 06cc 0028     		cmp	r0, #0
+ 1124 06ce 00F0C380 		beq	.L101
+ 1125              		.loc 1 104 0 is_stmt 0 discriminator 1
+ 1126 06d2 6D4B     		ldr	r3, .L130+32
+ 1127              	.LBB55:
+ 1128 06d4 6B48     		ldr	r0, .L130+28
+ 1129              	.LBE55:
+ 1130 06d6 1A88     		ldrh	r2, [r3, #0]
+ 1131              	.LBB56:
+ 1132 06d8 9921     		movs	r1, #153
+ 1133              	.LBE56:
+ 1134 06da 1332     		adds	r2, r2, #19
+ 1135 06dc 1A80     		strh	r2, [r3, #0]	@ movhi
+ 1136 06de 6B4B     		ldr	r3, .L130+36
+ 1137 06e0 6B4F     		ldr	r7, .L130+40
+ 1138 06e2 1A88     		ldrh	r2, [r3, #0]
+ 1139 06e4 6B4C     		ldr	r4, .L130+44
+ 1140 06e6 0132     		adds	r2, r2, #1
+ 1141 06e8 1A80     		strh	r2, [r3, #0]	@ movhi
+ 1142              	.LBB57:
+ 1143 06ea FFF7FEFF 		bl	uart_transmit
+ 1144              	.LVL119:
+ 1145 06ee 6548     		ldr	r0, .L130+28
+ 1146 06f0 1321     		movs	r1, #19
+ 1147 06f2 FFF7FEFF 		bl	uart_transmit
+ 1148              	.LBE57:
+ 1149 06f6 B523     		movs	r3, #181
+ 1150 06f8 3B70     		strb	r3, [r7, #0]
+ 1151 06fa C823     		movs	r3, #200
+ 1152 06fc 2370     		strb	r3, [r4, #0]
+ 1153 06fe 6148     		ldr	r0, .L130+28
+ 1154 0700 3146     		mov	r1, r6
+ 1155 0702 FFF7FEFF 		bl	uart_transmit
+ 1156 0706 3B78     		ldrb	r3, [r7, #0]	@ zero_extendqisi2
+ 1157 0708 2278     		ldrb	r2, [r4, #0]	@ zero_extendqisi2
+ 1158 070a 3133     		adds	r3, r3, #49
+ 1159 070c DBB2     		uxtb	r3, r3
+ 1160              	.LVL120:
+ 1161 070e 3B70     		strb	r3, [r7, #0]
+ 1162 0710 9B18     		adds	r3, r3, r2
+ 1163              	.LVL121:
+ 1164 0712 2370     		strb	r3, [r4, #0]
+ 1165 0714 5B48     		ldr	r0, .L130+28
+ 1166 0716 3121     		movs	r1, #49
+ 1167 0718 FFF7FEFF 		bl	uart_transmit
+ 1168              	.LVL122:
+ 1169              	.LBB58:
+ 1170 071c 3B78     		ldrb	r3, [r7, #0]	@ zero_extendqisi2
+ 1171 071e 2278     		ldrb	r2, [r4, #0]	@ zero_extendqisi2
+ 1172 0720 EB18     		adds	r3, r5, r3
+ 1173 0722 DBB2     		uxtb	r3, r3
+ 1174              	.LVL123:
+ 1175 0724 3B70     		strb	r3, [r7, #0]
+ 1176 0726 9B18     		adds	r3, r3, r2
+ 1177              	.LVL124:
+ 1178 0728 2370     		strb	r3, [r4, #0]
+ 1179 072a 5648     		ldr	r0, .L130+28
+ 1180 072c 2946     		mov	r1, r5
+ 1181 072e FFF7FEFF 		bl	uart_transmit
+ 1182              	.LBE58:
+ 1183              	.LBB59:
+ 1184 0732 9DF81010 		ldrb	r1, [sp, #16]	@ zero_extendqisi2
+ 1185              	.LVL125:
+ 1186 0736 3B78     		ldrb	r3, [r7, #0]	@ zero_extendqisi2
+ 1187 0738 2278     		ldrb	r2, [r4, #0]	@ zero_extendqisi2
+ 1188 073a CB18     		adds	r3, r1, r3
+ 1189 073c DBB2     		uxtb	r3, r3
+ 1190              	.LVL126:
+ 1191 073e 3B70     		strb	r3, [r7, #0]
+ 1192 0740 9B18     		adds	r3, r3, r2
+ 1193              	.LVL127:
+ 1194 0742 2370     		strb	r3, [r4, #0]
+ 1195 0744 4F48     		ldr	r0, .L130+28
+ 1196 0746 FFF7FEFF 		bl	uart_transmit
+ 1197              	.LVL128:
+ 1198              	.LBE59:
+ 1199              	.LBB60:
+ 1200 074a 9DF81110 		ldrb	r1, [sp, #17]	@ zero_extendqisi2
+ 1201              	.LVL129:
+ 1202 074e 3B78     		ldrb	r3, [r7, #0]	@ zero_extendqisi2
+ 1203 0750 2278     		ldrb	r2, [r4, #0]	@ zero_extendqisi2
+ 1204 0752 CB18     		adds	r3, r1, r3
+ 1205 0754 DBB2     		uxtb	r3, r3
+ 1206              	.LVL130:
+ 1207 0756 3B70     		strb	r3, [r7, #0]
+ 1208 0758 9B18     		adds	r3, r3, r2
+ 1209              	.LVL131:
+ 1210 075a 2370     		strb	r3, [r4, #0]
+ 1211 075c 4948     		ldr	r0, .L130+28
+ 1212 075e FFF7FEFF 		bl	uart_transmit
+ 1213              	.LVL132:
+ 1214              	.LBE60:
+ 1215              	.LBB61:
+ 1216 0762 9DF81210 		ldrb	r1, [sp, #18]	@ zero_extendqisi2
+ 1217              	.LVL133:
+ 1218 0766 3B78     		ldrb	r3, [r7, #0]	@ zero_extendqisi2
+ 1219 0768 2278     		ldrb	r2, [r4, #0]	@ zero_extendqisi2
+ 1220 076a CB18     		adds	r3, r1, r3
+ 1221 076c DBB2     		uxtb	r3, r3
+ 1222              	.LVL134:
+ 1223 076e 3B70     		strb	r3, [r7, #0]
+ 1224 0770 9B18     		adds	r3, r3, r2
+ 1225              	.LVL135:
+ 1226 0772 2370     		strb	r3, [r4, #0]
+ 1227 0774 4348     		ldr	r0, .L130+28
+ 1228 0776 FFF7FEFF 		bl	uart_transmit
+ 1229              	.LVL136:
+ 1230              	.LBE61:
+ 1231              	.LBB62:
+ 1232 077a 9DF81310 		ldrb	r1, [sp, #19]	@ zero_extendqisi2
+ 1233              	.LVL137:
+ 1234 077e 3B78     		ldrb	r3, [r7, #0]	@ zero_extendqisi2
+ 1235 0780 2278     		ldrb	r2, [r4, #0]	@ zero_extendqisi2
+ 1236 0782 CB18     		adds	r3, r1, r3
+ 1237 0784 DBB2     		uxtb	r3, r3
+ 1238              	.LVL138:
+ 1239 0786 3B70     		strb	r3, [r7, #0]
+ 1240 0788 9B18     		adds	r3, r3, r2
+ 1241              	.LVL139:
+ 1242 078a 2370     		strb	r3, [r4, #0]
+ 1243 078c 3D48     		ldr	r0, .L130+28
+ 1244 078e FFF7FEFF 		bl	uart_transmit
+ 1245              	.LVL140:
+ 1246              	.LBE62:
+ 1247              	.LBB63:
+ 1248 0792 9DF81410 		ldrb	r1, [sp, #20]	@ zero_extendqisi2
+ 1249              	.LVL141:
+ 1250 0796 3B78     		ldrb	r3, [r7, #0]	@ zero_extendqisi2
+ 1251 0798 2278     		ldrb	r2, [r4, #0]	@ zero_extendqisi2
+ 1252 079a CB18     		adds	r3, r1, r3
+ 1253 079c DBB2     		uxtb	r3, r3
+ 1254              	.LVL142:
+ 1255 079e 3B70     		strb	r3, [r7, #0]
+ 1256 07a0 9B18     		adds	r3, r3, r2
+ 1257              	.LVL143:
+ 1258 07a2 2370     		strb	r3, [r4, #0]
+ 1259 07a4 3748     		ldr	r0, .L130+28
+ 1260 07a6 FFF7FEFF 		bl	uart_transmit
+ 1261              	.LVL144:
+ 1262              	.LBE63:
+ 1263              	.LBB64:
+ 1264 07aa 9DF81510 		ldrb	r1, [sp, #21]	@ zero_extendqisi2
+ 1265              	.LVL145:
+ 1266 07ae 3B78     		ldrb	r3, [r7, #0]	@ zero_extendqisi2
+ 1267 07b0 2278     		ldrb	r2, [r4, #0]	@ zero_extendqisi2
+ 1268 07b2 CB18     		adds	r3, r1, r3
+ 1269 07b4 DBB2     		uxtb	r3, r3
+ 1270              	.LVL146:
+ 1271 07b6 3B70     		strb	r3, [r7, #0]
+ 1272 07b8 9B18     		adds	r3, r3, r2
+ 1273              	.LVL147:
+ 1274 07ba 2370     		strb	r3, [r4, #0]
+ 1275 07bc 3148     		ldr	r0, .L130+28
+ 1276 07be FFF7FEFF 		bl	uart_transmit
+ 1277              	.LVL148:
+ 1278              	.LBE64:
+ 1279              	.LBB65:
+ 1280 07c2 9DF81610 		ldrb	r1, [sp, #22]	@ zero_extendqisi2
+ 1281              	.LVL149:
+ 1282 07c6 3B78     		ldrb	r3, [r7, #0]	@ zero_extendqisi2
+ 1283 07c8 2278     		ldrb	r2, [r4, #0]	@ zero_extendqisi2
+ 1284 07ca CB18     		adds	r3, r1, r3
+ 1285 07cc DBB2     		uxtb	r3, r3
+ 1286              	.LVL150:
+ 1287 07ce 3B70     		strb	r3, [r7, #0]
+ 1288 07d0 9B18     		adds	r3, r3, r2
+ 1289              	.LVL151:
+ 1290 07d2 2370     		strb	r3, [r4, #0]
+ 1291 07d4 2B48     		ldr	r0, .L130+28
+ 1292 07d6 FFF7FEFF 		bl	uart_transmit
+ 1293              	.LVL152:
+ 1294              	.LBE65:
+ 1295              	.LBB66:
+ 1296 07da 9DF81710 		ldrb	r1, [sp, #23]	@ zero_extendqisi2
+ 1297              	.LVL153:
+ 1298 07de 3B78     		ldrb	r3, [r7, #0]	@ zero_extendqisi2
+ 1299 07e0 2278     		ldrb	r2, [r4, #0]	@ zero_extendqisi2
+ 1300 07e2 CB18     		adds	r3, r1, r3
+ 1301 07e4 DBB2     		uxtb	r3, r3
+ 1302              	.LVL154:
+ 1303 07e6 3B70     		strb	r3, [r7, #0]
+ 1304 07e8 9B18     		adds	r3, r3, r2
+ 1305              	.LVL155:
+ 1306 07ea 2370     		strb	r3, [r4, #0]
+ 1307 07ec 2548     		ldr	r0, .L130+28
+ 1308 07ee FFF7FEFF 		bl	uart_transmit
+ 1309              	.LVL156:
+ 1310              	.LBE66:
+ 1311              	.LBB67:
+ 1312 07f2 9DF81810 		ldrb	r1, [sp, #24]	@ zero_extendqisi2
+ 1313              	.LVL157:
+ 1314 07f6 3B78     		ldrb	r3, [r7, #0]	@ zero_extendqisi2
+ 1315 07f8 2278     		ldrb	r2, [r4, #0]	@ zero_extendqisi2
+ 1316 07fa CB18     		adds	r3, r1, r3
+ 1317 07fc DBB2     		uxtb	r3, r3
+ 1318              	.LVL158:
+ 1319 07fe 3B70     		strb	r3, [r7, #0]
+ 1320 0800 9B18     		adds	r3, r3, r2
+ 1321              	.LVL159:
+ 1322 0802 2370     		strb	r3, [r4, #0]
+ 1323 0804 1F48     		ldr	r0, .L130+28
+ 1324 0806 FFF7FEFF 		bl	uart_transmit
+ 1325              	.LVL160:
+ 1326              	.LBE67:
+ 1327              	.LBB68:
+ 1328 080a 9DF81910 		ldrb	r1, [sp, #25]	@ zero_extendqisi2
+ 1329              	.LVL161:
+ 1330 080e 3B78     		ldrb	r3, [r7, #0]	@ zero_extendqisi2
+ 1331 0810 2278     		ldrb	r2, [r4, #0]	@ zero_extendqisi2
+ 1332 0812 CB18     		adds	r3, r1, r3
+ 1333 0814 DBB2     		uxtb	r3, r3
+ 1334              	.LVL162:
+ 1335 0816 3B70     		strb	r3, [r7, #0]
+ 1336 0818 9B18     		adds	r3, r3, r2
+ 1337              	.LVL163:
+ 1338 081a 2370     		strb	r3, [r4, #0]
+ 1339 081c 1948     		ldr	r0, .L130+28
+ 1340 081e FFF7FEFF 		bl	uart_transmit
+ 1341              	.LVL164:
+ 1342              	.LBE68:
+ 1343              	.LBB69:
+ 1344 0822 9DF81A10 		ldrb	r1, [sp, #26]	@ zero_extendqisi2
+ 1345              	.LVL165:
+ 1346 0826 3B78     		ldrb	r3, [r7, #0]	@ zero_extendqisi2
+ 1347 0828 2278     		ldrb	r2, [r4, #0]	@ zero_extendqisi2
+ 1348 082a CB18     		adds	r3, r1, r3
+ 1349 082c DBB2     		uxtb	r3, r3
+ 1350              	.LVL166:
+ 1351 082e 3B70     		strb	r3, [r7, #0]
+ 1352 0830 9B18     		adds	r3, r3, r2
+ 1353              	.LVL167:
+ 1354 0832 2370     		strb	r3, [r4, #0]
+ 1355 0834 1348     		ldr	r0, .L130+28
+ 1356 0836 FFF7FEFF 		bl	uart_transmit
+ 1357              	.LVL168:
+ 1358              	.LBE69:
+ 1359              	.LBB70:
+ 1360 083a 9DF81B10 		ldrb	r1, [sp, #27]	@ zero_extendqisi2
+ 1361              	.LVL169:
+ 1362 083e 3B78     		ldrb	r3, [r7, #0]	@ zero_extendqisi2
+ 1363 0840 2278     		ldrb	r2, [r4, #0]	@ zero_extendqisi2
+ 1364 0842 CB18     		adds	r3, r1, r3
+ 1365 0844 DBB2     		uxtb	r3, r3
+ 1366              	.LVL170:
+ 1367 0846 3B70     		strb	r3, [r7, #0]
+ 1368 0848 9B18     		adds	r3, r3, r2
+ 1369              	.LVL171:
+ 1370 084a 0E48     		ldr	r0, .L130+28
+ 1371 084c 2370     		strb	r3, [r4, #0]
+ 1372 084e FFF7FEFF 		bl	uart_transmit
+ 1373              	.LVL172:
+ 1374              	.LBE70:
+ 1375 0852 0C48     		ldr	r0, .L130+28
+ 1376 0854 3978     		ldrb	r1, [r7, #0]	@ zero_extendqisi2
+ 1377 0856 D5E5     		b	.L117
+ 1378              	.LVL173:
+ 1379              	.L101:
+ 1380              		.loc 1 104 0 discriminator 2
+ 1381 0858 0F4B     		ldr	r3, .L130+48
+ 1382 085a 1A78     		ldrb	r2, [r3, #0]	@ zero_extendqisi2
+ 1383 085c 0132     		adds	r2, r2, #1
+ 1384 085e 1A70     		strb	r2, [r3, #0]
+ 1385              	.L1:
+ 1386              	.LBE54:
+ 105:firmwares/rotorcraft/datalink.c ****     }
+ 106:firmwares/rotorcraft/datalink.c ****     break;
+ 107:firmwares/rotorcraft/datalink.c **** #endif /* USE_NAVIGATION */
+ 108:firmwares/rotorcraft/datalink.c ****   default:
+ 109:firmwares/rotorcraft/datalink.c ****     break;
+ 110:firmwares/rotorcraft/datalink.c ****   }
+ 111:firmwares/rotorcraft/datalink.c ****   /* Parse modules datalink */
+ 112:firmwares/rotorcraft/datalink.c ****   modules_parse_datalink(msg_id);
+ 113:firmwares/rotorcraft/datalink.c **** }
+ 1387              		.loc 1 113 0 is_stmt 1
+ 1388 0860 09B0     		add	sp, sp, #36
+ 1389 0862 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 1390              	.L131:
+ 1391 0864 AFF30080 		.align	3
+ 1392              	.L130:
+ 1393 0868 277F1A33 		.word	857374503
+ 1394 086c 00000000 		.word	0
+ 1395 0870 00000000 		.word	stabilization_rate_ddgain
+ 1396 0874 00000000 		.word	.LANCHOR1
+ 1397 0878 2855E400 		.word	14964008
+ 1398 087c 00000000 		.word	ins_ltp_def
+ 1399 0880 00000000 		.word	waypoints
+ 1400 0884 00000000 		.word	uart2
+ 1401 0888 00000000 		.word	downlink_nb_bytes
+ 1402 088c 00000000 		.word	downlink_nb_msgs
+ 1403 0890 00000000 		.word	ck_a
+ 1404 0894 00000000 		.word	ck_b
+ 1405 0898 00000000 		.word	downlink_nb_ovrn
+ 1406              		.cfi_endproc
+ 1407              	.LFE37:
+ 1409              		.global	dl_buffer
+ 1410              		.global	datalink_time
+ 1411              		.global	dl_msg_available
+ 1412 089c AFF30080 		.section	.bss.dl_msg_available,"aw",%nobits
+ 1415              	dl_msg_available:
+ 1416 0000 00       		.space	1
+ 1417              		.section	.bss.dl_buffer,"aw",%nobits
+ 1418              		.align	3
+ 1419              		.set	.LANCHOR1,. + 0
+ 1422              	dl_buffer:
+ 1423 0000 00000000 		.space	128
+ 1423      00000000 
+ 1423      00000000 
+ 1423      00000000 
+ 1423      00000000 
+ 1424              		.section	.bss.datalink_time,"aw",%nobits
+ 1425              		.align	1
+ 1426              		.set	.LANCHOR0,. + 0
+ 1429              	datalink_time:
+ 1430 0000 0000     		.space	2
+ 1431              		.text
+ 1432              	.Letext0:
+ 1433              		.file 3 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
+ 1434              		.file 4 "/home/uav/paparazzi/sw/include/std.h"
+ 1435              		.file 5 "./math/pprz_algebra_int.h"
+ 1436              		.file 6 "./math/pprz_geodetic_int.h"
+ 1437              		.file 7 "firmwares/rotorcraft/stabilization/stabilization_attitude_int.h"
+ 1438              		.file 8 "./subsystems/ahrs.h"
+ 1439              		.file 9 "./mcu_periph/uart.h"
+ 1440              		.file 10 "./subsystems/datalink/datalink.h"
+ 1441              		.file 11 "./subsystems/ins.h"
+ 1442              		.file 12 "firmwares/rotorcraft/autopilot.h"
+ 1443              		.file 13 "firmwares/rotorcraft/guidance/guidance_h.h"
+ 1444              		.file 14 "firmwares/rotorcraft/guidance/guidance_v.h"
+ 1445              		.file 15 "firmwares/rotorcraft/navigation.h"
+ 1446              		.file 16 "./firmwares/rotorcraft/stabilization/stabilization_rate.h"
+ 1447              		.file 17 "firmwares/rotorcraft/stabilization/stabilization_attitude_ref_int.h"
+ 1448              		.file 18 "/home/uav/paparazzi/var/Quad_LisaM_2/generated/periodic_telemetry.h"
+ 1449              		.file 19 "./subsystems/datalink/pprz_transport.h"
+ 1450              		.file 20 "./subsystems/datalink/xbee.h"
+ 1451              		.file 21 "./subsystems/datalink/downlink.h"
+ 1452              		.file 22 "/home/uav/paparazzi/var/Quad_LisaM_2/generated/modules.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 datalink.c
+     /tmp/ccTOcf3w.s:26     .text.dl_parse_msg:0000000000000000 $t
+     /tmp/ccTOcf3w.s:31     .text.dl_parse_msg:0000000000000000 dl_parse_msg
+     /tmp/ccTOcf3w.s:64     .text.dl_parse_msg:000000000000001a $d
+     /tmp/ccTOcf3w.s:81     .text.dl_parse_msg:0000000000000038 $t
+     /tmp/ccTOcf3w.s:163    .text.dl_parse_msg:00000000000000ba $d
+     /tmp/ccTOcf3w.s:206    .text.dl_parse_msg:000000000000010c $t
+     /tmp/ccTOcf3w.s:481    .text.dl_parse_msg:0000000000000268 $d
+     /tmp/ccTOcf3w.s:516    .text.dl_parse_msg:00000000000002e8 $t
+     /tmp/ccTOcf3w.s:738    .text.dl_parse_msg:000000000000042c $d
+     /tmp/ccTOcf3w.s:781    .text.dl_parse_msg:00000000000004d0 $t
+     /tmp/ccTOcf3w.s:957    .text.dl_parse_msg:0000000000000588 $d
+     /tmp/ccTOcf3w.s:987    .text.dl_parse_msg:00000000000005f8 $t
+     /tmp/ccTOcf3w.s:1393   .text.dl_parse_msg:0000000000000868 $d
+     /tmp/ccTOcf3w.s:1422   .bss.dl_buffer:0000000000000000 dl_buffer
+     /tmp/ccTOcf3w.s:1429   .bss.datalink_time:0000000000000000 datalink_time
+     /tmp/ccTOcf3w.s:1415   .bss.dl_msg_available:0000000000000000 dl_msg_available
+     /tmp/ccTOcf3w.s:1416   .bss.dl_msg_available:0000000000000000 $d
+     /tmp/ccTOcf3w.s:1418   .bss.dl_buffer:0000000000000000 $d
+     /tmp/ccTOcf3w.s:1425   .bss.datalink_time:0000000000000000 $d
+                     .debug_frame:0000000000000010 $d
+     /tmp/ccTOcf3w.s:1412   .text.dl_parse_msg:000000000000089c $t
+
+UNDEFINED SYMBOLS
+__aeabi_f2uiz
+__aeabi_fcmpeq
+__aeabi_ui2f
+__aeabi_f2iz
+__aeabi_i2f
+__aeabi_fmul
+__aeabi_fsub
+__aeabi_ldivmod
+uart_check_free_space
+uart_transmit
+autopilot_set_motors_on
+uart2
+downlink_nb_bytes
+downlink_nb_msgs
+ck_a
+ck_b
+telemetry_mode_Main
+autopilot_mode_auto2
+kill_throttle
+autopilot_power_switch
+guidance_v_kp
+guidance_v_kd
+guidance_v_ki
+guidance_v_z_sum_err
+guidance_v_nominal_throttle
+guidance_v_z_sp
+ins_vf_realign
+guidance_h_pgain
+guidance_h_dgain
+guidance_h_igain
+guidance_h_pos_err_sum
+guidance_h_again
+guidance_h_pos_sp
+ins_hf_realign
+flight_altitude
+ground_alt
+nav_flight_altitude
+nav_heading
+nav_radius
+stabilization_gains
+stabilization_att_sum_err
+stabilization_rate_gain
+stabilization_rate_igain
+stabilization_rate_ddgain
+nav_goto_block
+enu_of_lla_point_i
+ins_ltp_def
+waypoints
+downlink_nb_ovrn

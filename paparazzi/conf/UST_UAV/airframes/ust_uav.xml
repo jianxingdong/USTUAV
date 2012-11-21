@@ -1,0 +1,11 @@
+<!-- this is a quadrotor frame equiped with Lisa/M and MKK motor controllers -->
+
+<airframe name="setup_lisam2">
+    <target name="sim" board="pc"/>
+    <target name="ap"  board="lisa_m_2.0"/>
+</airframe>
+
+<firmware name="fixedwing">
+    <subsystem name="radio_control"	type="ppm"/>
+    <subsystem name="telemetry"		type="transparent"/>
+</firmware>

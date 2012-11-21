@@ -1,0 +1,4131 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 18, 4
+  12              		.thumb
+  13              		.file	"ahrs_float_dcm.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.global	__aeabi_fmul
+  18              		.global	__aeabi_fadd
+  19              		.section	.text.Vector_Dot_Product,"ax",%progbits
+  20              		.align	1
+  21              		.thumb
+  22              		.thumb_func
+  24              	Vector_Dot_Product:
+  25              	.LFB7:
+  26              		.file 1 "./subsystems/ahrs/ahrs_float_dcm_algebra.h"
+   1:./subsystems/ahrs/ahrs_float_dcm_algebra.h **** //Algebra helper functions for DCM
+   2:./subsystems/ahrs/ahrs_float_dcm_algebra.h **** 
+   3:./subsystems/ahrs/ahrs_float_dcm_algebra.h **** static inline float Vector_Dot_Product(float vector1[3],float vector2[3])
+   4:./subsystems/ahrs/ahrs_float_dcm_algebra.h **** {
+  27              		.loc 1 4 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              	.LVL0:
+  32 0000 70B5     		push	{r4, r5, r6, lr}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 16
+  35              		.cfi_offset 14, -4
+  36              		.cfi_offset 6, -8
+  37              		.cfi_offset 5, -12
+  38              		.cfi_offset 4, -16
+  39              		.loc 1 4 0
+  40 0002 0546     		mov	r5, r0
+  41 0004 0C46     		mov	r4, r1
+   5:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   return vector1[0]*vector2[0] + vector1[1]*vector2[1] + vector1[2]*vector2[2];
+  42              		.loc 1 5 0
+  43 0006 0068     		ldr	r0, [r0, #0]	@ float
+  44              	.LVL1:
+  45 0008 0968     		ldr	r1, [r1, #0]	@ float
+  46              	.LVL2:
+  47 000a FFF7FEFF 		bl	__aeabi_fmul
+  48 000e 6168     		ldr	r1, [r4, #4]	@ float
+  49 0010 0646     		mov	r6, r0
+  50 0012 6868     		ldr	r0, [r5, #4]	@ float
+  51 0014 FFF7FEFF 		bl	__aeabi_fmul
+  52 0018 0146     		mov	r1, r0
+  53 001a 3046     		mov	r0, r6
+  54 001c FFF7FEFF 		bl	__aeabi_fadd
+  55 0020 A168     		ldr	r1, [r4, #8]	@ float
+  56 0022 0646     		mov	r6, r0
+  57 0024 A868     		ldr	r0, [r5, #8]	@ float
+  58 0026 FFF7FEFF 		bl	__aeabi_fmul
+  59 002a 0146     		mov	r1, r0
+  60 002c 3046     		mov	r0, r6
+  61 002e FFF7FEFF 		bl	__aeabi_fadd
+   6:./subsystems/ahrs/ahrs_float_dcm_algebra.h **** }
+  62              		.loc 1 6 0
+  63 0032 70BD     		pop	{r4, r5, r6, pc}
+  64              		.cfi_endproc
+  65              	.LFE7:
+  67              		.section	.text.Vector_Scale,"ax",%progbits
+  68              		.align	1
+  69              		.thumb
+  70              		.thumb_func
+  72              	Vector_Scale:
+  73              	.LFB9:
+   7:./subsystems/ahrs/ahrs_float_dcm_algebra.h **** 
+   8:./subsystems/ahrs/ahrs_float_dcm_algebra.h **** static inline void Vector_Cross_Product(float vectorOut[3], float v1[3],float v2[3])
+   9:./subsystems/ahrs/ahrs_float_dcm_algebra.h **** {
+  10:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   vectorOut[0]= (v1[1]*v2[2]) - (v1[2]*v2[1]);
+  11:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   vectorOut[1]= (v1[2]*v2[0]) - (v1[0]*v2[2]);
+  12:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   vectorOut[2]= (v1[0]*v2[1]) - (v1[1]*v2[0]);
+  13:./subsystems/ahrs/ahrs_float_dcm_algebra.h **** }
+  14:./subsystems/ahrs/ahrs_float_dcm_algebra.h **** 
+  15:./subsystems/ahrs/ahrs_float_dcm_algebra.h **** static inline void Vector_Scale(float vectorOut[3],float vectorIn[3], float scale2)
+  16:./subsystems/ahrs/ahrs_float_dcm_algebra.h **** {
+  74              		.loc 1 16 0
+  75              		.cfi_startproc
+  76              		@ args = 0, pretend = 0, frame = 0
+  77              		@ frame_needed = 0, uses_anonymous_args = 0
+  78              	.LVL3:
+  79 0000 70B5     		push	{r4, r5, r6, lr}
+  80              	.LCFI1:
+  81              		.cfi_def_cfa_offset 16
+  82              		.cfi_offset 14, -4
+  83              		.cfi_offset 6, -8
+  84              		.cfi_offset 5, -12
+  85              		.cfi_offset 4, -16
+  86              		.loc 1 16 0
+  87 0002 0446     		mov	r4, r0
+  88 0004 0D46     		mov	r5, r1
+  17:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   vectorOut[0]=vectorIn[0]*scale2;
+  89              		.loc 1 17 0
+  90 0006 0868     		ldr	r0, [r1, #0]	@ float
+  91              	.LVL4:
+  92 0008 1146     		mov	r1, r2
+  93              	.LVL5:
+  16:./subsystems/ahrs/ahrs_float_dcm_algebra.h **** {
+  94              		.loc 1 16 0
+  95 000a 1646     		mov	r6, r2
+  96              		.loc 1 17 0
+  97 000c FFF7FEFF 		bl	__aeabi_fmul
+  98              	.LVL6:
+  99 0010 2060     		str	r0, [r4, #0]	@ float
+  18:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   vectorOut[1]=vectorIn[1]*scale2;
+ 100              		.loc 1 18 0
+ 101 0012 6868     		ldr	r0, [r5, #4]	@ float
+ 102 0014 3146     		mov	r1, r6
+ 103 0016 FFF7FEFF 		bl	__aeabi_fmul
+ 104 001a 6060     		str	r0, [r4, #4]	@ float
+  19:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   vectorOut[2]=vectorIn[2]*scale2;
+ 105              		.loc 1 19 0
+ 106 001c A868     		ldr	r0, [r5, #8]	@ float
+ 107 001e 3146     		mov	r1, r6
+ 108 0020 FFF7FEFF 		bl	__aeabi_fmul
+ 109 0024 A060     		str	r0, [r4, #8]	@ float
+  20:./subsystems/ahrs/ahrs_float_dcm_algebra.h **** }
+ 110              		.loc 1 20 0
+ 111 0026 70BD     		pop	{r4, r5, r6, pc}
+ 112              		.cfi_endproc
+ 113              	.LFE9:
+ 115              		.section	.text.Vector_Add,"ax",%progbits
+ 116              		.align	1
+ 117              		.thumb
+ 118              		.thumb_func
+ 120              	Vector_Add:
+ 121              	.LFB10:
+  21:./subsystems/ahrs/ahrs_float_dcm_algebra.h **** 
+  22:./subsystems/ahrs/ahrs_float_dcm_algebra.h **** static inline void Vector_Add(float vectorOut[3],float vectorIn1[3], float vectorIn2[3])
+  23:./subsystems/ahrs/ahrs_float_dcm_algebra.h **** {
+ 122              		.loc 1 23 0
+ 123              		.cfi_startproc
+ 124              		@ args = 0, pretend = 0, frame = 0
+ 125              		@ frame_needed = 0, uses_anonymous_args = 0
+ 126              	.LVL7:
+ 127 0000 70B5     		push	{r4, r5, r6, lr}
+ 128              	.LCFI2:
+ 129              		.cfi_def_cfa_offset 16
+ 130              		.cfi_offset 14, -4
+ 131              		.cfi_offset 6, -8
+ 132              		.cfi_offset 5, -12
+ 133              		.cfi_offset 4, -16
+ 134              		.loc 1 23 0
+ 135 0002 0446     		mov	r4, r0
+ 136 0004 0D46     		mov	r5, r1
+  24:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   vectorOut[0]=vectorIn1[0]+vectorIn2[0];
+ 137              		.loc 1 24 0
+ 138 0006 0868     		ldr	r0, [r1, #0]	@ float
+ 139              	.LVL8:
+ 140 0008 1168     		ldr	r1, [r2, #0]	@ float
+ 141              	.LVL9:
+  23:./subsystems/ahrs/ahrs_float_dcm_algebra.h **** {
+ 142              		.loc 1 23 0
+ 143 000a 1646     		mov	r6, r2
+ 144              		.loc 1 24 0
+ 145 000c FFF7FEFF 		bl	__aeabi_fadd
+ 146              	.LVL10:
+ 147 0010 2060     		str	r0, [r4, #0]	@ float
+  25:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   vectorOut[1]=vectorIn1[1]+vectorIn2[1];
+ 148              		.loc 1 25 0
+ 149 0012 7168     		ldr	r1, [r6, #4]	@ float
+ 150 0014 6868     		ldr	r0, [r5, #4]	@ float
+ 151 0016 FFF7FEFF 		bl	__aeabi_fadd
+ 152 001a 6060     		str	r0, [r4, #4]	@ float
+  26:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   vectorOut[2]=vectorIn1[2]+vectorIn2[2];
+ 153              		.loc 1 26 0
+ 154 001c A868     		ldr	r0, [r5, #8]	@ float
+ 155 001e B168     		ldr	r1, [r6, #8]	@ float
+ 156 0020 FFF7FEFF 		bl	__aeabi_fadd
+ 157 0024 A060     		str	r0, [r4, #8]	@ float
+  27:./subsystems/ahrs/ahrs_float_dcm_algebra.h **** }
+ 158              		.loc 1 27 0
+ 159 0026 70BD     		pop	{r4, r5, r6, pc}
+ 160              		.cfi_endproc
+ 161              	.LFE10:
+ 163              		.section	.text.set_dcm_matrix_from_rmat,"ax",%progbits
+ 164              		.align	1
+ 165              		.thumb
+ 166              		.thumb_func
+ 168              	set_dcm_matrix_from_rmat:
+ 169              	.LFB41:
+ 170              		.file 2 "subsystems/ahrs/ahrs_float_dcm.c"
+   1:subsystems/ahrs/ahrs_float_dcm.c **** /*
+   2:subsystems/ahrs/ahrs_float_dcm.c ****  * Released under Creative Commons License
+   3:subsystems/ahrs/ahrs_float_dcm.c ****  *
+   4:subsystems/ahrs/ahrs_float_dcm.c ****  * 2010 The Paparazzi Team
+   5:subsystems/ahrs/ahrs_float_dcm.c ****  *
+   6:subsystems/ahrs/ahrs_float_dcm.c ****  *
+   7:subsystems/ahrs/ahrs_float_dcm.c ****  * Based on Code by Jordi Munoz and William Premerlani, Supported by Chris Anderson (Wired) and Nat
+   8:subsystems/ahrs/ahrs_float_dcm.c ****  * Version 1.0 for flat board updated by Doug Weibel and Jose Julio
+   9:subsystems/ahrs/ahrs_float_dcm.c ****  *
+  10:subsystems/ahrs/ahrs_float_dcm.c ****  * Modified at Hochschule Bremen, Germany
+  11:subsystems/ahrs/ahrs_float_dcm.c ****  * 2010 Heinrich Warmers, Christoph Niemann, Oliver Riesener
+  12:subsystems/ahrs/ahrs_float_dcm.c ****  *
+  13:subsystems/ahrs/ahrs_float_dcm.c ****  */
+  14:subsystems/ahrs/ahrs_float_dcm.c **** 
+  15:subsystems/ahrs/ahrs_float_dcm.c **** /** \file ahrs_float_dcm.c
+  16:subsystems/ahrs/ahrs_float_dcm.c ****  *  \brief Attitude estimation for fixedwings based on the DCM
+  17:subsystems/ahrs/ahrs_float_dcm.c ****  *  Theory: http://code.google.com/p/gentlenav/downloads/list  file DCMDraft2.pdf
+  18:subsystems/ahrs/ahrs_float_dcm.c ****  *
+  19:subsystems/ahrs/ahrs_float_dcm.c ****  */
+  20:subsystems/ahrs/ahrs_float_dcm.c **** 
+  21:subsystems/ahrs/ahrs_float_dcm.c **** #include "std.h"
+  22:subsystems/ahrs/ahrs_float_dcm.c **** 
+  23:subsystems/ahrs/ahrs_float_dcm.c **** #include "subsystems/ahrs.h"
+  24:subsystems/ahrs/ahrs_float_dcm.c **** #include "subsystems/ahrs/ahrs_float_dcm.h"
+  25:subsystems/ahrs/ahrs_float_dcm.c **** #include "subsystems/ahrs/ahrs_float_utils.h"
+  26:subsystems/ahrs/ahrs_float_dcm.c **** #include "subsystems/ahrs/ahrs_aligner.h"
+  27:subsystems/ahrs/ahrs_float_dcm.c **** #include "subsystems/imu.h"
+  28:subsystems/ahrs/ahrs_float_dcm.c **** 
+  29:subsystems/ahrs/ahrs_float_dcm.c **** #include "subsystems/ahrs/ahrs_float_dcm_algebra.h"
+  30:subsystems/ahrs/ahrs_float_dcm.c **** #include "math/pprz_algebra_float.h"
+  31:subsystems/ahrs/ahrs_float_dcm.c **** 
+  32:subsystems/ahrs/ahrs_float_dcm.c **** #if USE_GPS
+  33:subsystems/ahrs/ahrs_float_dcm.c **** #include "subsystems/gps.h"
+  34:subsystems/ahrs/ahrs_float_dcm.c **** #endif
+  35:subsystems/ahrs/ahrs_float_dcm.c **** 
+  36:subsystems/ahrs/ahrs_float_dcm.c **** #include <string.h>
+  37:subsystems/ahrs/ahrs_float_dcm.c **** 
+  38:subsystems/ahrs/ahrs_float_dcm.c **** #include "led.h"
+  39:subsystems/ahrs/ahrs_float_dcm.c **** 
+  40:subsystems/ahrs/ahrs_float_dcm.c **** // FIXME Debugging Only
+  41:subsystems/ahrs/ahrs_float_dcm.c **** #ifndef DOWNLINK_DEVICE
+  42:subsystems/ahrs/ahrs_float_dcm.c **** #define DOWNLINK_DEVICE DOWNLINK_AP_DEVICE
+  43:subsystems/ahrs/ahrs_float_dcm.c **** #endif
+  44:subsystems/ahrs/ahrs_float_dcm.c **** #include "mcu_periph/uart.h"
+  45:subsystems/ahrs/ahrs_float_dcm.c **** #include "messages.h"
+  46:subsystems/ahrs/ahrs_float_dcm.c **** #include "subsystems/datalink/downlink.h"
+  47:subsystems/ahrs/ahrs_float_dcm.c **** 
+  48:subsystems/ahrs/ahrs_float_dcm.c **** 
+  49:subsystems/ahrs/ahrs_float_dcm.c **** #ifdef AHRS_UPDATE_FW_ESTIMATOR
+  50:subsystems/ahrs/ahrs_float_dcm.c **** // FIXME this is still needed for fixedwing integration
+  51:subsystems/ahrs/ahrs_float_dcm.c **** #include "estimator.h"
+  52:subsystems/ahrs/ahrs_float_dcm.c **** // remotely settable
+  53:subsystems/ahrs/ahrs_float_dcm.c **** #ifndef INS_ROLL_NEUTRAL_DEFAULT
+  54:subsystems/ahrs/ahrs_float_dcm.c **** #define INS_ROLL_NEUTRAL_DEFAULT 0
+  55:subsystems/ahrs/ahrs_float_dcm.c **** #endif
+  56:subsystems/ahrs/ahrs_float_dcm.c **** #ifndef INS_PITCH_NEUTRAL_DEFAULT
+  57:subsystems/ahrs/ahrs_float_dcm.c **** #define INS_PITCH_NEUTRAL_DEFAULT 0
+  58:subsystems/ahrs/ahrs_float_dcm.c **** #endif
+  59:subsystems/ahrs/ahrs_float_dcm.c **** float ins_roll_neutral = INS_ROLL_NEUTRAL_DEFAULT;
+  60:subsystems/ahrs/ahrs_float_dcm.c **** float ins_pitch_neutral = INS_PITCH_NEUTRAL_DEFAULT;
+  61:subsystems/ahrs/ahrs_float_dcm.c **** #endif /* AHRS_UPDATE_FW_ESTIMATOR */
+  62:subsystems/ahrs/ahrs_float_dcm.c **** 
+  63:subsystems/ahrs/ahrs_float_dcm.c **** 
+  64:subsystems/ahrs/ahrs_float_dcm.c **** struct AhrsFloatDCM ahrs_impl;
+  65:subsystems/ahrs/ahrs_float_dcm.c **** 
+  66:subsystems/ahrs/ahrs_float_dcm.c **** // Axis definition: X axis pointing forward, Y axis pointing to the right and Z axis pointing down.
+  67:subsystems/ahrs/ahrs_float_dcm.c **** // Positive pitch : nose up
+  68:subsystems/ahrs/ahrs_float_dcm.c **** // Positive roll : right wing down
+  69:subsystems/ahrs/ahrs_float_dcm.c **** // Positive yaw : clockwise
+  70:subsystems/ahrs/ahrs_float_dcm.c **** 
+  71:subsystems/ahrs/ahrs_float_dcm.c **** // DCM Working variables
+  72:subsystems/ahrs/ahrs_float_dcm.c **** const float G_Dt = 1. / ((float) AHRS_PROPAGATE_FREQUENCY );
+  73:subsystems/ahrs/ahrs_float_dcm.c **** 
+  74:subsystems/ahrs/ahrs_float_dcm.c **** struct FloatVect3 accel_float = {0,0,0};
+  75:subsystems/ahrs/ahrs_float_dcm.c **** 
+  76:subsystems/ahrs/ahrs_float_dcm.c **** float Omega_Vector[3]= {0,0,0}; //Corrected Gyro_Vector data
+  77:subsystems/ahrs/ahrs_float_dcm.c **** float Omega_P[3]= {0,0,0};		//Omega Proportional correction
+  78:subsystems/ahrs/ahrs_float_dcm.c **** float Omega_I[3]= {0,0,0};		//Omega Integrator
+  79:subsystems/ahrs/ahrs_float_dcm.c **** float Omega[3]= {0,0,0};
+  80:subsystems/ahrs/ahrs_float_dcm.c **** 
+  81:subsystems/ahrs/ahrs_float_dcm.c **** float DCM_Matrix[3][3]       = {{1,0,0},{0,1,0},{0,0,1}};
+  82:subsystems/ahrs/ahrs_float_dcm.c **** float Update_Matrix[3][3]    = {{0,1,2},{3,4,5},{6,7,8}}; //Gyros here
+  83:subsystems/ahrs/ahrs_float_dcm.c **** float Temporary_Matrix[3][3] = {{0,0,0},{0,0,0},{0,0,0}};
+  84:subsystems/ahrs/ahrs_float_dcm.c **** 
+  85:subsystems/ahrs/ahrs_float_dcm.c **** #if USE_MAGNETOMETER
+  86:subsystems/ahrs/ahrs_float_dcm.c **** float MAG_Heading_X = 1;
+  87:subsystems/ahrs/ahrs_float_dcm.c **** float MAG_Heading_Y = 0;
+  88:subsystems/ahrs/ahrs_float_dcm.c **** #endif
+  89:subsystems/ahrs/ahrs_float_dcm.c **** 
+  90:subsystems/ahrs/ahrs_float_dcm.c **** static inline void compute_ahrs_representations(void);
+  91:subsystems/ahrs/ahrs_float_dcm.c **** static inline void compute_body_orientation_and_rates(void);
+  92:subsystems/ahrs/ahrs_float_dcm.c **** static inline void set_dcm_matrix_from_rmat(struct FloatRMat *rmat);
+  93:subsystems/ahrs/ahrs_float_dcm.c **** 
+  94:subsystems/ahrs/ahrs_float_dcm.c **** void Normalize(void);
+  95:subsystems/ahrs/ahrs_float_dcm.c **** void Drift_correction(void);
+  96:subsystems/ahrs/ahrs_float_dcm.c **** void Matrix_update(void);
+  97:subsystems/ahrs/ahrs_float_dcm.c **** 
+  98:subsystems/ahrs/ahrs_float_dcm.c **** #if PERFORMANCE_REPORTING == 1
+  99:subsystems/ahrs/ahrs_float_dcm.c **** int renorm_sqrt_count = 0;
+ 100:subsystems/ahrs/ahrs_float_dcm.c **** int renorm_blowup_count = 0;
+ 101:subsystems/ahrs/ahrs_float_dcm.c **** float imu_health = 0.;
+ 102:subsystems/ahrs/ahrs_float_dcm.c **** #endif
+ 103:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 104:subsystems/ahrs/ahrs_float_dcm.c **** #if USE_HIGH_ACCEL_FLAG
+ 105:subsystems/ahrs/ahrs_float_dcm.c **** // High Accel Flag
+ 106:subsystems/ahrs/ahrs_float_dcm.c **** #define HIGH_ACCEL_LOW_SPEED 15.0
+ 107:subsystems/ahrs/ahrs_float_dcm.c **** #define HIGH_ACCEL_LOW_SPEED_RESUME 4.0 // Hysteresis
+ 108:subsystems/ahrs/ahrs_float_dcm.c **** #define HIGH_ACCEL_HIGH_THRUST (0.8*MAX_PPRZ)
+ 109:subsystems/ahrs/ahrs_float_dcm.c **** #define HIGH_ACCEL_HIGH_THRUST_RESUME (0.1*MAX_PPRZ) // Hysteresis
+ 110:subsystems/ahrs/ahrs_float_dcm.c **** bool_t high_accel_done;
+ 111:subsystems/ahrs/ahrs_float_dcm.c **** bool_t high_accel_flag;
+ 112:subsystems/ahrs/ahrs_float_dcm.c **** // Command vector for thrust (fixed_wing)
+ 113:subsystems/ahrs/ahrs_float_dcm.c **** #include "inter_mcu.h"
+ 114:subsystems/ahrs/ahrs_float_dcm.c **** #endif
+ 115:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 116:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 117:subsystems/ahrs/ahrs_float_dcm.c **** static inline void set_dcm_matrix_from_rmat(struct FloatRMat *rmat)
+ 118:subsystems/ahrs/ahrs_float_dcm.c **** {
+ 171              		.loc 2 118 0
+ 172              		.cfi_startproc
+ 173              		@ args = 0, pretend = 0, frame = 0
+ 174              		@ frame_needed = 0, uses_anonymous_args = 0
+ 175              		@ link register save eliminated.
+ 176              	.LVL11:
+ 177              	.LBB23:
+ 178              	.LBB24:
+ 119:subsystems/ahrs/ahrs_float_dcm.c ****   for (int i=0; i<3; i++) {
+ 120:subsystems/ahrs/ahrs_float_dcm.c ****     for (int j=0; j<3; j++) {
+ 121:subsystems/ahrs/ahrs_float_dcm.c ****       DCM_Matrix[i][j] = RMAT_ELMT(*rmat, j, i);
+ 179              		.loc 2 121 0
+ 180 0000 0268     		ldr	r2, [r0, #0]	@ float
+ 181 0002 094B     		ldr	r3, .L5
+ 182 0004 1A60     		str	r2, [r3, #0]	@ float
+ 183              	.LVL12:
+ 184 0006 C268     		ldr	r2, [r0, #12]	@ float
+ 185 0008 5A60     		str	r2, [r3, #4]	@ float
+ 186              	.LVL13:
+ 187 000a 8269     		ldr	r2, [r0, #24]	@ float
+ 188 000c 9A60     		str	r2, [r3, #8]	@ float
+ 189              	.LVL14:
+ 190 000e 4268     		ldr	r2, [r0, #4]	@ float
+ 191 0010 DA60     		str	r2, [r3, #12]	@ float
+ 192              	.LVL15:
+ 193 0012 0269     		ldr	r2, [r0, #16]	@ float
+ 194 0014 1A61     		str	r2, [r3, #16]	@ float
+ 195              	.LVL16:
+ 196 0016 C269     		ldr	r2, [r0, #28]	@ float
+ 197 0018 5A61     		str	r2, [r3, #20]	@ float
+ 198              	.LVL17:
+ 199 001a 8268     		ldr	r2, [r0, #8]	@ float
+ 200 001c 9A61     		str	r2, [r3, #24]	@ float
+ 201              	.LVL18:
+ 202 001e 4269     		ldr	r2, [r0, #20]	@ float
+ 203 0020 DA61     		str	r2, [r3, #28]	@ float
+ 204              	.LVL19:
+ 205 0022 026A     		ldr	r2, [r0, #32]	@ float
+ 206 0024 1A62     		str	r2, [r3, #32]	@ float
+ 207              	.LVL20:
+ 208              	.LBE24:
+ 209              	.LBE23:
+ 122:subsystems/ahrs/ahrs_float_dcm.c ****     }
+ 123:subsystems/ahrs/ahrs_float_dcm.c ****   }
+ 124:subsystems/ahrs/ahrs_float_dcm.c **** }
+ 210              		.loc 2 124 0
+ 211 0026 7047     		bx	lr
+ 212              	.L6:
+ 213              		.align	2
+ 214              	.L5:
+ 215 0028 00000000 		.word	.LANCHOR0
+ 216              		.cfi_endproc
+ 217              	.LFE41:
+ 219              		.global	__aeabi_fsub
+ 220              		.section	.text.compute_body_orientation_and_rates,"ax",%progbits
+ 221              		.align	1
+ 222              		.thumb
+ 223              		.thumb_func
+ 225              	compute_body_orientation_and_rates:
+ 226              	.LFB51:
+ 125:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 126:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 127:subsystems/ahrs/ahrs_float_dcm.c **** void ahrs_init(void) {
+ 128:subsystems/ahrs/ahrs_float_dcm.c ****   ahrs.status = AHRS_UNINIT;
+ 129:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 130:subsystems/ahrs/ahrs_float_dcm.c ****   /*
+ 131:subsystems/ahrs/ahrs_float_dcm.c ****    * Initialises our IMU alignement variables
+ 132:subsystems/ahrs/ahrs_float_dcm.c ****    * This should probably done in the IMU code instead
+ 133:subsystems/ahrs/ahrs_float_dcm.c ****    */
+ 134:subsystems/ahrs/ahrs_float_dcm.c ****   struct FloatEulers body_to_imu_euler =
+ 135:subsystems/ahrs/ahrs_float_dcm.c ****     {IMU_BODY_TO_IMU_PHI, IMU_BODY_TO_IMU_THETA, IMU_BODY_TO_IMU_PSI};
+ 136:subsystems/ahrs/ahrs_float_dcm.c ****   FLOAT_QUAT_OF_EULERS(ahrs_impl.body_to_imu_quat, body_to_imu_euler);
+ 137:subsystems/ahrs/ahrs_float_dcm.c ****   FLOAT_RMAT_OF_EULERS(ahrs_impl.body_to_imu_rmat, body_to_imu_euler);
+ 138:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 139:subsystems/ahrs/ahrs_float_dcm.c ****   /* set ltp_to_body to zero */
+ 140:subsystems/ahrs/ahrs_float_dcm.c ****   FLOAT_QUAT_ZERO(ahrs_float.ltp_to_body_quat);
+ 141:subsystems/ahrs/ahrs_float_dcm.c ****   FLOAT_EULERS_ZERO(ahrs_float.ltp_to_body_euler);
+ 142:subsystems/ahrs/ahrs_float_dcm.c ****   FLOAT_RMAT_ZERO(ahrs_float.ltp_to_body_rmat);
+ 143:subsystems/ahrs/ahrs_float_dcm.c ****   FLOAT_RATES_ZERO(ahrs_float.body_rate);
+ 144:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 145:subsystems/ahrs/ahrs_float_dcm.c ****   /* set ltp_to_imu so that body is zero */
+ 146:subsystems/ahrs/ahrs_float_dcm.c ****   QUAT_COPY(ahrs_float.ltp_to_imu_quat, ahrs_impl.body_to_imu_quat);
+ 147:subsystems/ahrs/ahrs_float_dcm.c ****   RMAT_COPY(ahrs_float.ltp_to_imu_rmat, ahrs_impl.body_to_imu_rmat);
+ 148:subsystems/ahrs/ahrs_float_dcm.c ****   EULERS_COPY(ahrs_float.ltp_to_imu_euler, body_to_imu_euler);
+ 149:subsystems/ahrs/ahrs_float_dcm.c ****   FLOAT_RATES_ZERO(ahrs_float.imu_rate);
+ 150:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 151:subsystems/ahrs/ahrs_float_dcm.c ****   /* set inital filter dcm */
+ 152:subsystems/ahrs/ahrs_float_dcm.c ****   set_dcm_matrix_from_rmat(&ahrs_float.ltp_to_imu_rmat);
+ 153:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 154:subsystems/ahrs/ahrs_float_dcm.c **** #if USE_HIGH_ACCEL_FLAG
+ 155:subsystems/ahrs/ahrs_float_dcm.c ****   high_accel_done = FALSE;
+ 156:subsystems/ahrs/ahrs_float_dcm.c ****   high_accel_flag = FALSE;
+ 157:subsystems/ahrs/ahrs_float_dcm.c **** #endif
+ 158:subsystems/ahrs/ahrs_float_dcm.c **** }
+ 159:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 160:subsystems/ahrs/ahrs_float_dcm.c **** void ahrs_align(void)
+ 161:subsystems/ahrs/ahrs_float_dcm.c **** {
+ 162:subsystems/ahrs/ahrs_float_dcm.c ****   /* Compute an initial orientation using euler angles */
+ 163:subsystems/ahrs/ahrs_float_dcm.c ****   ahrs_float_get_euler_from_accel_mag(&ahrs_float.ltp_to_imu_euler, &ahrs_aligner.lp_accel, &ahrs_a
+ 164:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 165:subsystems/ahrs/ahrs_float_dcm.c ****   /* Convert initial orientation in quaternion and rotation matrice representations. */
+ 166:subsystems/ahrs/ahrs_float_dcm.c ****   FLOAT_QUAT_OF_EULERS(ahrs_float.ltp_to_imu_quat, ahrs_float.ltp_to_imu_euler);
+ 167:subsystems/ahrs/ahrs_float_dcm.c ****   FLOAT_RMAT_OF_QUAT(ahrs_float.ltp_to_imu_rmat, ahrs_float.ltp_to_imu_quat);
+ 168:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 169:subsystems/ahrs/ahrs_float_dcm.c ****   /* set filter dcm */
+ 170:subsystems/ahrs/ahrs_float_dcm.c ****   set_dcm_matrix_from_rmat(&ahrs_float.ltp_to_imu_rmat);
+ 171:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 172:subsystems/ahrs/ahrs_float_dcm.c ****   /* Compute initial body orientation */
+ 173:subsystems/ahrs/ahrs_float_dcm.c ****   compute_body_orientation_and_rates();
+ 174:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 175:subsystems/ahrs/ahrs_float_dcm.c ****   /* use averaged gyro as initial value for bias */
+ 176:subsystems/ahrs/ahrs_float_dcm.c ****   struct Int32Rates bias0;
+ 177:subsystems/ahrs/ahrs_float_dcm.c ****   RATES_COPY(bias0, ahrs_aligner.lp_gyro);
+ 178:subsystems/ahrs/ahrs_float_dcm.c ****   RATES_FLOAT_OF_BFP(ahrs_impl.gyro_bias, bias0);
+ 179:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 180:subsystems/ahrs/ahrs_float_dcm.c ****   ahrs.status = AHRS_RUNNING;
+ 181:subsystems/ahrs/ahrs_float_dcm.c **** }
+ 182:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 183:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 184:subsystems/ahrs/ahrs_float_dcm.c **** void ahrs_propagate(void)
+ 185:subsystems/ahrs/ahrs_float_dcm.c **** {
+ 186:subsystems/ahrs/ahrs_float_dcm.c ****   /* convert imu data to floating point */
+ 187:subsystems/ahrs/ahrs_float_dcm.c ****   struct FloatRates gyro_float;
+ 188:subsystems/ahrs/ahrs_float_dcm.c ****   RATES_FLOAT_OF_BFP(gyro_float, imu.gyro);
+ 189:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 190:subsystems/ahrs/ahrs_float_dcm.c ****   /* unbias rate measurement */
+ 191:subsystems/ahrs/ahrs_float_dcm.c ****   RATES_DIFF(ahrs_float.imu_rate, gyro_float, ahrs_impl.gyro_bias);
+ 192:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 193:subsystems/ahrs/ahrs_float_dcm.c ****   /* Uncouple Motions */
+ 194:subsystems/ahrs/ahrs_float_dcm.c **** #ifdef IMU_GYRO_P_Q
+ 195:subsystems/ahrs/ahrs_float_dcm.c ****   float dp=0,dq=0,dr=0;
+ 196:subsystems/ahrs/ahrs_float_dcm.c ****   dp += ahrs_float.imu_rate.q * IMU_GYRO_P_Q;
+ 197:subsystems/ahrs/ahrs_float_dcm.c ****   dp += ahrs_float.imu_rate.r * IMU_GYRO_P_R;
+ 198:subsystems/ahrs/ahrs_float_dcm.c ****   dq += ahrs_float.imu_rate.p * IMU_GYRO_Q_P;
+ 199:subsystems/ahrs/ahrs_float_dcm.c ****   dq += ahrs_float.imu_rate.r * IMU_GYRO_Q_R;
+ 200:subsystems/ahrs/ahrs_float_dcm.c ****   dr += ahrs_float.imu_rate.p * IMU_GYRO_R_P;
+ 201:subsystems/ahrs/ahrs_float_dcm.c ****   dr += ahrs_float.imu_rate.q * IMU_GYRO_R_Q;
+ 202:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 203:subsystems/ahrs/ahrs_float_dcm.c ****   ahrs_float.imu_rate.p += dp;
+ 204:subsystems/ahrs/ahrs_float_dcm.c ****   ahrs_float.imu_rate.q += dq;
+ 205:subsystems/ahrs/ahrs_float_dcm.c ****   ahrs_float.imu_rate.r += dr;
+ 206:subsystems/ahrs/ahrs_float_dcm.c **** #endif
+ 207:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 208:subsystems/ahrs/ahrs_float_dcm.c ****   Matrix_update();
+ 209:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 210:subsystems/ahrs/ahrs_float_dcm.c ****   Normalize();
+ 211:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 212:subsystems/ahrs/ahrs_float_dcm.c ****   compute_ahrs_representations();
+ 213:subsystems/ahrs/ahrs_float_dcm.c **** }
+ 214:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 215:subsystems/ahrs/ahrs_float_dcm.c **** void ahrs_update_accel(void)
+ 216:subsystems/ahrs/ahrs_float_dcm.c **** {
+ 217:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 218:subsystems/ahrs/ahrs_float_dcm.c ****   ACCELS_FLOAT_OF_BFP(accel_float, imu.accel);
+ 219:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 220:subsystems/ahrs/ahrs_float_dcm.c ****   // DCM filter uses g-force as positive
+ 221:subsystems/ahrs/ahrs_float_dcm.c ****   // accelerometer measures [0 0 -g] in a static case
+ 222:subsystems/ahrs/ahrs_float_dcm.c ****   accel_float.x = -accel_float.x;
+ 223:subsystems/ahrs/ahrs_float_dcm.c ****   accel_float.y = -accel_float.y;
+ 224:subsystems/ahrs/ahrs_float_dcm.c ****   accel_float.z = -accel_float.z;
+ 225:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 226:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 227:subsystems/ahrs/ahrs_float_dcm.c **** #if USE_GPS
+ 228:subsystems/ahrs/ahrs_float_dcm.c ****   if (gps.fix == GPS_FIX_3D) {    //Remove centrifugal acceleration.
+ 229:subsystems/ahrs/ahrs_float_dcm.c ****     accel_float.y += gps.speed_3d/100. * Omega[2];  // Centrifugal force on Acc_y = GPS_speed*GyroZ
+ 230:subsystems/ahrs/ahrs_float_dcm.c ****     accel_float.z -= gps.speed_3d/100. * Omega[1];  // Centrifugal force on Acc_z = GPS_speed*GyroY
+ 231:subsystems/ahrs/ahrs_float_dcm.c ****   }
+ 232:subsystems/ahrs/ahrs_float_dcm.c **** #endif
+ 233:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 234:subsystems/ahrs/ahrs_float_dcm.c ****   Drift_correction();
+ 235:subsystems/ahrs/ahrs_float_dcm.c **** }
+ 236:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 237:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 238:subsystems/ahrs/ahrs_float_dcm.c **** void ahrs_update_mag(void)
+ 239:subsystems/ahrs/ahrs_float_dcm.c **** {
+ 240:subsystems/ahrs/ahrs_float_dcm.c **** #if USE_MAGNETOMETER
+ 241:subsystems/ahrs/ahrs_float_dcm.c **** #warning MAGNETOMETER FEEDBACK NOT TESTED YET
+ 242:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 243:subsystems/ahrs/ahrs_float_dcm.c ****   float cos_roll;
+ 244:subsystems/ahrs/ahrs_float_dcm.c ****   float sin_roll;
+ 245:subsystems/ahrs/ahrs_float_dcm.c ****   float cos_pitch;
+ 246:subsystems/ahrs/ahrs_float_dcm.c ****   float sin_pitch;
+ 247:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 248:subsystems/ahrs/ahrs_float_dcm.c ****   cos_roll = cos(ahrs_float.ltp_to_imu_euler.phi);
+ 249:subsystems/ahrs/ahrs_float_dcm.c ****   sin_roll = sin(ahrs_float.ltp_to_imu_euler.phi);
+ 250:subsystems/ahrs/ahrs_float_dcm.c ****   cos_pitch = cos(ahrs_float.ltp_to_imu_euler.theta);
+ 251:subsystems/ahrs/ahrs_float_dcm.c ****   sin_pitch = sin(ahrs_float.ltp_to_imu_euler.theta);
+ 252:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 253:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 254:subsystems/ahrs/ahrs_float_dcm.c ****   // Pitch&Roll Compensation:
+ 255:subsystems/ahrs/ahrs_float_dcm.c ****   MAG_Heading_X = imu.mag.x*cos_pitch+imu.mag.y*sin_roll*sin_pitch+imu.mag.z*cos_roll*sin_pitch;
+ 256:subsystems/ahrs/ahrs_float_dcm.c ****   MAG_Heading_Y = imu.mag.y*cos_roll-imu.mag.z*sin_roll;
+ 257:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 258:subsystems/ahrs/ahrs_float_dcm.c **** /*
+ 259:subsystems/ahrs/ahrs_float_dcm.c ****  *
+ 260:subsystems/ahrs/ahrs_float_dcm.c ****   // Magnetic Heading
+ 261:subsystems/ahrs/ahrs_float_dcm.c ****   Heading = atan2(-Head_Y,Head_X);
+ 262:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 263:subsystems/ahrs/ahrs_float_dcm.c ****   // Declination correction (if supplied)
+ 264:subsystems/ahrs/ahrs_float_dcm.c ****   if( declination != 0.0 )
+ 265:subsystems/ahrs/ahrs_float_dcm.c ****   {
+ 266:subsystems/ahrs/ahrs_float_dcm.c ****       Heading = Heading + declination;
+ 267:subsystems/ahrs/ahrs_float_dcm.c ****       if (Heading > M_PI)    // Angle normalization (-180 deg, 180 deg)
+ 268:subsystems/ahrs/ahrs_float_dcm.c ****           Heading -= (2.0 * M_PI);
+ 269:subsystems/ahrs/ahrs_float_dcm.c ****       else if (Heading < -M_PI)
+ 270:subsystems/ahrs/ahrs_float_dcm.c ****           Heading += (2.0 * M_PI);
+ 271:subsystems/ahrs/ahrs_float_dcm.c ****   }
+ 272:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 273:subsystems/ahrs/ahrs_float_dcm.c ****   // Optimization for external DCM use. Calculate normalized components
+ 274:subsystems/ahrs/ahrs_float_dcm.c ****   Heading_X = cos(Heading);
+ 275:subsystems/ahrs/ahrs_float_dcm.c ****   Heading_Y = sin(Heading);
+ 276:subsystems/ahrs/ahrs_float_dcm.c **** */
+ 277:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 278:subsystems/ahrs/ahrs_float_dcm.c ****   struct FloatVect3 ltp_mag;
+ 279:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 280:subsystems/ahrs/ahrs_float_dcm.c ****   ltp_mag.x = MAG_Heading_X;
+ 281:subsystems/ahrs/ahrs_float_dcm.c ****   ltp_mag.y = MAG_Heading_Y;
+ 282:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 283:subsystems/ahrs/ahrs_float_dcm.c ****   // Downlink
+ 284:subsystems/ahrs/ahrs_float_dcm.c ****   RunOnceEvery(10,DOWNLINK_SEND_IMU_MAG(DefaultChannel, DefaultDevice, &ltp_mag.x, &ltp_mag.y, &ltp
+ 285:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 286:subsystems/ahrs/ahrs_float_dcm.c ****   // Magnetic Heading
+ 287:subsystems/ahrs/ahrs_float_dcm.c ****   // MAG_Heading = atan2(imu.mag.y, -imu.mag.x);
+ 288:subsystems/ahrs/ahrs_float_dcm.c **** #endif
+ 289:subsystems/ahrs/ahrs_float_dcm.c **** }
+ 290:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 291:subsystems/ahrs/ahrs_float_dcm.c **** void ahrs_update_gps(void) {
+ 292:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 293:subsystems/ahrs/ahrs_float_dcm.c **** }
+ 294:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 295:subsystems/ahrs/ahrs_float_dcm.c **** void Normalize(void)
+ 296:subsystems/ahrs/ahrs_float_dcm.c **** {
+ 297:subsystems/ahrs/ahrs_float_dcm.c ****   float error=0;
+ 298:subsystems/ahrs/ahrs_float_dcm.c ****   float temporary[3][3];
+ 299:subsystems/ahrs/ahrs_float_dcm.c ****   float renorm=0;
+ 300:subsystems/ahrs/ahrs_float_dcm.c ****   uint8_t problem=FALSE;
+ 301:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 302:subsystems/ahrs/ahrs_float_dcm.c ****   // Find the non-orthogonality of X wrt Y
+ 303:subsystems/ahrs/ahrs_float_dcm.c ****   error= -Vector_Dot_Product(&DCM_Matrix[0][0],&DCM_Matrix[1][0])*.5; //eq.19
+ 304:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 305:subsystems/ahrs/ahrs_float_dcm.c ****   // Add half the XY error to X, and half to Y
+ 306:subsystems/ahrs/ahrs_float_dcm.c ****   Vector_Scale(&temporary[0][0], &DCM_Matrix[1][0], error);           //eq.19
+ 307:subsystems/ahrs/ahrs_float_dcm.c ****   Vector_Scale(&temporary[1][0], &DCM_Matrix[0][0], error);           //eq.19
+ 308:subsystems/ahrs/ahrs_float_dcm.c ****   Vector_Add(&temporary[0][0], &temporary[0][0], &DCM_Matrix[0][0]);  //eq.19
+ 309:subsystems/ahrs/ahrs_float_dcm.c ****   Vector_Add(&temporary[1][0], &temporary[1][0], &DCM_Matrix[1][0]);  //eq.19
+ 310:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 311:subsystems/ahrs/ahrs_float_dcm.c ****   // The third axis is simply set perpendicular to the first 2. (there is not correction of XY base
+ 312:subsystems/ahrs/ahrs_float_dcm.c ****   Vector_Cross_Product(&temporary[2][0],&temporary[0][0],&temporary[1][0]); // c= a x b //eq.20
+ 313:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 314:subsystems/ahrs/ahrs_float_dcm.c ****   // Normalize lenght of X
+ 315:subsystems/ahrs/ahrs_float_dcm.c ****   renorm= Vector_Dot_Product(&temporary[0][0],&temporary[0][0]);
+ 316:subsystems/ahrs/ahrs_float_dcm.c ****   // a) if norm is close to 1, use the fast 1st element from the tailer expansion of SQRT
+ 317:subsystems/ahrs/ahrs_float_dcm.c ****   // b) if the norm is further from 1, use a real sqrt
+ 318:subsystems/ahrs/ahrs_float_dcm.c ****   // c) norm is huge: disaster! reset! mayday!
+ 319:subsystems/ahrs/ahrs_float_dcm.c ****   if (renorm < 1.5625f && renorm > 0.64f) {
+ 320:subsystems/ahrs/ahrs_float_dcm.c ****     renorm= .5 * (3-renorm);                                          //eq.21
+ 321:subsystems/ahrs/ahrs_float_dcm.c ****   } else if (renorm < 100.0f && renorm > 0.01f) {
+ 322:subsystems/ahrs/ahrs_float_dcm.c ****     renorm= 1. / sqrt(renorm);
+ 323:subsystems/ahrs/ahrs_float_dcm.c **** #if PERFORMANCE_REPORTING == 1
+ 324:subsystems/ahrs/ahrs_float_dcm.c ****     renorm_sqrt_count++;
+ 325:subsystems/ahrs/ahrs_float_dcm.c **** #endif
+ 326:subsystems/ahrs/ahrs_float_dcm.c ****   } else {
+ 327:subsystems/ahrs/ahrs_float_dcm.c ****     problem = TRUE;
+ 328:subsystems/ahrs/ahrs_float_dcm.c **** #if PERFORMANCE_REPORTING == 1
+ 329:subsystems/ahrs/ahrs_float_dcm.c ****     renorm_blowup_count++;
+ 330:subsystems/ahrs/ahrs_float_dcm.c **** #endif
+ 331:subsystems/ahrs/ahrs_float_dcm.c ****   }
+ 332:subsystems/ahrs/ahrs_float_dcm.c ****   Vector_Scale(&DCM_Matrix[0][0], &temporary[0][0], renorm);
+ 333:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 334:subsystems/ahrs/ahrs_float_dcm.c ****   // Normalize lenght of Y
+ 335:subsystems/ahrs/ahrs_float_dcm.c ****   renorm= Vector_Dot_Product(&temporary[1][0],&temporary[1][0]);
+ 336:subsystems/ahrs/ahrs_float_dcm.c ****   if (renorm < 1.5625f && renorm > 0.64f) {
+ 337:subsystems/ahrs/ahrs_float_dcm.c ****     renorm= .5 * (3-renorm);                                                 //eq.21
+ 338:subsystems/ahrs/ahrs_float_dcm.c ****   } else if (renorm < 100.0f && renorm > 0.01f) {
+ 339:subsystems/ahrs/ahrs_float_dcm.c ****     renorm= 1. / sqrt(renorm);
+ 340:subsystems/ahrs/ahrs_float_dcm.c **** #if PERFORMANCE_REPORTING == 1
+ 341:subsystems/ahrs/ahrs_float_dcm.c ****     renorm_sqrt_count++;
+ 342:subsystems/ahrs/ahrs_float_dcm.c **** #endif
+ 343:subsystems/ahrs/ahrs_float_dcm.c ****   } else {
+ 344:subsystems/ahrs/ahrs_float_dcm.c ****     problem = TRUE;
+ 345:subsystems/ahrs/ahrs_float_dcm.c **** #if PERFORMANCE_REPORTING == 1
+ 346:subsystems/ahrs/ahrs_float_dcm.c ****     renorm_blowup_count++;
+ 347:subsystems/ahrs/ahrs_float_dcm.c **** #endif
+ 348:subsystems/ahrs/ahrs_float_dcm.c ****   }
+ 349:subsystems/ahrs/ahrs_float_dcm.c ****   Vector_Scale(&DCM_Matrix[1][0], &temporary[1][0], renorm);
+ 350:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 351:subsystems/ahrs/ahrs_float_dcm.c ****   // Normalize lenght of Z
+ 352:subsystems/ahrs/ahrs_float_dcm.c ****   renorm= Vector_Dot_Product(&temporary[2][0],&temporary[2][0]);
+ 353:subsystems/ahrs/ahrs_float_dcm.c ****   if (renorm < 1.5625f && renorm > 0.64f) {
+ 354:subsystems/ahrs/ahrs_float_dcm.c ****     renorm= .5 * (3-renorm);                                                 //eq.21
+ 355:subsystems/ahrs/ahrs_float_dcm.c ****   } else if (renorm < 100.0f && renorm > 0.01f) {
+ 356:subsystems/ahrs/ahrs_float_dcm.c ****     renorm= 1. / sqrt(renorm);
+ 357:subsystems/ahrs/ahrs_float_dcm.c **** #if PERFORMANCE_REPORTING == 1
+ 358:subsystems/ahrs/ahrs_float_dcm.c ****     renorm_sqrt_count++;
+ 359:subsystems/ahrs/ahrs_float_dcm.c **** #endif
+ 360:subsystems/ahrs/ahrs_float_dcm.c ****   } else {
+ 361:subsystems/ahrs/ahrs_float_dcm.c ****     problem = TRUE;
+ 362:subsystems/ahrs/ahrs_float_dcm.c **** #if PERFORMANCE_REPORTING == 1
+ 363:subsystems/ahrs/ahrs_float_dcm.c ****     renorm_blowup_count++;
+ 364:subsystems/ahrs/ahrs_float_dcm.c **** #endif
+ 365:subsystems/ahrs/ahrs_float_dcm.c ****   }
+ 366:subsystems/ahrs/ahrs_float_dcm.c ****   Vector_Scale(&DCM_Matrix[2][0], &temporary[2][0], renorm);
+ 367:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 368:subsystems/ahrs/ahrs_float_dcm.c ****   // Reset on trouble
+ 369:subsystems/ahrs/ahrs_float_dcm.c ****   if (problem) {                // Our solution is blowing up and we will force back to initial con
+ 370:subsystems/ahrs/ahrs_float_dcm.c ****     set_dcm_matrix_from_rmat(&ahrs_impl.body_to_imu_rmat);
+ 371:subsystems/ahrs/ahrs_float_dcm.c ****     problem = FALSE;
+ 372:subsystems/ahrs/ahrs_float_dcm.c ****   }
+ 373:subsystems/ahrs/ahrs_float_dcm.c **** }
+ 374:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 375:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 376:subsystems/ahrs/ahrs_float_dcm.c **** void Drift_correction(void)
+ 377:subsystems/ahrs/ahrs_float_dcm.c **** {
+ 378:subsystems/ahrs/ahrs_float_dcm.c ****   //Compensation the Roll, Pitch and Yaw drift.
+ 379:subsystems/ahrs/ahrs_float_dcm.c ****   static float Scaled_Omega_P[3];
+ 380:subsystems/ahrs/ahrs_float_dcm.c ****   static float Scaled_Omega_I[3];
+ 381:subsystems/ahrs/ahrs_float_dcm.c ****   float Accel_magnitude;
+ 382:subsystems/ahrs/ahrs_float_dcm.c ****   float Accel_weight;
+ 383:subsystems/ahrs/ahrs_float_dcm.c ****   float Integrator_magnitude;
+ 384:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 385:subsystems/ahrs/ahrs_float_dcm.c ****   // Local Working Variables
+ 386:subsystems/ahrs/ahrs_float_dcm.c ****   float errorRollPitch[3];
+ 387:subsystems/ahrs/ahrs_float_dcm.c ****   float errorYaw[3];
+ 388:subsystems/ahrs/ahrs_float_dcm.c ****   float errorCourse;
+ 389:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 390:subsystems/ahrs/ahrs_float_dcm.c ****   //*****Roll and Pitch***************
+ 391:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 392:subsystems/ahrs/ahrs_float_dcm.c ****   // Calculate the magnitude of the accelerometer vector
+ 393:subsystems/ahrs/ahrs_float_dcm.c ****   Accel_magnitude = sqrt(accel_float.x*accel_float.x + accel_float.y*accel_float.y + accel_float.z*
+ 394:subsystems/ahrs/ahrs_float_dcm.c ****   Accel_magnitude = Accel_magnitude / GRAVITY; // Scale to gravity.
+ 395:subsystems/ahrs/ahrs_float_dcm.c ****   // Dynamic weighting of accelerometer info (reliability filter)
+ 396:subsystems/ahrs/ahrs_float_dcm.c ****   // Weight for accelerometer info (<0.5G = 0.0, 1G = 1.0 , >1.5G = 0.0)
+ 397:subsystems/ahrs/ahrs_float_dcm.c ****   Accel_weight = Chop(1 - 2*fabs(1 - Accel_magnitude),0,1);  //
+ 398:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 399:subsystems/ahrs/ahrs_float_dcm.c **** #if USE_HIGH_ACCEL_FLAG
+ 400:subsystems/ahrs/ahrs_float_dcm.c ****   // Test for high acceleration:
+ 401:subsystems/ahrs/ahrs_float_dcm.c ****   //  - low speed
+ 402:subsystems/ahrs/ahrs_float_dcm.c ****   //  - high thrust
+ 403:subsystems/ahrs/ahrs_float_dcm.c ****   if (estimator_hspeed_mod < HIGH_ACCEL_LOW_SPEED && ap_state->commands[COMMAND_THROTTLE] > HIGH_AC
+ 404:subsystems/ahrs/ahrs_float_dcm.c ****     high_accel_flag = TRUE;
+ 405:subsystems/ahrs/ahrs_float_dcm.c ****   } else {
+ 406:subsystems/ahrs/ahrs_float_dcm.c ****     high_accel_flag = FALSE;
+ 407:subsystems/ahrs/ahrs_float_dcm.c ****     if (estimator_hspeed_mod > HIGH_ACCEL_LOW_SPEED && !high_accel_done) {
+ 408:subsystems/ahrs/ahrs_float_dcm.c ****       high_accel_done = TRUE; // After takeoff, don't use high accel before landing (GS small, Thro
+ 409:subsystems/ahrs/ahrs_float_dcm.c ****     }
+ 410:subsystems/ahrs/ahrs_float_dcm.c ****     if (estimator_hspeed_mod < HIGH_ACCEL_HIGH_THRUST_RESUME && ap_state->commands[COMMAND_THROTTLE
+ 411:subsystems/ahrs/ahrs_float_dcm.c ****       high_accel_done = FALSE; // Activate high accel after landing
+ 412:subsystems/ahrs/ahrs_float_dcm.c ****     }
+ 413:subsystems/ahrs/ahrs_float_dcm.c ****   }
+ 414:subsystems/ahrs/ahrs_float_dcm.c ****   if (high_accel_flag) { Accel_weight = 0.; }
+ 415:subsystems/ahrs/ahrs_float_dcm.c **** #endif
+ 416:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 417:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 418:subsystems/ahrs/ahrs_float_dcm.c ****   #if PERFORMANCE_REPORTING == 1
+ 419:subsystems/ahrs/ahrs_float_dcm.c ****   {
+ 420:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 421:subsystems/ahrs/ahrs_float_dcm.c ****     float tempfloat = ((Accel_weight - 0.5) * 256.0f);    //amount added was determined to give imu
+ 422:subsystems/ahrs/ahrs_float_dcm.c ****     imu_health += tempfloat;
+ 423:subsystems/ahrs/ahrs_float_dcm.c ****     Bound(imu_health,129,65405);
+ 424:subsystems/ahrs/ahrs_float_dcm.c ****   }
+ 425:subsystems/ahrs/ahrs_float_dcm.c ****   #endif
+ 426:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 427:subsystems/ahrs/ahrs_float_dcm.c ****   Vector_Cross_Product(&errorRollPitch[0],&accel_float.x,&DCM_Matrix[2][0]); //adjust the ground of
+ 428:subsystems/ahrs/ahrs_float_dcm.c ****   Vector_Scale(&Omega_P[0],&errorRollPitch[0],Kp_ROLLPITCH*Accel_weight);
+ 429:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 430:subsystems/ahrs/ahrs_float_dcm.c ****   Vector_Scale(&Scaled_Omega_I[0],&errorRollPitch[0],Ki_ROLLPITCH*Accel_weight);
+ 431:subsystems/ahrs/ahrs_float_dcm.c ****   Vector_Add(Omega_I,Omega_I,Scaled_Omega_I);
+ 432:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 433:subsystems/ahrs/ahrs_float_dcm.c ****   //*****YAW***************
+ 434:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 435:subsystems/ahrs/ahrs_float_dcm.c **** #if USE_MAGNETOMETER
+ 436:subsystems/ahrs/ahrs_float_dcm.c ****   // We make the gyro YAW drift correction based on compass magnetic heading
+ 437:subsystems/ahrs/ahrs_float_dcm.c **** //  float mag_heading_x = cos(MAG_Heading);
+ 438:subsystems/ahrs/ahrs_float_dcm.c **** //  float mag_heading_y = sin(MAG_Heading);
+ 439:subsystems/ahrs/ahrs_float_dcm.c ****   // 2D dot product
+ 440:subsystems/ahrs/ahrs_float_dcm.c ****   errorCourse=(DCM_Matrix[0][0]*MAG_Heading_Y) + (DCM_Matrix[1][0]*MAG_Heading_X);  //Calculating Y
+ 441:subsystems/ahrs/ahrs_float_dcm.c ****   Vector_Scale(errorYaw,&DCM_Matrix[2][0],errorCourse); //Applys the yaw correction to the XYZ rota
+ 442:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 443:subsystems/ahrs/ahrs_float_dcm.c ****   Vector_Scale(&Scaled_Omega_P[0],&errorYaw[0],Kp_YAW);
+ 444:subsystems/ahrs/ahrs_float_dcm.c ****   Vector_Add(Omega_P,Omega_P,Scaled_Omega_P);//Adding  Proportional.
+ 445:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 446:subsystems/ahrs/ahrs_float_dcm.c ****   Vector_Scale(&Scaled_Omega_I[0],&errorYaw[0],Ki_YAW);
+ 447:subsystems/ahrs/ahrs_float_dcm.c ****   Vector_Add(Omega_I,Omega_I,Scaled_Omega_I);//adding integrator to the Omega_I
+ 448:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 449:subsystems/ahrs/ahrs_float_dcm.c **** #elif USE_GPS // Use GPS Ground course to correct yaw gyro drift
+ 450:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 451:subsystems/ahrs/ahrs_float_dcm.c ****   if(gps.fix == GPS_FIX_3D && gps.gspeed>= 500) { //got a 3d fix and ground speed is more than 0.5 
+ 452:subsystems/ahrs/ahrs_float_dcm.c ****     float ground_course = ((float)gps.course)/1.e7 - M_PI; //This is the runaway direction of you "
+ 453:subsystems/ahrs/ahrs_float_dcm.c ****     float COGX = cosf(ground_course); //Course overground X axis
+ 454:subsystems/ahrs/ahrs_float_dcm.c ****     float COGY = sinf(ground_course); //Course overground Y axis
+ 455:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 456:subsystems/ahrs/ahrs_float_dcm.c ****     errorCourse=(DCM_Matrix[0][0]*COGY) - (DCM_Matrix[1][0]*COGX);  //Calculating YAW error
+ 457:subsystems/ahrs/ahrs_float_dcm.c ****     Vector_Scale(errorYaw,&DCM_Matrix[2][0],errorCourse); //Applys the yaw correction to the XYZ ro
+ 458:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 459:subsystems/ahrs/ahrs_float_dcm.c ****     Vector_Scale(&Scaled_Omega_P[0],&errorYaw[0],Kp_YAW);
+ 460:subsystems/ahrs/ahrs_float_dcm.c ****     Vector_Add(Omega_P,Omega_P,Scaled_Omega_P);//Adding  Proportional.
+ 461:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 462:subsystems/ahrs/ahrs_float_dcm.c ****     Vector_Scale(&Scaled_Omega_I[0],&errorYaw[0],Ki_YAW);
+ 463:subsystems/ahrs/ahrs_float_dcm.c ****     Vector_Add(Omega_I,Omega_I,Scaled_Omega_I);//adding integrator to the Omega_I
+ 464:subsystems/ahrs/ahrs_float_dcm.c ****   }
+ 465:subsystems/ahrs/ahrs_float_dcm.c **** #endif
+ 466:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 467:subsystems/ahrs/ahrs_float_dcm.c ****   //  Here we will place a limit on the integrator so that the integrator cannot ever exceed half t
+ 468:subsystems/ahrs/ahrs_float_dcm.c ****   Integrator_magnitude = sqrt(Vector_Dot_Product(Omega_I,Omega_I));
+ 469:subsystems/ahrs/ahrs_float_dcm.c ****   if (Integrator_magnitude > RadOfDeg(300)) {
+ 470:subsystems/ahrs/ahrs_float_dcm.c ****     Vector_Scale(Omega_I,Omega_I,0.5f*RadOfDeg(300)/Integrator_magnitude);
+ 471:subsystems/ahrs/ahrs_float_dcm.c ****   }
+ 472:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 473:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 474:subsystems/ahrs/ahrs_float_dcm.c **** }
+ 475:subsystems/ahrs/ahrs_float_dcm.c **** /**************************************************/
+ 476:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 477:subsystems/ahrs/ahrs_float_dcm.c **** void Matrix_update(void)
+ 478:subsystems/ahrs/ahrs_float_dcm.c **** {
+ 479:subsystems/ahrs/ahrs_float_dcm.c ****   Vector_Add(&Omega[0], &ahrs_float.imu_rate.p, &Omega_I[0]);  //adding proportional term
+ 480:subsystems/ahrs/ahrs_float_dcm.c ****   Vector_Add(&Omega_Vector[0], &Omega[0], &Omega_P[0]); //adding Integrator term
+ 481:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 482:subsystems/ahrs/ahrs_float_dcm.c ****  #if OUTPUTMODE==1    // With corrected data (drift correction)
+ 483:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[0][0]=0;
+ 484:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[0][1]=-G_Dt*Omega_Vector[2];//-z
+ 485:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[0][2]=G_Dt*Omega_Vector[1];//y
+ 486:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[1][0]=G_Dt*Omega_Vector[2];//z
+ 487:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[1][1]=0;
+ 488:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[1][2]=-G_Dt*Omega_Vector[0];//-x
+ 489:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[2][0]=-G_Dt*Omega_Vector[1];//-y
+ 490:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[2][1]=G_Dt*Omega_Vector[0];//x
+ 491:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[2][2]=0;
+ 492:subsystems/ahrs/ahrs_float_dcm.c ****  #else                    // Uncorrected data (no drift correction)
+ 493:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[0][0]=0;
+ 494:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[0][1]=-G_Dt*ahrs_float.imu_rate.r;//-z
+ 495:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[0][2]=G_Dt*ahrs_float.imu_rate.q;//y
+ 496:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[1][0]=G_Dt*ahrs_float.imu_rate.r;//z
+ 497:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[1][1]=0;
+ 498:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[1][2]=-G_Dt*ahrs_float.imu_rate.p;
+ 499:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[2][0]=-G_Dt*ahrs_float.imu_rate.q;
+ 500:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[2][1]=G_Dt*ahrs_float.imu_rate.p;
+ 501:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[2][2]=0;
+ 502:subsystems/ahrs/ahrs_float_dcm.c ****  #endif
+ 503:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 504:subsystems/ahrs/ahrs_float_dcm.c ****   Matrix_Multiply(DCM_Matrix,Update_Matrix,Temporary_Matrix); //a*b=c
+ 505:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 506:subsystems/ahrs/ahrs_float_dcm.c ****   for(int x=0; x<3; x++) //Matrix Addition (update)
+ 507:subsystems/ahrs/ahrs_float_dcm.c ****   {
+ 508:subsystems/ahrs/ahrs_float_dcm.c ****     for(int y=0; y<3; y++)
+ 509:subsystems/ahrs/ahrs_float_dcm.c ****     {
+ 510:subsystems/ahrs/ahrs_float_dcm.c ****       DCM_Matrix[x][y]+=Temporary_Matrix[x][y];
+ 511:subsystems/ahrs/ahrs_float_dcm.c ****     }
+ 512:subsystems/ahrs/ahrs_float_dcm.c ****   }
+ 513:subsystems/ahrs/ahrs_float_dcm.c **** }
+ 514:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 515:subsystems/ahrs/ahrs_float_dcm.c **** /*
+ 516:subsystems/ahrs/ahrs_float_dcm.c ****  * Compute body orientation and rates from imu orientation and rates
+ 517:subsystems/ahrs/ahrs_float_dcm.c ****  */
+ 518:subsystems/ahrs/ahrs_float_dcm.c **** static inline void compute_body_orientation_and_rates(void) {
+ 227              		.loc 2 518 0
+ 228              		.cfi_startproc
+ 229              		@ args = 0, pretend = 0, frame = 40
+ 230              		@ frame_needed = 0, uses_anonymous_args = 0
+ 231 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, sl, fp, lr}
+ 232              	.LCFI3:
+ 233              		.cfi_def_cfa_offset 36
+ 234              		.cfi_offset 14, -4
+ 235              		.cfi_offset 11, -8
+ 236              		.cfi_offset 10, -12
+ 237              		.cfi_offset 9, -16
+ 238              		.cfi_offset 8, -20
+ 239              		.cfi_offset 7, -24
+ 240              		.cfi_offset 6, -28
+ 241              		.cfi_offset 5, -32
+ 242              		.cfi_offset 4, -36
+ 519:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 520:subsystems/ahrs/ahrs_float_dcm.c ****   FLOAT_QUAT_COMP_INV(ahrs_float.ltp_to_body_quat,
+ 243              		.loc 2 520 0
+ 244 0004 A04C     		ldr	r4, .L8
+ 245 0006 A14D     		ldr	r5, .L8+4
+ 246 0008 2368     		ldr	r3, [r4, #0]	@ float
+ 247 000a AA69     		ldr	r2, [r5, #24]	@ float
+ 518:subsystems/ahrs/ahrs_float_dcm.c **** static inline void compute_body_orientation_and_rates(void) {
+ 248              		.loc 2 518 0
+ 249 000c 8BB0     		sub	sp, sp, #44
+ 250              	.LCFI4:
+ 251              		.cfi_def_cfa_offset 80
+ 252              		.loc 2 520 0
+ 253 000e 1846     		mov	r0, r3
+ 254 0010 1146     		mov	r1, r2
+ 255 0012 0093     		str	r3, [sp, #0]
+ 256 0014 0392     		str	r2, [sp, #12]	@ float
+ 257 0016 FFF7FEFF 		bl	__aeabi_fmul
+ 258 001a D4F804A0 		ldr	sl, [r4, #4]	@ float
+ 259 001e EF69     		ldr	r7, [r5, #28]	@ float
+ 260 0020 0246     		mov	r2, r0
+ 261 0022 3946     		mov	r1, r7
+ 262 0024 5046     		mov	r0, sl
+ 263 0026 0192     		str	r2, [sp, #4]
+ 264 0028 FFF7FEFF 		bl	__aeabi_fmul
+ 265 002c 019A     		ldr	r2, [sp, #4]
+ 266 002e 0146     		mov	r1, r0
+ 267 0030 1046     		mov	r0, r2
+ 268 0032 FFF7FEFF 		bl	__aeabi_fadd
+ 269 0036 D4F80880 		ldr	r8, [r4, #8]	@ float
+ 270 003a D5F82090 		ldr	r9, [r5, #32]	@ float
+ 271 003e 0246     		mov	r2, r0
+ 272 0040 4946     		mov	r1, r9
+ 273 0042 4046     		mov	r0, r8
+ 274 0044 0192     		str	r2, [sp, #4]
+ 275 0046 FFF7FEFF 		bl	__aeabi_fmul
+ 276 004a 019A     		ldr	r2, [sp, #4]
+ 277 004c 0146     		mov	r1, r0
+ 278 004e 1046     		mov	r0, r2
+ 279 0050 FFF7FEFF 		bl	__aeabi_fadd
+ 280 0054 E668     		ldr	r6, [r4, #12]	@ float
+ 281 0056 D5F824B0 		ldr	fp, [r5, #36]	@ float
+ 282 005a 0246     		mov	r2, r0
+ 283 005c 5946     		mov	r1, fp
+ 284 005e 3046     		mov	r0, r6
+ 285 0060 0192     		str	r2, [sp, #4]
+ 286 0062 FFF7FEFF 		bl	__aeabi_fmul
+ 287 0066 019A     		ldr	r2, [sp, #4]
+ 288 0068 0146     		mov	r1, r0
+ 289 006a 1046     		mov	r0, r2
+ 290 006c FFF7FEFF 		bl	__aeabi_fadd
+ 291 0070 009B     		ldr	r3, [sp, #0]
+ 292 0072 3946     		mov	r1, r7
+ 293 0074 03F10043 		add	r3, r3, #-2147483648
+ 294 0078 6066     		str	r0, [r4, #100]	@ float
+ 295 007a 1846     		mov	r0, r3
+ 296 007c 0093     		str	r3, [sp, #0]
+ 297 007e FFF7FEFF 		bl	__aeabi_fmul
+ 298 0082 0399     		ldr	r1, [sp, #12]	@ float
+ 299 0084 0246     		mov	r2, r0
+ 300 0086 5046     		mov	r0, sl
+ 301 0088 0192     		str	r2, [sp, #4]
+ 302 008a FFF7FEFF 		bl	__aeabi_fmul
+ 303 008e 019A     		ldr	r2, [sp, #4]
+ 304 0090 0146     		mov	r1, r0
+ 305 0092 1046     		mov	r0, r2
+ 306 0094 FFF7FEFF 		bl	__aeabi_fadd
+ 307 0098 5946     		mov	r1, fp
+ 308 009a 0246     		mov	r2, r0
+ 309 009c 4046     		mov	r0, r8
+ 310 009e 0192     		str	r2, [sp, #4]
+ 311 00a0 FFF7FEFF 		bl	__aeabi_fmul
+ 312 00a4 019A     		ldr	r2, [sp, #4]
+ 313 00a6 0146     		mov	r1, r0
+ 314 00a8 1046     		mov	r0, r2
+ 315 00aa FFF7FEFF 		bl	__aeabi_fsub
+ 316 00ae 4946     		mov	r1, r9
+ 317 00b0 0246     		mov	r2, r0
+ 318 00b2 3046     		mov	r0, r6
+ 319 00b4 0192     		str	r2, [sp, #4]
+ 320 00b6 FFF7FEFF 		bl	__aeabi_fmul
+ 321 00ba 019A     		ldr	r2, [sp, #4]
+ 322 00bc 0146     		mov	r1, r0
+ 323 00be 1046     		mov	r0, r2
+ 324 00c0 FFF7FEFF 		bl	__aeabi_fadd
+ 325 00c4 009B     		ldr	r3, [sp, #0]
+ 326 00c6 4946     		mov	r1, r9
+ 327 00c8 A066     		str	r0, [r4, #104]	@ float
+ 328 00ca 1846     		mov	r0, r3
+ 329 00cc FFF7FEFF 		bl	__aeabi_fmul
+ 330 00d0 5946     		mov	r1, fp
+ 331 00d2 0246     		mov	r2, r0
+ 332 00d4 5046     		mov	r0, sl
+ 333 00d6 0192     		str	r2, [sp, #4]
+ 334 00d8 FFF7FEFF 		bl	__aeabi_fmul
+ 335 00dc 019A     		ldr	r2, [sp, #4]
+ 336 00de 0146     		mov	r1, r0
+ 337 00e0 1046     		mov	r0, r2
+ 338 00e2 FFF7FEFF 		bl	__aeabi_fadd
+ 339 00e6 0399     		ldr	r1, [sp, #12]	@ float
+ 340 00e8 0246     		mov	r2, r0
+ 341 00ea 4046     		mov	r0, r8
+ 342 00ec 0192     		str	r2, [sp, #4]
+ 343 00ee FFF7FEFF 		bl	__aeabi_fmul
+ 344 00f2 019A     		ldr	r2, [sp, #4]
+ 345 00f4 0146     		mov	r1, r0
+ 346 00f6 1046     		mov	r0, r2
+ 347 00f8 FFF7FEFF 		bl	__aeabi_fadd
+ 348 00fc 3946     		mov	r1, r7
+ 349 00fe 0246     		mov	r2, r0
+ 350 0100 3046     		mov	r0, r6
+ 351 0102 0192     		str	r2, [sp, #4]
+ 352 0104 FFF7FEFF 		bl	__aeabi_fmul
+ 353 0108 019A     		ldr	r2, [sp, #4]
+ 354 010a 0146     		mov	r1, r0
+ 355 010c 1046     		mov	r0, r2
+ 356 010e FFF7FEFF 		bl	__aeabi_fsub
+ 357 0112 009B     		ldr	r3, [sp, #0]
+ 358 0114 5946     		mov	r1, fp
+ 359 0116 E066     		str	r0, [r4, #108]	@ float
+ 360 0118 1846     		mov	r0, r3
+ 361 011a FFF7FEFF 		bl	__aeabi_fmul
+ 362 011e 4946     		mov	r1, r9
+ 363 0120 8346     		mov	fp, r0
+ 364 0122 5046     		mov	r0, sl
+ 365 0124 FFF7FEFF 		bl	__aeabi_fmul
+ 366 0128 0146     		mov	r1, r0
+ 367 012a 5846     		mov	r0, fp
+ 368 012c FFF7FEFF 		bl	__aeabi_fsub
+ 369 0130 3946     		mov	r1, r7
+ 370 0132 8146     		mov	r9, r0
+ 371 0134 4046     		mov	r0, r8
+ 372 0136 FFF7FEFF 		bl	__aeabi_fmul
+ 373 013a 0146     		mov	r1, r0
+ 374 013c 4846     		mov	r0, r9
+ 375 013e FFF7FEFF 		bl	__aeabi_fadd
+ 376 0142 0399     		ldr	r1, [sp, #12]	@ float
+ 377 0144 0746     		mov	r7, r0
+ 378 0146 3046     		mov	r0, r6
+ 379 0148 FFF7FEFF 		bl	__aeabi_fmul
+ 380 014c 0146     		mov	r1, r0
+ 381 014e 3846     		mov	r0, r7
+ 382 0150 FFF7FEFF 		bl	__aeabi_fadd
+ 521:subsystems/ahrs/ahrs_float_dcm.c ****                       ahrs_float.ltp_to_imu_quat, ahrs_impl.body_to_imu_quat);
+ 522:subsystems/ahrs/ahrs_float_dcm.c ****   FLOAT_RMAT_COMP_INV(ahrs_float.ltp_to_body_rmat,
+ 383              		.loc 2 522 0
+ 384 0154 D5F82890 		ldr	r9, [r5, #40]	@ float
+ 385 0158 D4F81CB0 		ldr	fp, [r4, #28]	@ float
+ 386 015c 636B     		ldr	r3, [r4, #52]	@ float
+ 387 015e 5946     		mov	r1, fp
+ 520:subsystems/ahrs/ahrs_float_dcm.c ****   FLOAT_QUAT_COMP_INV(ahrs_float.ltp_to_body_quat,
+ 388              		.loc 2 520 0
+ 389 0160 2067     		str	r0, [r4, #112]	@ float
+ 390              		.loc 2 522 0
+ 391 0162 4846     		mov	r0, r9
+ 392 0164 0393     		str	r3, [sp, #12]	@ float
+ 393 0166 FFF7FEFF 		bl	__aeabi_fmul
+ 394 016a 6F6B     		ldr	r7, [r5, #52]	@ float
+ 395 016c D4F828A0 		ldr	sl, [r4, #40]	@ float
+ 396 0170 8046     		mov	r8, r0
+ 397 0172 5146     		mov	r1, sl
+ 398 0174 3846     		mov	r0, r7
+ 399 0176 FFF7FEFF 		bl	__aeabi_fmul
+ 400 017a 0146     		mov	r1, r0
+ 401 017c 4046     		mov	r0, r8
+ 402 017e FFF7FEFF 		bl	__aeabi_fadd
+ 403 0182 2E6C     		ldr	r6, [r5, #64]	@ float
+ 404 0184 8046     		mov	r8, r0
+ 405 0186 0399     		ldr	r1, [sp, #12]	@ float
+ 406 0188 3046     		mov	r0, r6
+ 407 018a FFF7FEFF 		bl	__aeabi_fmul
+ 408 018e 0146     		mov	r1, r0
+ 409 0190 4046     		mov	r0, r8
+ 410 0192 FFF7FEFF 		bl	__aeabi_fadd
+ 411 0196 E36A     		ldr	r3, [r4, #44]	@ float
+ 412 0198 226A     		ldr	r2, [r4, #32]	@ float
+ 413 019a 0493     		str	r3, [sp, #16]	@ float
+ 414 019c A36B     		ldr	r3, [r4, #56]	@ float
+ 415 019e 1146     		mov	r1, r2
+ 416 01a0 0890     		str	r0, [sp, #32]	@ float
+ 417 01a2 C4F88000 		str	r0, [r4, #128]	@ float
+ 418 01a6 4846     		mov	r0, r9
+ 419 01a8 0593     		str	r3, [sp, #20]	@ float
+ 420 01aa 0192     		str	r2, [sp, #4]
+ 421 01ac FFF7FEFF 		bl	__aeabi_fmul
+ 422 01b0 0499     		ldr	r1, [sp, #16]	@ float
+ 423 01b2 8046     		mov	r8, r0
+ 424 01b4 3846     		mov	r0, r7
+ 425 01b6 FFF7FEFF 		bl	__aeabi_fmul
+ 426 01ba 0146     		mov	r1, r0
+ 427 01bc 4046     		mov	r0, r8
+ 428 01be FFF7FEFF 		bl	__aeabi_fadd
+ 429 01c2 0599     		ldr	r1, [sp, #20]	@ float
+ 430 01c4 8046     		mov	r8, r0
+ 431 01c6 3046     		mov	r0, r6
+ 432 01c8 FFF7FEFF 		bl	__aeabi_fmul
+ 433 01cc 0146     		mov	r1, r0
+ 434 01ce 4046     		mov	r0, r8
+ 435 01d0 FFF7FEFF 		bl	__aeabi_fadd
+ 436 01d4 236B     		ldr	r3, [r4, #48]	@ float
+ 437 01d6 D4F82480 		ldr	r8, [r4, #36]	@ float
+ 438 01da 0693     		str	r3, [sp, #24]	@ float
+ 439 01dc E36B     		ldr	r3, [r4, #60]	@ float
+ 440 01de 4146     		mov	r1, r8
+ 441 01e0 0990     		str	r0, [sp, #36]	@ float
+ 442 01e2 C4F88400 		str	r0, [r4, #132]	@ float
+ 443 01e6 4846     		mov	r0, r9
+ 444 01e8 0793     		str	r3, [sp, #28]	@ float
+ 445 01ea FFF7FEFF 		bl	__aeabi_fmul
+ 446 01ee 0699     		ldr	r1, [sp, #24]	@ float
+ 447 01f0 8146     		mov	r9, r0
+ 448 01f2 3846     		mov	r0, r7
+ 449 01f4 FFF7FEFF 		bl	__aeabi_fmul
+ 450 01f8 0146     		mov	r1, r0
+ 451 01fa 4846     		mov	r0, r9
+ 452 01fc FFF7FEFF 		bl	__aeabi_fadd
+ 453 0200 0799     		ldr	r1, [sp, #28]	@ float
+ 454 0202 0746     		mov	r7, r0
+ 455 0204 3046     		mov	r0, r6
+ 456 0206 FFF7FEFF 		bl	__aeabi_fmul
+ 457 020a 0146     		mov	r1, r0
+ 458 020c 3846     		mov	r0, r7
+ 459 020e FFF7FEFF 		bl	__aeabi_fadd
+ 460 0212 D5F82C90 		ldr	r9, [r5, #44]	@ float
+ 461 0216 8446     		mov	ip, r0
+ 462 0218 5946     		mov	r1, fp
+ 463 021a C4F88800 		str	r0, [r4, #136]	@ float
+ 464 021e 4846     		mov	r0, r9
+ 465 0220 CDF808C0 		str	ip, [sp, #8]
+ 466 0224 FFF7FEFF 		bl	__aeabi_fmul
+ 467 0228 AF6B     		ldr	r7, [r5, #56]	@ float
+ 468 022a 0346     		mov	r3, r0
+ 469 022c 5146     		mov	r1, sl
+ 470 022e 3846     		mov	r0, r7
+ 471 0230 0093     		str	r3, [sp, #0]
+ 472 0232 FFF7FEFF 		bl	__aeabi_fmul
+ 473 0236 009B     		ldr	r3, [sp, #0]
+ 474 0238 0146     		mov	r1, r0
+ 475 023a 1846     		mov	r0, r3
+ 476 023c FFF7FEFF 		bl	__aeabi_fadd
+ 477 0240 6E6C     		ldr	r6, [r5, #68]	@ float
+ 478 0242 0346     		mov	r3, r0
+ 479 0244 0399     		ldr	r1, [sp, #12]	@ float
+ 480 0246 3046     		mov	r0, r6
+ 481 0248 0093     		str	r3, [sp, #0]
+ 482 024a FFF7FEFF 		bl	__aeabi_fmul
+ 483 024e 009B     		ldr	r3, [sp, #0]
+ 484 0250 0146     		mov	r1, r0
+ 485 0252 1846     		mov	r0, r3
+ 486 0254 FFF7FEFF 		bl	__aeabi_fadd
+ 487 0258 019A     		ldr	r2, [sp, #4]
+ 488 025a C4F88C00 		str	r0, [r4, #140]	@ float
+ 489 025e 1146     		mov	r1, r2
+ 490 0260 4846     		mov	r0, r9
+ 491 0262 FFF7FEFF 		bl	__aeabi_fmul
+ 492 0266 0499     		ldr	r1, [sp, #16]	@ float
+ 493 0268 0346     		mov	r3, r0
+ 494 026a 3846     		mov	r0, r7
+ 495 026c 0093     		str	r3, [sp, #0]
+ 496 026e FFF7FEFF 		bl	__aeabi_fmul
+ 497 0272 009B     		ldr	r3, [sp, #0]
+ 498 0274 0146     		mov	r1, r0
+ 499 0276 1846     		mov	r0, r3
+ 500 0278 FFF7FEFF 		bl	__aeabi_fadd
+ 501 027c 0599     		ldr	r1, [sp, #20]	@ float
+ 502 027e 0346     		mov	r3, r0
+ 503 0280 3046     		mov	r0, r6
+ 504 0282 0093     		str	r3, [sp, #0]
+ 505 0284 04E0     		b	.L9
+ 506              	.L10:
+ 507 0286 00BF     		.align	2
+ 508              	.L8:
+ 509 0288 00000000 		.word	ahrs_float
+ 510 028c 00000000 		.word	.LANCHOR1
+ 511              	.L9:
+ 512 0290 FFF7FEFF 		bl	__aeabi_fmul
+ 513 0294 009B     		ldr	r3, [sp, #0]
+ 514 0296 0146     		mov	r1, r0
+ 515 0298 1846     		mov	r0, r3
+ 516 029a FFF7FEFF 		bl	__aeabi_fadd
+ 517 029e 4146     		mov	r1, r8
+ 518 02a0 C4F89000 		str	r0, [r4, #144]	@ float
+ 519 02a4 4846     		mov	r0, r9
+ 520 02a6 FFF7FEFF 		bl	__aeabi_fmul
+ 521 02aa 0699     		ldr	r1, [sp, #24]	@ float
+ 522 02ac 8146     		mov	r9, r0
+ 523 02ae 3846     		mov	r0, r7
+ 524 02b0 FFF7FEFF 		bl	__aeabi_fmul
+ 525 02b4 0146     		mov	r1, r0
+ 526 02b6 4846     		mov	r0, r9
+ 527 02b8 FFF7FEFF 		bl	__aeabi_fadd
+ 528 02bc 0799     		ldr	r1, [sp, #28]	@ float
+ 529 02be 0746     		mov	r7, r0
+ 530 02c0 3046     		mov	r0, r6
+ 531 02c2 FFF7FEFF 		bl	__aeabi_fmul
+ 532 02c6 0146     		mov	r1, r0
+ 533 02c8 3846     		mov	r0, r7
+ 534 02ca FFF7FEFF 		bl	__aeabi_fadd
+ 535 02ce D5F83090 		ldr	r9, [r5, #48]	@ float
+ 536 02d2 0346     		mov	r3, r0
+ 537 02d4 5946     		mov	r1, fp
+ 538 02d6 C4F89400 		str	r0, [r4, #148]	@ float
+ 539 02da 4846     		mov	r0, r9
+ 540 02dc 0093     		str	r3, [sp, #0]
+ 541 02de FFF7FEFF 		bl	__aeabi_fmul
+ 542 02e2 EF6B     		ldr	r7, [r5, #60]	@ float
+ 543 02e4 5146     		mov	r1, sl
+ 544 02e6 8346     		mov	fp, r0
+ 545 02e8 3846     		mov	r0, r7
+ 546 02ea FFF7FEFF 		bl	__aeabi_fmul
+ 547 02ee 0146     		mov	r1, r0
+ 548 02f0 5846     		mov	r0, fp
+ 549 02f2 FFF7FEFF 		bl	__aeabi_fadd
+ 550 02f6 AE6C     		ldr	r6, [r5, #72]	@ float
+ 551 02f8 8246     		mov	sl, r0
+ 552 02fa 0399     		ldr	r1, [sp, #12]	@ float
+ 553 02fc 3046     		mov	r0, r6
+ 554 02fe FFF7FEFF 		bl	__aeabi_fmul
+ 555 0302 0146     		mov	r1, r0
+ 556 0304 5046     		mov	r0, sl
+ 557 0306 FFF7FEFF 		bl	__aeabi_fadd
+ 558 030a 019A     		ldr	r2, [sp, #4]
+ 559 030c C4F89800 		str	r0, [r4, #152]	@ float
+ 560 0310 1146     		mov	r1, r2
+ 561 0312 4846     		mov	r0, r9
+ 562 0314 FFF7FEFF 		bl	__aeabi_fmul
+ 563 0318 0499     		ldr	r1, [sp, #16]	@ float
+ 564 031a 8246     		mov	sl, r0
+ 565 031c 3846     		mov	r0, r7
+ 566 031e FFF7FEFF 		bl	__aeabi_fmul
+ 567 0322 0146     		mov	r1, r0
+ 568 0324 5046     		mov	r0, sl
+ 569 0326 FFF7FEFF 		bl	__aeabi_fadd
+ 570 032a 0599     		ldr	r1, [sp, #20]	@ float
+ 571 032c 8246     		mov	sl, r0
+ 572 032e 3046     		mov	r0, r6
+ 573 0330 FFF7FEFF 		bl	__aeabi_fmul
+ 574 0334 0146     		mov	r1, r0
+ 575 0336 5046     		mov	r0, sl
+ 576 0338 FFF7FEFF 		bl	__aeabi_fadd
+ 577 033c 4146     		mov	r1, r8
+ 578 033e C4F89C00 		str	r0, [r4, #156]	@ float
+ 579 0342 4846     		mov	r0, r9
+ 580 0344 FFF7FEFF 		bl	__aeabi_fmul
+ 581 0348 0699     		ldr	r1, [sp, #24]	@ float
+ 582 034a 8046     		mov	r8, r0
+ 583 034c 3846     		mov	r0, r7
+ 584 034e FFF7FEFF 		bl	__aeabi_fmul
+ 585 0352 0146     		mov	r1, r0
+ 586 0354 4046     		mov	r0, r8
+ 587 0356 FFF7FEFF 		bl	__aeabi_fadd
+ 588 035a 0799     		ldr	r1, [sp, #28]	@ float
+ 589 035c 0746     		mov	r7, r0
+ 590 035e 3046     		mov	r0, r6
+ 591 0360 FFF7FEFF 		bl	__aeabi_fmul
+ 592 0364 0146     		mov	r1, r0
+ 593 0366 3846     		mov	r0, r7
+ 594 0368 FFF7FEFF 		bl	__aeabi_fadd
+ 595 036c C4F8A000 		str	r0, [r4, #160]	@ float
+ 596              	.LVL21:
+ 597              	.LBB25:
+ 523:subsystems/ahrs/ahrs_float_dcm.c ****                       ahrs_float.ltp_to_imu_rmat, ahrs_impl.body_to_imu_rmat);
+ 524:subsystems/ahrs/ahrs_float_dcm.c ****   FLOAT_EULERS_OF_RMAT(ahrs_float.ltp_to_body_euler, ahrs_float.ltp_to_body_rmat);
+ 598              		.loc 2 524 0
+ 599 0370 009B     		ldr	r3, [sp, #0]
+ 600              	.LBE25:
+ 522:subsystems/ahrs/ahrs_float_dcm.c ****   FLOAT_RMAT_COMP_INV(ahrs_float.ltp_to_body_rmat,
+ 601              		.loc 2 522 0
+ 602 0372 0146     		mov	r1, r0
+ 603              	.LVL22:
+ 604              	.LBB26:
+ 605              		.loc 2 524 0
+ 606 0374 1846     		mov	r0, r3
+ 607              	.LVL23:
+ 608 0376 FFF7FEFF 		bl	atan2f
+ 609              	.LVL24:
+ 610 037a DDF808C0 		ldr	ip, [sp, #8]
+ 611 037e 6067     		str	r0, [r4, #116]	@ float
+ 612 0380 6046     		mov	r0, ip
+ 613 0382 FFF7FEFF 		bl	asinf
+ 614 0386 00F10040 		add	r0, r0, #-2147483648
+ 615 038a A067     		str	r0, [r4, #120]	@ float
+ 616 038c 0899     		ldr	r1, [sp, #32]	@ float
+ 617 038e 0998     		ldr	r0, [sp, #36]	@ float
+ 618 0390 FFF7FEFF 		bl	atan2f
+ 619              	.LBE26:
+ 525:subsystems/ahrs/ahrs_float_dcm.c ****   FLOAT_RMAT_TRANSP_RATEMULT(ahrs_float.body_rate, ahrs_impl.body_to_imu_rmat, ahrs_float.imu_rate)
+ 620              		.loc 2 525 0
+ 621 0394 D4F84080 		ldr	r8, [r4, #64]	@ float
+ 622              	.LBB27:
+ 524:subsystems/ahrs/ahrs_float_dcm.c ****   FLOAT_EULERS_OF_RMAT(ahrs_float.ltp_to_body_euler, ahrs_float.ltp_to_body_rmat);
+ 623              		.loc 2 524 0
+ 624 0398 E067     		str	r0, [r4, #124]	@ float
+ 625              	.LBE27:
+ 626              		.loc 2 525 0
+ 627 039a A96A     		ldr	r1, [r5, #40]	@ float
+ 628 039c 4046     		mov	r0, r8
+ 629 039e FFF7FEFF 		bl	__aeabi_fmul
+ 630 03a2 676C     		ldr	r7, [r4, #68]	@ float
+ 631 03a4 8146     		mov	r9, r0
+ 632 03a6 696B     		ldr	r1, [r5, #52]	@ float
+ 633 03a8 3846     		mov	r0, r7
+ 634 03aa FFF7FEFF 		bl	__aeabi_fmul
+ 635 03ae 0146     		mov	r1, r0
+ 636 03b0 4846     		mov	r0, r9
+ 637 03b2 FFF7FEFF 		bl	__aeabi_fadd
+ 638 03b6 A66C     		ldr	r6, [r4, #72]	@ float
+ 639 03b8 8146     		mov	r9, r0
+ 640 03ba 296C     		ldr	r1, [r5, #64]	@ float
+ 641 03bc 3046     		mov	r0, r6
+ 642 03be FFF7FEFF 		bl	__aeabi_fmul
+ 643 03c2 0146     		mov	r1, r0
+ 644 03c4 4846     		mov	r0, r9
+ 645 03c6 FFF7FEFF 		bl	__aeabi_fadd
+ 646 03ca E96A     		ldr	r1, [r5, #44]	@ float
+ 647 03cc C4F8A400 		str	r0, [r4, #164]	@ float
+ 648 03d0 4046     		mov	r0, r8
+ 649 03d2 FFF7FEFF 		bl	__aeabi_fmul
+ 650 03d6 A96B     		ldr	r1, [r5, #56]	@ float
+ 651 03d8 8146     		mov	r9, r0
+ 652 03da 3846     		mov	r0, r7
+ 653 03dc FFF7FEFF 		bl	__aeabi_fmul
+ 654 03e0 0146     		mov	r1, r0
+ 655 03e2 4846     		mov	r0, r9
+ 656 03e4 FFF7FEFF 		bl	__aeabi_fadd
+ 657 03e8 696C     		ldr	r1, [r5, #68]	@ float
+ 658 03ea 8146     		mov	r9, r0
+ 659 03ec 3046     		mov	r0, r6
+ 660 03ee FFF7FEFF 		bl	__aeabi_fmul
+ 661 03f2 0146     		mov	r1, r0
+ 662 03f4 4846     		mov	r0, r9
+ 663 03f6 FFF7FEFF 		bl	__aeabi_fadd
+ 664 03fa 296B     		ldr	r1, [r5, #48]	@ float
+ 665 03fc C4F8A800 		str	r0, [r4, #168]	@ float
+ 666 0400 4046     		mov	r0, r8
+ 667 0402 FFF7FEFF 		bl	__aeabi_fmul
+ 668 0406 E96B     		ldr	r1, [r5, #60]	@ float
+ 669 0408 8046     		mov	r8, r0
+ 670 040a 3846     		mov	r0, r7
+ 671 040c FFF7FEFF 		bl	__aeabi_fmul
+ 672 0410 0146     		mov	r1, r0
+ 673 0412 4046     		mov	r0, r8
+ 674 0414 FFF7FEFF 		bl	__aeabi_fadd
+ 675 0418 A96C     		ldr	r1, [r5, #72]	@ float
+ 676 041a 0746     		mov	r7, r0
+ 677 041c 3046     		mov	r0, r6
+ 678 041e FFF7FEFF 		bl	__aeabi_fmul
+ 679 0422 0146     		mov	r1, r0
+ 680 0424 3846     		mov	r0, r7
+ 681 0426 FFF7FEFF 		bl	__aeabi_fadd
+ 682 042a C4F8AC00 		str	r0, [r4, #172]	@ float
+ 526:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 527:subsystems/ahrs/ahrs_float_dcm.c **** }
+ 683              		.loc 2 527 0
+ 684 042e 0BB0     		add	sp, sp, #44
+ 685 0430 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, sl, fp, pc}
+ 686              		.cfi_endproc
+ 687              	.LFE51:
+ 689              		.section	.text.ahrs_init,"ax",%progbits
+ 690              		.align	1
+ 691              		.global	ahrs_init
+ 692              		.thumb
+ 693              		.thumb_func
+ 695              	ahrs_init:
+ 696              	.LFB42:
+ 127:subsystems/ahrs/ahrs_float_dcm.c **** void ahrs_init(void) {
+ 697              		.loc 2 127 0
+ 698              		.cfi_startproc
+ 699              		@ args = 0, pretend = 0, frame = 0
+ 700              		@ frame_needed = 0, uses_anonymous_args = 0
+ 128:subsystems/ahrs/ahrs_float_dcm.c ****   ahrs.status = AHRS_UNINIT;
+ 701              		.loc 2 128 0
+ 702 0000 284B     		ldr	r3, .L12
+ 127:subsystems/ahrs/ahrs_float_dcm.c **** void ahrs_init(void) {
+ 703              		.loc 2 127 0
+ 704 0002 F0B5     		push	{r4, r5, r6, r7, lr}
+ 705              	.LCFI5:
+ 706              		.cfi_def_cfa_offset 20
+ 707              		.cfi_offset 14, -4
+ 708              		.cfi_offset 7, -8
+ 709              		.cfi_offset 6, -12
+ 710              		.cfi_offset 5, -16
+ 711              		.cfi_offset 4, -20
+ 128:subsystems/ahrs/ahrs_float_dcm.c ****   ahrs.status = AHRS_UNINIT;
+ 712              		.loc 2 128 0
+ 713 0004 0022     		movs	r2, #0
+ 140:subsystems/ahrs/ahrs_float_dcm.c ****   FLOAT_QUAT_ZERO(ahrs_float.ltp_to_body_quat);
+ 714              		.loc 2 140 0
+ 715 0006 284D     		ldr	r5, .L12+4
+ 716              	.LBB28:
+ 136:subsystems/ahrs/ahrs_float_dcm.c ****   FLOAT_QUAT_OF_EULERS(ahrs_impl.body_to_imu_quat, body_to_imu_euler);
+ 717              		.loc 2 136 0
+ 718 0008 284F     		ldr	r7, .L12+8
+ 719 000a 0024     		movs	r4, #0
+ 720              	.LBE28:
+ 128:subsystems/ahrs/ahrs_float_dcm.c ****   ahrs.status = AHRS_UNINIT;
+ 721              		.loc 2 128 0
+ 722 000c 83F89820 		strb	r2, [r3, #152]
+ 723              	.LVL25:
+ 724              	.LBB29:
+ 136:subsystems/ahrs/ahrs_float_dcm.c ****   FLOAT_QUAT_OF_EULERS(ahrs_impl.body_to_imu_quat, body_to_imu_euler);
+ 725              		.loc 2 136 0
+ 726 0010 4FF07E53 		mov	r3, #1065353216
+ 727              	.LBE29:
+ 728              	.LBB30:
+ 137:subsystems/ahrs/ahrs_float_dcm.c ****   FLOAT_RMAT_OF_EULERS(ahrs_impl.body_to_imu_rmat, body_to_imu_euler);
+ 729              		.loc 2 137 0
+ 730 0014 4FF00042 		mov	r2, #-2147483648
+ 731              	.LBE30:
+ 732              	.LBB31:
+ 136:subsystems/ahrs/ahrs_float_dcm.c ****   FLOAT_QUAT_OF_EULERS(ahrs_impl.body_to_imu_quat, body_to_imu_euler);
+ 733              		.loc 2 136 0
+ 734 0018 BB61     		str	r3, [r7, #24]	@ float
+ 735 001a FC61     		str	r4, [r7, #28]	@ float
+ 736 001c 3C62     		str	r4, [r7, #32]	@ float
+ 737 001e 7C62     		str	r4, [r7, #36]	@ float
+ 738              	.LVL26:
+ 739              	.LBE31:
+ 740              	.LBB32:
+ 137:subsystems/ahrs/ahrs_float_dcm.c ****   FLOAT_RMAT_OF_EULERS(ahrs_impl.body_to_imu_rmat, body_to_imu_euler);
+ 741              		.loc 2 137 0
+ 742 0020 BB62     		str	r3, [r7, #40]	@ float
+ 743 0022 FC62     		str	r4, [r7, #44]	@ float
+ 744 0024 3A63     		str	r2, [r7, #48]	@ float
+ 745 0026 7C63     		str	r4, [r7, #52]	@ float
+ 746 0028 BB63     		str	r3, [r7, #56]	@ float
+ 747 002a FC63     		str	r4, [r7, #60]	@ float
+ 748 002c 3C64     		str	r4, [r7, #64]	@ float
+ 749 002e 7C64     		str	r4, [r7, #68]	@ float
+ 750 0030 BB64     		str	r3, [r7, #72]	@ float
+ 751              	.LBE32:
+ 147:subsystems/ahrs/ahrs_float_dcm.c ****   RMAT_COPY(ahrs_float.ltp_to_imu_rmat, ahrs_impl.body_to_imu_rmat);
+ 752              		.loc 2 147 0
+ 753 0032 05F11C06 		add	r6, r5, #28
+ 754 0036 2837     		adds	r7, r7, #40
+ 140:subsystems/ahrs/ahrs_float_dcm.c ****   FLOAT_QUAT_ZERO(ahrs_float.ltp_to_body_quat);
+ 755              		.loc 2 140 0
+ 756 0038 6B66     		str	r3, [r5, #100]	@ float
+ 142:subsystems/ahrs/ahrs_float_dcm.c ****   FLOAT_RMAT_ZERO(ahrs_float.ltp_to_body_rmat);
+ 757              		.loc 2 142 0
+ 758 003a C5F88030 		str	r3, [r5, #128]	@ float
+ 759 003e C5F89030 		str	r3, [r5, #144]	@ float
+ 760 0042 C5F8A030 		str	r3, [r5, #160]	@ float
+ 140:subsystems/ahrs/ahrs_float_dcm.c ****   FLOAT_QUAT_ZERO(ahrs_float.ltp_to_body_quat);
+ 761              		.loc 2 140 0
+ 762 0046 AC66     		str	r4, [r5, #104]	@ float
+ 763 0048 EC66     		str	r4, [r5, #108]	@ float
+ 764 004a 2C67     		str	r4, [r5, #112]	@ float
+ 141:subsystems/ahrs/ahrs_float_dcm.c ****   FLOAT_EULERS_ZERO(ahrs_float.ltp_to_body_euler);
+ 765              		.loc 2 141 0
+ 766 004c 6C67     		str	r4, [r5, #116]	@ float
+ 767 004e AC67     		str	r4, [r5, #120]	@ float
+ 768 0050 EC67     		str	r4, [r5, #124]	@ float
+ 142:subsystems/ahrs/ahrs_float_dcm.c ****   FLOAT_RMAT_ZERO(ahrs_float.ltp_to_body_rmat);
+ 769              		.loc 2 142 0
+ 770 0052 C5F88440 		str	r4, [r5, #132]	@ float
+ 771 0056 C5F88840 		str	r4, [r5, #136]	@ float
+ 772 005a C5F88C40 		str	r4, [r5, #140]	@ float
+ 773 005e C5F89440 		str	r4, [r5, #148]	@ float
+ 774 0062 C5F89840 		str	r4, [r5, #152]	@ float
+ 775 0066 C5F89C40 		str	r4, [r5, #156]	@ float
+ 143:subsystems/ahrs/ahrs_float_dcm.c ****   FLOAT_RATES_ZERO(ahrs_float.body_rate);
+ 776              		.loc 2 143 0
+ 777 006a C5F8A440 		str	r4, [r5, #164]	@ float
+ 778 006e C5F8A840 		str	r4, [r5, #168]	@ float
+ 779 0072 C5F8AC40 		str	r4, [r5, #172]	@ float
+ 146:subsystems/ahrs/ahrs_float_dcm.c ****   QUAT_COPY(ahrs_float.ltp_to_imu_quat, ahrs_impl.body_to_imu_quat);
+ 780              		.loc 2 146 0
+ 781 0076 2B60     		str	r3, [r5, #0]	@ float
+ 147:subsystems/ahrs/ahrs_float_dcm.c ****   RMAT_COPY(ahrs_float.ltp_to_imu_rmat, ahrs_impl.body_to_imu_rmat);
+ 782              		.loc 2 147 0
+ 783 0078 0FCF     		ldmia	r7!, {r0, r1, r2, r3}
+ 784 007a 0FC6     		stmia	r6!, {r0, r1, r2, r3}
+ 785 007c 0FCF     		ldmia	r7!, {r0, r1, r2, r3}
+ 786 007e 0FC6     		stmia	r6!, {r0, r1, r2, r3}
+ 787 0080 3B68     		ldr	r3, [r7, #0]
+ 152:subsystems/ahrs/ahrs_float_dcm.c ****   set_dcm_matrix_from_rmat(&ahrs_float.ltp_to_imu_rmat);
+ 788              		.loc 2 152 0
+ 789 0082 05F11C00 		add	r0, r5, #28
+ 147:subsystems/ahrs/ahrs_float_dcm.c ****   RMAT_COPY(ahrs_float.ltp_to_imu_rmat, ahrs_impl.body_to_imu_rmat);
+ 790              		.loc 2 147 0
+ 791 0086 3360     		str	r3, [r6, #0]
+ 146:subsystems/ahrs/ahrs_float_dcm.c ****   QUAT_COPY(ahrs_float.ltp_to_imu_quat, ahrs_impl.body_to_imu_quat);
+ 792              		.loc 2 146 0
+ 793 0088 6C60     		str	r4, [r5, #4]	@ float
+ 794 008a AC60     		str	r4, [r5, #8]	@ float
+ 795 008c EC60     		str	r4, [r5, #12]	@ float
+ 148:subsystems/ahrs/ahrs_float_dcm.c ****   EULERS_COPY(ahrs_float.ltp_to_imu_euler, body_to_imu_euler);
+ 796              		.loc 2 148 0
+ 797 008e 2C61     		str	r4, [r5, #16]	@ float
+ 798 0090 6C61     		str	r4, [r5, #20]	@ float
+ 799 0092 AC61     		str	r4, [r5, #24]	@ float
+ 149:subsystems/ahrs/ahrs_float_dcm.c ****   FLOAT_RATES_ZERO(ahrs_float.imu_rate);
+ 800              		.loc 2 149 0
+ 801 0094 2C64     		str	r4, [r5, #64]	@ float
+ 802 0096 6C64     		str	r4, [r5, #68]	@ float
+ 803 0098 AC64     		str	r4, [r5, #72]	@ float
+ 158:subsystems/ahrs/ahrs_float_dcm.c **** }
+ 804              		.loc 2 158 0
+ 805 009a BDE8F040 		pop	{r4, r5, r6, r7, lr}
+ 152:subsystems/ahrs/ahrs_float_dcm.c ****   set_dcm_matrix_from_rmat(&ahrs_float.ltp_to_imu_rmat);
+ 806              		.loc 2 152 0
+ 807 009e FFF7FEBF 		b	set_dcm_matrix_from_rmat
+ 808              	.L13:
+ 809 00a2 00BF     		.align	2
+ 810              	.L12:
+ 811 00a4 00000000 		.word	ahrs
+ 812 00a8 00000000 		.word	ahrs_float
+ 813 00ac 00000000 		.word	.LANCHOR1
+ 814              		.cfi_endproc
+ 815              	.LFE42:
+ 817              		.global	__aeabi_i2f
+ 818              		.global	__aeabi_f2d
+ 819              		.global	__aeabi_dmul
+ 820              		.global	__aeabi_dadd
+ 821              		.global	__aeabi_dsub
+ 822              		.global	__aeabi_d2f
+ 823              		.global	__aeabi_dcmpgt
+ 824              		.global	__aeabi_dcmplt
+ 825              		.section	.text.ahrs_align,"ax",%progbits
+ 826              		.align	1
+ 827              		.global	ahrs_align
+ 828              		.thumb
+ 829              		.thumb_func
+ 831              	ahrs_align:
+ 832              	.LFB43:
+ 161:subsystems/ahrs/ahrs_float_dcm.c **** {
+ 833              		.loc 2 161 0
+ 834              		.cfi_startproc
+ 835              		@ args = 0, pretend = 0, frame = 24
+ 836              		@ frame_needed = 0, uses_anonymous_args = 0
+ 837              	.LVL27:
+ 838 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, sl, fp, lr}
+ 839              	.LCFI6:
+ 840              		.cfi_def_cfa_offset 36
+ 841              		.cfi_offset 14, -4
+ 842              		.cfi_offset 11, -8
+ 843              		.cfi_offset 10, -12
+ 844              		.cfi_offset 9, -16
+ 845              		.cfi_offset 8, -20
+ 846              		.cfi_offset 7, -24
+ 847              		.cfi_offset 6, -28
+ 848              		.cfi_offset 5, -32
+ 849              		.cfi_offset 4, -36
+ 850              	.LBB33:
+ 851              	.LBB34:
+ 852              		.file 3 "./subsystems/ahrs/ahrs_float_utils.h"
+   1:./subsystems/ahrs/ahrs_float_utils.h **** #ifndef AHRS_FLOAT_UTILS_H
+   2:./subsystems/ahrs/ahrs_float_utils.h **** #define AHRS_FLOAT_UTILS_H
+   3:./subsystems/ahrs/ahrs_float_utils.h **** 
+   4:./subsystems/ahrs/ahrs_float_utils.h **** #include "subsystems/ahrs/ahrs_magnetic_field_model.h"
+   5:./subsystems/ahrs/ahrs_float_utils.h **** 
+   6:./subsystems/ahrs/ahrs_float_utils.h **** #include "std.h" // for ABS
+   7:./subsystems/ahrs/ahrs_float_utils.h **** 
+   8:./subsystems/ahrs/ahrs_float_utils.h **** static inline void ahrs_float_get_euler_from_accel_mag(struct FloatEulers* e, struct Int32Vect3* ac
+   9:./subsystems/ahrs/ahrs_float_utils.h ****   /* get phi and theta from accelerometer */
+  10:./subsystems/ahrs/ahrs_float_utils.h ****   struct FloatVect3 accelf;
+  11:./subsystems/ahrs/ahrs_float_utils.h ****   ACCELS_FLOAT_OF_BFP(accelf, *accel);
+ 853              		.loc 3 11 0
+ 854 0004 B04D     		ldr	r5, .L21+32
+ 855              	.LBE34:
+ 856              	.LBE33:
+ 161:subsystems/ahrs/ahrs_float_dcm.c **** {
+ 857              		.loc 2 161 0
+ 858 0006 87B0     		sub	sp, sp, #28
+ 859              	.LCFI7:
+ 860              		.cfi_def_cfa_offset 64
+ 861              	.LBB37:
+ 862              	.LBB35:
+ 863              		.loc 3 11 0
+ 864 0008 E868     		ldr	r0, [r5, #12]
+ 865 000a FFF7FEFF 		bl	__aeabi_i2f
+ 866 000e 4FF06A51 		mov	r1, #981467136
+ 867 0012 FFF7FEFF 		bl	__aeabi_fmul
+ 868 0016 0646     		mov	r6, r0
+ 869              	.LVL28:
+ 870 0018 6869     		ldr	r0, [r5, #20]
+ 871              	.LVL29:
+ 872 001a FFF7FEFF 		bl	__aeabi_i2f
+ 873              	.LVL30:
+ 874 001e 4FF06A51 		mov	r1, #981467136
+ 875 0022 FFF7FEFF 		bl	__aeabi_fmul
+  12:./subsystems/ahrs/ahrs_float_utils.h ****   const float phi   = atan2f(-accelf.y, -accelf.z);
+ 876              		.loc 3 12 0
+ 877 0026 00F10044 		add	r4, r0, #-2147483648
+  11:./subsystems/ahrs/ahrs_float_utils.h ****   ACCELS_FLOAT_OF_BFP(accelf, *accel);
+ 878              		.loc 3 11 0
+ 879 002a 2869     		ldr	r0, [r5, #16]
+ 880 002c FFF7FEFF 		bl	__aeabi_i2f
+ 881 0030 4FF06A51 		mov	r1, #981467136
+ 882 0034 FFF7FEFF 		bl	__aeabi_fmul
+ 883              		.loc 3 12 0
+ 884 0038 2146     		mov	r1, r4
+ 885 003a 00F10040 		add	r0, r0, #-2147483648
+ 886 003e FFF7FEFF 		bl	atan2f
+ 887 0042 0746     		mov	r7, r0
+ 888              	.LVL31:
+  13:./subsystems/ahrs/ahrs_float_utils.h ****   const float cphi = cosf(phi);
+ 889              		.loc 3 13 0
+ 890 0044 FFF7FEFF 		bl	cosf
+ 891              	.LVL32:
+  14:./subsystems/ahrs/ahrs_float_utils.h ****   const float theta = atan2f(cphi*accelf.x, -accelf.z);
+ 892              		.loc 3 14 0
+ 893 0048 3146     		mov	r1, r6
+  13:./subsystems/ahrs/ahrs_float_utils.h ****   const float cphi = cosf(phi);
+ 894              		.loc 3 13 0
+ 895 004a 8146     		mov	r9, r0
+ 896              	.LVL33:
+ 897              		.loc 3 14 0
+ 898 004c FFF7FEFF 		bl	__aeabi_fmul
+ 899              	.LVL34:
+ 900 0050 2146     		mov	r1, r4
+ 901 0052 FFF7FEFF 		bl	atan2f
+ 902 0056 0646     		mov	r6, r0
+ 903              	.LVL35:
+  15:./subsystems/ahrs/ahrs_float_utils.h **** 
+  16:./subsystems/ahrs/ahrs_float_utils.h ****   /* get psi from magnetometer */
+  17:./subsystems/ahrs/ahrs_float_utils.h ****   /* project mag on local tangeant plane */
+  18:./subsystems/ahrs/ahrs_float_utils.h ****   struct FloatVect3 magf;
+  19:./subsystems/ahrs/ahrs_float_utils.h ****   MAGS_FLOAT_OF_BFP(magf, *mag);
+ 904              		.loc 3 19 0
+ 905 0058 A869     		ldr	r0, [r5, #24]
+ 906              	.LVL36:
+ 907 005a FFF7FEFF 		bl	__aeabi_i2f
+ 908 005e 4FF06851 		mov	r1, #973078528
+ 909 0062 FFF7FEFF 		bl	__aeabi_fmul
+ 910 0066 0446     		mov	r4, r0
+ 911              	.LVL37:
+ 912 0068 E869     		ldr	r0, [r5, #28]
+ 913              	.LVL38:
+ 914 006a FFF7FEFF 		bl	__aeabi_i2f
+ 915 006e 4FF06851 		mov	r1, #973078528
+ 916 0072 FFF7FEFF 		bl	__aeabi_fmul
+ 917 0076 8046     		mov	r8, r0
+ 918              	.LVL39:
+ 919 0078 286A     		ldr	r0, [r5, #32]
+ 920              	.LVL40:
+ 921 007a FFF7FEFF 		bl	__aeabi_i2f
+ 922 007e 4FF06851 		mov	r1, #973078528
+ 923 0082 FFF7FEFF 		bl	__aeabi_fmul
+ 924 0086 0490     		str	r0, [sp, #16]	@ float
+ 925              	.LVL41:
+  20:./subsystems/ahrs/ahrs_float_utils.h ****   const float sphi   = sinf(phi);
+ 926              		.loc 3 20 0
+ 927 0088 3846     		mov	r0, r7
+ 928              	.LVL42:
+ 929 008a FFF7FEFF 		bl	sinf
+ 930 008e 0546     		mov	r5, r0
+ 931              	.LVL43:
+  21:./subsystems/ahrs/ahrs_float_utils.h ****   const float ctheta = cosf(theta);
+ 932              		.loc 3 21 0
+ 933 0090 3046     		mov	r0, r6
+ 934              	.LVL44:
+ 935 0092 FFF7FEFF 		bl	cosf
+ 936 0096 8446     		mov	ip, r0
+ 937              	.LVL45:
+  22:./subsystems/ahrs/ahrs_float_utils.h ****   const float stheta = sinf(theta);
+ 938              		.loc 3 22 0
+ 939 0098 3046     		mov	r0, r6
+ 940              	.LVL46:
+ 941 009a CDF804C0 		str	ip, [sp, #4]
+ 942 009e FFF7FEFF 		bl	sinf
+ 943              	.LVL47:
+ 944 00a2 8246     		mov	sl, r0
+ 945              	.LVL48:
+  23:./subsystems/ahrs/ahrs_float_utils.h ****   const float mn = ctheta * magf.x + sphi*stheta*magf.y + cphi*stheta*magf.z;
+  24:./subsystems/ahrs/ahrs_float_utils.h ****   const float me =     0. * magf.x + cphi       *magf.y - sphi       *magf.z;
+ 946              		.loc 3 24 0
+ 947 00a4 2046     		mov	r0, r4
+ 948              	.LVL49:
+ 949 00a6 FFF7FEFF 		bl	__aeabi_f2d
+ 950              	.LVL50:
+ 951 00aa 0022     		movs	r2, #0
+ 952 00ac 0023     		movs	r3, #0
+ 953 00ae FFF7FEFF 		bl	__aeabi_dmul
+ 954 00b2 CDE90201 		strd	r0, [sp, #8]
+ 955 00b6 4146     		mov	r1, r8
+ 956 00b8 4846     		mov	r0, r9
+ 957 00ba FFF7FEFF 		bl	__aeabi_fmul
+ 958 00be FFF7FEFF 		bl	__aeabi_f2d
+ 959 00c2 0246     		mov	r2, r0
+ 960 00c4 0B46     		mov	r3, r1
+ 961 00c6 DDE90201 		ldrd	r0, [sp, #8]
+ 962 00ca FFF7FEFF 		bl	__aeabi_dadd
+ 963 00ce CDE90201 		strd	r0, [sp, #8]
+ 964 00d2 0499     		ldr	r1, [sp, #16]	@ float
+ 965 00d4 2846     		mov	r0, r5
+ 966 00d6 FFF7FEFF 		bl	__aeabi_fmul
+ 967 00da FFF7FEFF 		bl	__aeabi_f2d
+ 968 00de 0246     		mov	r2, r0
+ 969 00e0 0B46     		mov	r3, r1
+ 970 00e2 DDE90201 		ldrd	r0, [sp, #8]
+ 971 00e6 FFF7FEFF 		bl	__aeabi_dsub
+ 972 00ea FFF7FEFF 		bl	__aeabi_d2f
+  23:./subsystems/ahrs/ahrs_float_utils.h ****   const float mn = ctheta * magf.x + sphi*stheta*magf.y + cphi*stheta*magf.z;
+ 973              		.loc 3 23 0
+ 974 00ee DDF804C0 		ldr	ip, [sp, #4]
+ 975 00f2 2146     		mov	r1, r4
+ 976              		.loc 3 24 0
+ 977 00f4 8346     		mov	fp, r0
+  23:./subsystems/ahrs/ahrs_float_utils.h ****   const float mn = ctheta * magf.x + sphi*stheta*magf.y + cphi*stheta*magf.z;
+ 978              		.loc 3 23 0
+ 979 00f6 6046     		mov	r0, ip
+ 980 00f8 FFF7FEFF 		bl	__aeabi_fmul
+ 981 00fc 5146     		mov	r1, sl
+ 982 00fe 0446     		mov	r4, r0
+ 983              	.LVL51:
+ 984 0100 2846     		mov	r0, r5
+ 985 0102 FFF7FEFF 		bl	__aeabi_fmul
+ 986 0106 4146     		mov	r1, r8
+ 987 0108 FFF7FEFF 		bl	__aeabi_fmul
+ 988 010c 0146     		mov	r1, r0
+ 989 010e 2046     		mov	r0, r4
+ 990 0110 FFF7FEFF 		bl	__aeabi_fadd
+ 991 0114 5146     		mov	r1, sl
+ 992 0116 0446     		mov	r4, r0
+ 993 0118 4846     		mov	r0, r9
+ 994 011a FFF7FEFF 		bl	__aeabi_fmul
+ 995 011e 0499     		ldr	r1, [sp, #16]	@ float
+ 996 0120 FFF7FEFF 		bl	__aeabi_fmul
+ 997 0124 0146     		mov	r1, r0
+ 998 0126 2046     		mov	r0, r4
+ 999 0128 FFF7FEFF 		bl	__aeabi_fadd
+ 1000 012c 0146     		mov	r1, r0
+  25:./subsystems/ahrs/ahrs_float_utils.h ****   float psi = -atan2f(me, mn) + atan2(AHRS_H_Y, AHRS_H_X);
+ 1001              		.loc 3 25 0
+ 1002 012e 5846     		mov	r0, fp
+ 1003 0130 FFF7FEFF 		bl	atan2f
+ 1004 0134 0146     		mov	r1, r0
+ 1005 0136 0020     		movs	r0, #0
+ 1006 0138 FFF7FEFF 		bl	__aeabi_fsub
+ 1007 013c 0446     		mov	r4, r0
+ 1008              	.LVL52:
+  26:./subsystems/ahrs/ahrs_float_utils.h ****   if (psi > M_PI) psi -= 2.*M_PI; if (psi < -M_PI) psi+= 2.*M_PI;
+ 1009              		.loc 3 26 0
+ 1010 013e FFF7FEFF 		bl	__aeabi_f2d
+ 1011              	.LVL53:
+ 1012 0142 59A3     		adr	r3, .L21
+ 1013 0144 D3E90023 		ldrd	r2, [r3]
+ 1014 0148 8046     		mov	r8, r0
+ 1015              	.LVL54:
+ 1016 014a 8946     		mov	r9, r1
+ 1017              	.LVL55:
+ 1018 014c FFF7FEFF 		bl	__aeabi_dcmpgt
+ 1019 0150 48B1     		cbz	r0, .L15
+ 1020 0152 57A3     		adr	r3, .L21+8
+ 1021 0154 D3E90023 		ldrd	r2, [r3]
+ 1022 0158 4046     		mov	r0, r8
+ 1023 015a 4946     		mov	r1, r9
+ 1024 015c FFF7FEFF 		bl	__aeabi_dsub
+ 1025 0160 FFF7FEFF 		bl	__aeabi_d2f
+ 1026 0164 0446     		mov	r4, r0
+ 1027              	.LVL56:
+ 1028              	.L15:
+ 1029 0166 2046     		mov	r0, r4
+ 1030 0168 FFF7FEFF 		bl	__aeabi_f2d
+ 1031 016c 52A3     		adr	r3, .L21+16
+ 1032 016e D3E90023 		ldrd	r2, [r3]
+ 1033 0172 8046     		mov	r8, r0
+ 1034 0174 8946     		mov	r9, r1
+ 1035 0176 FFF7FEFF 		bl	__aeabi_dcmplt
+ 1036 017a 48B1     		cbz	r0, .L17
+ 1037 017c 4CA3     		adr	r3, .L21+8
+ 1038 017e D3E90023 		ldrd	r2, [r3]
+ 1039 0182 4046     		mov	r0, r8
+ 1040 0184 4946     		mov	r1, r9
+ 1041 0186 FFF7FEFF 		bl	__aeabi_dadd
+ 1042 018a FFF7FEFF 		bl	__aeabi_d2f
+ 1043 018e 0446     		mov	r4, r0
+ 1044              	.LVL57:
+ 1045              	.L17:
+  27:./subsystems/ahrs/ahrs_float_utils.h ****   EULERS_ASSIGN(*e, phi, theta, psi);
+ 1046              		.loc 3 27 0
+ 1047 0190 4E4D     		ldr	r5, .L21+36
+ 1048              	.LVL58:
+ 1049              	.LBE35:
+ 1050              	.LBE37:
+ 1051              	.LBB38:
+ 166:subsystems/ahrs/ahrs_float_dcm.c ****   FLOAT_QUAT_OF_EULERS(ahrs_float.ltp_to_imu_quat, ahrs_float.ltp_to_imu_euler);
+ 1052              		.loc 2 166 0
+ 1053 0192 3846     		mov	r0, r7
+ 1054              	.LBE38:
+ 1055              	.LBB39:
+ 1056              	.LBB36:
+ 1057              		.loc 3 27 0
+ 1058 0194 2F61     		str	r7, [r5, #16]	@ float
+ 1059 0196 6E61     		str	r6, [r5, #20]	@ float
+ 1060 0198 AC61     		str	r4, [r5, #24]	@ float
+ 1061              	.LBE36:
+ 1062              	.LBE39:
+ 1063              	.LBB40:
+ 166:subsystems/ahrs/ahrs_float_dcm.c ****   FLOAT_QUAT_OF_EULERS(ahrs_float.ltp_to_imu_quat, ahrs_float.ltp_to_imu_euler);
+ 1064              		.loc 2 166 0
+ 1065 019a 4FF07C51 		mov	r1, #1056964608
+ 1066 019e FFF7FEFF 		bl	__aeabi_fmul
+ 1067 01a2 4FF07C51 		mov	r1, #1056964608
+ 1068 01a6 0746     		mov	r7, r0
+ 1069              	.LVL59:
+ 1070 01a8 3046     		mov	r0, r6
+ 1071              	.LVL60:
+ 1072 01aa FFF7FEFF 		bl	__aeabi_fmul
+ 1073 01ae 4FF07C51 		mov	r1, #1056964608
+ 1074 01b2 0646     		mov	r6, r0
+ 1075              	.LVL61:
+ 1076 01b4 2046     		mov	r0, r4
+ 1077              	.LVL62:
+ 1078 01b6 FFF7FEFF 		bl	__aeabi_fmul
+ 1079 01ba 0446     		mov	r4, r0
+ 1080              	.LVL63:
+ 1081 01bc 3846     		mov	r0, r7
+ 1082              	.LVL64:
+ 1083 01be FFF7FEFF 		bl	sinf
+ 1084 01c2 8346     		mov	fp, r0
+ 1085              	.LVL65:
+ 1086 01c4 3846     		mov	r0, r7
+ 1087              	.LVL66:
+ 1088 01c6 FFF7FEFF 		bl	cosf
+ 1089 01ca 8046     		mov	r8, r0
+ 1090              	.LVL67:
+ 1091 01cc 3046     		mov	r0, r6
+ 1092              	.LVL68:
+ 1093 01ce FFF7FEFF 		bl	sinf
+ 1094 01d2 0746     		mov	r7, r0
+ 1095              	.LVL69:
+ 1096 01d4 3046     		mov	r0, r6
+ 1097              	.LVL70:
+ 1098 01d6 FFF7FEFF 		bl	cosf
+ 1099 01da 8246     		mov	sl, r0
+ 1100              	.LVL71:
+ 1101 01dc 2046     		mov	r0, r4
+ 1102              	.LVL72:
+ 1103 01de FFF7FEFF 		bl	sinf
+ 1104 01e2 0646     		mov	r6, r0
+ 1105              	.LVL73:
+ 1106 01e4 2046     		mov	r0, r4
+ 1107              	.LVL74:
+ 1108 01e6 FFF7FEFF 		bl	cosf
+ 1109 01ea 5146     		mov	r1, sl
+ 1110 01ec 0446     		mov	r4, r0
+ 1111              	.LVL75:
+ 1112 01ee 4046     		mov	r0, r8
+ 1113              	.LVL76:
+ 1114 01f0 FFF7FEFF 		bl	__aeabi_fmul
+ 1115 01f4 3946     		mov	r1, r7
+ 1116 01f6 8146     		mov	r9, r0
+ 1117 01f8 5846     		mov	r0, fp
+ 1118 01fa FFF7FEFF 		bl	__aeabi_fmul
+ 1119 01fe 2146     		mov	r1, r4
+ 1120 0200 0490     		str	r0, [sp, #16]	@ float
+ 1121 0202 4846     		mov	r0, r9
+ 1122 0204 FFF7FEFF 		bl	__aeabi_fmul
+ 1123 0208 3146     		mov	r1, r6
+ 1124 020a 0346     		mov	r3, r0
+ 1125 020c 0498     		ldr	r0, [sp, #16]	@ float
+ 1126 020e 0193     		str	r3, [sp, #4]
+ 1127 0210 FFF7FEFF 		bl	__aeabi_fmul
+ 1128 0214 019B     		ldr	r3, [sp, #4]
+ 1129 0216 0146     		mov	r1, r0
+ 1130 0218 1846     		mov	r0, r3
+ 1131 021a FFF7FEFF 		bl	__aeabi_fadd
+ 1132 021e 5146     		mov	r1, sl
+ 1133 0220 0346     		mov	r3, r0
+ 1134 0222 2860     		str	r0, [r5, #0]	@ float
+ 1135 0224 5846     		mov	r0, fp
+ 1136 0226 0193     		str	r3, [sp, #4]
+ 1137 0228 FFF7FEFF 		bl	__aeabi_fmul
+ 1138 022c 3946     		mov	r1, r7
+ 1139 022e 8246     		mov	sl, r0
+ 1140              	.LVL77:
+ 1141 0230 08F10040 		add	r0, r8, #-2147483648
+ 1142 0234 FFF7FEFF 		bl	__aeabi_fmul
+ 1143 0238 3146     		mov	r1, r6
+ 1144 023a FFF7FEFF 		bl	__aeabi_fmul
+ 1145 023e 2146     		mov	r1, r4
+ 1146 0240 8346     		mov	fp, r0
+ 1147              	.LVL78:
+ 1148 0242 5046     		mov	r0, sl
+ 1149 0244 FFF7FEFF 		bl	__aeabi_fmul
+ 1150 0248 0146     		mov	r1, r0
+ 1151 024a 5846     		mov	r0, fp
+ 1152 024c FFF7FEFF 		bl	__aeabi_fadd
+ 1153 0250 3946     		mov	r1, r7
+ 1154 0252 8346     		mov	fp, r0
+ 1155 0254 6860     		str	r0, [r5, #4]	@ float
+ 1156 0256 4046     		mov	r0, r8
+ 1157 0258 FFF7FEFF 		bl	__aeabi_fmul
+ 1158 025c 2146     		mov	r1, r4
+ 1159 025e FFF7FEFF 		bl	__aeabi_fmul
+ 1160 0262 3146     		mov	r1, r6
+ 1161 0264 0746     		mov	r7, r0
+ 1162              	.LVL79:
+ 1163 0266 5046     		mov	r0, sl
+ 1164 0268 FFF7FEFF 		bl	__aeabi_fmul
+ 1165 026c 0146     		mov	r1, r0
+ 1166 026e 3846     		mov	r0, r7
+ 1167 0270 FFF7FEFF 		bl	__aeabi_fadd
+ 1168 0274 3146     		mov	r1, r6
+ 1169 0276 8246     		mov	sl, r0
+ 1170 0278 A860     		str	r0, [r5, #8]	@ float
+ 1171 027a 4846     		mov	r0, r9
+ 1172 027c FFF7FEFF 		bl	__aeabi_fmul
+ 1173 0280 2146     		mov	r1, r4
+ 1174 0282 0646     		mov	r6, r0
+ 1175              	.LVL80:
+ 1176 0284 0498     		ldr	r0, [sp, #16]	@ float
+ 1177 0286 FFF7FEFF 		bl	__aeabi_fmul
+ 1178 028a 0146     		mov	r1, r0
+ 1179 028c 3046     		mov	r0, r6
+ 1180 028e FFF7FEFF 		bl	__aeabi_fsub
+ 1181              	.LBE40:
+ 1182              	.LBB41:
+ 167:subsystems/ahrs/ahrs_float_dcm.c ****   FLOAT_RMAT_OF_QUAT(ahrs_float.ltp_to_imu_rmat, ahrs_float.ltp_to_imu_quat);
+ 1183              		.loc 2 167 0
+ 1184 0292 019B     		ldr	r3, [sp, #4]
+ 1185              	.LBE41:
+ 1186              	.LBB42:
+ 166:subsystems/ahrs/ahrs_float_dcm.c ****   FLOAT_QUAT_OF_EULERS(ahrs_float.ltp_to_imu_quat, ahrs_float.ltp_to_imu_euler);
+ 1187              		.loc 2 166 0
+ 1188 0294 8046     		mov	r8, r0
+ 1189              	.LVL81:
+ 1190 0296 E860     		str	r0, [r5, #12]	@ float
+ 1191              	.LBE42:
+ 1192              	.LBB43:
+ 167:subsystems/ahrs/ahrs_float_dcm.c ****   FLOAT_RMAT_OF_QUAT(ahrs_float.ltp_to_imu_rmat, ahrs_float.ltp_to_imu_quat);
+ 1193              		.loc 2 167 0
+ 1194 0298 1846     		mov	r0, r3
+ 1195 029a FFF7FEFF 		bl	__aeabi_f2d
+ 1196 029e 08A3     		adr	r3, .L21+24
+ 1197 02a0 D3E90023 		ldrd	r2, [r3]
+ 1198 02a4 14E0     		b	.L22
+ 1199              	.L23:
+ 1200 02a6 00BF     		.align	3
+ 1201              	.L21:
+ 1202 02a8 182D4454 		.word	1413754136
+ 1203 02ac FB210940 		.word	1074340347
+ 1204 02b0 182D4454 		.word	1413754136
+ 1205 02b4 FB211940 		.word	1075388923
+ 1206 02b8 182D4454 		.word	1413754136
+ 1207 02bc FB2109C0 		.word	-1073143301
+ 1208 02c0 CD3B7F66 		.word	1719614413
+ 1209 02c4 9EA0F63F 		.word	1073127582
+ 1210 02c8 00000000 		.word	ahrs_aligner
+ 1211 02cc 00000000 		.word	ahrs_float
+ 1212              	.L22:
+ 1213 02d0 FFF7FEFF 		bl	__aeabi_dmul
+ 1214 02d4 FFF7FEFF 		bl	__aeabi_d2f
+ 1215 02d8 0446     		mov	r4, r0
+ 1216              	.LVL82:
+ 1217 02da 5846     		mov	r0, fp
+ 1218              	.LVL83:
+ 1219 02dc FFF7FEFF 		bl	__aeabi_f2d
+ 1220 02e0 53A3     		adr	r3, .L24
+ 1221 02e2 D3E90023 		ldrd	r2, [r3]
+ 1222 02e6 FFF7FEFF 		bl	__aeabi_dmul
+ 1223 02ea FFF7FEFF 		bl	__aeabi_d2f
+ 1224 02ee 0746     		mov	r7, r0
+ 1225              	.LVL84:
+ 1226 02f0 5046     		mov	r0, sl
+ 1227              	.LVL85:
+ 1228 02f2 FFF7FEFF 		bl	__aeabi_f2d
+ 1229 02f6 4EA3     		adr	r3, .L24
+ 1230 02f8 D3E90023 		ldrd	r2, [r3]
+ 1231 02fc FFF7FEFF 		bl	__aeabi_dmul
+ 1232 0300 FFF7FEFF 		bl	__aeabi_d2f
+ 1233 0304 0646     		mov	r6, r0
+ 1234              	.LVL86:
+ 1235 0306 4046     		mov	r0, r8
+ 1236              	.LVL87:
+ 1237 0308 FFF7FEFF 		bl	__aeabi_f2d
+ 1238 030c 48A3     		adr	r3, .L24
+ 1239 030e D3E90023 		ldrd	r2, [r3]
+ 1240 0312 FFF7FEFF 		bl	__aeabi_dmul
+ 1241 0316 FFF7FEFF 		bl	__aeabi_d2f
+ 1242 031a 2146     		mov	r1, r4
+ 1243 031c 8046     		mov	r8, r0
+ 1244              	.LVL88:
+ 1245 031e 2046     		mov	r0, r4
+ 1246              	.LVL89:
+ 1247 0320 FFF7FEFF 		bl	__aeabi_fmul
+ 1248 0324 4FF07E51 		mov	r1, #1065353216
+ 1249 0328 FFF7FEFF 		bl	__aeabi_fsub
+ 1250 032c 3946     		mov	r1, r7
+ 1251 032e 8146     		mov	r9, r0
+ 1252              	.LVL90:
+ 1253 0330 2046     		mov	r0, r4
+ 1254              	.LVL91:
+ 1255 0332 FFF7FEFF 		bl	__aeabi_fmul
+ 1256 0336 3146     		mov	r1, r6
+ 1257 0338 0490     		str	r0, [sp, #16]	@ float
+ 1258              	.LVL92:
+ 1259 033a 2046     		mov	r0, r4
+ 1260              	.LVL93:
+ 1261 033c FFF7FEFF 		bl	__aeabi_fmul
+ 1262 0340 4146     		mov	r1, r8
+ 1263 0342 0290     		str	r0, [sp, #8]	@ float
+ 1264              	.LVL94:
+ 1265 0344 2046     		mov	r0, r4
+ 1266              	.LVL95:
+ 1267 0346 FFF7FEFF 		bl	__aeabi_fmul
+ 1268 034a 3146     		mov	r1, r6
+ 1269 034c 8246     		mov	sl, r0
+ 1270              	.LVL96:
+ 1271 034e 3846     		mov	r0, r7
+ 1272              	.LVL97:
+ 1273 0350 FFF7FEFF 		bl	__aeabi_fmul
+ 1274 0354 4146     		mov	r1, r8
+ 1275 0356 8346     		mov	fp, r0
+ 1276              	.LVL98:
+ 1277 0358 3846     		mov	r0, r7
+ 1278              	.LVL99:
+ 1279 035a FFF7FEFF 		bl	__aeabi_fmul
+ 1280 035e 4146     		mov	r1, r8
+ 1281 0360 0446     		mov	r4, r0
+ 1282              	.LVL100:
+ 1283 0362 3046     		mov	r0, r6
+ 1284              	.LVL101:
+ 1285 0364 FFF7FEFF 		bl	__aeabi_fmul
+ 1286 0368 3946     		mov	r1, r7
+ 1287 036a 0590     		str	r0, [sp, #20]	@ float
+ 1288              	.LVL102:
+ 1289 036c 3846     		mov	r0, r7
+ 1290              	.LVL103:
+ 1291 036e FFF7FEFF 		bl	__aeabi_fmul
+ 1292 0372 0146     		mov	r1, r0
+ 1293 0374 4846     		mov	r0, r9
+ 1294 0376 FFF7FEFF 		bl	__aeabi_fadd
+ 1295 037a 5146     		mov	r1, sl
+ 1296 037c E861     		str	r0, [r5, #28]	@ float
+ 1297 037e 5846     		mov	r0, fp
+ 1298 0380 FFF7FEFF 		bl	__aeabi_fadd
+ 1299 0384 0299     		ldr	r1, [sp, #8]	@ float
+ 1300 0386 2862     		str	r0, [r5, #32]	@ float
+ 1301 0388 2046     		mov	r0, r4
+ 1302 038a FFF7FEFF 		bl	__aeabi_fsub
+ 1303 038e 5146     		mov	r1, sl
+ 1304 0390 6862     		str	r0, [r5, #36]	@ float
+ 1305 0392 5846     		mov	r0, fp
+ 1306 0394 FFF7FEFF 		bl	__aeabi_fsub
+ 1307 0398 3146     		mov	r1, r6
+ 1308 039a A862     		str	r0, [r5, #40]	@ float
+ 1309 039c 3046     		mov	r0, r6
+ 1310 039e FFF7FEFF 		bl	__aeabi_fmul
+ 1311 03a2 0146     		mov	r1, r0
+ 1312 03a4 4846     		mov	r0, r9
+ 1313 03a6 FFF7FEFF 		bl	__aeabi_fadd
+ 1314 03aa 0499     		ldr	r1, [sp, #16]	@ float
+ 1315 03ac E862     		str	r0, [r5, #44]	@ float
+ 1316 03ae 0598     		ldr	r0, [sp, #20]	@ float
+ 1317 03b0 FFF7FEFF 		bl	__aeabi_fadd
+ 1318 03b4 0299     		ldr	r1, [sp, #8]	@ float
+ 1319 03b6 2863     		str	r0, [r5, #48]	@ float
+ 1320 03b8 2046     		mov	r0, r4
+ 1321 03ba FFF7FEFF 		bl	__aeabi_fadd
+ 1322 03be 0499     		ldr	r1, [sp, #16]	@ float
+ 1323 03c0 6863     		str	r0, [r5, #52]	@ float
+ 1324 03c2 0598     		ldr	r0, [sp, #20]	@ float
+ 1325 03c4 FFF7FEFF 		bl	__aeabi_fsub
+ 1326 03c8 4146     		mov	r1, r8
+ 1327 03ca A863     		str	r0, [r5, #56]	@ float
+ 1328 03cc 4046     		mov	r0, r8
+ 1329 03ce FFF7FEFF 		bl	__aeabi_fmul
+ 1330 03d2 0146     		mov	r1, r0
+ 1331 03d4 4846     		mov	r0, r9
+ 1332 03d6 FFF7FEFF 		bl	__aeabi_fadd
+ 1333 03da E863     		str	r0, [r5, #60]	@ float
+ 1334              	.LBE43:
+ 170:subsystems/ahrs/ahrs_float_dcm.c ****   set_dcm_matrix_from_rmat(&ahrs_float.ltp_to_imu_rmat);
+ 1335              		.loc 2 170 0
+ 1336 03dc 05F11C00 		add	r0, r5, #28
+ 1337 03e0 FFF7FEFF 		bl	set_dcm_matrix_from_rmat
+ 173:subsystems/ahrs/ahrs_float_dcm.c ****   compute_body_orientation_and_rates();
+ 1338              		.loc 2 173 0
+ 1339 03e4 FFF7FEFF 		bl	compute_body_orientation_and_rates
+ 1340              	.LVL104:
+ 177:subsystems/ahrs/ahrs_float_dcm.c ****   RATES_COPY(bias0, ahrs_aligner.lp_gyro);
+ 1341              		.loc 2 177 0
+ 1342 03e8 134B     		ldr	r3, .L24+8
+ 1343              	.LVL105:
+ 178:subsystems/ahrs/ahrs_float_dcm.c ****   RATES_FLOAT_OF_BFP(ahrs_impl.gyro_bias, bias0);
+ 1344              		.loc 2 178 0
+ 1345 03ea 144C     		ldr	r4, .L24+12
+ 1346              	.LVL106:
+ 1347 03ec 1868     		ldr	r0, [r3, #0]
+ 177:subsystems/ahrs/ahrs_float_dcm.c ****   RATES_COPY(bias0, ahrs_aligner.lp_gyro);
+ 1348              		.loc 2 177 0
+ 1349 03ee 5E68     		ldr	r6, [r3, #4]
+ 1350              	.LVL107:
+ 1351 03f0 9D68     		ldr	r5, [r3, #8]
+ 1352              	.LVL108:
+ 178:subsystems/ahrs/ahrs_float_dcm.c ****   RATES_FLOAT_OF_BFP(ahrs_impl.gyro_bias, bias0);
+ 1353              		.loc 2 178 0
+ 1354 03f2 FFF7FEFF 		bl	__aeabi_i2f
+ 1355              	.LVL109:
+ 1356 03f6 4FF06651 		mov	r1, #964689920
+ 1357 03fa FFF7FEFF 		bl	__aeabi_fmul
+ 1358 03fe 2060     		str	r0, [r4, #0]	@ float
+ 1359 0400 3046     		mov	r0, r6
+ 1360 0402 FFF7FEFF 		bl	__aeabi_i2f
+ 1361 0406 4FF06651 		mov	r1, #964689920
+ 1362 040a FFF7FEFF 		bl	__aeabi_fmul
+ 1363 040e 6060     		str	r0, [r4, #4]	@ float
+ 1364 0410 2846     		mov	r0, r5
+ 1365 0412 FFF7FEFF 		bl	__aeabi_i2f
+ 1366 0416 4FF06651 		mov	r1, #964689920
+ 1367 041a FFF7FEFF 		bl	__aeabi_fmul
+ 180:subsystems/ahrs/ahrs_float_dcm.c ****   ahrs.status = AHRS_RUNNING;
+ 1368              		.loc 2 180 0
+ 1369 041e 084B     		ldr	r3, .L24+16
+ 1370 0420 0122     		movs	r2, #1
+ 178:subsystems/ahrs/ahrs_float_dcm.c ****   RATES_FLOAT_OF_BFP(ahrs_impl.gyro_bias, bias0);
+ 1371              		.loc 2 178 0
+ 1372 0422 A060     		str	r0, [r4, #8]	@ float
+ 180:subsystems/ahrs/ahrs_float_dcm.c ****   ahrs.status = AHRS_RUNNING;
+ 1373              		.loc 2 180 0
+ 1374 0424 83F89820 		strb	r2, [r3, #152]
+ 181:subsystems/ahrs/ahrs_float_dcm.c **** }
+ 1375              		.loc 2 181 0
+ 1376 0428 07B0     		add	sp, sp, #28
+ 1377 042a BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, sl, fp, pc}
+ 1378              	.L25:
+ 1379 042e 00BF     		.align	3
+ 1380              	.L24:
+ 1381 0430 CD3B7F66 		.word	1719614413
+ 1382 0434 9EA0F63F 		.word	1073127582
+ 1383 0438 00000000 		.word	ahrs_aligner
+ 1384 043c 00000000 		.word	.LANCHOR1
+ 1385 0440 00000000 		.word	ahrs
+ 1386              		.cfi_endproc
+ 1387              	.LFE43:
+ 1389 0444 AFF30080 		.section	.text.ahrs_update_mag,"ax",%progbits
+ 1390              		.align	1
+ 1391              		.global	ahrs_update_mag
+ 1392              		.thumb
+ 1393              		.thumb_func
+ 1395              	ahrs_update_mag:
+ 1396              	.LFB46:
+ 239:subsystems/ahrs/ahrs_float_dcm.c **** {
+ 1397              		.loc 2 239 0
+ 1398              		.cfi_startproc
+ 1399              		@ args = 0, pretend = 0, frame = 0
+ 1400              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1401              		@ link register save eliminated.
+ 289:subsystems/ahrs/ahrs_float_dcm.c **** }
+ 1402              		.loc 2 289 0
+ 1403 0000 7047     		bx	lr
+ 1404              		.cfi_endproc
+ 1405              	.LFE46:
+ 1407              		.section	.text.ahrs_update_gps,"ax",%progbits
+ 1408              		.align	1
+ 1409              		.global	ahrs_update_gps
+ 1410              		.thumb
+ 1411              		.thumb_func
+ 1413              	ahrs_update_gps:
+ 1414              	.LFB47:
+ 291:subsystems/ahrs/ahrs_float_dcm.c **** void ahrs_update_gps(void) {
+ 1415              		.loc 2 291 0
+ 1416              		.cfi_startproc
+ 1417              		@ args = 0, pretend = 0, frame = 0
+ 1418              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1419              		@ link register save eliminated.
+ 293:subsystems/ahrs/ahrs_float_dcm.c **** }
+ 1420              		.loc 2 293 0
+ 1421 0000 7047     		bx	lr
+ 1422              		.cfi_endproc
+ 1423              	.LFE47:
+ 1425              		.global	__aeabi_fcmplt
+ 1426              		.global	__aeabi_fcmpgt
+ 1427              		.global	__aeabi_ddiv
+ 1428              		.section	.text.Normalize,"ax",%progbits
+ 1429              		.align	1
+ 1430              		.global	Normalize
+ 1431              		.thumb
+ 1432              		.thumb_func
+ 1434              	Normalize:
+ 1435              	.LFB48:
+ 296:subsystems/ahrs/ahrs_float_dcm.c **** {
+ 1436              		.loc 2 296 0
+ 1437              		.cfi_startproc
+ 1438              		@ args = 0, pretend = 0, frame = 40
+ 1439              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1440              	.LVL110:
+ 1441 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+ 1442              	.LCFI8:
+ 1443              		.cfi_def_cfa_offset 28
+ 1444              		.cfi_offset 14, -4
+ 1445              		.cfi_offset 9, -8
+ 1446              		.cfi_offset 8, -12
+ 1447              		.cfi_offset 7, -16
+ 1448              		.cfi_offset 6, -20
+ 1449              		.cfi_offset 5, -24
+ 1450              		.cfi_offset 4, -28
+ 303:subsystems/ahrs/ahrs_float_dcm.c ****   error= -Vector_Dot_Product(&DCM_Matrix[0][0],&DCM_Matrix[1][0])*.5; //eq.19
+ 1451              		.loc 2 303 0
+ 1452 0004 8C48     		ldr	r0, .L64
+ 296:subsystems/ahrs/ahrs_float_dcm.c **** {
+ 1453              		.loc 2 296 0
+ 1454 0006 8BB0     		sub	sp, sp, #44
+ 1455              	.LCFI9:
+ 1456              		.cfi_def_cfa_offset 72
+ 303:subsystems/ahrs/ahrs_float_dcm.c ****   error= -Vector_Dot_Product(&DCM_Matrix[0][0],&DCM_Matrix[1][0])*.5; //eq.19
+ 1457              		.loc 2 303 0
+ 1458 0008 00F10C01 		add	r1, r0, #12
+ 1459 000c FFF7FEFF 		bl	Vector_Dot_Product
+ 1460 0010 4FF07C51 		mov	r1, #1056964608
+ 1461 0014 00F10040 		add	r0, r0, #-2147483648
+ 1462 0018 FFF7FEFF 		bl	__aeabi_fmul
+ 1463 001c 0546     		mov	r5, r0
+ 1464              	.LVL111:
+ 307:subsystems/ahrs/ahrs_float_dcm.c ****   Vector_Scale(&temporary[1][0], &DCM_Matrix[0][0], error);           //eq.19
+ 1465              		.loc 2 307 0
+ 1466 001e 04AC     		add	r4, sp, #16
+ 306:subsystems/ahrs/ahrs_float_dcm.c ****   Vector_Scale(&temporary[0][0], &DCM_Matrix[1][0], error);           //eq.19
+ 1467              		.loc 2 306 0
+ 1468 0020 2A46     		mov	r2, r5
+ 1469 0022 01A8     		add	r0, sp, #4
+ 1470              	.LVL112:
+ 1471 0024 8549     		ldr	r1, .L64+4
+ 1472 0026 FFF7FEFF 		bl	Vector_Scale
+ 1473              	.LVL113:
+ 307:subsystems/ahrs/ahrs_float_dcm.c ****   Vector_Scale(&temporary[1][0], &DCM_Matrix[0][0], error);           //eq.19
+ 1474              		.loc 2 307 0
+ 1475 002a 2046     		mov	r0, r4
+ 1476 002c 2A46     		mov	r2, r5
+ 1477 002e 8249     		ldr	r1, .L64
+ 1478 0030 FFF7FEFF 		bl	Vector_Scale
+ 308:subsystems/ahrs/ahrs_float_dcm.c ****   Vector_Add(&temporary[0][0], &temporary[0][0], &DCM_Matrix[0][0]);  //eq.19
+ 1479              		.loc 2 308 0
+ 1480 0034 01A8     		add	r0, sp, #4
+ 1481 0036 0146     		mov	r1, r0
+ 1482 0038 7F4A     		ldr	r2, .L64
+ 1483 003a FFF7FEFF 		bl	Vector_Add
+ 309:subsystems/ahrs/ahrs_float_dcm.c ****   Vector_Add(&temporary[1][0], &temporary[1][0], &DCM_Matrix[1][0]);  //eq.19
+ 1484              		.loc 2 309 0
+ 1485 003e 7F4A     		ldr	r2, .L64+4
+ 1486 0040 2046     		mov	r0, r4
+ 1487 0042 2146     		mov	r1, r4
+ 1488 0044 FFF7FEFF 		bl	Vector_Add
+ 1489              	.LVL114:
+ 1490              	.LBB44:
+ 1491              	.LBB45:
+  10:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   vectorOut[0]= (v1[1]*v2[2]) - (v1[2]*v2[1]);
+ 1492              		.loc 1 10 0
+ 1493 0048 029D     		ldr	r5, [sp, #8]	@ float
+ 1494              	.LVL115:
+ 1495 004a DDF81880 		ldr	r8, [sp, #24]	@ float
+ 1496 004e 2846     		mov	r0, r5
+ 1497 0050 4146     		mov	r1, r8
+ 1498 0052 FFF7FEFF 		bl	__aeabi_fmul
+ 1499 0056 DDF80C90 		ldr	r9, [sp, #12]	@ float
+ 1500 005a 059E     		ldr	r6, [sp, #20]	@ float
+ 1501 005c 0446     		mov	r4, r0
+ 1502              	.LVL116:
+ 1503 005e 3146     		mov	r1, r6
+ 1504 0060 4846     		mov	r0, r9
+ 1505 0062 FFF7FEFF 		bl	__aeabi_fmul
+ 1506 0066 0146     		mov	r1, r0
+ 1507 0068 2046     		mov	r0, r4
+ 1508 006a FFF7FEFF 		bl	__aeabi_fsub
+  11:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   vectorOut[1]= (v1[2]*v2[0]) - (v1[0]*v2[2]);
+ 1509              		.loc 1 11 0
+ 1510 006e 049C     		ldr	r4, [sp, #16]	@ float
+  10:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   vectorOut[0]= (v1[1]*v2[2]) - (v1[2]*v2[1]);
+ 1511              		.loc 1 10 0
+ 1512 0070 0790     		str	r0, [sp, #28]	@ float
+  11:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   vectorOut[1]= (v1[2]*v2[0]) - (v1[0]*v2[2]);
+ 1513              		.loc 1 11 0
+ 1514 0072 2146     		mov	r1, r4
+ 1515 0074 4846     		mov	r0, r9
+ 1516 0076 FFF7FEFF 		bl	__aeabi_fmul
+ 1517 007a 019F     		ldr	r7, [sp, #4]	@ float
+ 1518 007c 8146     		mov	r9, r0
+ 1519 007e 4146     		mov	r1, r8
+ 1520 0080 3846     		mov	r0, r7
+ 1521 0082 FFF7FEFF 		bl	__aeabi_fmul
+ 1522 0086 0146     		mov	r1, r0
+ 1523 0088 4846     		mov	r0, r9
+ 1524 008a FFF7FEFF 		bl	__aeabi_fsub
+  12:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   vectorOut[2]= (v1[0]*v2[1]) - (v1[1]*v2[0]);
+ 1525              		.loc 1 12 0
+ 1526 008e 3146     		mov	r1, r6
+  11:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   vectorOut[1]= (v1[2]*v2[0]) - (v1[0]*v2[2]);
+ 1527              		.loc 1 11 0
+ 1528 0090 0890     		str	r0, [sp, #32]	@ float
+  12:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   vectorOut[2]= (v1[0]*v2[1]) - (v1[1]*v2[0]);
+ 1529              		.loc 1 12 0
+ 1530 0092 3846     		mov	r0, r7
+ 1531 0094 FFF7FEFF 		bl	__aeabi_fmul
+ 1532 0098 2146     		mov	r1, r4
+ 1533 009a 0646     		mov	r6, r0
+ 1534 009c 2846     		mov	r0, r5
+ 1535 009e FFF7FEFF 		bl	__aeabi_fmul
+ 1536 00a2 0146     		mov	r1, r0
+ 1537 00a4 3046     		mov	r0, r6
+ 1538 00a6 FFF7FEFF 		bl	__aeabi_fsub
+ 1539 00aa 0990     		str	r0, [sp, #36]	@ float
+ 1540              	.LBE45:
+ 1541              	.LBE44:
+ 315:subsystems/ahrs/ahrs_float_dcm.c ****   renorm= Vector_Dot_Product(&temporary[0][0],&temporary[0][0]);
+ 1542              		.loc 2 315 0
+ 1543 00ac 01A8     		add	r0, sp, #4
+ 1544              	.LVL117:
+ 1545 00ae 0146     		mov	r1, r0
+ 1546 00b0 FFF7FEFF 		bl	Vector_Dot_Product
+ 1547              	.LVL118:
+ 319:subsystems/ahrs/ahrs_float_dcm.c ****   if (renorm < 1.5625f && renorm > 0.64f) {
+ 1548              		.loc 2 319 0
+ 1549 00b4 6249     		ldr	r1, .L64+8
+ 315:subsystems/ahrs/ahrs_float_dcm.c ****   renorm= Vector_Dot_Product(&temporary[0][0],&temporary[0][0]);
+ 1550              		.loc 2 315 0
+ 1551 00b6 0546     		mov	r5, r0
+ 1552              	.LVL119:
+ 319:subsystems/ahrs/ahrs_float_dcm.c ****   if (renorm < 1.5625f && renorm > 0.64f) {
+ 1553              		.loc 2 319 0
+ 1554 00b8 FFF7FEFF 		bl	__aeabi_fcmplt
+ 1555              	.LVL120:
+ 1556 00bc 70B1     		cbz	r0, .L29
+ 319:subsystems/ahrs/ahrs_float_dcm.c ****   if (renorm < 1.5625f && renorm > 0.64f) {
+ 1557              		.loc 2 319 0 is_stmt 0 discriminator 1
+ 1558 00be 2846     		mov	r0, r5
+ 1559 00c0 6049     		ldr	r1, .L64+12
+ 1560 00c2 FFF7FEFF 		bl	__aeabi_fcmpgt
+ 1561 00c6 48B1     		cbz	r0, .L29
+ 320:subsystems/ahrs/ahrs_float_dcm.c ****     renorm= .5 * (3-renorm);                                          //eq.21
+ 1562              		.loc 2 320 0 is_stmt 1
+ 1563 00c8 2946     		mov	r1, r5
+ 1564 00ca 5F48     		ldr	r0, .L64+16
+ 1565 00cc FFF7FEFF 		bl	__aeabi_fsub
+ 1566 00d0 4FF07C51 		mov	r1, #1056964608
+ 1567 00d4 FFF7FEFF 		bl	__aeabi_fmul
+ 1568 00d8 0546     		mov	r5, r0
+ 1569              	.LVL121:
+ 1570 00da 1BE0     		b	.L63
+ 1571              	.LVL122:
+ 1572              	.L29:
+ 321:subsystems/ahrs/ahrs_float_dcm.c ****   } else if (renorm < 100.0f && renorm > 0.01f) {
+ 1573              		.loc 2 321 0
+ 1574 00dc 2846     		mov	r0, r5
+ 1575 00de 5B49     		ldr	r1, .L64+20
+ 1576 00e0 FFF7FEFF 		bl	__aeabi_fcmplt
+ 1577 00e4 C0B1     		cbz	r0, .L33
+ 321:subsystems/ahrs/ahrs_float_dcm.c ****   } else if (renorm < 100.0f && renorm > 0.01f) {
+ 1578              		.loc 2 321 0 is_stmt 0 discriminator 1
+ 1579 00e6 2846     		mov	r0, r5
+ 1580 00e8 5949     		ldr	r1, .L64+24
+ 1581 00ea FFF7FEFF 		bl	__aeabi_fcmpgt
+ 1582 00ee 98B1     		cbz	r0, .L33
+ 322:subsystems/ahrs/ahrs_float_dcm.c ****     renorm= 1. / sqrt(renorm);
+ 1583              		.loc 2 322 0 is_stmt 1
+ 1584 00f0 2846     		mov	r0, r5
+ 1585 00f2 FFF7FEFF 		bl	__aeabi_f2d
+ 1586 00f6 FFF7FEFF 		bl	sqrt
+ 1587 00fa 0246     		mov	r2, r0
+ 1588 00fc 0B46     		mov	r3, r1
+ 1589 00fe 0020     		movs	r0, #0
+ 1590 0100 5449     		ldr	r1, .L64+28
+ 1591 0102 FFF7FEFF 		bl	__aeabi_ddiv
+ 1592 0106 FFF7FEFF 		bl	__aeabi_d2f
+ 324:subsystems/ahrs/ahrs_float_dcm.c ****     renorm_sqrt_count++;
+ 1593              		.loc 2 324 0
+ 1594 010a 534B     		ldr	r3, .L64+32
+ 322:subsystems/ahrs/ahrs_float_dcm.c ****     renorm= 1. / sqrt(renorm);
+ 1595              		.loc 2 322 0
+ 1596 010c 0546     		mov	r5, r0
+ 1597              	.LVL123:
+ 324:subsystems/ahrs/ahrs_float_dcm.c ****     renorm_sqrt_count++;
+ 1598              		.loc 2 324 0
+ 1599 010e 1A68     		ldr	r2, [r3, #0]
+ 1600 0110 0132     		adds	r2, r2, #1
+ 1601 0112 1A60     		str	r2, [r3, #0]
+ 1602              	.L63:
+ 300:subsystems/ahrs/ahrs_float_dcm.c ****   uint8_t problem=FALSE;
+ 1603              		.loc 2 300 0
+ 1604 0114 0024     		movs	r4, #0
+ 324:subsystems/ahrs/ahrs_float_dcm.c ****     renorm_sqrt_count++;
+ 1605              		.loc 2 324 0
+ 1606 0116 04E0     		b	.L32
+ 1607              	.LVL124:
+ 1608              	.L33:
+ 329:subsystems/ahrs/ahrs_float_dcm.c ****     renorm_blowup_count++;
+ 1609              		.loc 2 329 0
+ 1610 0118 504B     		ldr	r3, .L64+36
+ 327:subsystems/ahrs/ahrs_float_dcm.c ****     problem = TRUE;
+ 1611              		.loc 2 327 0
+ 1612 011a 0124     		movs	r4, #1
+ 329:subsystems/ahrs/ahrs_float_dcm.c ****     renorm_blowup_count++;
+ 1613              		.loc 2 329 0
+ 1614 011c 1A68     		ldr	r2, [r3, #0]
+ 1615 011e 0132     		adds	r2, r2, #1
+ 1616 0120 1A60     		str	r2, [r3, #0]
+ 1617              	.LVL125:
+ 1618              	.L32:
+ 332:subsystems/ahrs/ahrs_float_dcm.c ****   Vector_Scale(&DCM_Matrix[0][0], &temporary[0][0], renorm);
+ 1619              		.loc 2 332 0
+ 1620 0122 2A46     		mov	r2, r5
+ 1621 0124 4448     		ldr	r0, .L64
+ 1622 0126 01A9     		add	r1, sp, #4
+ 1623              	.LVL126:
+ 1624 0128 FFF7FEFF 		bl	Vector_Scale
+ 1625              	.LVL127:
+ 335:subsystems/ahrs/ahrs_float_dcm.c ****   renorm= Vector_Dot_Product(&temporary[1][0],&temporary[1][0]);
+ 1626              		.loc 2 335 0
+ 1627 012c 04A8     		add	r0, sp, #16
+ 1628              	.LVL128:
+ 1629 012e 0146     		mov	r1, r0
+ 1630 0130 FFF7FEFF 		bl	Vector_Dot_Product
+ 1631              	.LVL129:
+ 336:subsystems/ahrs/ahrs_float_dcm.c ****   if (renorm < 1.5625f && renorm > 0.64f) {
+ 1632              		.loc 2 336 0
+ 1633 0134 4249     		ldr	r1, .L64+8
+ 335:subsystems/ahrs/ahrs_float_dcm.c ****   renorm= Vector_Dot_Product(&temporary[1][0],&temporary[1][0]);
+ 1634              		.loc 2 335 0
+ 1635 0136 0546     		mov	r5, r0
+ 1636              	.LVL130:
+ 336:subsystems/ahrs/ahrs_float_dcm.c ****   if (renorm < 1.5625f && renorm > 0.64f) {
+ 1637              		.loc 2 336 0
+ 1638 0138 FFF7FEFF 		bl	__aeabi_fcmplt
+ 1639              	.LVL131:
+ 1640 013c 70B1     		cbz	r0, .L36
+ 336:subsystems/ahrs/ahrs_float_dcm.c ****   if (renorm < 1.5625f && renorm > 0.64f) {
+ 1641              		.loc 2 336 0 is_stmt 0 discriminator 1
+ 1642 013e 2846     		mov	r0, r5
+ 1643 0140 4049     		ldr	r1, .L64+12
+ 1644 0142 FFF7FEFF 		bl	__aeabi_fcmpgt
+ 1645 0146 48B1     		cbz	r0, .L36
+ 337:subsystems/ahrs/ahrs_float_dcm.c ****     renorm= .5 * (3-renorm);                                                 //eq.21
+ 1646              		.loc 2 337 0 is_stmt 1
+ 1647 0148 2946     		mov	r1, r5
+ 1648 014a 3F48     		ldr	r0, .L64+16
+ 1649 014c FFF7FEFF 		bl	__aeabi_fsub
+ 1650 0150 4FF07C51 		mov	r1, #1056964608
+ 1651 0154 FFF7FEFF 		bl	__aeabi_fmul
+ 1652 0158 0546     		mov	r5, r0
+ 1653              	.LVL132:
+ 1654 015a 21E0     		b	.L39
+ 1655              	.LVL133:
+ 1656              	.L36:
+ 338:subsystems/ahrs/ahrs_float_dcm.c ****   } else if (renorm < 100.0f && renorm > 0.01f) {
+ 1657              		.loc 2 338 0
+ 1658 015c 2846     		mov	r0, r5
+ 1659 015e 3B49     		ldr	r1, .L64+20
+ 1660 0160 FFF7FEFF 		bl	__aeabi_fcmplt
+ 1661 0164 B8B1     		cbz	r0, .L40
+ 338:subsystems/ahrs/ahrs_float_dcm.c ****   } else if (renorm < 100.0f && renorm > 0.01f) {
+ 1662              		.loc 2 338 0 is_stmt 0 discriminator 1
+ 1663 0166 2846     		mov	r0, r5
+ 1664 0168 3949     		ldr	r1, .L64+24
+ 1665 016a FFF7FEFF 		bl	__aeabi_fcmpgt
+ 1666 016e 90B1     		cbz	r0, .L40
+ 339:subsystems/ahrs/ahrs_float_dcm.c ****     renorm= 1. / sqrt(renorm);
+ 1667              		.loc 2 339 0 is_stmt 1
+ 1668 0170 2846     		mov	r0, r5
+ 1669 0172 FFF7FEFF 		bl	__aeabi_f2d
+ 1670 0176 FFF7FEFF 		bl	sqrt
+ 1671 017a 0246     		mov	r2, r0
+ 1672 017c 0B46     		mov	r3, r1
+ 1673 017e 0020     		movs	r0, #0
+ 1674 0180 3449     		ldr	r1, .L64+28
+ 1675 0182 FFF7FEFF 		bl	__aeabi_ddiv
+ 1676 0186 FFF7FEFF 		bl	__aeabi_d2f
+ 341:subsystems/ahrs/ahrs_float_dcm.c ****     renorm_sqrt_count++;
+ 1677              		.loc 2 341 0
+ 1678 018a 334B     		ldr	r3, .L64+32
+ 339:subsystems/ahrs/ahrs_float_dcm.c ****     renorm= 1. / sqrt(renorm);
+ 1679              		.loc 2 339 0
+ 1680 018c 0546     		mov	r5, r0
+ 1681              	.LVL134:
+ 341:subsystems/ahrs/ahrs_float_dcm.c ****     renorm_sqrt_count++;
+ 1682              		.loc 2 341 0
+ 1683 018e 1A68     		ldr	r2, [r3, #0]
+ 1684 0190 0132     		adds	r2, r2, #1
+ 1685 0192 1A60     		str	r2, [r3, #0]
+ 1686 0194 04E0     		b	.L39
+ 1687              	.LVL135:
+ 1688              	.L40:
+ 346:subsystems/ahrs/ahrs_float_dcm.c ****     renorm_blowup_count++;
+ 1689              		.loc 2 346 0
+ 1690 0196 314B     		ldr	r3, .L64+36
+ 344:subsystems/ahrs/ahrs_float_dcm.c ****     problem = TRUE;
+ 1691              		.loc 2 344 0
+ 1692 0198 0124     		movs	r4, #1
+ 346:subsystems/ahrs/ahrs_float_dcm.c ****     renorm_blowup_count++;
+ 1693              		.loc 2 346 0
+ 1694 019a 1A68     		ldr	r2, [r3, #0]
+ 1695 019c 0132     		adds	r2, r2, #1
+ 1696 019e 1A60     		str	r2, [r3, #0]
+ 1697              	.LVL136:
+ 1698              	.L39:
+ 349:subsystems/ahrs/ahrs_float_dcm.c ****   Vector_Scale(&DCM_Matrix[1][0], &temporary[1][0], renorm);
+ 1699              		.loc 2 349 0
+ 1700 01a0 2A46     		mov	r2, r5
+ 1701 01a2 2648     		ldr	r0, .L64+4
+ 1702 01a4 04A9     		add	r1, sp, #16
+ 1703              	.LVL137:
+ 1704 01a6 FFF7FEFF 		bl	Vector_Scale
+ 1705              	.LVL138:
+ 352:subsystems/ahrs/ahrs_float_dcm.c ****   renorm= Vector_Dot_Product(&temporary[2][0],&temporary[2][0]);
+ 1706              		.loc 2 352 0
+ 1707 01aa 07A8     		add	r0, sp, #28
+ 1708 01ac 0146     		mov	r1, r0
+ 1709 01ae FFF7FEFF 		bl	Vector_Dot_Product
+ 353:subsystems/ahrs/ahrs_float_dcm.c ****   if (renorm < 1.5625f && renorm > 0.64f) {
+ 1710              		.loc 2 353 0
+ 1711 01b2 2349     		ldr	r1, .L64+8
+ 352:subsystems/ahrs/ahrs_float_dcm.c ****   renorm= Vector_Dot_Product(&temporary[2][0],&temporary[2][0]);
+ 1712              		.loc 2 352 0
+ 1713 01b4 0546     		mov	r5, r0
+ 1714              	.LVL139:
+ 353:subsystems/ahrs/ahrs_float_dcm.c ****   if (renorm < 1.5625f && renorm > 0.64f) {
+ 1715              		.loc 2 353 0
+ 1716 01b6 FFF7FEFF 		bl	__aeabi_fcmplt
+ 1717              	.LVL140:
+ 1718 01ba 70B1     		cbz	r0, .L43
+ 353:subsystems/ahrs/ahrs_float_dcm.c ****   if (renorm < 1.5625f && renorm > 0.64f) {
+ 1719              		.loc 2 353 0 is_stmt 0 discriminator 1
+ 1720 01bc 2846     		mov	r0, r5
+ 1721 01be 2149     		ldr	r1, .L64+12
+ 1722 01c0 FFF7FEFF 		bl	__aeabi_fcmpgt
+ 1723 01c4 48B1     		cbz	r0, .L43
+ 354:subsystems/ahrs/ahrs_float_dcm.c ****     renorm= .5 * (3-renorm);                                                 //eq.21
+ 1724              		.loc 2 354 0 is_stmt 1
+ 1725 01c6 2946     		mov	r1, r5
+ 1726 01c8 1F48     		ldr	r0, .L64+16
+ 1727 01ca FFF7FEFF 		bl	__aeabi_fsub
+ 1728 01ce 4FF07C51 		mov	r1, #1056964608
+ 1729 01d2 FFF7FEFF 		bl	__aeabi_fmul
+ 1730 01d6 0546     		mov	r5, r0
+ 1731              	.LVL141:
+ 1732 01d8 21E0     		b	.L46
+ 1733              	.LVL142:
+ 1734              	.L43:
+ 355:subsystems/ahrs/ahrs_float_dcm.c ****   } else if (renorm < 100.0f && renorm > 0.01f) {
+ 1735              		.loc 2 355 0
+ 1736 01da 2846     		mov	r0, r5
+ 1737 01dc 1B49     		ldr	r1, .L64+20
+ 1738 01de FFF7FEFF 		bl	__aeabi_fcmplt
+ 1739 01e2 B8B1     		cbz	r0, .L47
+ 355:subsystems/ahrs/ahrs_float_dcm.c ****   } else if (renorm < 100.0f && renorm > 0.01f) {
+ 1740              		.loc 2 355 0 is_stmt 0 discriminator 1
+ 1741 01e4 2846     		mov	r0, r5
+ 1742 01e6 1A49     		ldr	r1, .L64+24
+ 1743 01e8 FFF7FEFF 		bl	__aeabi_fcmpgt
+ 1744 01ec 90B1     		cbz	r0, .L47
+ 356:subsystems/ahrs/ahrs_float_dcm.c ****     renorm= 1. / sqrt(renorm);
+ 1745              		.loc 2 356 0 is_stmt 1
+ 1746 01ee 2846     		mov	r0, r5
+ 1747 01f0 FFF7FEFF 		bl	__aeabi_f2d
+ 1748 01f4 FFF7FEFF 		bl	sqrt
+ 1749 01f8 0246     		mov	r2, r0
+ 1750 01fa 0B46     		mov	r3, r1
+ 1751 01fc 0020     		movs	r0, #0
+ 1752 01fe 1549     		ldr	r1, .L64+28
+ 1753 0200 FFF7FEFF 		bl	__aeabi_ddiv
+ 1754 0204 FFF7FEFF 		bl	__aeabi_d2f
+ 358:subsystems/ahrs/ahrs_float_dcm.c ****     renorm_sqrt_count++;
+ 1755              		.loc 2 358 0
+ 1756 0208 134B     		ldr	r3, .L64+32
+ 356:subsystems/ahrs/ahrs_float_dcm.c ****     renorm= 1. / sqrt(renorm);
+ 1757              		.loc 2 356 0
+ 1758 020a 0546     		mov	r5, r0
+ 1759              	.LVL143:
+ 358:subsystems/ahrs/ahrs_float_dcm.c ****     renorm_sqrt_count++;
+ 1760              		.loc 2 358 0
+ 1761 020c 1A68     		ldr	r2, [r3, #0]
+ 1762 020e 0132     		adds	r2, r2, #1
+ 1763 0210 1A60     		str	r2, [r3, #0]
+ 1764 0212 04E0     		b	.L46
+ 1765              	.LVL144:
+ 1766              	.L47:
+ 363:subsystems/ahrs/ahrs_float_dcm.c ****     renorm_blowup_count++;
+ 1767              		.loc 2 363 0
+ 1768 0214 114B     		ldr	r3, .L64+36
+ 361:subsystems/ahrs/ahrs_float_dcm.c ****     problem = TRUE;
+ 1769              		.loc 2 361 0
+ 1770 0216 0124     		movs	r4, #1
+ 363:subsystems/ahrs/ahrs_float_dcm.c ****     renorm_blowup_count++;
+ 1771              		.loc 2 363 0
+ 1772 0218 1A68     		ldr	r2, [r3, #0]
+ 1773 021a 0132     		adds	r2, r2, #1
+ 1774 021c 1A60     		str	r2, [r3, #0]
+ 1775              	.LVL145:
+ 1776              	.L46:
+ 366:subsystems/ahrs/ahrs_float_dcm.c ****   Vector_Scale(&DCM_Matrix[2][0], &temporary[2][0], renorm);
+ 1777              		.loc 2 366 0
+ 1778 021e 1048     		ldr	r0, .L64+40
+ 1779 0220 07A9     		add	r1, sp, #28
+ 1780 0222 2A46     		mov	r2, r5
+ 1781 0224 FFF7FEFF 		bl	Vector_Scale
+ 369:subsystems/ahrs/ahrs_float_dcm.c ****   if (problem) {                // Our solution is blowing up and we will force back to initial con
+ 1782              		.loc 2 369 0
+ 1783 0228 14B1     		cbz	r4, .L28
+ 370:subsystems/ahrs/ahrs_float_dcm.c ****     set_dcm_matrix_from_rmat(&ahrs_impl.body_to_imu_rmat);
+ 1784              		.loc 2 370 0
+ 1785 022a 0E48     		ldr	r0, .L64+44
+ 1786 022c FFF7FEFF 		bl	set_dcm_matrix_from_rmat
+ 1787              	.LVL146:
+ 1788              	.L28:
+ 373:subsystems/ahrs/ahrs_float_dcm.c **** }
+ 1789              		.loc 2 373 0
+ 1790 0230 0BB0     		add	sp, sp, #44
+ 1791 0232 BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 1792              	.L65:
+ 1793 0236 00BF     		.align	2
+ 1794              	.L64:
+ 1795 0238 00000000 		.word	.LANCHOR0
+ 1796 023c 0C000000 		.word	.LANCHOR0+12
+ 1797 0240 0000C83F 		.word	1070071808
+ 1798 0244 0AD7233F 		.word	1059313418
+ 1799 0248 00004040 		.word	1077936128
+ 1800 024c 0000C842 		.word	1120403456
+ 1801 0250 0AD7233C 		.word	1008981770
+ 1802 0254 0000F03F 		.word	1072693248
+ 1803 0258 00000000 		.word	.LANCHOR2
+ 1804 025c 00000000 		.word	.LANCHOR3
+ 1805 0260 18000000 		.word	.LANCHOR0+24
+ 1806 0264 28000000 		.word	.LANCHOR1+40
+ 1807              		.cfi_endproc
+ 1808              	.LFE48:
+ 1810              		.section	.text.Drift_correction,"ax",%progbits
+ 1811              		.align	1
+ 1812              		.global	Drift_correction
+ 1813              		.thumb
+ 1814              		.thumb_func
+ 1816              	Drift_correction:
+ 1817              	.LFB49:
+ 377:subsystems/ahrs/ahrs_float_dcm.c **** {
+ 1818              		.loc 2 377 0
+ 1819              		.cfi_startproc
+ 1820              		@ args = 0, pretend = 0, frame = 32
+ 1821              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1822 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, sl, lr}
+ 1823              	.LCFI10:
+ 1824              		.cfi_def_cfa_offset 32
+ 1825              		.cfi_offset 14, -4
+ 1826              		.cfi_offset 10, -8
+ 1827              		.cfi_offset 9, -12
+ 1828              		.cfi_offset 8, -16
+ 1829              		.cfi_offset 7, -20
+ 1830              		.cfi_offset 6, -24
+ 1831              		.cfi_offset 5, -28
+ 1832              		.cfi_offset 4, -32
+ 393:subsystems/ahrs/ahrs_float_dcm.c ****   Accel_magnitude = sqrt(accel_float.x*accel_float.x + accel_float.y*accel_float.y + accel_float.z*
+ 1833              		.loc 2 393 0
+ 1834 0004 A84B     		ldr	r3, .L82+56
+ 377:subsystems/ahrs/ahrs_float_dcm.c **** {
+ 1835              		.loc 2 377 0
+ 1836 0006 88B0     		sub	sp, sp, #32
+ 1837              	.LCFI11:
+ 1838              		.cfi_def_cfa_offset 64
+ 393:subsystems/ahrs/ahrs_float_dcm.c ****   Accel_magnitude = sqrt(accel_float.x*accel_float.x + accel_float.y*accel_float.y + accel_float.z*
+ 1839              		.loc 2 393 0
+ 1840 0008 1868     		ldr	r0, [r3, #0]	@ float
+ 1841 000a 9D68     		ldr	r5, [r3, #8]	@ float
+ 1842 000c 0146     		mov	r1, r0
+ 1843 000e 5E68     		ldr	r6, [r3, #4]	@ float
+ 1844 0010 FFF7FEFF 		bl	__aeabi_fmul
+ 1845 0014 3146     		mov	r1, r6
+ 1846 0016 0446     		mov	r4, r0
+ 1847 0018 3046     		mov	r0, r6
+ 1848 001a FFF7FEFF 		bl	__aeabi_fmul
+ 1849 001e 0146     		mov	r1, r0
+ 1850 0020 2046     		mov	r0, r4
+ 1851 0022 FFF7FEFF 		bl	__aeabi_fadd
+ 1852 0026 2946     		mov	r1, r5
+ 1853 0028 0446     		mov	r4, r0
+ 1854 002a 2846     		mov	r0, r5
+ 1855 002c FFF7FEFF 		bl	__aeabi_fmul
+ 1856 0030 0146     		mov	r1, r0
+ 1857 0032 2046     		mov	r0, r4
+ 1858 0034 FFF7FEFF 		bl	__aeabi_fadd
+ 1859 0038 FFF7FEFF 		bl	__aeabi_f2d
+ 1860 003c FFF7FEFF 		bl	sqrt
+ 1861 0040 FFF7FEFF 		bl	__aeabi_d2f
+ 394:subsystems/ahrs/ahrs_float_dcm.c ****   Accel_magnitude = Accel_magnitude / GRAVITY; // Scale to gravity.
+ 1862              		.loc 2 394 0
+ 1863 0044 FFF7FEFF 		bl	__aeabi_f2d
+ 1864 0048 89A3     		adr	r3, .L82
+ 1865 004a D3E90023 		ldrd	r2, [r3]
+ 1866 004e FFF7FEFF 		bl	__aeabi_ddiv
+ 1867 0052 FFF7FEFF 		bl	__aeabi_d2f
+ 1868 0056 0146     		mov	r1, r0
+ 397:subsystems/ahrs/ahrs_float_dcm.c ****   Accel_weight = Chop(1 - 2*fabs(1 - Accel_magnitude),0,1);  //
+ 1869              		.loc 2 397 0
+ 1870 0058 4FF07E50 		mov	r0, #1065353216
+ 1871 005c FFF7FEFF 		bl	__aeabi_fsub
+ 1872 0060 20F00040 		bic	r0, r0, #-2147483648
+ 1873 0064 FFF7FEFF 		bl	__aeabi_f2d
+ 1874 0068 0246     		mov	r2, r0
+ 1875 006a 0B46     		mov	r3, r1
+ 1876 006c FFF7FEFF 		bl	__aeabi_dadd
+ 1877 0070 0246     		mov	r2, r0
+ 1878 0072 0B46     		mov	r3, r1
+ 1879 0074 0020     		movs	r0, #0
+ 1880 0076 8D49     		ldr	r1, .L82+60
+ 1881 0078 FFF7FEFF 		bl	__aeabi_dsub
+ 1882 007c 0022     		movs	r2, #0
+ 1883 007e 0023     		movs	r3, #0
+ 1884 0080 0446     		mov	r4, r0
+ 1885 0082 0D46     		mov	r5, r1
+ 1886 0084 FFF7FEFF 		bl	__aeabi_dcmplt
+ 1887 0088 58B9     		cbnz	r0, .L75
+ 397:subsystems/ahrs/ahrs_float_dcm.c ****   Accel_weight = Chop(1 - 2*fabs(1 - Accel_magnitude),0,1);  //
+ 1888              		.loc 2 397 0 is_stmt 0 discriminator 2
+ 1889 008a 2046     		mov	r0, r4
+ 1890 008c 2946     		mov	r1, r5
+ 1891 008e 0022     		movs	r2, #0
+ 1892 0090 864B     		ldr	r3, .L82+60
+ 1893 0092 FFF7FEFF 		bl	__aeabi_dcmpgt
+ 1894 0096 30B9     		cbnz	r0, .L76
+ 397:subsystems/ahrs/ahrs_float_dcm.c ****   Accel_weight = Chop(1 - 2*fabs(1 - Accel_magnitude),0,1);  //
+ 1895              		.loc 2 397 0 discriminator 4
+ 1896 0098 2046     		mov	r0, r4
+ 1897 009a 2946     		mov	r1, r5
+ 1898 009c FFF7FEFF 		bl	__aeabi_d2f
+ 1899 00a0 03E0     		b	.L67
+ 1900              	.L75:
+ 397:subsystems/ahrs/ahrs_float_dcm.c ****   Accel_weight = Chop(1 - 2*fabs(1 - Accel_magnitude),0,1);  //
+ 1901              		.loc 2 397 0
+ 1902 00a2 0020     		movs	r0, #0
+ 1903 00a4 01E0     		b	.L67
+ 1904              	.L76:
+ 1905 00a6 4FF07E50 		mov	r0, #1065353216
+ 1906              	.L67:
+ 1907              	.LVL147:
+ 1908              	.LBB46:
+ 421:subsystems/ahrs/ahrs_float_dcm.c ****     float tempfloat = ((Accel_weight - 0.5) * 256.0f);    //amount added was determined to give imu
+ 1909              		.loc 2 421 0 is_stmt 1 discriminator 6
+ 1910 00aa FFF7FEFF 		bl	__aeabi_f2d
+ 1911              	.LVL148:
+ 1912 00ae 0022     		movs	r2, #0
+ 1913 00b0 7F4B     		ldr	r3, .L82+64
+ 422:subsystems/ahrs/ahrs_float_dcm.c ****     imu_health += tempfloat;
+ 1914              		.loc 2 422 0 discriminator 6
+ 1915 00b2 804C     		ldr	r4, .L82+68
+ 421:subsystems/ahrs/ahrs_float_dcm.c ****     float tempfloat = ((Accel_weight - 0.5) * 256.0f);    //amount added was determined to give imu
+ 1916              		.loc 2 421 0 discriminator 6
+ 1917 00b4 CDE90001 		strd	r0, [sp]
+ 1918              	.LVL149:
+ 1919 00b8 FFF7FEFF 		bl	__aeabi_dsub
+ 1920              	.LVL150:
+ 1921 00bc 0022     		movs	r2, #0
+ 1922 00be 7E4B     		ldr	r3, .L82+72
+ 1923 00c0 FFF7FEFF 		bl	__aeabi_dmul
+ 1924 00c4 FFF7FEFF 		bl	__aeabi_d2f
+ 422:subsystems/ahrs/ahrs_float_dcm.c ****     imu_health += tempfloat;
+ 1925              		.loc 2 422 0 discriminator 6
+ 1926 00c8 2168     		ldr	r1, [r4, #0]	@ float
+ 1927 00ca FFF7FEFF 		bl	__aeabi_fadd
+ 423:subsystems/ahrs/ahrs_float_dcm.c ****     Bound(imu_health,129,65405);
+ 1928              		.loc 2 423 0 discriminator 6
+ 1929 00ce 7B4D     		ldr	r5, .L82+76
+ 422:subsystems/ahrs/ahrs_float_dcm.c ****     imu_health += tempfloat;
+ 1930              		.loc 2 422 0 discriminator 6
+ 1931 00d0 2060     		str	r0, [r4, #0]	@ float
+ 423:subsystems/ahrs/ahrs_float_dcm.c ****     Bound(imu_health,129,65405);
+ 1932              		.loc 2 423 0 discriminator 6
+ 1933 00d2 2946     		mov	r1, r5
+ 422:subsystems/ahrs/ahrs_float_dcm.c ****     imu_health += tempfloat;
+ 1934              		.loc 2 422 0 discriminator 6
+ 1935 00d4 0646     		mov	r6, r0
+ 423:subsystems/ahrs/ahrs_float_dcm.c ****     Bound(imu_health,129,65405);
+ 1936              		.loc 2 423 0 discriminator 6
+ 1937 00d6 FFF7FEFF 		bl	__aeabi_fcmpgt
+ 1938 00da 28B9     		cbnz	r0, .L81
+ 1939              	.L80:
+ 423:subsystems/ahrs/ahrs_float_dcm.c ****     Bound(imu_health,129,65405);
+ 1940              		.loc 2 423 0 is_stmt 0 discriminator 2
+ 1941 00dc 784D     		ldr	r5, .L82+80
+ 1942 00de 3046     		mov	r0, r6
+ 1943 00e0 2946     		mov	r1, r5
+ 1944 00e2 FFF7FEFF 		bl	__aeabi_fcmplt
+ 1945 00e6 00B1     		cbz	r0, .L70
+ 1946              	.L81:
+ 423:subsystems/ahrs/ahrs_float_dcm.c ****     Bound(imu_health,129,65405);
+ 1947              		.loc 2 423 0 discriminator 3
+ 1948 00e8 2560     		str	r5, [r4, #0]	@ float
+ 1949              	.L70:
+ 1950              	.LVL151:
+ 1951              	.LBE46:
+ 1952              	.LBB47:
+ 1953              	.LBB48:
+  10:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   vectorOut[0]= (v1[1]*v2[2]) - (v1[2]*v2[1]);
+ 1954              		.loc 1 10 0 is_stmt 1
+ 1955 00ea 6F4D     		ldr	r5, .L82+56
+ 1956 00ec 754C     		ldr	r4, .L82+84
+ 1957 00ee 6E68     		ldr	r6, [r5, #4]	@ float
+ 1958 00f0 D4F82080 		ldr	r8, [r4, #32]	@ float
+ 1959 00f4 3046     		mov	r0, r6
+ 1960 00f6 4146     		mov	r1, r8
+ 1961 00f8 FFF7FEFF 		bl	__aeabi_fmul
+ 1962 00fc D5F80890 		ldr	r9, [r5, #8]	@ float
+ 1963 0100 E769     		ldr	r7, [r4, #28]	@ float
+ 1964 0102 8246     		mov	sl, r0
+ 1965 0104 3946     		mov	r1, r7
+ 1966 0106 4846     		mov	r0, r9
+ 1967 0108 FFF7FEFF 		bl	__aeabi_fmul
+ 1968 010c 0146     		mov	r1, r0
+ 1969 010e 5046     		mov	r0, sl
+ 1970 0110 FFF7FEFF 		bl	__aeabi_fsub
+  11:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   vectorOut[1]= (v1[2]*v2[0]) - (v1[0]*v2[2]);
+ 1971              		.loc 1 11 0
+ 1972 0114 D4F818A0 		ldr	sl, [r4, #24]	@ float
+  10:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   vectorOut[0]= (v1[1]*v2[2]) - (v1[2]*v2[1]);
+ 1973              		.loc 1 10 0
+ 1974 0118 0290     		str	r0, [sp, #8]	@ float
+  11:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   vectorOut[1]= (v1[2]*v2[0]) - (v1[0]*v2[2]);
+ 1975              		.loc 1 11 0
+ 1976 011a 5146     		mov	r1, sl
+ 1977 011c 4846     		mov	r0, r9
+ 1978 011e FFF7FEFF 		bl	__aeabi_fmul
+ 1979 0122 2D68     		ldr	r5, [r5, #0]	@ float
+ 1980 0124 8146     		mov	r9, r0
+ 1981 0126 4146     		mov	r1, r8
+ 1982 0128 2846     		mov	r0, r5
+ 1983 012a FFF7FEFF 		bl	__aeabi_fmul
+ 1984 012e 0146     		mov	r1, r0
+ 1985 0130 4846     		mov	r0, r9
+ 1986 0132 FFF7FEFF 		bl	__aeabi_fsub
+  12:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   vectorOut[2]= (v1[0]*v2[1]) - (v1[1]*v2[0]);
+ 1987              		.loc 1 12 0
+ 1988 0136 3946     		mov	r1, r7
+  11:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   vectorOut[1]= (v1[2]*v2[0]) - (v1[0]*v2[2]);
+ 1989              		.loc 1 11 0
+ 1990 0138 0390     		str	r0, [sp, #12]	@ float
+  12:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   vectorOut[2]= (v1[0]*v2[1]) - (v1[1]*v2[0]);
+ 1991              		.loc 1 12 0
+ 1992 013a 2846     		mov	r0, r5
+ 1993 013c FFF7FEFF 		bl	__aeabi_fmul
+ 1994 0140 5146     		mov	r1, sl
+ 1995 0142 0546     		mov	r5, r0
+ 1996 0144 3046     		mov	r0, r6
+ 1997 0146 FFF7FEFF 		bl	__aeabi_fmul
+ 1998 014a 0146     		mov	r1, r0
+ 1999 014c 2846     		mov	r0, r5
+ 2000 014e FFF7FEFF 		bl	__aeabi_fsub
+ 2001              	.LBE48:
+ 2002              	.LBE47:
+ 428:subsystems/ahrs/ahrs_float_dcm.c ****   Vector_Scale(&Omega_P[0],&errorRollPitch[0],Kp_ROLLPITCH*Accel_weight);
+ 2003              		.loc 2 428 0
+ 2004 0152 49A3     		adr	r3, .L82+8
+ 2005 0154 D3E90023 		ldrd	r2, [r3]
+ 2006              	.LBB50:
+ 2007              	.LBB49:
+  12:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   vectorOut[2]= (v1[0]*v2[1]) - (v1[1]*v2[0]);
+ 2008              		.loc 1 12 0
+ 2009 0158 0490     		str	r0, [sp, #16]	@ float
+ 2010              	.LBE49:
+ 2011              	.LBE50:
+ 428:subsystems/ahrs/ahrs_float_dcm.c ****   Vector_Scale(&Omega_P[0],&errorRollPitch[0],Kp_ROLLPITCH*Accel_weight);
+ 2012              		.loc 2 428 0
+ 2013 015a DDE90001 		ldrd	r0, [sp]
+ 2014 015e FFF7FEFF 		bl	__aeabi_dmul
+ 2015 0162 FFF7FEFF 		bl	__aeabi_d2f
+ 2016 0166 02A9     		add	r1, sp, #8
+ 2017 0168 0246     		mov	r2, r0
+ 2018 016a 5748     		ldr	r0, .L82+88
+ 2019 016c FFF7FEFF 		bl	Vector_Scale
+ 430:subsystems/ahrs/ahrs_float_dcm.c ****   Vector_Scale(&Scaled_Omega_I[0],&errorRollPitch[0],Ki_ROLLPITCH*Accel_weight);
+ 2020              		.loc 2 430 0
+ 2021 0170 43A3     		adr	r3, .L82+16
+ 2022 0172 D3E90023 		ldrd	r2, [r3]
+ 2023 0176 DDE90001 		ldrd	r0, [sp]
+ 2024 017a FFF7FEFF 		bl	__aeabi_dmul
+ 2025 017e FFF7FEFF 		bl	__aeabi_d2f
+ 2026 0182 02A9     		add	r1, sp, #8
+ 2027 0184 0246     		mov	r2, r0
+ 2028 0186 5148     		ldr	r0, .L82+92
+ 2029 0188 FFF7FEFF 		bl	Vector_Scale
+ 431:subsystems/ahrs/ahrs_float_dcm.c ****   Vector_Add(Omega_I,Omega_I,Scaled_Omega_I);
+ 2030              		.loc 2 431 0
+ 2031 018c 5048     		ldr	r0, .L82+96
+ 2032 018e 4F4A     		ldr	r2, .L82+92
+ 2033 0190 0146     		mov	r1, r0
+ 2034 0192 FFF7FEFF 		bl	Vector_Add
+ 451:subsystems/ahrs/ahrs_float_dcm.c ****   if(gps.fix == GPS_FIX_3D && gps.gspeed>= 500) { //got a 3d fix and ground speed is more than 0.5 
+ 2035              		.loc 2 451 0
+ 2036 0196 4F4B     		ldr	r3, .L82+100
+ 2037 0198 93F85B20 		ldrb	r2, [r3, #91]	@ zero_extendqisi2
+ 2038 019c 032A     		cmp	r2, #3
+ 2039 019e 42D1     		bne	.L72
+ 451:subsystems/ahrs/ahrs_float_dcm.c ****   if(gps.fix == GPS_FIX_3D && gps.gspeed>= 500) { //got a 3d fix and ground speed is more than 0.5 
+ 2040              		.loc 2 451 0 is_stmt 0 discriminator 1
+ 2041 01a0 B3F94420 		ldrsh	r2, [r3, #68]
+ 2042 01a4 B2F5FA7F 		cmp	r2, #500
+ 2043 01a8 3DDB     		blt	.L72
+ 2044              	.LBB51:
+ 452:subsystems/ahrs/ahrs_float_dcm.c ****     float ground_course = ((float)gps.course)/1.e7 - M_PI; //This is the runaway direction of you "
+ 2045              		.loc 2 452 0 is_stmt 1
+ 2046 01aa 986C     		ldr	r0, [r3, #72]
+ 2047 01ac FFF7FEFF 		bl	__aeabi_i2f
+ 2048 01b0 FFF7FEFF 		bl	__aeabi_f2d
+ 2049 01b4 34A3     		adr	r3, .L82+24
+ 2050 01b6 D3E90023 		ldrd	r2, [r3]
+ 2051 01ba FFF7FEFF 		bl	__aeabi_ddiv
+ 2052 01be 34A3     		adr	r3, .L82+32
+ 2053 01c0 D3E90023 		ldrd	r2, [r3]
+ 2054 01c4 FFF7FEFF 		bl	__aeabi_dsub
+ 2055 01c8 FFF7FEFF 		bl	__aeabi_d2f
+ 2056 01cc 0546     		mov	r5, r0
+ 2057              	.LVL152:
+ 453:subsystems/ahrs/ahrs_float_dcm.c ****     float COGX = cosf(ground_course); //Course overground X axis
+ 2058              		.loc 2 453 0
+ 2059 01ce FFF7FEFF 		bl	cosf
+ 2060              	.LVL153:
+ 2061 01d2 0646     		mov	r6, r0
+ 2062              	.LVL154:
+ 454:subsystems/ahrs/ahrs_float_dcm.c ****     float COGY = sinf(ground_course); //Course overground Y axis
+ 2063              		.loc 2 454 0
+ 2064 01d4 2846     		mov	r0, r5
+ 2065              	.LVL155:
+ 2066 01d6 FFF7FEFF 		bl	sinf
+ 456:subsystems/ahrs/ahrs_float_dcm.c ****     errorCourse=(DCM_Matrix[0][0]*COGY) - (DCM_Matrix[1][0]*COGX);  //Calculating YAW error
+ 2067              		.loc 2 456 0
+ 2068 01da 2168     		ldr	r1, [r4, #0]	@ float
+ 2069 01dc FFF7FEFF 		bl	__aeabi_fmul
+ 2070 01e0 E168     		ldr	r1, [r4, #12]	@ float
+ 2071 01e2 0546     		mov	r5, r0
+ 2072              	.LVL156:
+ 2073 01e4 3046     		mov	r0, r6
+ 2074 01e6 FFF7FEFF 		bl	__aeabi_fmul
+ 2075 01ea 0146     		mov	r1, r0
+ 2076 01ec 2846     		mov	r0, r5
+ 2077 01ee FFF7FEFF 		bl	__aeabi_fsub
+ 457:subsystems/ahrs/ahrs_float_dcm.c ****     Vector_Scale(errorYaw,&DCM_Matrix[2][0],errorCourse); //Applys the yaw correction to the XYZ ro
+ 2078              		.loc 2 457 0
+ 2079 01f2 04F11801 		add	r1, r4, #24
+ 456:subsystems/ahrs/ahrs_float_dcm.c ****     errorCourse=(DCM_Matrix[0][0]*COGY) - (DCM_Matrix[1][0]*COGX);  //Calculating YAW error
+ 2080              		.loc 2 456 0
+ 2081 01f6 0246     		mov	r2, r0
+ 457:subsystems/ahrs/ahrs_float_dcm.c ****     Vector_Scale(errorYaw,&DCM_Matrix[2][0],errorCourse); //Applys the yaw correction to the XYZ ro
+ 2082              		.loc 2 457 0
+ 2083 01f8 05A8     		add	r0, sp, #20
+ 2084 01fa FFF7FEFF 		bl	Vector_Scale
+ 459:subsystems/ahrs/ahrs_float_dcm.c ****     Vector_Scale(&Scaled_Omega_P[0],&errorYaw[0],Kp_YAW);
+ 2085              		.loc 2 459 0
+ 2086 01fe 3648     		ldr	r0, .L82+104
+ 2087 0200 05A9     		add	r1, sp, #20
+ 2088 0202 364A     		ldr	r2, .L82+108
+ 2089 0204 FFF7FEFF 		bl	Vector_Scale
+ 460:subsystems/ahrs/ahrs_float_dcm.c ****     Vector_Add(Omega_P,Omega_P,Scaled_Omega_P);//Adding  Proportional.
+ 2090              		.loc 2 460 0
+ 2091 0208 2F48     		ldr	r0, .L82+88
+ 2092 020a 334A     		ldr	r2, .L82+104
+ 2093 020c 0146     		mov	r1, r0
+ 2094 020e FFF7FEFF 		bl	Vector_Add
+ 462:subsystems/ahrs/ahrs_float_dcm.c ****     Vector_Scale(&Scaled_Omega_I[0],&errorYaw[0],Ki_YAW);
+ 2095              		.loc 2 462 0
+ 2096 0212 2E48     		ldr	r0, .L82+92
+ 2097 0214 05A9     		add	r1, sp, #20
+ 2098 0216 324A     		ldr	r2, .L82+112
+ 2099 0218 FFF7FEFF 		bl	Vector_Scale
+ 463:subsystems/ahrs/ahrs_float_dcm.c ****     Vector_Add(Omega_I,Omega_I,Scaled_Omega_I);//adding integrator to the Omega_I
+ 2100              		.loc 2 463 0
+ 2101 021c 2C48     		ldr	r0, .L82+96
+ 2102 021e 2B4A     		ldr	r2, .L82+92
+ 2103 0220 0146     		mov	r1, r0
+ 2104 0222 FFF7FEFF 		bl	Vector_Add
+ 2105              	.LVL157:
+ 2106              	.L72:
+ 2107              	.LBE51:
+ 468:subsystems/ahrs/ahrs_float_dcm.c ****   Integrator_magnitude = sqrt(Vector_Dot_Product(Omega_I,Omega_I));
+ 2108              		.loc 2 468 0
+ 2109 0226 2A48     		ldr	r0, .L82+96
+ 2110 0228 0146     		mov	r1, r0
+ 2111 022a FFF7FEFF 		bl	Vector_Dot_Product
+ 2112 022e FFF7FEFF 		bl	__aeabi_f2d
+ 2113 0232 FFF7FEFF 		bl	sqrt
+ 2114 0236 FFF7FEFF 		bl	__aeabi_d2f
+ 469:subsystems/ahrs/ahrs_float_dcm.c ****   if (Integrator_magnitude > RadOfDeg(300)) {
+ 2115              		.loc 2 469 0
+ 2116 023a FFF7FEFF 		bl	__aeabi_f2d
+ 2117 023e 16A3     		adr	r3, .L82+40
+ 2118 0240 D3E90023 		ldrd	r2, [r3]
+ 2119 0244 0446     		mov	r4, r0
+ 2120 0246 0D46     		mov	r5, r1
+ 2121 0248 FFF7FEFF 		bl	__aeabi_dcmpgt
+ 2122 024c 68B1     		cbz	r0, .L66
+ 470:subsystems/ahrs/ahrs_float_dcm.c ****     Vector_Scale(Omega_I,Omega_I,0.5f*RadOfDeg(300)/Integrator_magnitude);
+ 2123              		.loc 2 470 0
+ 2124 024e 2246     		mov	r2, r4
+ 2125 0250 2B46     		mov	r3, r5
+ 2126 0252 13A1     		adr	r1, .L82+48
+ 2127 0254 D1E90001 		ldrd	r0, [r1]
+ 2128 0258 FFF7FEFF 		bl	__aeabi_ddiv
+ 2129 025c FFF7FEFF 		bl	__aeabi_d2f
+ 2130 0260 0246     		mov	r2, r0
+ 2131 0262 1B48     		ldr	r0, .L82+96
+ 2132 0264 0146     		mov	r1, r0
+ 2133 0266 FFF7FEFF 		bl	Vector_Scale
+ 2134              	.L66:
+ 474:subsystems/ahrs/ahrs_float_dcm.c **** }
+ 2135              		.loc 2 474 0
+ 2136 026a 08B0     		add	sp, sp, #32
+ 2137 026c BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, sl, pc}
+ 2138              	.L83:
+ 2139              		.align	3
+ 2140              	.L82:
+ 2141 0270 1F85EB51 		.word	1374389535
+ 2142 0274 B89E2340 		.word	1076076216
+ 2143 0278 B81E85EB 		.word	3951369912
+ 2144 027c 51B88E3F 		.word	1066317905
+ 2145 0280 F168E388 		.word	2296604913
+ 2146 0284 B5F8E43E 		.word	1055193269
+ 2147 0288 00000000 		.word	0
+ 2148 028c D0126341 		.word	1097011920
+ 2149 0290 182D4454 		.word	1413754136
+ 2150 0294 FB210940 		.word	1074340347
+ 2151 0298 3FD038C6 		.word	3325612095
+ 2152 029c A6F11440 		.word	1075114406
+ 2153 02a0 3FD038C6 		.word	3325612095
+ 2154 02a4 A6F10440 		.word	1074065830
+ 2155 02a8 00000000 		.word	.LANCHOR4
+ 2156 02ac 0000F03F 		.word	1072693248
+ 2157 02b0 0000E03F 		.word	1071644672
+ 2158 02b4 00000000 		.word	.LANCHOR5
+ 2159 02b8 00007040 		.word	1081081856
+ 2160 02bc 007D7F47 		.word	1199537408
+ 2161 02c0 00000143 		.word	1124139008
+ 2162 02c4 00000000 		.word	.LANCHOR0
+ 2163 02c8 00000000 		.word	.LANCHOR6
+ 2164 02cc 00000000 		.word	.LANCHOR7
+ 2165 02d0 00000000 		.word	.LANCHOR8
+ 2166 02d4 00000000 		.word	gps
+ 2167 02d8 00000000 		.word	.LANCHOR9
+ 2168 02dc 6666663F 		.word	1063675494
+ 2169 02e0 17B75138 		.word	944879383
+ 2170              		.cfi_endproc
+ 2171              	.LFE49:
+ 2173              		.global	__aeabi_i2d
+ 2174 02e4 AFF30080 		.section	.text.ahrs_update_accel,"ax",%progbits
+ 2175              		.align	1
+ 2176              		.global	ahrs_update_accel
+ 2177              		.thumb
+ 2178              		.thumb_func
+ 2180              	ahrs_update_accel:
+ 2181              	.LFB45:
+ 216:subsystems/ahrs/ahrs_float_dcm.c **** {
+ 2182              		.loc 2 216 0
+ 2183              		.cfi_startproc
+ 2184              		@ args = 0, pretend = 0, frame = 0
+ 2185              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2186 0000 2DE9F84F 		push	{r3, r4, r5, r6, r7, r8, r9, sl, fp, lr}
+ 2187              	.LCFI12:
+ 2188              		.cfi_def_cfa_offset 40
+ 2189              		.cfi_offset 14, -4
+ 2190              		.cfi_offset 11, -8
+ 2191              		.cfi_offset 10, -12
+ 2192              		.cfi_offset 9, -16
+ 2193              		.cfi_offset 8, -20
+ 2194              		.cfi_offset 7, -24
+ 2195              		.cfi_offset 6, -28
+ 2196              		.cfi_offset 5, -32
+ 2197              		.cfi_offset 4, -36
+ 2198              		.cfi_offset 3, -40
+ 218:subsystems/ahrs/ahrs_float_dcm.c ****   ACCELS_FLOAT_OF_BFP(accel_float, imu.accel);
+ 2199              		.loc 2 218 0
+ 2200 0004 314F     		ldr	r7, .L86
+ 222:subsystems/ahrs/ahrs_float_dcm.c ****   accel_float.x = -accel_float.x;
+ 2201              		.loc 2 222 0
+ 2202 0006 324C     		ldr	r4, .L86+4
+ 218:subsystems/ahrs/ahrs_float_dcm.c ****   ACCELS_FLOAT_OF_BFP(accel_float, imu.accel);
+ 2203              		.loc 2 218 0
+ 2204 0008 3869     		ldr	r0, [r7, #16]
+ 2205 000a FFF7FEFF 		bl	__aeabi_i2f
+ 2206 000e 4FF06A51 		mov	r1, #981467136
+ 2207 0012 FFF7FEFF 		bl	__aeabi_fmul
+ 2208 0016 0546     		mov	r5, r0
+ 2209 0018 7869     		ldr	r0, [r7, #20]
+ 2210 001a FFF7FEFF 		bl	__aeabi_i2f
+ 2211 001e 4FF06A51 		mov	r1, #981467136
+ 2212 0022 FFF7FEFF 		bl	__aeabi_fmul
+ 2213 0026 0646     		mov	r6, r0
+ 2214 0028 F868     		ldr	r0, [r7, #12]
+ 2215 002a FFF7FEFF 		bl	__aeabi_i2f
+ 2216 002e 4FF06A51 		mov	r1, #981467136
+ 2217 0032 FFF7FEFF 		bl	__aeabi_fmul
+ 228:subsystems/ahrs/ahrs_float_dcm.c ****   if (gps.fix == GPS_FIX_3D) {    //Remove centrifugal acceleration.
+ 2218              		.loc 2 228 0
+ 2219 0036 274B     		ldr	r3, .L86+8
+ 222:subsystems/ahrs/ahrs_float_dcm.c ****   accel_float.x = -accel_float.x;
+ 2220              		.loc 2 222 0
+ 2221 0038 00F10040 		add	r0, r0, #-2147483648
+ 228:subsystems/ahrs/ahrs_float_dcm.c ****   if (gps.fix == GPS_FIX_3D) {    //Remove centrifugal acceleration.
+ 2222              		.loc 2 228 0
+ 2223 003c 93F85B20 		ldrb	r2, [r3, #91]	@ zero_extendqisi2
+ 223:subsystems/ahrs/ahrs_float_dcm.c ****   accel_float.y = -accel_float.y;
+ 2224              		.loc 2 223 0
+ 2225 0040 05F10045 		add	r5, r5, #-2147483648
+ 224:subsystems/ahrs/ahrs_float_dcm.c ****   accel_float.z = -accel_float.z;
+ 2226              		.loc 2 224 0
+ 2227 0044 06F10046 		add	r6, r6, #-2147483648
+ 228:subsystems/ahrs/ahrs_float_dcm.c ****   if (gps.fix == GPS_FIX_3D) {    //Remove centrifugal acceleration.
+ 2228              		.loc 2 228 0
+ 2229 0048 032A     		cmp	r2, #3
+ 222:subsystems/ahrs/ahrs_float_dcm.c ****   accel_float.x = -accel_float.x;
+ 2230              		.loc 2 222 0
+ 2231 004a 2060     		str	r0, [r4, #0]	@ float
+ 223:subsystems/ahrs/ahrs_float_dcm.c ****   accel_float.y = -accel_float.y;
+ 2232              		.loc 2 223 0
+ 2233 004c 6560     		str	r5, [r4, #4]	@ float
+ 224:subsystems/ahrs/ahrs_float_dcm.c ****   accel_float.z = -accel_float.z;
+ 2234              		.loc 2 224 0
+ 2235 004e A660     		str	r6, [r4, #8]	@ float
+ 228:subsystems/ahrs/ahrs_float_dcm.c ****   if (gps.fix == GPS_FIX_3D) {    //Remove centrifugal acceleration.
+ 2236              		.loc 2 228 0
+ 2237 0050 38D1     		bne	.L85
+ 229:subsystems/ahrs/ahrs_float_dcm.c ****     accel_float.y += gps.speed_3d/100. * Omega[2];  // Centrifugal force on Acc_y = GPS_speed*GyroZ
+ 2238              		.loc 2 229 0
+ 2239 0052 B3F94600 		ldrsh	r0, [r3, #70]
+ 2240 0056 FFF7FEFF 		bl	__aeabi_i2d
+ 2241 005a 0022     		movs	r2, #0
+ 2242 005c 1E4B     		ldr	r3, .L86+12
+ 2243 005e FFF7FEFF 		bl	__aeabi_ddiv
+ 2244 0062 8046     		mov	r8, r0
+ 2245 0064 2846     		mov	r0, r5
+ 2246 0066 8946     		mov	r9, r1
+ 2247 0068 FFF7FEFF 		bl	__aeabi_f2d
+ 2248 006c 1B4D     		ldr	r5, .L86+16
+ 2249 006e 8246     		mov	sl, r0
+ 2250 0070 A868     		ldr	r0, [r5, #8]	@ float
+ 2251 0072 8B46     		mov	fp, r1
+ 2252 0074 FFF7FEFF 		bl	__aeabi_f2d
+ 2253 0078 0246     		mov	r2, r0
+ 2254 007a 0B46     		mov	r3, r1
+ 2255 007c 4046     		mov	r0, r8
+ 2256 007e 4946     		mov	r1, r9
+ 2257 0080 FFF7FEFF 		bl	__aeabi_dmul
+ 2258 0084 0246     		mov	r2, r0
+ 2259 0086 0B46     		mov	r3, r1
+ 2260 0088 5046     		mov	r0, sl
+ 2261 008a 5946     		mov	r1, fp
+ 2262 008c FFF7FEFF 		bl	__aeabi_dadd
+ 2263 0090 FFF7FEFF 		bl	__aeabi_d2f
+ 2264 0094 6060     		str	r0, [r4, #4]	@ float
+ 230:subsystems/ahrs/ahrs_float_dcm.c ****     accel_float.z -= gps.speed_3d/100. * Omega[1];  // Centrifugal force on Acc_z = GPS_speed*GyroY
+ 2265              		.loc 2 230 0
+ 2266 0096 3046     		mov	r0, r6
+ 2267 0098 FFF7FEFF 		bl	__aeabi_f2d
+ 2268 009c 0646     		mov	r6, r0
+ 2269 009e 6868     		ldr	r0, [r5, #4]	@ float
+ 2270 00a0 0F46     		mov	r7, r1
+ 2271 00a2 FFF7FEFF 		bl	__aeabi_f2d
+ 2272 00a6 0246     		mov	r2, r0
+ 2273 00a8 0B46     		mov	r3, r1
+ 2274 00aa 4046     		mov	r0, r8
+ 2275 00ac 4946     		mov	r1, r9
+ 2276 00ae FFF7FEFF 		bl	__aeabi_dmul
+ 2277 00b2 0246     		mov	r2, r0
+ 2278 00b4 0B46     		mov	r3, r1
+ 2279 00b6 3046     		mov	r0, r6
+ 2280 00b8 3946     		mov	r1, r7
+ 2281 00ba FFF7FEFF 		bl	__aeabi_dsub
+ 2282 00be FFF7FEFF 		bl	__aeabi_d2f
+ 2283 00c2 A060     		str	r0, [r4, #8]	@ float
+ 2284              	.L85:
+ 235:subsystems/ahrs/ahrs_float_dcm.c **** }
+ 2285              		.loc 2 235 0
+ 2286 00c4 BDE8F84F 		pop	{r3, r4, r5, r6, r7, r8, r9, sl, fp, lr}
+ 234:subsystems/ahrs/ahrs_float_dcm.c ****   Drift_correction();
+ 2287              		.loc 2 234 0
+ 2288 00c8 FFF7FEBF 		b	Drift_correction
+ 2289              	.L87:
+ 2290              		.align	2
+ 2291              	.L86:
+ 2292 00cc 00000000 		.word	imu
+ 2293 00d0 00000000 		.word	.LANCHOR4
+ 2294 00d4 00000000 		.word	gps
+ 2295 00d8 00005940 		.word	1079574528
+ 2296 00dc 00000000 		.word	.LANCHOR10
+ 2297              		.cfi_endproc
+ 2298              	.LFE45:
+ 2300              		.section	.text.Matrix_update,"ax",%progbits
+ 2301              		.align	1
+ 2302              		.global	Matrix_update
+ 2303              		.thumb
+ 2304              		.thumb_func
+ 2306              	Matrix_update:
+ 2307              	.LFB50:
+ 478:subsystems/ahrs/ahrs_float_dcm.c **** {
+ 2308              		.loc 2 478 0
+ 2309              		.cfi_startproc
+ 2310              		@ args = 0, pretend = 0, frame = 16
+ 2311              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2312 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, sl, fp, lr}
+ 2313              	.LCFI13:
+ 2314              		.cfi_def_cfa_offset 36
+ 2315              		.cfi_offset 14, -4
+ 2316              		.cfi_offset 11, -8
+ 2317              		.cfi_offset 10, -12
+ 2318              		.cfi_offset 9, -16
+ 2319              		.cfi_offset 8, -20
+ 2320              		.cfi_offset 7, -24
+ 2321              		.cfi_offset 6, -28
+ 2322              		.cfi_offset 5, -32
+ 2323              		.cfi_offset 4, -36
+ 480:subsystems/ahrs/ahrs_float_dcm.c ****   Vector_Add(&Omega_Vector[0], &Omega[0], &Omega_P[0]); //adding Integrator term
+ 2324              		.loc 2 480 0
+ 2325 0004 3E4C     		ldr	r4, .L95
+ 478:subsystems/ahrs/ahrs_float_dcm.c **** {
+ 2326              		.loc 2 478 0
+ 2327 0006 85B0     		sub	sp, sp, #20
+ 2328              	.LCFI14:
+ 2329              		.cfi_def_cfa_offset 56
+ 479:subsystems/ahrs/ahrs_float_dcm.c ****   Vector_Add(&Omega[0], &ahrs_float.imu_rate.p, &Omega_I[0]);  //adding proportional term
+ 2330              		.loc 2 479 0
+ 2331 0008 3E48     		ldr	r0, .L95+4
+ 2332 000a 3F49     		ldr	r1, .L95+8
+ 2333 000c 3F4A     		ldr	r2, .L95+12
+ 2334 000e FFF7FEFF 		bl	Vector_Add
+ 480:subsystems/ahrs/ahrs_float_dcm.c ****   Vector_Add(&Omega_Vector[0], &Omega[0], &Omega_P[0]); //adding Integrator term
+ 2335              		.loc 2 480 0
+ 2336 0012 3F4A     		ldr	r2, .L95+16
+ 2337 0014 2046     		mov	r0, r4
+ 2338 0016 3B49     		ldr	r1, .L95+4
+ 2339 0018 FFF7FEFF 		bl	Vector_Add
+ 483:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[0][0]=0;
+ 2340              		.loc 2 483 0
+ 2341 001c 3D4D     		ldr	r5, .L95+20
+ 484:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[0][1]=-G_Dt*Omega_Vector[2];//-z
+ 2342              		.loc 2 484 0
+ 2343 001e D4F80880 		ldr	r8, [r4, #8]	@ float
+ 483:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[0][0]=0;
+ 2344              		.loc 2 483 0
+ 2345 0022 0026     		movs	r6, #0
+ 484:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[0][1]=-G_Dt*Omega_Vector[2];//-z
+ 2346              		.loc 2 484 0
+ 2347 0024 3C49     		ldr	r1, .L95+24
+ 483:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[0][0]=0;
+ 2348              		.loc 2 483 0
+ 2349 0026 2E60     		str	r6, [r5, #0]	@ float
+ 484:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[0][1]=-G_Dt*Omega_Vector[2];//-z
+ 2350              		.loc 2 484 0
+ 2351 0028 4046     		mov	r0, r8
+ 2352 002a FFF7FEFF 		bl	__aeabi_fmul
+ 485:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[0][2]=G_Dt*Omega_Vector[1];//y
+ 2353              		.loc 2 485 0
+ 2354 002e 6768     		ldr	r7, [r4, #4]	@ float
+ 484:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[0][1]=-G_Dt*Omega_Vector[2];//-z
+ 2355              		.loc 2 484 0
+ 2356 0030 6860     		str	r0, [r5, #4]	@ float
+ 485:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[0][2]=G_Dt*Omega_Vector[1];//y
+ 2357              		.loc 2 485 0
+ 2358 0032 3A49     		ldr	r1, .L95+28
+ 2359 0034 3846     		mov	r0, r7
+ 2360 0036 FFF7FEFF 		bl	__aeabi_fmul
+ 486:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[1][0]=G_Dt*Omega_Vector[2];//z
+ 2361              		.loc 2 486 0
+ 2362 003a 3849     		ldr	r1, .L95+28
+ 485:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[0][2]=G_Dt*Omega_Vector[1];//y
+ 2363              		.loc 2 485 0
+ 2364 003c A860     		str	r0, [r5, #8]	@ float
+ 486:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[1][0]=G_Dt*Omega_Vector[2];//z
+ 2365              		.loc 2 486 0
+ 2366 003e 4046     		mov	r0, r8
+ 2367 0040 FFF7FEFF 		bl	__aeabi_fmul
+ 488:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[1][2]=-G_Dt*Omega_Vector[0];//-x
+ 2368              		.loc 2 488 0
+ 2369 0044 2468     		ldr	r4, [r4, #0]	@ float
+ 486:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[1][0]=G_Dt*Omega_Vector[2];//z
+ 2370              		.loc 2 486 0
+ 2371 0046 E860     		str	r0, [r5, #12]	@ float
+ 488:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[1][2]=-G_Dt*Omega_Vector[0];//-x
+ 2372              		.loc 2 488 0
+ 2373 0048 3349     		ldr	r1, .L95+24
+ 2374 004a 2046     		mov	r0, r4
+ 487:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[1][1]=0;
+ 2375              		.loc 2 487 0
+ 2376 004c 2E61     		str	r6, [r5, #16]	@ float
+ 488:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[1][2]=-G_Dt*Omega_Vector[0];//-x
+ 2377              		.loc 2 488 0
+ 2378 004e FFF7FEFF 		bl	__aeabi_fmul
+ 489:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[2][0]=-G_Dt*Omega_Vector[1];//-y
+ 2379              		.loc 2 489 0
+ 2380 0052 3149     		ldr	r1, .L95+24
+ 488:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[1][2]=-G_Dt*Omega_Vector[0];//-x
+ 2381              		.loc 2 488 0
+ 2382 0054 6861     		str	r0, [r5, #20]	@ float
+ 489:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[2][0]=-G_Dt*Omega_Vector[1];//-y
+ 2383              		.loc 2 489 0
+ 2384 0056 3846     		mov	r0, r7
+ 2385 0058 FFF7FEFF 		bl	__aeabi_fmul
+ 490:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[2][1]=G_Dt*Omega_Vector[0];//x
+ 2386              		.loc 2 490 0
+ 2387 005c 2F49     		ldr	r1, .L95+28
+ 489:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[2][0]=-G_Dt*Omega_Vector[1];//-y
+ 2388              		.loc 2 489 0
+ 2389 005e A861     		str	r0, [r5, #24]	@ float
+ 490:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[2][1]=G_Dt*Omega_Vector[0];//x
+ 2390              		.loc 2 490 0
+ 2391 0060 2046     		mov	r0, r4
+ 2392 0062 FFF7FEFF 		bl	__aeabi_fmul
+ 504:subsystems/ahrs/ahrs_float_dcm.c ****   Matrix_Multiply(DCM_Matrix,Update_Matrix,Temporary_Matrix); //a*b=c
+ 2393              		.loc 2 504 0
+ 2394 0066 2E4C     		ldr	r4, .L95+32
+ 2395              	.LBB52:
+ 2396              	.LBB53:
+ 2397              	.LBB54:
+ 477:subsystems/ahrs/ahrs_float_dcm.c **** void Matrix_update(void)
+ 2398              		.loc 2 477 0
+ 2399 0068 2E4B     		ldr	r3, .L95+36
+ 2400              	.LBE54:
+ 2401              	.LBE53:
+ 2402              	.LBE52:
+ 490:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[2][1]=G_Dt*Omega_Vector[0];//x
+ 2403              		.loc 2 490 0
+ 2404 006a E861     		str	r0, [r5, #28]	@ float
+ 491:subsystems/ahrs/ahrs_float_dcm.c ****   Update_Matrix[2][2]=0;
+ 2405              		.loc 2 491 0
+ 2406 006c 2E62     		str	r6, [r5, #32]	@ float
+ 2407              	.LVL158:
+ 477:subsystems/ahrs/ahrs_float_dcm.c **** void Matrix_update(void)
+ 2408              		.loc 2 477 0
+ 2409 006e 04F1240A 		add	sl, r4, #36
+ 2410              	.LBB63:
+ 2411              	.LBB61:
+ 2412              	.LBB59:
+ 2413 0072 C4EB0309 		rsb	r9, r4, r3
+ 2414 0076 26E0     		b	.L89
+ 2415              	.LVL159:
+ 2416              	.L90:
+ 2417              	.LBB55:
+ 2418              	.LBB56:
+  28:./subsystems/ahrs/ahrs_float_dcm_algebra.h **** 
+  29:./subsystems/ahrs/ahrs_float_dcm_algebra.h **** /*
+  30:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   #define Matrix_Multiply( _m_a2b, _m_b2c, _m_a2c) {			\
+  31:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   _m_a2c[0] = (_m_b2c[0]*_m_a2b[0] + _m_b2c[1]*_m_a2b[3] + _m_b2c[2]*_m_a2b[6]); \
+  32:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   _m_a2c[1] = (_m_b2c[0]*_m_a2b[1] + _m_b2c[1]*_m_a2b[4] + _m_b2c[2]*_m_a2b[7]); \
+  33:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   _m_a2c[2] = (_m_b2c[0]*_m_a2b[2] + _m_b2c[1]*_m_a2b[5] + _m_b2c[2]*_m_a2b[8]); \
+  34:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   _m_a2c[3] = (_m_b2c[3]*_m_a2b[0] + _m_b2c[4]*_m_a2b[3] + _m_b2c[5]*_m_a2b[6]); \
+  35:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   _m_a2c[4] = (_m_b2c[3]*_m_a2b[1] + _m_b2c[4]*_m_a2b[4] + _m_b2c[5]*_m_a2b[7]); \
+  36:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   _m_a2c[5] = (_m_b2c[3]*_m_a2b[2] + _m_b2c[4]*_m_a2b[5] + _m_b2c[5]*_m_a2b[8]); \
+  37:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   _m_a2c[6] = (_m_b2c[6]*_m_a2b[0] + _m_b2c[7]*_m_a2b[3] + _m_b2c[8]*_m_a2b[6]); \
+  38:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   _m_a2c[7] = (_m_b2c[6]*_m_a2b[1] + _m_b2c[7]*_m_a2b[4] + _m_b2c[8]*_m_a2b[7]); \
+  39:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   _m_a2c[8] = (_m_b2c[6]*_m_a2b[2] + _m_b2c[7]*_m_a2b[5] + _m_b2c[8]*_m_a2b[8]); \
+  40:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   }
+  41:./subsystems/ahrs/ahrs_float_dcm_algebra.h **** */
+  42:./subsystems/ahrs/ahrs_float_dcm_algebra.h **** 
+  43:./subsystems/ahrs/ahrs_float_dcm_algebra.h **** static inline void Matrix_Multiply(float a[3][3], float b[3][3],float mat[3][3])
+  44:./subsystems/ahrs/ahrs_float_dcm_algebra.h **** {
+  45:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   float op[3];
+  46:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   for(int x=0; x<3; x++)
+  47:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****     {
+  48:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****       for(int y=0; y<3; y++)
+  49:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****         {
+  50:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****           for(int w=0; w<3; w++)
+  51:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****             {
+  52:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****               op[w]=a[x][w]*b[w][y];
+ 2419              		.loc 1 52 0
+ 2420 0078 7159     		ldr	r1, [r6, r5]	@ float
+ 2421 007a 2068     		ldr	r0, [r4, #0]	@ float
+ 2422 007c FFF7FEFF 		bl	__aeabi_fmul
+ 2423 0080 F968     		ldr	r1, [r7, #12]	@ float
+ 2424 0082 8046     		mov	r8, r0
+ 2425 0084 0190     		str	r0, [sp, #4]	@ float
+ 2426              	.LVL160:
+ 2427 0086 6068     		ldr	r0, [r4, #4]	@ float
+ 2428 0088 FFF7FEFF 		bl	__aeabi_fmul
+ 2429 008c 0146     		mov	r1, r0
+ 2430 008e 0290     		str	r0, [sp, #8]	@ float
+ 2431              	.LVL161:
+ 2432              	.LBE56:
+  53:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****             }
+  54:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****           mat[x][y]=op[0]+op[1]+op[2];
+ 2433              		.loc 1 54 0
+ 2434 0090 4046     		mov	r0, r8
+ 2435 0092 FFF7FEFF 		bl	__aeabi_fadd
+ 2436              	.LBB57:
+  52:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****               op[w]=a[x][w]*b[w][y];
+ 2437              		.loc 1 52 0
+ 2438 0096 B969     		ldr	r1, [r7, #24]	@ float
+ 2439              	.LBE57:
+ 2440              		.loc 1 54 0
+ 2441 0098 8046     		mov	r8, r0
+ 2442              	.LBB58:
+  52:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****               op[w]=a[x][w]*b[w][y];
+ 2443              		.loc 1 52 0
+ 2444 009a A068     		ldr	r0, [r4, #8]	@ float
+ 2445 009c FFF7FEFF 		bl	__aeabi_fmul
+ 2446 00a0 0146     		mov	r1, r0
+ 2447              	.LBE58:
+ 2448              		.loc 1 54 0
+ 2449 00a2 4046     		mov	r0, r8
+ 2450 00a4 FFF7FEFF 		bl	__aeabi_fadd
+ 2451 00a8 4BF80600 		str	r0, [fp, r6]	@ float
+ 2452 00ac 0436     		adds	r6, r6, #4
+ 2453 00ae 0437     		adds	r7, r7, #4
+  48:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****       for(int y=0; y<3; y++)
+ 2454              		.loc 1 48 0
+ 2455 00b0 0C2E     		cmp	r6, #12
+ 2456 00b2 E1D1     		bne	.L90
+ 2457 00b4 0C34     		adds	r4, r4, #12
+ 2458              	.LBE55:
+  46:./subsystems/ahrs/ahrs_float_dcm_algebra.h ****   for(int x=0; x<3; x++)
+ 2459              		.loc 1 46 0
+ 2460 00b6 5445     		cmp	r4, sl
+ 2461 00b8 05D1     		bne	.L89
+ 2462 00ba 194C     		ldr	r4, .L95+32
+ 2463 00bc 194E     		ldr	r6, .L95+36
+ 2464 00be 0025     		movs	r5, #0
+ 2465              	.LBE59:
+ 2466              	.LBE61:
+ 2467              	.LBE63:
+ 2468              	.LBB64:
+ 2469              	.LBB65:
+ 510:subsystems/ahrs/ahrs_float_dcm.c ****       DCM_Matrix[x][y]+=Temporary_Matrix[x][y];
+ 2470              		.loc 2 510 0
+ 2471 00c0 2746     		mov	r7, r4
+ 2472 00c2 B046     		mov	r8, r6
+ 2473 00c4 04E0     		b	.L91
+ 2474              	.LVL162:
+ 2475              	.L89:
+ 2476              	.LBE65:
+ 2477              	.LBE64:
+ 2478              	.LBB67:
+ 2479              	.LBB62:
+ 2480              	.LBB60:
+ 477:subsystems/ahrs/ahrs_float_dcm.c **** void Matrix_update(void)
+ 2481              		.loc 2 477 0
+ 2482 00c6 09EB040B 		add	fp, r9, r4
+ 504:subsystems/ahrs/ahrs_float_dcm.c ****   Matrix_Multiply(DCM_Matrix,Update_Matrix,Temporary_Matrix); //a*b=c
+ 2483              		.loc 2 504 0
+ 2484 00ca 124F     		ldr	r7, .L95+20
+ 2485              	.LBE60:
+ 2486              	.LBE62:
+ 2487              	.LBE67:
+ 477:subsystems/ahrs/ahrs_float_dcm.c **** void Matrix_update(void)
+ 2488              		.loc 2 477 0
+ 2489 00cc 0026     		movs	r6, #0
+ 2490 00ce D3E7     		b	.L90
+ 2491              	.LVL163:
+ 2492              	.L91:
+ 2493              	.LBB68:
+ 2494              	.LBB66:
+ 510:subsystems/ahrs/ahrs_float_dcm.c ****       DCM_Matrix[x][y]+=Temporary_Matrix[x][y];
+ 2495              		.loc 2 510 0 discriminator 1
+ 2496 00d0 E859     		ldr	r0, [r5, r7]	@ float
+ 2497 00d2 55F80810 		ldr	r1, [r5, r8]	@ float
+ 2498 00d6 FFF7FEFF 		bl	__aeabi_fadd
+ 2499 00da 7851     		str	r0, [r7, r5]	@ float
+ 2500              	.LVL164:
+ 2501 00dc 6068     		ldr	r0, [r4, #4]	@ float
+ 2502 00de 7168     		ldr	r1, [r6, #4]	@ float
+ 2503 00e0 FFF7FEFF 		bl	__aeabi_fadd
+ 2504 00e4 B168     		ldr	r1, [r6, #8]	@ float
+ 2505 00e6 6060     		str	r0, [r4, #4]	@ float
+ 2506              	.LVL165:
+ 2507 00e8 A068     		ldr	r0, [r4, #8]	@ float
+ 2508 00ea FFF7FEFF 		bl	__aeabi_fadd
+ 2509 00ee 0C35     		adds	r5, r5, #12
+ 2510 00f0 A060     		str	r0, [r4, #8]	@ float
+ 2511              	.LVL166:
+ 2512 00f2 0C36     		adds	r6, r6, #12
+ 2513 00f4 0C34     		adds	r4, r4, #12
+ 2514              	.LBE66:
+ 506:subsystems/ahrs/ahrs_float_dcm.c ****   for(int x=0; x<3; x++) //Matrix Addition (update)
+ 2515              		.loc 2 506 0 discriminator 1
+ 2516 00f6 242D     		cmp	r5, #36
+ 2517 00f8 EAD1     		bne	.L91
+ 2518              	.LBE68:
+ 513:subsystems/ahrs/ahrs_float_dcm.c **** }
+ 2519              		.loc 2 513 0
+ 2520 00fa 05B0     		add	sp, sp, #20
+ 2521 00fc BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, sl, fp, pc}
+ 2522              	.L96:
+ 2523              		.align	2
+ 2524              	.L95:
+ 2525 0100 00000000 		.word	.LANCHOR11
+ 2526 0104 00000000 		.word	.LANCHOR10
+ 2527 0108 40000000 		.word	ahrs_float+64
+ 2528 010c 00000000 		.word	.LANCHOR8
+ 2529 0110 00000000 		.word	.LANCHOR6
+ 2530 0114 00000000 		.word	.LANCHOR12
+ 2531 0118 0AD723BC 		.word	-1138501878
+ 2532 011c 0AD7233C 		.word	1008981770
+ 2533 0120 00000000 		.word	.LANCHOR0
+ 2534 0124 00000000 		.word	.LANCHOR13
+ 2535              		.cfi_endproc
+ 2536              	.LFE50:
+ 2538              		.section	.text.ahrs_propagate,"ax",%progbits
+ 2539              		.align	1
+ 2540              		.global	ahrs_propagate
+ 2541              		.thumb
+ 2542              		.thumb_func
+ 2544              	ahrs_propagate:
+ 2545              	.LFB44:
+ 185:subsystems/ahrs/ahrs_float_dcm.c **** {
+ 2546              		.loc 2 185 0
+ 2547              		.cfi_startproc
+ 2548              		@ args = 0, pretend = 0, frame = 24
+ 2549              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2550              	.LVL167:
+ 2551 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, sl, fp, lr}
+ 2552              	.LCFI15:
+ 2553              		.cfi_def_cfa_offset 36
+ 2554              		.cfi_offset 14, -4
+ 2555              		.cfi_offset 11, -8
+ 2556              		.cfi_offset 10, -12
+ 2557              		.cfi_offset 9, -16
+ 2558              		.cfi_offset 8, -20
+ 2559              		.cfi_offset 7, -24
+ 2560              		.cfi_offset 6, -28
+ 2561              		.cfi_offset 5, -32
+ 2562              		.cfi_offset 4, -36
+ 188:subsystems/ahrs/ahrs_float_dcm.c ****   RATES_FLOAT_OF_BFP(gyro_float, imu.gyro);
+ 2563              		.loc 2 188 0
+ 2564 0004 AA4D     		ldr	r5, .L98+8
+ 185:subsystems/ahrs/ahrs_float_dcm.c **** {
+ 2565              		.loc 2 185 0
+ 2566 0006 87B0     		sub	sp, sp, #28
+ 2567              	.LCFI16:
+ 2568              		.cfi_def_cfa_offset 64
+ 188:subsystems/ahrs/ahrs_float_dcm.c ****   RATES_FLOAT_OF_BFP(gyro_float, imu.gyro);
+ 2569              		.loc 2 188 0
+ 2570 0008 6868     		ldr	r0, [r5, #4]
+ 2571 000a FFF7FEFF 		bl	__aeabi_i2f
+ 2572              	.LVL168:
+ 2573 000e 4FF06651 		mov	r1, #964689920
+ 2574 0012 FFF7FEFF 		bl	__aeabi_fmul
+ 2575 0016 0746     		mov	r7, r0
+ 2576              	.LVL169:
+ 2577 0018 A868     		ldr	r0, [r5, #8]
+ 2578              	.LVL170:
+ 2579 001a FFF7FEFF 		bl	__aeabi_i2f
+ 2580 001e 4FF06651 		mov	r1, #964689920
+ 2581 0022 FFF7FEFF 		bl	__aeabi_fmul
+ 2582 0026 0646     		mov	r6, r0
+ 2583              	.LVL171:
+ 2584 0028 2868     		ldr	r0, [r5, #0]
+ 2585              	.LVL172:
+ 191:subsystems/ahrs/ahrs_float_dcm.c ****   RATES_DIFF(ahrs_float.imu_rate, gyro_float, ahrs_impl.gyro_bias);
+ 2586              		.loc 2 191 0
+ 2587 002a A24D     		ldr	r5, .L98+12
+ 188:subsystems/ahrs/ahrs_float_dcm.c ****   RATES_FLOAT_OF_BFP(gyro_float, imu.gyro);
+ 2588              		.loc 2 188 0
+ 2589 002c FFF7FEFF 		bl	__aeabi_i2f
+ 2590              	.LVL173:
+ 2591 0030 4FF06651 		mov	r1, #964689920
+ 2592 0034 FFF7FEFF 		bl	__aeabi_fmul
+ 191:subsystems/ahrs/ahrs_float_dcm.c ****   RATES_DIFF(ahrs_float.imu_rate, gyro_float, ahrs_impl.gyro_bias);
+ 2593              		.loc 2 191 0
+ 2594 0038 2968     		ldr	r1, [r5, #0]	@ float
+ 2595 003a FFF7FEFF 		bl	__aeabi_fsub
+ 2596 003e 9E4C     		ldr	r4, .L98+16
+ 2597 0040 6968     		ldr	r1, [r5, #4]	@ float
+ 2598 0042 2064     		str	r0, [r4, #64]	@ float
+ 2599 0044 3846     		mov	r0, r7
+ 2600 0046 FFF7FEFF 		bl	__aeabi_fsub
+ 2601 004a A968     		ldr	r1, [r5, #8]	@ float
+ 2602 004c 6064     		str	r0, [r4, #68]	@ float
+ 2603 004e 3046     		mov	r0, r6
+ 2604 0050 FFF7FEFF 		bl	__aeabi_fsub
+ 2605              	.LBB69:
+ 2606              	.LBB70:
+ 528:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 529:subsystems/ahrs/ahrs_float_dcm.c **** static inline void compute_ahrs_representations(void) {
+ 530:subsystems/ahrs/ahrs_float_dcm.c **** #if (OUTPUTMODE==2)         // Only accelerometer info (debugging purposes)
+ 531:subsystems/ahrs/ahrs_float_dcm.c ****   ahrs_float.ltp_to_imu_euler.phi = atan2(accel_float.y,accel_float.z);    // atan2(acc_y,acc_z)
+ 532:subsystems/ahrs/ahrs_float_dcm.c ****   ahrs_float.ltp_to_imu_euler.theta = -asin((accel_float.x)/GRAVITY); // asin(acc_x)
+ 533:subsystems/ahrs/ahrs_float_dcm.c ****   ahrs_float.ltp_to_imu_euler.psi = 0;
+ 534:subsystems/ahrs/ahrs_float_dcm.c **** #else
+ 535:subsystems/ahrs/ahrs_float_dcm.c ****   ahrs_float.ltp_to_imu_euler.phi = atan2(DCM_Matrix[2][1],DCM_Matrix[2][2]);
+ 2607              		.loc 2 535 0
+ 2608 0054 994D     		ldr	r5, .L98+20
+ 2609              	.LBE70:
+ 2610              	.LBE69:
+ 191:subsystems/ahrs/ahrs_float_dcm.c ****   RATES_DIFF(ahrs_float.imu_rate, gyro_float, ahrs_impl.gyro_bias);
+ 2611              		.loc 2 191 0
+ 2612 0056 A064     		str	r0, [r4, #72]	@ float
+ 208:subsystems/ahrs/ahrs_float_dcm.c ****   Matrix_update();
+ 2613              		.loc 2 208 0
+ 2614 0058 FFF7FEFF 		bl	Matrix_update
+ 210:subsystems/ahrs/ahrs_float_dcm.c ****   Normalize();
+ 2615              		.loc 2 210 0
+ 2616 005c FFF7FEFF 		bl	Normalize
+ 2617              	.LBB76:
+ 2618              	.LBB74:
+ 2619              		.loc 2 535 0
+ 2620 0060 E869     		ldr	r0, [r5, #28]	@ float
+ 2621 0062 FFF7FEFF 		bl	__aeabi_f2d
+ 2622 0066 0646     		mov	r6, r0
+ 2623              	.LVL174:
+ 2624 0068 286A     		ldr	r0, [r5, #32]	@ float
+ 2625 006a 0F46     		mov	r7, r1
+ 2626              	.LVL175:
+ 2627 006c FFF7FEFF 		bl	__aeabi_f2d
+ 2628 0070 0246     		mov	r2, r0
+ 2629 0072 0B46     		mov	r3, r1
+ 2630 0074 3046     		mov	r0, r6
+ 2631 0076 3946     		mov	r1, r7
+ 2632 0078 FFF7FEFF 		bl	atan2
+ 2633 007c FFF7FEFF 		bl	__aeabi_d2f
+ 2634 0080 2061     		str	r0, [r4, #16]	@ float
+ 536:subsystems/ahrs/ahrs_float_dcm.c ****   ahrs_float.ltp_to_imu_euler.theta = -asin(DCM_Matrix[2][0]);
+ 2635              		.loc 2 536 0
+ 2636 0082 A869     		ldr	r0, [r5, #24]	@ float
+ 2637 0084 FFF7FEFF 		bl	__aeabi_f2d
+ 2638 0088 FFF7FEFF 		bl	asin
+ 2639 008c FFF7FEFF 		bl	__aeabi_d2f
+ 2640 0090 00F10040 		add	r0, r0, #-2147483648
+ 2641 0094 6061     		str	r0, [r4, #20]	@ float
+ 537:subsystems/ahrs/ahrs_float_dcm.c ****   ahrs_float.ltp_to_imu_euler.psi = atan2(DCM_Matrix[1][0],DCM_Matrix[0][0]);
+ 2642              		.loc 2 537 0
+ 2643 0096 E868     		ldr	r0, [r5, #12]	@ float
+ 2644 0098 FFF7FEFF 		bl	__aeabi_f2d
+ 2645 009c 0646     		mov	r6, r0
+ 2646 009e 2868     		ldr	r0, [r5, #0]	@ float
+ 2647 00a0 0F46     		mov	r7, r1
+ 2648 00a2 FFF7FEFF 		bl	__aeabi_f2d
+ 2649 00a6 0246     		mov	r2, r0
+ 2650 00a8 0B46     		mov	r3, r1
+ 2651 00aa 3046     		mov	r0, r6
+ 2652 00ac 3946     		mov	r1, r7
+ 2653 00ae FFF7FEFF 		bl	atan2
+ 2654 00b2 FFF7FEFF 		bl	__aeabi_d2f
+ 538:subsystems/ahrs/ahrs_float_dcm.c ****   ahrs_float.ltp_to_imu_euler.psi += M_PI; // Rotating the angle 180deg to fit for PPRZ
+ 2655              		.loc 2 538 0
+ 2656 00b6 FFF7FEFF 		bl	__aeabi_f2d
+ 2657 00ba 7BA3     		adr	r3, .L98
+ 2658 00bc D3E90023 		ldrd	r2, [r3]
+ 2659 00c0 FFF7FEFF 		bl	__aeabi_dadd
+ 2660 00c4 FFF7FEFF 		bl	__aeabi_d2f
+ 2661              	.LBB71:
+ 539:subsystems/ahrs/ahrs_float_dcm.c **** #endif
+ 540:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 541:subsystems/ahrs/ahrs_float_dcm.c ****   /* set quaternion and rotation matrix representations as well */
+ 542:subsystems/ahrs/ahrs_float_dcm.c ****   FLOAT_QUAT_OF_EULERS(ahrs_float.ltp_to_imu_quat, ahrs_float.ltp_to_imu_euler);
+ 2662              		.loc 2 542 0
+ 2663 00c8 D4F81090 		ldr	r9, [r4, #16]	@ float
+ 2664              	.LBE71:
+ 538:subsystems/ahrs/ahrs_float_dcm.c ****   ahrs_float.ltp_to_imu_euler.psi += M_PI; // Rotating the angle 180deg to fit for PPRZ
+ 2665              		.loc 2 538 0
+ 2666 00cc 0546     		mov	r5, r0
+ 2667 00ce A061     		str	r0, [r4, #24]	@ float
+ 2668              	.LBB72:
+ 2669              		.loc 2 542 0
+ 2670 00d0 4FF07C51 		mov	r1, #1056964608
+ 2671 00d4 4846     		mov	r0, r9
+ 2672 00d6 FFF7FEFF 		bl	__aeabi_fmul
+ 2673 00da D4F81480 		ldr	r8, [r4, #20]	@ float
+ 2674 00de 0746     		mov	r7, r0
+ 2675              	.LVL176:
+ 2676 00e0 4FF07C51 		mov	r1, #1056964608
+ 2677 00e4 4046     		mov	r0, r8
+ 2678              	.LVL177:
+ 2679 00e6 FFF7FEFF 		bl	__aeabi_fmul
+ 2680 00ea 4FF07C51 		mov	r1, #1056964608
+ 2681 00ee 0646     		mov	r6, r0
+ 2682              	.LVL178:
+ 2683 00f0 2846     		mov	r0, r5
+ 2684              	.LVL179:
+ 2685 00f2 FFF7FEFF 		bl	__aeabi_fmul
+ 2686 00f6 0390     		str	r0, [sp, #12]	@ float
+ 2687              	.LVL180:
+ 2688 00f8 3846     		mov	r0, r7
+ 2689              	.LVL181:
+ 2690 00fa FFF7FEFF 		bl	sinf
+ 2691 00fe 0290     		str	r0, [sp, #8]	@ float
+ 2692              	.LVL182:
+ 2693 0100 3846     		mov	r0, r7
+ 2694              	.LVL183:
+ 2695 0102 FFF7FEFF 		bl	cosf
+ 2696 0106 8346     		mov	fp, r0
+ 2697              	.LVL184:
+ 2698 0108 3046     		mov	r0, r6
+ 2699              	.LVL185:
+ 2700 010a FFF7FEFF 		bl	sinf
+ 2701 010e 8246     		mov	sl, r0
+ 2702              	.LVL186:
+ 2703 0110 3046     		mov	r0, r6
+ 2704              	.LVL187:
+ 2705 0112 FFF7FEFF 		bl	cosf
+ 2706 0116 0490     		str	r0, [sp, #16]	@ float
+ 2707              	.LVL188:
+ 2708 0118 0398     		ldr	r0, [sp, #12]	@ float
+ 2709              	.LVL189:
+ 2710 011a FFF7FEFF 		bl	sinf
+ 2711 011e 0746     		mov	r7, r0
+ 2712              	.LVL190:
+ 2713 0120 0398     		ldr	r0, [sp, #12]	@ float
+ 2714              	.LVL191:
+ 2715 0122 FFF7FEFF 		bl	cosf
+ 2716 0126 0499     		ldr	r1, [sp, #16]	@ float
+ 2717 0128 0646     		mov	r6, r0
+ 2718              	.LVL192:
+ 2719 012a 5846     		mov	r0, fp
+ 2720              	.LVL193:
+ 2721 012c FFF7FEFF 		bl	__aeabi_fmul
+ 2722 0130 5146     		mov	r1, sl
+ 2723 0132 0390     		str	r0, [sp, #12]	@ float
+ 2724 0134 0298     		ldr	r0, [sp, #8]	@ float
+ 2725 0136 FFF7FEFF 		bl	__aeabi_fmul
+ 2726 013a 3146     		mov	r1, r6
+ 2727 013c 0590     		str	r0, [sp, #20]	@ float
+ 2728 013e 0398     		ldr	r0, [sp, #12]	@ float
+ 2729 0140 FFF7FEFF 		bl	__aeabi_fmul
+ 2730 0144 3946     		mov	r1, r7
+ 2731 0146 0346     		mov	r3, r0
+ 2732 0148 0598     		ldr	r0, [sp, #20]	@ float
+ 2733 014a 0193     		str	r3, [sp, #4]
+ 2734 014c FFF7FEFF 		bl	__aeabi_fmul
+ 2735 0150 019B     		ldr	r3, [sp, #4]
+ 2736 0152 0146     		mov	r1, r0
+ 2737 0154 1846     		mov	r0, r3
+ 2738 0156 FFF7FEFF 		bl	__aeabi_fadd
+ 2739 015a 0499     		ldr	r1, [sp, #16]	@ float
+ 2740 015c 2060     		str	r0, [r4, #0]	@ float
+ 2741 015e 0298     		ldr	r0, [sp, #8]	@ float
+ 2742 0160 FFF7FEFF 		bl	__aeabi_fmul
+ 2743 0164 5146     		mov	r1, sl
+ 2744 0166 0290     		str	r0, [sp, #8]	@ float
+ 2745 0168 0BF10040 		add	r0, fp, #-2147483648
+ 2746 016c FFF7FEFF 		bl	__aeabi_fmul
+ 2747 0170 3946     		mov	r1, r7
+ 2748 0172 FFF7FEFF 		bl	__aeabi_fmul
+ 2749 0176 3146     		mov	r1, r6
+ 2750 0178 0346     		mov	r3, r0
+ 2751 017a 0298     		ldr	r0, [sp, #8]	@ float
+ 2752 017c 0193     		str	r3, [sp, #4]
+ 2753 017e FFF7FEFF 		bl	__aeabi_fmul
+ 2754 0182 019B     		ldr	r3, [sp, #4]
+ 2755 0184 0146     		mov	r1, r0
+ 2756 0186 1846     		mov	r0, r3
+ 2757 0188 FFF7FEFF 		bl	__aeabi_fadd
+ 2758 018c 5146     		mov	r1, sl
+ 2759 018e 6060     		str	r0, [r4, #4]	@ float
+ 2760 0190 5846     		mov	r0, fp
+ 2761 0192 FFF7FEFF 		bl	__aeabi_fmul
+ 2762 0196 3146     		mov	r1, r6
+ 2763 0198 FFF7FEFF 		bl	__aeabi_fmul
+ 2764 019c 3946     		mov	r1, r7
+ 2765 019e 8246     		mov	sl, r0
+ 2766              	.LVL194:
+ 2767 01a0 0298     		ldr	r0, [sp, #8]	@ float
+ 2768 01a2 FFF7FEFF 		bl	__aeabi_fmul
+ 2769 01a6 0146     		mov	r1, r0
+ 2770 01a8 5046     		mov	r0, sl
+ 2771 01aa FFF7FEFF 		bl	__aeabi_fadd
+ 2772 01ae 3946     		mov	r1, r7
+ 2773 01b0 A060     		str	r0, [r4, #8]	@ float
+ 2774 01b2 0398     		ldr	r0, [sp, #12]	@ float
+ 2775 01b4 FFF7FEFF 		bl	__aeabi_fmul
+ 2776 01b8 3146     		mov	r1, r6
+ 2777 01ba 0746     		mov	r7, r0
+ 2778              	.LVL195:
+ 2779 01bc 0598     		ldr	r0, [sp, #20]	@ float
+ 2780 01be FFF7FEFF 		bl	__aeabi_fmul
+ 2781 01c2 0146     		mov	r1, r0
+ 2782 01c4 3846     		mov	r0, r7
+ 2783 01c6 FFF7FEFF 		bl	__aeabi_fsub
+ 2784 01ca E060     		str	r0, [r4, #12]	@ float
+ 2785              	.LBE72:
+ 2786              	.LBB73:
+ 543:subsystems/ahrs/ahrs_float_dcm.c ****   FLOAT_RMAT_OF_EULERS(ahrs_float.ltp_to_imu_rmat, ahrs_float.ltp_to_imu_euler);
+ 2787              		.loc 2 543 0
+ 2788 01cc 4846     		mov	r0, r9
+ 2789 01ce FFF7FEFF 		bl	sinf
+ 2790 01d2 8246     		mov	sl, r0
+ 2791              	.LVL196:
+ 2792 01d4 4846     		mov	r0, r9
+ 2793              	.LVL197:
+ 2794 01d6 FFF7FEFF 		bl	cosf
+ 2795 01da 0746     		mov	r7, r0
+ 2796              	.LVL198:
+ 2797 01dc 4046     		mov	r0, r8
+ 2798              	.LVL199:
+ 2799 01de FFF7FEFF 		bl	sinf
+ 2800 01e2 8146     		mov	r9, r0
+ 2801              	.LVL200:
+ 2802 01e4 4046     		mov	r0, r8
+ 2803              	.LVL201:
+ 2804 01e6 FFF7FEFF 		bl	cosf
+ 2805 01ea 8046     		mov	r8, r0
+ 2806              	.LVL202:
+ 2807 01ec 2846     		mov	r0, r5
+ 2808              	.LVL203:
+ 2809 01ee FFF7FEFF 		bl	sinf
+ 2810 01f2 0646     		mov	r6, r0
+ 2811              	.LVL204:
+ 2812 01f4 2846     		mov	r0, r5
+ 2813              	.LVL205:
+ 2814 01f6 FFF7FEFF 		bl	cosf
+ 2815 01fa 0546     		mov	r5, r0
+ 2816              	.LVL206:
+ 2817 01fc 2946     		mov	r1, r5
+ 2818 01fe 4046     		mov	r0, r8
+ 2819              	.LVL207:
+ 2820 0200 FFF7FEFF 		bl	__aeabi_fmul
+ 2821              	.LVL208:
+ 2822 0204 3146     		mov	r1, r6
+ 2823 0206 E061     		str	r0, [r4, #28]	@ float
+ 2824 0208 4046     		mov	r0, r8
+ 2825 020a FFF7FEFF 		bl	__aeabi_fmul
+ 2826 020e 09F10043 		add	r3, r9, #-2147483648
+ 2827 0212 2062     		str	r0, [r4, #32]	@ float
+ 2828 0214 4946     		mov	r1, r9
+ 2829 0216 5046     		mov	r0, sl
+ 2830 0218 6362     		str	r3, [r4, #36]	@ float
+ 2831 021a FFF7FEFF 		bl	__aeabi_fmul
+ 2832 021e 2946     		mov	r1, r5
+ 2833 0220 0190     		str	r0, [sp, #4]
+ 2834 0222 FFF7FEFF 		bl	__aeabi_fmul
+ 2835 0226 3146     		mov	r1, r6
+ 2836 0228 8346     		mov	fp, r0
+ 2837              	.LVL209:
+ 2838 022a 3846     		mov	r0, r7
+ 2839 022c FFF7FEFF 		bl	__aeabi_fmul
+ 2840 0230 0146     		mov	r1, r0
+ 2841 0232 5846     		mov	r0, fp
+ 2842 0234 FFF7FEFF 		bl	__aeabi_fsub
+ 2843 0238 019B     		ldr	r3, [sp, #4]
+ 2844 023a A062     		str	r0, [r4, #40]	@ float
+ 2845 023c 3146     		mov	r1, r6
+ 2846 023e 1846     		mov	r0, r3
+ 2847 0240 FFF7FEFF 		bl	__aeabi_fmul
+ 2848 0244 2946     		mov	r1, r5
+ 2849 0246 8346     		mov	fp, r0
+ 2850 0248 3846     		mov	r0, r7
+ 2851 024a FFF7FEFF 		bl	__aeabi_fmul
+ 2852 024e 0146     		mov	r1, r0
+ 2853 0250 5846     		mov	r0, fp
+ 2854 0252 FFF7FEFF 		bl	__aeabi_fadd
+ 2855 0256 4146     		mov	r1, r8
+ 2856 0258 E062     		str	r0, [r4, #44]	@ float
+ 2857 025a 5046     		mov	r0, sl
+ 2858 025c FFF7FEFF 		bl	__aeabi_fmul
+ 2859 0260 4946     		mov	r1, r9
+ 2860 0262 2063     		str	r0, [r4, #48]	@ float
+ 2861 0264 3846     		mov	r0, r7
+ 2862 0266 FFF7FEFF 		bl	__aeabi_fmul
+ 2863 026a 2946     		mov	r1, r5
+ 2864 026c 8146     		mov	r9, r0
+ 2865              	.LVL210:
+ 2866 026e FFF7FEFF 		bl	__aeabi_fmul
+ 2867 0272 3146     		mov	r1, r6
+ 2868 0274 8346     		mov	fp, r0
+ 2869 0276 5046     		mov	r0, sl
+ 2870 0278 FFF7FEFF 		bl	__aeabi_fmul
+ 2871 027c 0146     		mov	r1, r0
+ 2872 027e 5846     		mov	r0, fp
+ 2873 0280 FFF7FEFF 		bl	__aeabi_fadd
+ 2874 0284 3146     		mov	r1, r6
+ 2875 0286 6063     		str	r0, [r4, #52]	@ float
+ 2876 0288 4846     		mov	r0, r9
+ 2877 028a FFF7FEFF 		bl	__aeabi_fmul
+ 2878 028e 2946     		mov	r1, r5
+ 2879 0290 0646     		mov	r6, r0
+ 2880              	.LVL211:
+ 2881 0292 5046     		mov	r0, sl
+ 2882 0294 FFF7FEFF 		bl	__aeabi_fmul
+ 2883 0298 0146     		mov	r1, r0
+ 2884 029a 3046     		mov	r0, r6
+ 2885 029c FFF7FEFF 		bl	__aeabi_fsub
+ 2886 02a0 4146     		mov	r1, r8
+ 2887 02a2 A063     		str	r0, [r4, #56]	@ float
+ 2888 02a4 3846     		mov	r0, r7
+ 2889 02a6 0BE0     		b	.L99
+ 2890              	.L100:
+ 2891              		.align	3
+ 2892              	.L98:
+ 2893 02a8 182D4454 		.word	1413754136
+ 2894 02ac FB210940 		.word	1074340347
+ 2895 02b0 00000000 		.word	imu
+ 2896 02b4 00000000 		.word	.LANCHOR1
+ 2897 02b8 00000000 		.word	ahrs_float
+ 2898 02bc 00000000 		.word	.LANCHOR0
+ 2899              	.L99:
+ 2900 02c0 FFF7FEFF 		bl	__aeabi_fmul
+ 2901 02c4 E063     		str	r0, [r4, #60]	@ float
+ 2902              	.LBE73:
+ 2903              	.LBE74:
+ 2904              	.LBE76:
+ 213:subsystems/ahrs/ahrs_float_dcm.c **** }
+ 2905              		.loc 2 213 0
+ 2906 02c6 07B0     		add	sp, sp, #28
+ 2907 02c8 BDE8F04F 		pop	{r4, r5, r6, r7, r8, r9, sl, fp, lr}
+ 2908              	.LBB77:
+ 2909              	.LBB75:
+ 544:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 545:subsystems/ahrs/ahrs_float_dcm.c ****   compute_body_orientation_and_rates();
+ 2910              		.loc 2 545 0
+ 2911 02cc FFF7FEBF 		b	compute_body_orientation_and_rates
+ 2912              	.LBE75:
+ 2913              	.LBE77:
+ 2914              		.cfi_endproc
+ 2915              	.LFE44:
+ 2917              		.section	.text.ahrs_update_fw_estimator,"ax",%progbits
+ 2918              		.align	1
+ 2919              		.global	ahrs_update_fw_estimator
+ 2920              		.thumb
+ 2921              		.thumb_func
+ 2923              	ahrs_update_fw_estimator:
+ 2924              	.LFB53:
+ 546:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 547:subsystems/ahrs/ahrs_float_dcm.c ****   /*
+ 548:subsystems/ahrs/ahrs_float_dcm.c ****     RunOnceEvery(6,DOWNLINK_SEND_RMAT_DEBUG(DefaultChannel, DefaultDevice,
+ 549:subsystems/ahrs/ahrs_float_dcm.c ****     &(DCM_Matrix[0][0]),
+ 550:subsystems/ahrs/ahrs_float_dcm.c ****     &(DCM_Matrix[0][1]),
+ 551:subsystems/ahrs/ahrs_float_dcm.c ****     &(DCM_Matrix[0][2]),
+ 552:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 553:subsystems/ahrs/ahrs_float_dcm.c ****     &(DCM_Matrix[1][0]),
+ 554:subsystems/ahrs/ahrs_float_dcm.c ****     &(DCM_Matrix[1][1]),
+ 555:subsystems/ahrs/ahrs_float_dcm.c ****     &(DCM_Matrix[1][2]),
+ 556:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 557:subsystems/ahrs/ahrs_float_dcm.c ****     &(DCM_Matrix[2][0]),
+ 558:subsystems/ahrs/ahrs_float_dcm.c ****     &(DCM_Matrix[2][1]),
+ 559:subsystems/ahrs/ahrs_float_dcm.c ****     &(DCM_Matrix[2][2])
+ 560:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 561:subsystems/ahrs/ahrs_float_dcm.c ****     ));
+ 562:subsystems/ahrs/ahrs_float_dcm.c ****   */
+ 563:subsystems/ahrs/ahrs_float_dcm.c **** }
+ 564:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 565:subsystems/ahrs/ahrs_float_dcm.c **** #ifdef AHRS_UPDATE_FW_ESTIMATOR
+ 566:subsystems/ahrs/ahrs_float_dcm.c **** void ahrs_update_fw_estimator( void ) {
+ 2925              		.loc 2 566 0
+ 2926              		.cfi_startproc
+ 2927              		@ args = 0, pretend = 0, frame = 0
+ 2928              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2929 0000 10B5     		push	{r4, lr}
+ 2930              	.LCFI17:
+ 2931              		.cfi_def_cfa_offset 8
+ 2932              		.cfi_offset 14, -4
+ 2933              		.cfi_offset 4, -8
+ 567:subsystems/ahrs/ahrs_float_dcm.c ****   // export results to estimator
+ 568:subsystems/ahrs/ahrs_float_dcm.c ****   estimator_phi   = ahrs_float.ltp_to_body_euler.phi - ins_roll_neutral;
+ 2934              		.loc 2 568 0
+ 2935 0002 0F4B     		ldr	r3, .L102
+ 2936 0004 0F4C     		ldr	r4, .L102+4
+ 2937 0006 1968     		ldr	r1, [r3, #0]	@ float
+ 2938 0008 606F     		ldr	r0, [r4, #116]	@ float
+ 2939 000a FFF7FEFF 		bl	__aeabi_fsub
+ 2940 000e 0E4B     		ldr	r3, .L102+8
+ 2941 0010 1860     		str	r0, [r3, #0]	@ float
+ 569:subsystems/ahrs/ahrs_float_dcm.c ****   estimator_theta = ahrs_float.ltp_to_body_euler.theta - ins_pitch_neutral;
+ 2942              		.loc 2 569 0
+ 2943 0012 0E4B     		ldr	r3, .L102+12
+ 2944 0014 A06F     		ldr	r0, [r4, #120]	@ float
+ 2945 0016 1968     		ldr	r1, [r3, #0]	@ float
+ 2946 0018 FFF7FEFF 		bl	__aeabi_fsub
+ 2947 001c 0C4B     		ldr	r3, .L102+16
+ 570:subsystems/ahrs/ahrs_float_dcm.c ****   estimator_psi   = ahrs_float.ltp_to_body_euler.psi;
+ 2948              		.loc 2 570 0
+ 2949 001e E26F     		ldr	r2, [r4, #124]	@ float
+ 569:subsystems/ahrs/ahrs_float_dcm.c ****   estimator_theta = ahrs_float.ltp_to_body_euler.theta - ins_pitch_neutral;
+ 2950              		.loc 2 569 0
+ 2951 0020 1860     		str	r0, [r3, #0]	@ float
+ 2952              		.loc 2 570 0
+ 2953 0022 0C4B     		ldr	r3, .L102+20
+ 2954 0024 1A60     		str	r2, [r3, #0]	@ float
+ 571:subsystems/ahrs/ahrs_float_dcm.c **** 
+ 572:subsystems/ahrs/ahrs_float_dcm.c ****   estimator_p = ahrs_float.body_rate.p;
+ 2955              		.loc 2 572 0
+ 2956 0026 D4F8A420 		ldr	r2, [r4, #164]	@ float
+ 2957 002a 0B4B     		ldr	r3, .L102+24
+ 2958 002c 1A60     		str	r2, [r3, #0]	@ float
+ 573:subsystems/ahrs/ahrs_float_dcm.c ****   estimator_q = ahrs_float.body_rate.q;
+ 2959              		.loc 2 573 0
+ 2960 002e D4F8A820 		ldr	r2, [r4, #168]	@ float
+ 2961 0032 0A4B     		ldr	r3, .L102+28
+ 2962 0034 1A60     		str	r2, [r3, #0]	@ float
+ 574:subsystems/ahrs/ahrs_float_dcm.c ****   estimator_r = ahrs_float.body_rate.r;
+ 2963              		.loc 2 574 0
+ 2964 0036 D4F8AC20 		ldr	r2, [r4, #172]	@ float
+ 2965 003a 094B     		ldr	r3, .L102+32
+ 2966 003c 1A60     		str	r2, [r3, #0]	@ float
+ 575:subsystems/ahrs/ahrs_float_dcm.c **** }
+ 2967              		.loc 2 575 0
+ 2968 003e 10BD     		pop	{r4, pc}
+ 2969              	.L103:
+ 2970              		.align	2
+ 2971              	.L102:
+ 2972 0040 00000000 		.word	.LANCHOR14
+ 2973 0044 00000000 		.word	ahrs_float
+ 2974 0048 00000000 		.word	estimator_phi
+ 2975 004c 00000000 		.word	.LANCHOR15
+ 2976 0050 00000000 		.word	estimator_theta
+ 2977 0054 00000000 		.word	estimator_psi
+ 2978 0058 00000000 		.word	estimator_p
+ 2979 005c 00000000 		.word	estimator_q
+ 2980 0060 00000000 		.word	estimator_r
+ 2981              		.cfi_endproc
+ 2982              	.LFE53:
+ 2984              		.global	imu_health
+ 2985              		.global	renorm_blowup_count
+ 2986              		.global	renorm_sqrt_count
+ 2987              		.global	Temporary_Matrix
+ 2988              		.global	Update_Matrix
+ 2989              		.global	DCM_Matrix
+ 2990              		.global	Omega
+ 2991              		.global	Omega_I
+ 2992              		.global	Omega_P
+ 2993              		.global	Omega_Vector
+ 2994              		.global	accel_float
+ 2995              		.global	G_Dt
+ 2996              		.global	ahrs_impl
+ 2997              		.global	ins_pitch_neutral
+ 2998              		.global	ins_roll_neutral
+ 2999              		.section	.bss.Omega_Vector,"aw",%nobits
+ 3000              		.align	2
+ 3001              		.set	.LANCHOR11,. + 0
+ 3004              	Omega_Vector:
+ 3005 0000 00000000 		.space	12
+ 3005      00000000 
+ 3005      00000000 
+ 3006              		.section	.bss.Temporary_Matrix,"aw",%nobits
+ 3007              		.align	2
+ 3008              		.set	.LANCHOR13,. + 0
+ 3011              	Temporary_Matrix:
+ 3012 0000 00000000 		.space	36
+ 3012      00000000 
+ 3012      00000000 
+ 3012      00000000 
+ 3012      00000000 
+ 3013              		.section	.bss.ahrs_impl,"aw",%nobits
+ 3014              		.align	2
+ 3015              		.set	.LANCHOR1,. + 0
+ 3018              	ahrs_impl:
+ 3019 0000 00000000 		.space	76
+ 3019      00000000 
+ 3019      00000000 
+ 3019      00000000 
+ 3019      00000000 
+ 3020              		.section	.bss.Scaled_Omega_I.4134,"aw",%nobits
+ 3021              		.align	2
+ 3022              		.set	.LANCHOR7,. + 0
+ 3025              	Scaled_Omega_I.4134:
+ 3026 0000 00000000 		.space	12
+ 3026      00000000 
+ 3026      00000000 
+ 3027              		.section	.bss.Omega,"aw",%nobits
+ 3028              		.align	2
+ 3029              		.set	.LANCHOR10,. + 0
+ 3032              	Omega:
+ 3033 0000 00000000 		.space	12
+ 3033      00000000 
+ 3033      00000000 
+ 3034              		.section	.rodata.G_Dt,"a",%progbits
+ 3035              		.align	2
+ 3038              	G_Dt:
+ 3039 0000 0AD7233C 		.word	1008981770
+ 3040              		.section	.bss.renorm_sqrt_count,"aw",%nobits
+ 3041              		.align	2
+ 3042              		.set	.LANCHOR2,. + 0
+ 3045              	renorm_sqrt_count:
+ 3046 0000 00000000 		.space	4
+ 3047              		.section	.bss.renorm_blowup_count,"aw",%nobits
+ 3048              		.align	2
+ 3049              		.set	.LANCHOR3,. + 0
+ 3052              	renorm_blowup_count:
+ 3053 0000 00000000 		.space	4
+ 3054              		.section	.bss.ins_pitch_neutral,"aw",%nobits
+ 3055              		.align	2
+ 3056              		.set	.LANCHOR15,. + 0
+ 3059              	ins_pitch_neutral:
+ 3060 0000 00000000 		.space	4
+ 3061              		.section	.bss.Scaled_Omega_P.4133,"aw",%nobits
+ 3062              		.align	2
+ 3063              		.set	.LANCHOR9,. + 0
+ 3066              	Scaled_Omega_P.4133:
+ 3067 0000 00000000 		.space	12
+ 3067      00000000 
+ 3067      00000000 
+ 3068              		.section	.bss.ins_roll_neutral,"aw",%nobits
+ 3069              		.align	2
+ 3070              		.set	.LANCHOR14,. + 0
+ 3073              	ins_roll_neutral:
+ 3074 0000 00000000 		.space	4
+ 3075              		.section	.bss.imu_health,"aw",%nobits
+ 3076              		.align	2
+ 3077              		.set	.LANCHOR5,. + 0
+ 3080              	imu_health:
+ 3081 0000 00000000 		.space	4
+ 3082              		.section	.data.Update_Matrix,"aw",%progbits
+ 3083              		.align	2
+ 3084              		.set	.LANCHOR12,. + 0
+ 3087              	Update_Matrix:
+ 3088 0000 00000000 		.word	0
+ 3089 0004 0000803F 		.word	1065353216
+ 3090 0008 00000040 		.word	1073741824
+ 3091 000c 00004040 		.word	1077936128
+ 3092 0010 00008040 		.word	1082130432
+ 3093 0014 0000A040 		.word	1084227584
+ 3094 0018 0000C040 		.word	1086324736
+ 3095 001c 0000E040 		.word	1088421888
+ 3096 0020 00000041 		.word	1090519040
+ 3097              		.section	.bss.Omega_I,"aw",%nobits
+ 3098              		.align	2
+ 3099              		.set	.LANCHOR8,. + 0
+ 3102              	Omega_I:
+ 3103 0000 00000000 		.space	12
+ 3103      00000000 
+ 3103      00000000 
+ 3104              		.section	.data.DCM_Matrix,"aw",%progbits
+ 3105              		.align	2
+ 3106              		.set	.LANCHOR0,. + 0
+ 3109              	DCM_Matrix:
+ 3110 0000 0000803F 		.word	1065353216
+ 3111 0004 00000000 		.word	0
+ 3112 0008 00000000 		.word	0
+ 3113 000c 00000000 		.word	0
+ 3114 0010 0000803F 		.word	1065353216
+ 3115 0014 00000000 		.word	0
+ 3116 0018 00000000 		.word	0
+ 3117 001c 00000000 		.word	0
+ 3118 0020 0000803F 		.word	1065353216
+ 3119              		.section	.bss.Omega_P,"aw",%nobits
+ 3120              		.align	2
+ 3121              		.set	.LANCHOR6,. + 0
+ 3124              	Omega_P:
+ 3125 0000 00000000 		.space	12
+ 3125      00000000 
+ 3125      00000000 
+ 3126              		.section	.bss.accel_float,"aw",%nobits
+ 3127              		.align	2
+ 3128              		.set	.LANCHOR4,. + 0
+ 3131              	accel_float:
+ 3132 0000 00000000 		.space	12
+ 3132      00000000 
+ 3132      00000000 
+ 3133              		.text
+ 3134              	.Letext0:
+ 3135              		.file 4 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
+ 3136              		.file 5 "/home/uav/paparazzi/sw/include/std.h"
+ 3137              		.file 6 "./math/pprz_algebra_int.h"
+ 3138              		.file 7 "./math/pprz_algebra_float.h"
+ 3139              		.file 8 "./subsystems/ahrs/ahrs_float_dcm.h"
+ 3140              		.file 9 "./subsystems/ahrs.h"
+ 3141              		.file 10 "./subsystems/ahrs/ahrs_aligner.h"
+ 3142              		.file 11 "./subsystems/imu.h"
+ 3143              		.file 12 "./subsystems/imu/imu_aspirin2.h"
+ 3144              		.file 13 "./math/pprz_geodetic_int.h"
+ 3145              		.file 14 "./subsystems/gps.h"
+ 3146              		.file 15 "./subsystems/datalink/datalink.h"
+ 3147              		.file 16 "./subsystems/datalink/xbee.h"
+ 3148              		.file 17 "./estimator.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 ahrs_float_dcm.c
+     /tmp/ccL01qsC.s:20     .text.Vector_Dot_Product:0000000000000000 $t
+     /tmp/ccL01qsC.s:24     .text.Vector_Dot_Product:0000000000000000 Vector_Dot_Product
+     /tmp/ccL01qsC.s:68     .text.Vector_Scale:0000000000000000 $t
+     /tmp/ccL01qsC.s:72     .text.Vector_Scale:0000000000000000 Vector_Scale
+     /tmp/ccL01qsC.s:116    .text.Vector_Add:0000000000000000 $t
+     /tmp/ccL01qsC.s:120    .text.Vector_Add:0000000000000000 Vector_Add
+     /tmp/ccL01qsC.s:164    .text.set_dcm_matrix_from_rmat:0000000000000000 $t
+     /tmp/ccL01qsC.s:168    .text.set_dcm_matrix_from_rmat:0000000000000000 set_dcm_matrix_from_rmat
+     /tmp/ccL01qsC.s:215    .text.set_dcm_matrix_from_rmat:0000000000000028 $d
+     /tmp/ccL01qsC.s:221    .text.compute_body_orientation_and_rates:0000000000000000 $t
+     /tmp/ccL01qsC.s:225    .text.compute_body_orientation_and_rates:0000000000000000 compute_body_orientation_and_rates
+     /tmp/ccL01qsC.s:509    .text.compute_body_orientation_and_rates:0000000000000288 $d
+     /tmp/ccL01qsC.s:512    .text.compute_body_orientation_and_rates:0000000000000290 $t
+     /tmp/ccL01qsC.s:690    .text.ahrs_init:0000000000000000 $t
+     /tmp/ccL01qsC.s:695    .text.ahrs_init:0000000000000000 ahrs_init
+     /tmp/ccL01qsC.s:811    .text.ahrs_init:00000000000000a4 $d
+     /tmp/ccL01qsC.s:826    .text.ahrs_align:0000000000000000 $t
+     /tmp/ccL01qsC.s:831    .text.ahrs_align:0000000000000000 ahrs_align
+     /tmp/ccL01qsC.s:1202   .text.ahrs_align:00000000000002a8 $d
+     /tmp/ccL01qsC.s:1213   .text.ahrs_align:00000000000002d0 $t
+     /tmp/ccL01qsC.s:1381   .text.ahrs_align:0000000000000430 $d
+     /tmp/ccL01qsC.s:1390   .text.ahrs_update_mag:0000000000000000 $t
+     /tmp/ccL01qsC.s:1395   .text.ahrs_update_mag:0000000000000000 ahrs_update_mag
+     /tmp/ccL01qsC.s:1408   .text.ahrs_update_gps:0000000000000000 $t
+     /tmp/ccL01qsC.s:1413   .text.ahrs_update_gps:0000000000000000 ahrs_update_gps
+     /tmp/ccL01qsC.s:1429   .text.Normalize:0000000000000000 $t
+     /tmp/ccL01qsC.s:1434   .text.Normalize:0000000000000000 Normalize
+     /tmp/ccL01qsC.s:1795   .text.Normalize:0000000000000238 $d
+     /tmp/ccL01qsC.s:1811   .text.Drift_correction:0000000000000000 $t
+     /tmp/ccL01qsC.s:1816   .text.Drift_correction:0000000000000000 Drift_correction
+     /tmp/ccL01qsC.s:2141   .text.Drift_correction:0000000000000270 $d
+     /tmp/ccL01qsC.s:2175   .text.ahrs_update_accel:0000000000000000 $t
+     /tmp/ccL01qsC.s:2180   .text.ahrs_update_accel:0000000000000000 ahrs_update_accel
+     /tmp/ccL01qsC.s:2292   .text.ahrs_update_accel:00000000000000cc $d
+     /tmp/ccL01qsC.s:2301   .text.Matrix_update:0000000000000000 $t
+     /tmp/ccL01qsC.s:2306   .text.Matrix_update:0000000000000000 Matrix_update
+     /tmp/ccL01qsC.s:2525   .text.Matrix_update:0000000000000100 $d
+     /tmp/ccL01qsC.s:2539   .text.ahrs_propagate:0000000000000000 $t
+     /tmp/ccL01qsC.s:2544   .text.ahrs_propagate:0000000000000000 ahrs_propagate
+     /tmp/ccL01qsC.s:2893   .text.ahrs_propagate:00000000000002a8 $d
+     /tmp/ccL01qsC.s:2900   .text.ahrs_propagate:00000000000002c0 $t
+     /tmp/ccL01qsC.s:2918   .text.ahrs_update_fw_estimator:0000000000000000 $t
+     /tmp/ccL01qsC.s:2923   .text.ahrs_update_fw_estimator:0000000000000000 ahrs_update_fw_estimator
+     /tmp/ccL01qsC.s:2972   .text.ahrs_update_fw_estimator:0000000000000040 $d
+     /tmp/ccL01qsC.s:3080   .bss.imu_health:0000000000000000 imu_health
+     /tmp/ccL01qsC.s:3052   .bss.renorm_blowup_count:0000000000000000 renorm_blowup_count
+     /tmp/ccL01qsC.s:3045   .bss.renorm_sqrt_count:0000000000000000 renorm_sqrt_count
+     /tmp/ccL01qsC.s:3011   .bss.Temporary_Matrix:0000000000000000 Temporary_Matrix
+     /tmp/ccL01qsC.s:3087   .data.Update_Matrix:0000000000000000 Update_Matrix
+     /tmp/ccL01qsC.s:3109   .data.DCM_Matrix:0000000000000000 DCM_Matrix
+     /tmp/ccL01qsC.s:3032   .bss.Omega:0000000000000000 Omega
+     /tmp/ccL01qsC.s:3102   .bss.Omega_I:0000000000000000 Omega_I
+     /tmp/ccL01qsC.s:3124   .bss.Omega_P:0000000000000000 Omega_P
+     /tmp/ccL01qsC.s:3004   .bss.Omega_Vector:0000000000000000 Omega_Vector
+     /tmp/ccL01qsC.s:3131   .bss.accel_float:0000000000000000 accel_float
+     /tmp/ccL01qsC.s:3038   .rodata.G_Dt:0000000000000000 G_Dt
+     /tmp/ccL01qsC.s:3018   .bss.ahrs_impl:0000000000000000 ahrs_impl
+     /tmp/ccL01qsC.s:3059   .bss.ins_pitch_neutral:0000000000000000 ins_pitch_neutral
+     /tmp/ccL01qsC.s:3073   .bss.ins_roll_neutral:0000000000000000 ins_roll_neutral
+     /tmp/ccL01qsC.s:3000   .bss.Omega_Vector:0000000000000000 $d
+     /tmp/ccL01qsC.s:3007   .bss.Temporary_Matrix:0000000000000000 $d
+     /tmp/ccL01qsC.s:3014   .bss.ahrs_impl:0000000000000000 $d
+     /tmp/ccL01qsC.s:3021   .bss.Scaled_Omega_I.4134:0000000000000000 $d
+     /tmp/ccL01qsC.s:3025   .bss.Scaled_Omega_I.4134:0000000000000000 Scaled_Omega_I.4134
+     /tmp/ccL01qsC.s:3028   .bss.Omega:0000000000000000 $d
+     /tmp/ccL01qsC.s:3035   .rodata.G_Dt:0000000000000000 $d
+     /tmp/ccL01qsC.s:3041   .bss.renorm_sqrt_count:0000000000000000 $d
+     /tmp/ccL01qsC.s:3048   .bss.renorm_blowup_count:0000000000000000 $d
+     /tmp/ccL01qsC.s:3055   .bss.ins_pitch_neutral:0000000000000000 $d
+     /tmp/ccL01qsC.s:3062   .bss.Scaled_Omega_P.4133:0000000000000000 $d
+     /tmp/ccL01qsC.s:3066   .bss.Scaled_Omega_P.4133:0000000000000000 Scaled_Omega_P.4133
+     /tmp/ccL01qsC.s:3069   .bss.ins_roll_neutral:0000000000000000 $d
+     /tmp/ccL01qsC.s:3076   .bss.imu_health:0000000000000000 $d
+     /tmp/ccL01qsC.s:3083   .data.Update_Matrix:0000000000000000 $d
+     /tmp/ccL01qsC.s:3098   .bss.Omega_I:0000000000000000 $d
+     /tmp/ccL01qsC.s:3105   .data.DCM_Matrix:0000000000000000 $d
+     /tmp/ccL01qsC.s:3120   .bss.Omega_P:0000000000000000 $d
+     /tmp/ccL01qsC.s:3127   .bss.accel_float:0000000000000000 $d
+                     .debug_frame:0000000000000010 $d
+     /tmp/ccL01qsC.s:1389   .text.ahrs_align:0000000000000444 $t
+     /tmp/ccL01qsC.s:2174   .text.Drift_correction:00000000000002e4 $t
+
+UNDEFINED SYMBOLS
+__aeabi_fmul
+__aeabi_fadd
+__aeabi_fsub
+ahrs_float
+atan2f
+asinf
+ahrs
+__aeabi_i2f
+__aeabi_f2d
+__aeabi_dmul
+__aeabi_dadd
+__aeabi_dsub
+__aeabi_d2f
+__aeabi_dcmpgt
+__aeabi_dcmplt
+cosf
+sinf
+ahrs_aligner
+__aeabi_fcmplt
+__aeabi_fcmpgt
+__aeabi_ddiv
+sqrt
+gps
+__aeabi_i2d
+imu
+atan2
+asin
+estimator_phi
+estimator_theta
+estimator_psi
+estimator_p
+estimator_q
+estimator_r

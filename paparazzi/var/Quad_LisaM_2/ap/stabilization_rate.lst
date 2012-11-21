@@ -1,0 +1,882 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 18, 4
+  12              		.thumb
+  13              		.file	"stabilization_rate.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.stabilization_rate_init,"ax",%progbits
+  18              		.align	1
+  19              		.global	stabilization_rate_init
+  20              		.thumb
+  21              		.thumb_func
+  23              	stabilization_rate_init:
+  24              	.LFB32:
+  25              		.file 1 "firmwares/rotorcraft/stabilization/stabilization_rate.c"
+   1:firmwares/rotorcraft/stabilization/stabilization_rate.c **** /*
+   2:firmwares/rotorcraft/stabilization/stabilization_rate.c ****  * Copyright (C) 2008-2009 Antoine Drouin <poinix@gmail.com>
+   3:firmwares/rotorcraft/stabilization/stabilization_rate.c ****  * Copyright (C) 2010 Felix Ruess <felix.ruess@gmail.com>
+   4:firmwares/rotorcraft/stabilization/stabilization_rate.c ****  *
+   5:firmwares/rotorcraft/stabilization/stabilization_rate.c ****  * This file is part of paparazzi.
+   6:firmwares/rotorcraft/stabilization/stabilization_rate.c ****  *
+   7:firmwares/rotorcraft/stabilization/stabilization_rate.c ****  * paparazzi is free software; you can redistribute it and/or modify
+   8:firmwares/rotorcraft/stabilization/stabilization_rate.c ****  * it under the terms of the GNU General Public License as published by
+   9:firmwares/rotorcraft/stabilization/stabilization_rate.c ****  * the Free Software Foundation; either version 2, or (at your option)
+  10:firmwares/rotorcraft/stabilization/stabilization_rate.c ****  * any later version.
+  11:firmwares/rotorcraft/stabilization/stabilization_rate.c ****  *
+  12:firmwares/rotorcraft/stabilization/stabilization_rate.c ****  * paparazzi is distributed in the hope that it will be useful,
+  13:firmwares/rotorcraft/stabilization/stabilization_rate.c ****  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  14:firmwares/rotorcraft/stabilization/stabilization_rate.c ****  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  15:firmwares/rotorcraft/stabilization/stabilization_rate.c ****  * GNU General Public License for more details.
+  16:firmwares/rotorcraft/stabilization/stabilization_rate.c ****  *
+  17:firmwares/rotorcraft/stabilization/stabilization_rate.c ****  * You should have received a copy of the GNU General Public License
+  18:firmwares/rotorcraft/stabilization/stabilization_rate.c ****  * along with paparazzi; see the file COPYING.  If not, write to
+  19:firmwares/rotorcraft/stabilization/stabilization_rate.c ****  * the Free Software Foundation, 59 Temple Place - Suite 330,
+  20:firmwares/rotorcraft/stabilization/stabilization_rate.c ****  * Boston, MA 02111-1307, USA.
+  21:firmwares/rotorcraft/stabilization/stabilization_rate.c ****  */
+  22:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+  23:firmwares/rotorcraft/stabilization/stabilization_rate.c **** /** @file stabilization_rate.c
+  24:firmwares/rotorcraft/stabilization/stabilization_rate.c ****  *  Rate stabilization for rotorcrafts.
+  25:firmwares/rotorcraft/stabilization/stabilization_rate.c ****  *
+  26:firmwares/rotorcraft/stabilization/stabilization_rate.c ****  *  Control loops for angular velocity.
+  27:firmwares/rotorcraft/stabilization/stabilization_rate.c ****  */
+  28:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+  29:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #include "firmwares/rotorcraft/stabilization.h"
+  30:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+  31:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #include "subsystems/ahrs.h"
+  32:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+  33:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #include "subsystems/imu.h"
+  34:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #include "subsystems/radio_control.h"
+  35:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #include "generated/airframe.h"
+  36:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+  37:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #define F_UPDATE_RES 9
+  38:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #define REF_DOT_FRAC 11
+  39:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #define REF_FRAC  16
+  40:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+  41:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #define MAX_SUM_ERR 4000000
+  42:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+  43:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #if (STABILIZATION_RATE_GAIN_P < 0) || \
+  44:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   (STABILIZATION_RATE_GAIN_Q < 0)   || \
+  45:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   (STABILIZATION_RATE_GAIN_R < 0)
+  46:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #warning "ALL control gains are now positive!!!"
+  47:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #endif
+  48:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+  49:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #ifndef STABILIZATION_RATE_DDGAIN_P
+  50:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #define STABILIZATION_RATE_DDGAIN_P 0
+  51:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #endif
+  52:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #ifndef STABILIZATION_RATE_DDGAIN_Q
+  53:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #define STABILIZATION_RATE_DDGAIN_Q 0
+  54:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #endif
+  55:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #ifndef STABILIZATION_RATE_DDGAIN_R
+  56:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #define STABILIZATION_RATE_DDGAIN_R 0
+  57:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #endif
+  58:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+  59:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #ifndef STABILIZATION_RATE_IGAIN_P
+  60:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #define STABILIZATION_RATE_IGAIN_P 0
+  61:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #else
+  62:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #if (STABILIZATION_RATE_IGAIN_P < 0)
+  63:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #warning "ALL control gains are now positive!!!"
+  64:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #endif
+  65:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #endif
+  66:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #ifndef STABILIZATION_RATE_IGAIN_Q
+  67:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #define STABILIZATION_RATE_IGAIN_Q 0
+  68:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #else
+  69:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #if (STABILIZATION_RATE_IGAIN_Q < 0)
+  70:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #warning "ALL control gains are now positive!!!"
+  71:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #endif
+  72:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #endif
+  73:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #ifndef STABILIZATION_RATE_IGAIN_R
+  74:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #define STABILIZATION_RATE_IGAIN_R 0
+  75:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #else
+  76:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #if (STABILIZATION_RATE_IGAIN_R < 0)
+  77:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #warning "ALL control gains are now positive!!!"
+  78:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #endif
+  79:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #endif
+  80:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+  81:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #ifndef STABILIZATION_RATE_REF_TAU
+  82:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #define STABILIZATION_RATE_REF_TAU 4
+  83:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #endif
+  84:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+  85:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #define OFFSET_AND_ROUND(_a, _b) (((_a)+(1<<((_b)-1)))>>(_b))
+  86:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #define OFFSET_AND_ROUND2(_a, _b) (((_a)+(1<<((_b)-1))-((_a)<0?1:0))>>(_b))
+  87:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+  88:firmwares/rotorcraft/stabilization/stabilization_rate.c **** struct Int32Rates stabilization_rate_sp;
+  89:firmwares/rotorcraft/stabilization/stabilization_rate.c **** struct Int32Rates stabilization_rate_gain;
+  90:firmwares/rotorcraft/stabilization/stabilization_rate.c **** struct Int32Rates stabilization_rate_igain;
+  91:firmwares/rotorcraft/stabilization/stabilization_rate.c **** struct Int32Rates stabilization_rate_ddgain;
+  92:firmwares/rotorcraft/stabilization/stabilization_rate.c **** struct Int32Rates stabilization_rate_ref;
+  93:firmwares/rotorcraft/stabilization/stabilization_rate.c **** struct Int32Rates stabilization_rate_refdot;
+  94:firmwares/rotorcraft/stabilization/stabilization_rate.c **** struct Int32Rates stabilization_rate_sum_err;
+  95:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+  96:firmwares/rotorcraft/stabilization/stabilization_rate.c **** struct Int32Rates stabilization_rate_fb_cmd;
+  97:firmwares/rotorcraft/stabilization/stabilization_rate.c **** struct Int32Rates stabilization_rate_ff_cmd;
+  98:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+  99:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+ 100:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #ifndef STABILIZATION_RATE_DEADBAND_P
+ 101:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #define STABILIZATION_RATE_DEADBAND_P 0
+ 102:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #endif
+ 103:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #ifndef STABILIZATION_RATE_DEADBAND_Q
+ 104:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #define STABILIZATION_RATE_DEADBAND_Q 0
+ 105:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #endif
+ 106:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #ifndef STABILIZATION_RATE_DEADBAND_R
+ 107:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #define STABILIZATION_RATE_DEADBAND_R 200
+ 108:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #endif
+ 109:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+ 110:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #define ROLL_RATE_DEADBAND_EXCEEDED()                                         \
+ 111:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   (radio_control.values[RADIO_ROLL] >  STABILIZATION_RATE_DEADBAND_P || \
+ 112:firmwares/rotorcraft/stabilization/stabilization_rate.c ****    radio_control.values[RADIO_ROLL] < -STABILIZATION_RATE_DEADBAND_P)
+ 113:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+ 114:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #define PITCH_RATE_DEADBAND_EXCEEDED()                                         \
+ 115:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   (radio_control.values[RADIO_PITCH] >  STABILIZATION_RATE_DEADBAND_Q || \
+ 116:firmwares/rotorcraft/stabilization/stabilization_rate.c ****    radio_control.values[RADIO_PITCH] < -STABILIZATION_RATE_DEADBAND_Q)
+ 117:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+ 118:firmwares/rotorcraft/stabilization/stabilization_rate.c **** #define YAW_RATE_DEADBAND_EXCEEDED()                                         \
+ 119:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   (radio_control.values[RADIO_YAW] >  STABILIZATION_RATE_DEADBAND_R || \
+ 120:firmwares/rotorcraft/stabilization/stabilization_rate.c ****    radio_control.values[RADIO_YAW] < -STABILIZATION_RATE_DEADBAND_R)
+ 121:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+ 122:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+ 123:firmwares/rotorcraft/stabilization/stabilization_rate.c **** void stabilization_rate_init(void) {
+  26              		.loc 1 123 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30              		@ link register save eliminated.
+ 124:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+ 125:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   INT_RATES_ZERO(stabilization_rate_sp);
+  31              		.loc 1 125 0
+  32 0000 124A     		ldr	r2, .L2
+  33 0002 0023     		movs	r3, #0
+  34 0004 1360     		str	r3, [r2, #0]
+  35 0006 5360     		str	r3, [r2, #4]
+  36 0008 9360     		str	r3, [r2, #8]
+ 126:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+ 127:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   RATES_ASSIGN(stabilization_rate_gain,
+  37              		.loc 1 127 0
+  38 000a 114A     		ldr	r2, .L2+4
+  39 000c 4FF4C871 		mov	r1, #400
+  40 0010 1160     		str	r1, [r2, #0]
+  41 0012 5160     		str	r1, [r2, #4]
+  42 0014 4FF4AF71 		mov	r1, #350
+  43 0018 9160     		str	r1, [r2, #8]
+ 128:firmwares/rotorcraft/stabilization/stabilization_rate.c ****                STABILIZATION_RATE_GAIN_P,
+ 129:firmwares/rotorcraft/stabilization/stabilization_rate.c ****                STABILIZATION_RATE_GAIN_Q,
+ 130:firmwares/rotorcraft/stabilization/stabilization_rate.c ****                STABILIZATION_RATE_GAIN_R);
+ 131:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   RATES_ASSIGN(stabilization_rate_igain,
+  44              		.loc 1 131 0
+  45 001a 0E4A     		ldr	r2, .L2+8
+  46 001c 4B21     		movs	r1, #75
+  47 001e 1160     		str	r1, [r2, #0]
+  48 0020 5160     		str	r1, [r2, #4]
+  49 0022 3221     		movs	r1, #50
+  50 0024 9160     		str	r1, [r2, #8]
+ 132:firmwares/rotorcraft/stabilization/stabilization_rate.c ****                STABILIZATION_RATE_IGAIN_P,
+ 133:firmwares/rotorcraft/stabilization/stabilization_rate.c ****                STABILIZATION_RATE_IGAIN_Q,
+ 134:firmwares/rotorcraft/stabilization/stabilization_rate.c ****                STABILIZATION_RATE_IGAIN_R);
+ 135:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   RATES_ASSIGN(stabilization_rate_ddgain,
+  51              		.loc 1 135 0
+  52 0026 0C4A     		ldr	r2, .L2+12
+  53 0028 4FF49671 		mov	r1, #300
+  54 002c 1160     		str	r1, [r2, #0]
+  55 002e 5160     		str	r1, [r2, #4]
+  56 0030 9160     		str	r1, [r2, #8]
+ 136:firmwares/rotorcraft/stabilization/stabilization_rate.c ****                STABILIZATION_RATE_DDGAIN_P,
+ 137:firmwares/rotorcraft/stabilization/stabilization_rate.c ****                STABILIZATION_RATE_DDGAIN_Q,
+ 138:firmwares/rotorcraft/stabilization/stabilization_rate.c ****                STABILIZATION_RATE_DDGAIN_R);
+ 139:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+ 140:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   INT_RATES_ZERO(stabilization_rate_ref);
+  57              		.loc 1 140 0
+  58 0032 0A4A     		ldr	r2, .L2+16
+  59 0034 1360     		str	r3, [r2, #0]
+  60 0036 5360     		str	r3, [r2, #4]
+  61 0038 9360     		str	r3, [r2, #8]
+ 141:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   INT_RATES_ZERO(stabilization_rate_refdot);
+  62              		.loc 1 141 0
+  63 003a 094A     		ldr	r2, .L2+20
+  64 003c 1360     		str	r3, [r2, #0]
+  65 003e 5360     		str	r3, [r2, #4]
+  66 0040 9360     		str	r3, [r2, #8]
+ 142:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   INT_RATES_ZERO(stabilization_rate_sum_err);
+  67              		.loc 1 142 0
+  68 0042 084A     		ldr	r2, .L2+24
+  69 0044 1360     		str	r3, [r2, #0]
+  70 0046 5360     		str	r3, [r2, #4]
+  71 0048 9360     		str	r3, [r2, #8]
+ 143:firmwares/rotorcraft/stabilization/stabilization_rate.c **** }
+  72              		.loc 1 143 0
+  73 004a 7047     		bx	lr
+  74              	.L3:
+  75              		.align	2
+  76              	.L2:
+  77 004c 00000000 		.word	.LANCHOR0
+  78 0050 00000000 		.word	.LANCHOR1
+  79 0054 00000000 		.word	.LANCHOR2
+  80 0058 00000000 		.word	.LANCHOR3
+  81 005c 00000000 		.word	.LANCHOR4
+  82 0060 00000000 		.word	.LANCHOR5
+  83 0064 00000000 		.word	.LANCHOR6
+  84              		.cfi_endproc
+  85              	.LFE32:
+  87              		.section	.text.stabilization_rate_read_rc,"ax",%progbits
+  88              		.align	1
+  89              		.global	stabilization_rate_read_rc
+  90              		.thumb
+  91              		.thumb_func
+  93              	stabilization_rate_read_rc:
+  94              	.LFB33:
+ 144:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+ 145:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+ 146:firmwares/rotorcraft/stabilization/stabilization_rate.c **** void stabilization_rate_read_rc( void ) {
+  95              		.loc 1 146 0
+  96              		.cfi_startproc
+  97              		@ args = 0, pretend = 0, frame = 0
+  98              		@ frame_needed = 0, uses_anonymous_args = 0
+  99              		@ link register save eliminated.
+ 147:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+ 148:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   if(ROLL_RATE_DEADBAND_EXCEEDED())
+ 100              		.loc 1 148 0
+ 101 0000 214B     		ldr	r3, .L14
+ 102 0002 1A89     		ldrh	r2, [r3, #8]
+ 103 0004 02F11401 		add	r1, r2, #20
+ 104 0008 89B2     		uxth	r1, r1
+ 105 000a 2829     		cmp	r1, #40
+ 106 000c 1946     		mov	r1, r3
+ 107 000e 1F4B     		ldr	r3, .L14+4
+ 108 0010 08D9     		bls	.L5
+ 149:firmwares/rotorcraft/stabilization/stabilization_rate.c ****     stabilization_rate_sp.p = (int32_t)radio_control.values[RADIO_ROLL] * STABILIZATION_RATE_SP_MAX
+ 109              		.loc 1 149 0
+ 110 0012 42F21070 		movw	r0, #10000
+ 111 0016 12B2     		sxth	r2, r2
+ 112 0018 4243     		muls	r2, r0, r2
+ 113 001a 4FF41650 		mov	r0, #9600
+ 114 001e 92FBF0F2 		sdiv	r2, r2, r0
+ 115 0022 00E0     		b	.L11
+ 116              	.L5:
+ 150:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   else
+ 151:firmwares/rotorcraft/stabilization/stabilization_rate.c ****     stabilization_rate_sp.p = 0;
+ 117              		.loc 1 151 0
+ 118 0024 0022     		movs	r2, #0
+ 119              	.L11:
+ 120 0026 1A60     		str	r2, [r3, #0]
+ 152:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+ 153:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   if(PITCH_RATE_DEADBAND_EXCEEDED())
+ 121              		.loc 1 153 0
+ 122 0028 4A89     		ldrh	r2, [r1, #10]
+ 123 002a 02F11403 		add	r3, r2, #20
+ 124 002e 9BB2     		uxth	r3, r3
+ 125 0030 282B     		cmp	r3, #40
+ 126 0032 164B     		ldr	r3, .L14+4
+ 127 0034 08D9     		bls	.L7
+ 154:firmwares/rotorcraft/stabilization/stabilization_rate.c ****     stabilization_rate_sp.q = (int32_t)radio_control.values[RADIO_PITCH] * STABILIZATION_RATE_SP_MA
+ 128              		.loc 1 154 0
+ 129 0036 42F21071 		movw	r1, #10000
+ 130 003a 12B2     		sxth	r2, r2
+ 131 003c 4A43     		muls	r2, r1, r2
+ 132 003e 4FF41651 		mov	r1, #9600
+ 133 0042 92FBF1F2 		sdiv	r2, r2, r1
+ 134 0046 00E0     		b	.L12
+ 135              	.L7:
+ 155:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   else
+ 156:firmwares/rotorcraft/stabilization/stabilization_rate.c ****     stabilization_rate_sp.q = 0;
+ 136              		.loc 1 156 0
+ 137 0048 0022     		movs	r2, #0
+ 138              	.L12:
+ 139 004a 5A60     		str	r2, [r3, #4]
+ 157:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+ 158:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   if(YAW_RATE_DEADBAND_EXCEEDED())
+ 140              		.loc 1 158 0
+ 141 004c 0E4B     		ldr	r3, .L14
+ 142 004e 9A89     		ldrh	r2, [r3, #12]
+ 143 0050 02F1C803 		add	r3, r2, #200
+ 144 0054 9BB2     		uxth	r3, r3
+ 145 0056 B3F5C87F 		cmp	r3, #400
+ 146 005a 0C4B     		ldr	r3, .L14+4
+ 147 005c 08D9     		bls	.L9
+ 159:firmwares/rotorcraft/stabilization/stabilization_rate.c ****     stabilization_rate_sp.r = (int32_t)radio_control.values[RADIO_YAW] * STABILIZATION_RATE_SP_MAX_
+ 148              		.loc 1 159 0
+ 149 005e 42F21071 		movw	r1, #10000
+ 150 0062 12B2     		sxth	r2, r2
+ 151 0064 4A43     		muls	r2, r1, r2
+ 152 0066 4FF41651 		mov	r1, #9600
+ 153 006a 92FBF1F2 		sdiv	r2, r2, r1
+ 154 006e 00E0     		b	.L13
+ 155              	.L9:
+ 160:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   else
+ 161:firmwares/rotorcraft/stabilization/stabilization_rate.c ****     stabilization_rate_sp.r = 0;
+ 156              		.loc 1 161 0
+ 157 0070 0022     		movs	r2, #0
+ 158              	.L13:
+ 159 0072 9A60     		str	r2, [r3, #8]
+ 162:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+ 163:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   // Setpoint at ref resolution
+ 164:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   INT_RATES_LSHIFT(stabilization_rate_sp, stabilization_rate_sp, REF_FRAC - INT32_RATE_FRAC);
+ 160              		.loc 1 164 0
+ 161 0074 1A68     		ldr	r2, [r3, #0]
+ 162 0076 1201     		lsls	r2, r2, #4
+ 163 0078 1A60     		str	r2, [r3, #0]
+ 164 007a 5A68     		ldr	r2, [r3, #4]
+ 165 007c 1201     		lsls	r2, r2, #4
+ 166 007e 5A60     		str	r2, [r3, #4]
+ 167 0080 9A68     		ldr	r2, [r3, #8]
+ 168 0082 1201     		lsls	r2, r2, #4
+ 169 0084 9A60     		str	r2, [r3, #8]
+ 165:firmwares/rotorcraft/stabilization/stabilization_rate.c **** }
+ 170              		.loc 1 165 0
+ 171 0086 7047     		bx	lr
+ 172              	.L15:
+ 173              		.align	2
+ 174              	.L14:
+ 175 0088 00000000 		.word	radio_control
+ 176 008c 00000000 		.word	.LANCHOR0
+ 177              		.cfi_endproc
+ 178              	.LFE33:
+ 180              		.section	.text.stabilization_rate_enter,"ax",%progbits
+ 181              		.align	1
+ 182              		.global	stabilization_rate_enter
+ 183              		.thumb
+ 184              		.thumb_func
+ 186              	stabilization_rate_enter:
+ 187              	.LFB34:
+ 166:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+ 167:firmwares/rotorcraft/stabilization/stabilization_rate.c **** void stabilization_rate_enter(void) {
+ 188              		.loc 1 167 0
+ 189              		.cfi_startproc
+ 190              		@ args = 0, pretend = 0, frame = 0
+ 191              		@ frame_needed = 0, uses_anonymous_args = 0
+ 192              		@ link register save eliminated.
+ 168:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   RATES_COPY(stabilization_rate_ref, stabilization_rate_sp);
+ 193              		.loc 1 168 0
+ 194 0000 064A     		ldr	r2, .L17
+ 195 0002 074B     		ldr	r3, .L17+4
+ 196 0004 1168     		ldr	r1, [r2, #0]
+ 197 0006 1960     		str	r1, [r3, #0]
+ 198 0008 5168     		ldr	r1, [r2, #4]
+ 199 000a 9268     		ldr	r2, [r2, #8]
+ 200 000c 5960     		str	r1, [r3, #4]
+ 201 000e 9A60     		str	r2, [r3, #8]
+ 169:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   INT_RATES_ZERO(stabilization_rate_sum_err);
+ 202              		.loc 1 169 0
+ 203 0010 044B     		ldr	r3, .L17+8
+ 204 0012 0022     		movs	r2, #0
+ 205 0014 1A60     		str	r2, [r3, #0]
+ 206 0016 5A60     		str	r2, [r3, #4]
+ 207 0018 9A60     		str	r2, [r3, #8]
+ 170:firmwares/rotorcraft/stabilization/stabilization_rate.c **** }
+ 208              		.loc 1 170 0
+ 209 001a 7047     		bx	lr
+ 210              	.L18:
+ 211              		.align	2
+ 212              	.L17:
+ 213 001c 00000000 		.word	.LANCHOR0
+ 214 0020 00000000 		.word	.LANCHOR4
+ 215 0024 00000000 		.word	.LANCHOR6
+ 216              		.cfi_endproc
+ 217              	.LFE34:
+ 219              		.section	.text.stabilization_rate_run,"ax",%progbits
+ 220              		.align	1
+ 221              		.global	stabilization_rate_run
+ 222              		.thumb
+ 223              		.thumb_func
+ 225              	stabilization_rate_run:
+ 226              	.LFB35:
+ 171:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+ 172:firmwares/rotorcraft/stabilization/stabilization_rate.c **** void stabilization_rate_run(bool_t in_flight) {
+ 227              		.loc 1 172 0
+ 228              		.cfi_startproc
+ 229              		@ args = 0, pretend = 0, frame = 0
+ 230              		@ frame_needed = 0, uses_anonymous_args = 0
+ 231              	.LVL0:
+ 232 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, sl, fp, lr}
+ 233              	.LCFI0:
+ 234              		.cfi_def_cfa_offset 36
+ 235              		.cfi_offset 14, -4
+ 236              		.cfi_offset 11, -8
+ 237              		.cfi_offset 10, -12
+ 238              		.cfi_offset 9, -16
+ 239              		.cfi_offset 8, -20
+ 240              		.cfi_offset 7, -24
+ 241              		.cfi_offset 6, -28
+ 242              		.cfi_offset 5, -32
+ 243              		.cfi_offset 4, -36
+ 173:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+ 174:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   /* reference */
+ 175:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   struct Int32Rates _r;
+ 176:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   RATES_DIFF(_r, stabilization_rate_sp, stabilization_rate_ref);
+ 244              		.loc 1 176 0
+ 245 0004 6B49     		ldr	r1, .L30
+ 246 0006 6C4F     		ldr	r7, .L30+4
+ 247 0008 4A68     		ldr	r2, [r1, #4]
+ 248 000a D7F800C0 		ldr	ip, [r7, #0]
+ 249              	.LVL1:
+ 250 000e 7E68     		ldr	r6, [r7, #4]
+ 251 0010 BD68     		ldr	r5, [r7, #8]
+ 252 0012 8B68     		ldr	r3, [r1, #8]
+ 253 0014 0968     		ldr	r1, [r1, #0]
+ 177:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   RATES_SDIV(stabilization_rate_refdot, _r, STABILIZATION_RATE_REF_TAU);
+ 254              		.loc 1 177 0
+ 255 0016 4FF00408 		mov	r8, #4
+ 256 001a 684C     		ldr	r4, .L30+8
+ 176:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   RATES_DIFF(_r, stabilization_rate_sp, stabilization_rate_ref);
+ 257              		.loc 1 176 0
+ 258 001c 921B     		subs	r2, r2, r6
+ 259              	.LVL2:
+ 260 001e 5B1B     		subs	r3, r3, r5
+ 261              	.LVL3:
+ 262 0020 CCEB0101 		rsb	r1, ip, r1
+ 263              		.loc 1 177 0
+ 264 0024 91FBF8F1 		sdiv	r1, r1, r8
+ 265 0028 92FBF8F2 		sdiv	r2, r2, r8
+ 266              	.LVL4:
+ 267 002c 93FBF8F3 		sdiv	r3, r3, r8
+ 268              	.LVL5:
+ 269 0030 2160     		str	r1, [r4, #0]
+ 270 0032 6260     		str	r2, [r4, #4]
+ 271 0034 A360     		str	r3, [r4, #8]
+ 272              	.LVL6:
+ 178:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   /* integrate ref */
+ 179:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   const struct Int32Rates _delta_ref = {
+ 180:firmwares/rotorcraft/stabilization/stabilization_rate.c ****     stabilization_rate_refdot.p >> ( F_UPDATE_RES + REF_DOT_FRAC - REF_FRAC),
+ 181:firmwares/rotorcraft/stabilization/stabilization_rate.c ****     stabilization_rate_refdot.q >> ( F_UPDATE_RES + REF_DOT_FRAC - REF_FRAC),
+ 182:firmwares/rotorcraft/stabilization/stabilization_rate.c ****     stabilization_rate_refdot.r >> ( F_UPDATE_RES + REF_DOT_FRAC - REF_FRAC)};
+ 183:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   RATES_ADD(stabilization_rate_ref, _delta_ref);
+ 184:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+ 185:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   /* compute feed-forward command */
+ 186:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   RATES_EWMULT_RSHIFT(stabilization_rate_ff_cmd, stabilization_rate_ddgain, stabilization_rate_refd
+ 273              		.loc 1 186 0
+ 274 0036 624C     		ldr	r4, .L30+12
+ 183:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   RATES_ADD(stabilization_rate_ref, _delta_ref);
+ 275              		.loc 1 183 0
+ 276 0038 06EB2216 		add	r6, r6, r2, asr #4
+ 277 003c 0CEB211C 		add	ip, ip, r1, asr #4
+ 278 0040 05EB2315 		add	r5, r5, r3, asr #4
+ 279 0044 C7F800C0 		str	ip, [r7, #0]
+ 280 0048 7E60     		str	r6, [r7, #4]
+ 281 004a BD60     		str	r5, [r7, #8]
+ 282              		.loc 1 186 0
+ 283 004c D4F80480 		ldr	r8, [r4, #4]
+ 284 0050 2768     		ldr	r7, [r4, #0]
+ 285 0052 A468     		ldr	r4, [r4, #8]
+ 286 0054 7943     		muls	r1, r7, r1
+ 287              	.LVL7:
+ 288 0056 6343     		muls	r3, r4, r3
+ 289              	.LVL8:
+ 290 0058 08FB02F2 		mul	r2, r8, r2
+ 291              	.LVL9:
+ 292 005c 594F     		ldr	r7, .L30+16
+ 293 005e 4912     		asrs	r1, r1, #9
+ 294 0060 5212     		asrs	r2, r2, #9
+ 295 0062 5B12     		asrs	r3, r3, #9
+ 296 0064 3960     		str	r1, [r7, #0]
+ 297 0066 7A60     		str	r2, [r7, #4]
+ 298 0068 BB60     		str	r3, [r7, #8]
+ 299              	.LVL10:
+ 187:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+ 188:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+ 189:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   /* compute feed-back command */
+ 190:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   /* error for feedback */
+ 191:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   const struct Int32Rates _ref_scaled = {
+ 192:firmwares/rotorcraft/stabilization/stabilization_rate.c ****     OFFSET_AND_ROUND(stabilization_rate_ref.p, (REF_FRAC - INT32_RATE_FRAC)),
+ 193:firmwares/rotorcraft/stabilization/stabilization_rate.c ****     OFFSET_AND_ROUND(stabilization_rate_ref.q, (REF_FRAC - INT32_RATE_FRAC)),
+ 194:firmwares/rotorcraft/stabilization/stabilization_rate.c ****     OFFSET_AND_ROUND(stabilization_rate_ref.r, (REF_FRAC - INT32_RATE_FRAC)) };
+ 195:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   struct Int32Rates _error;
+ 196:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   RATES_DIFF(_error, _ref_scaled, ahrs.body_rate);
+ 300              		.loc 1 196 0
+ 301 006a 574F     		ldr	r7, .L30+20
+ 192:firmwares/rotorcraft/stabilization/stabilization_rate.c ****     OFFSET_AND_ROUND(stabilization_rate_ref.p, (REF_FRAC - INT32_RATE_FRAC)),
+ 302              		.loc 1 192 0
+ 303 006c 0CF1080C 		add	ip, ip, #8
+ 304              	.LVL11:
+ 305              		.loc 1 196 0
+ 306 0070 D7F88C40 		ldr	r4, [r7, #140]
+ 194:firmwares/rotorcraft/stabilization/stabilization_rate.c ****     OFFSET_AND_ROUND(stabilization_rate_ref.r, (REF_FRAC - INT32_RATE_FRAC)) };
+ 307              		.loc 1 194 0
+ 308 0074 0835     		adds	r5, r5, #8
+ 309              	.LVL12:
+ 310              		.loc 1 196 0
+ 311 0076 C4EB2C14 		rsb	r4, r4, ip, asr #4
+ 312              	.LVL13:
+ 193:firmwares/rotorcraft/stabilization/stabilization_rate.c ****     OFFSET_AND_ROUND(stabilization_rate_ref.q, (REF_FRAC - INT32_RATE_FRAC)),
+ 313              		.loc 1 193 0
+ 314 007a 06F1080C 		add	ip, r6, #8
+ 315              		.loc 1 196 0
+ 316 007e D7F89060 		ldr	r6, [r7, #144]
+ 317              	.LVL14:
+ 318 0082 D7F89470 		ldr	r7, [r7, #148]
+ 319 0086 C6EB2C16 		rsb	r6, r6, ip, asr #4
+ 320              	.LVL15:
+ 321 008a C7EB2515 		rsb	r5, r7, r5, asr #4
+ 322              	.LVL16:
+ 323 008e 4F4F     		ldr	r7, .L30+24
+ 197:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   if (in_flight) {
+ 324              		.loc 1 197 0
+ 325 0090 28B3     		cbz	r0, .L20
+ 198:firmwares/rotorcraft/stabilization/stabilization_rate.c ****     /* update integrator */
+ 199:firmwares/rotorcraft/stabilization/stabilization_rate.c ****     RATES_ADD(stabilization_rate_sum_err, _error);
+ 326              		.loc 1 199 0
+ 327 0092 7868     		ldr	r0, [r7, #4]
+ 328              	.LVL17:
+ 200:firmwares/rotorcraft/stabilization/stabilization_rate.c ****     RATES_BOUND_CUBE(stabilization_rate_sum_err, -MAX_SUM_ERR, MAX_SUM_ERR);
+ 329              		.loc 1 200 0
+ 330 0094 DFF84CC1 		ldr	ip, .L30+48
+ 199:firmwares/rotorcraft/stabilization/stabilization_rate.c ****     RATES_ADD(stabilization_rate_sum_err, _error);
+ 331              		.loc 1 199 0
+ 332 0098 06EB000A 		add	sl, r6, r0
+ 333 009c B868     		ldr	r0, [r7, #8]
+ 334 009e 05EB0009 		add	r9, r5, r0
+ 335 00a2 3868     		ldr	r0, [r7, #0]
+ 336 00a4 04EB0008 		add	r8, r4, r0
+ 337              		.loc 1 200 0
+ 338 00a8 4948     		ldr	r0, .L30+28
+ 339 00aa E045     		cmp	r8, ip
+ 340 00ac A8BF     		it	ge
+ 341 00ae E046     		movge	r8, ip
+ 342 00b0 8045     		cmp	r8, r0
+ 343 00b2 ACBF     		ite	ge
+ 344 00b4 C7F80080 		strge	r8, [r7, #0]
+ 345 00b8 3860     		strlt	r0, [r7, #0]
+ 346 00ba E245     		cmp	sl, ip
+ 347 00bc B4BF     		ite	lt
+ 348 00be D046     		movlt	r8, sl
+ 349 00c0 E046     		movge	r8, ip
+ 350 00c2 E145     		cmp	r9, ip
+ 351 00c4 B8BF     		it	lt
+ 352 00c6 CC46     		movlt	ip, r9
+ 353 00c8 8045     		cmp	r8, r0
+ 354 00ca ACBF     		ite	ge
+ 355 00cc C7F80480 		strge	r8, [r7, #4]
+ 356 00d0 7860     		strlt	r0, [r7, #4]
+ 357 00d2 8445     		cmp	ip, r0
+ 358 00d4 ACBF     		ite	ge
+ 359 00d6 C7F808C0 		strge	ip, [r7, #8]
+ 360 00da B860     		strlt	r0, [r7, #8]
+ 361 00dc 02E0     		b	.L21
+ 362              	.LVL18:
+ 363              	.L20:
+ 201:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   }
+ 202:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   else {
+ 203:firmwares/rotorcraft/stabilization/stabilization_rate.c ****     INT_RATES_ZERO(stabilization_rate_sum_err);
+ 364              		.loc 1 203 0
+ 365 00de 3860     		str	r0, [r7, #0]
+ 366 00e0 7860     		str	r0, [r7, #4]
+ 367 00e2 B860     		str	r0, [r7, #8]
+ 368              	.LVL19:
+ 369              	.L21:
+ 204:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   }
+ 205:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+ 206:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   /* PI */
+ 207:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   stabilization_rate_fb_cmd.p = stabilization_rate_gain.p * _error.p +
+ 208:firmwares/rotorcraft/stabilization/stabilization_rate.c ****     OFFSET_AND_ROUND2((stabilization_rate_igain.p  * stabilization_rate_sum_err.p), 10);
+ 370              		.loc 1 208 0
+ 371 00e4 DFF800C1 		ldr	ip, .L30+52
+ 372 00e8 384F     		ldr	r7, .L30+24
+ 373 00ea DCF80000 		ldr	r0, [ip, #0]
+ 374 00ee D7F80080 		ldr	r8, [r7, #0]
+ 209:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+ 210:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   stabilization_rate_fb_cmd.q = stabilization_rate_gain.q * _error.q +
+ 211:firmwares/rotorcraft/stabilization/stabilization_rate.c ****     OFFSET_AND_ROUND2((stabilization_rate_igain.q  * stabilization_rate_sum_err.q), 10);
+ 375              		.loc 1 211 0
+ 376 00f2 D7F80490 		ldr	r9, [r7, #4]
+ 208:firmwares/rotorcraft/stabilization/stabilization_rate.c ****     OFFSET_AND_ROUND2((stabilization_rate_igain.p  * stabilization_rate_sum_err.p), 10);
+ 377              		.loc 1 208 0
+ 378 00f6 08FB00F8 		mul	r8, r8, r0
+ 379              		.loc 1 211 0
+ 380 00fa DCF80400 		ldr	r0, [ip, #4]
+ 212:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+ 213:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   stabilization_rate_fb_cmd.r = stabilization_rate_gain.r * _error.r +
+ 214:firmwares/rotorcraft/stabilization/stabilization_rate.c ****     OFFSET_AND_ROUND2((stabilization_rate_igain.r  * stabilization_rate_sum_err.r), 10);
+ 381              		.loc 1 214 0
+ 382 00fe BF68     		ldr	r7, [r7, #8]
+ 211:firmwares/rotorcraft/stabilization/stabilization_rate.c ****     OFFSET_AND_ROUND2((stabilization_rate_igain.q  * stabilization_rate_sum_err.q), 10);
+ 383              		.loc 1 211 0
+ 384 0100 09FB00F9 		mul	r9, r9, r0
+ 385              		.loc 1 214 0
+ 386 0104 DCF808C0 		ldr	ip, [ip, #8]
+ 210:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   stabilization_rate_fb_cmd.q = stabilization_rate_gain.q * _error.q +
+ 387              		.loc 1 210 0
+ 388 0108 3248     		ldr	r0, .L30+32
+ 389              		.loc 1 214 0
+ 390 010a 07FB0CF7 		mul	r7, r7, ip
+ 211:firmwares/rotorcraft/stabilization/stabilization_rate.c ****     OFFSET_AND_ROUND2((stabilization_rate_igain.q  * stabilization_rate_sum_err.q), 10);
+ 391              		.loc 1 211 0
+ 392 010e 09F5007A 		add	sl, r9, #512
+ 210:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   stabilization_rate_fb_cmd.q = stabilization_rate_gain.q * _error.q +
+ 393              		.loc 1 210 0
+ 394 0112 D0F804B0 		ldr	fp, [r0, #4]
+ 211:firmwares/rotorcraft/stabilization/stabilization_rate.c ****     OFFSET_AND_ROUND2((stabilization_rate_igain.q  * stabilization_rate_sum_err.q), 10);
+ 395              		.loc 1 211 0
+ 396 0116 AAEBD979 		sub	r9, sl, r9, lsr #31
+ 397 011a 4FEAA929 		asr	r9, r9, #10
+ 210:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   stabilization_rate_fb_cmd.q = stabilization_rate_gain.q * _error.q +
+ 398              		.loc 1 210 0
+ 399 011e 0BFB0696 		mla	r6, fp, r6, r9
+ 400              	.LVL20:
+ 401              		.loc 1 214 0
+ 402 0122 07F50079 		add	r9, r7, #512
+ 213:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   stabilization_rate_fb_cmd.r = stabilization_rate_gain.r * _error.r +
+ 403              		.loc 1 213 0
+ 404 0126 D0F808C0 		ldr	ip, [r0, #8]
+ 405              		.loc 1 214 0
+ 406 012a A9EBD777 		sub	r7, r9, r7, lsr #31
+ 407 012e BF12     		asrs	r7, r7, #10
+ 213:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   stabilization_rate_fb_cmd.r = stabilization_rate_gain.r * _error.r +
+ 408              		.loc 1 213 0
+ 409 0130 0CFB0575 		mla	r5, ip, r5, r7
+ 410              	.LVL21:
+ 208:firmwares/rotorcraft/stabilization/stabilization_rate.c ****     OFFSET_AND_ROUND2((stabilization_rate_igain.p  * stabilization_rate_sum_err.p), 10);
+ 411              		.loc 1 208 0
+ 412 0134 08F50077 		add	r7, r8, #512
+ 207:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   stabilization_rate_fb_cmd.p = stabilization_rate_gain.p * _error.p +
+ 413              		.loc 1 207 0
+ 414 0138 0068     		ldr	r0, [r0, #0]
+ 208:firmwares/rotorcraft/stabilization/stabilization_rate.c ****     OFFSET_AND_ROUND2((stabilization_rate_igain.p  * stabilization_rate_sum_err.p), 10);
+ 415              		.loc 1 208 0
+ 416 013a A7EBD878 		sub	r8, r7, r8, lsr #31
+ 417 013e 4FEAA828 		asr	r8, r8, #10
+ 207:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   stabilization_rate_fb_cmd.p = stabilization_rate_gain.p * _error.p +
+ 418              		.loc 1 207 0
+ 419 0142 00FB0484 		mla	r4, r0, r4, r8
+ 420              	.LVL22:
+ 215:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+ 216:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   stabilization_rate_fb_cmd.p = stabilization_rate_fb_cmd.p >> 11;
+ 421              		.loc 1 216 0
+ 422 0146 2448     		ldr	r0, .L30+36
+ 423 0148 E412     		asrs	r4, r4, #11
+ 217:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   stabilization_rate_fb_cmd.q = stabilization_rate_fb_cmd.q >> 11;
+ 424              		.loc 1 217 0
+ 425 014a F612     		asrs	r6, r6, #11
+ 218:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   stabilization_rate_fb_cmd.r = stabilization_rate_fb_cmd.r >> 11;
+ 426              		.loc 1 218 0
+ 427 014c ED12     		asrs	r5, r5, #11
+ 216:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   stabilization_rate_fb_cmd.p = stabilization_rate_fb_cmd.p >> 11;
+ 428              		.loc 1 216 0
+ 429 014e 0460     		str	r4, [r0, #0]
+ 217:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   stabilization_rate_fb_cmd.q = stabilization_rate_fb_cmd.q >> 11;
+ 430              		.loc 1 217 0
+ 431 0150 4660     		str	r6, [r0, #4]
+ 432              		.loc 1 218 0
+ 433 0152 8560     		str	r5, [r0, #8]
+ 219:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+ 220:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   /* sum to final command */
+ 221:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   stabilization_cmd[COMMAND_ROLL]  = stabilization_rate_ff_cmd.p + stabilization_rate_fb_cmd.p;
+ 434              		.loc 1 221 0
+ 435 0154 0919     		adds	r1, r1, r4
+ 436 0156 2148     		ldr	r0, .L30+40
+ 222:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   stabilization_cmd[COMMAND_PITCH] = stabilization_rate_ff_cmd.q + stabilization_rate_fb_cmd.q;
+ 223:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   stabilization_cmd[COMMAND_YAW]   = stabilization_rate_ff_cmd.r + stabilization_rate_fb_cmd.r;
+ 437              		.loc 1 223 0
+ 438 0158 5B19     		adds	r3, r3, r5
+ 222:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   stabilization_cmd[COMMAND_PITCH] = stabilization_rate_ff_cmd.q + stabilization_rate_fb_cmd.q;
+ 439              		.loc 1 222 0
+ 440 015a 9219     		adds	r2, r2, r6
+ 224:firmwares/rotorcraft/stabilization/stabilization_rate.c **** 
+ 225:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   /* bound the result */
+ 226:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   BoundAbs(stabilization_cmd[COMMAND_ROLL], MAX_PPRZ);
+ 441              		.loc 1 226 0
+ 442 015c B1F5165F 		cmp	r1, #9600
+ 223:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   stabilization_cmd[COMMAND_YAW]   = stabilization_rate_ff_cmd.r + stabilization_rate_fb_cmd.r;
+ 443              		.loc 1 223 0
+ 444 0160 8360     		str	r3, [r0, #8]
+ 221:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   stabilization_cmd[COMMAND_ROLL]  = stabilization_rate_ff_cmd.p + stabilization_rate_fb_cmd.p;
+ 445              		.loc 1 221 0
+ 446 0162 0160     		str	r1, [r0, #0]
+ 222:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   stabilization_cmd[COMMAND_PITCH] = stabilization_rate_ff_cmd.q + stabilization_rate_fb_cmd.q;
+ 447              		.loc 1 222 0
+ 448 0164 4260     		str	r2, [r0, #4]
+ 449 0166 0346     		mov	r3, r0
+ 450              		.loc 1 226 0
+ 451 0168 02DD     		ble	.L22
+ 452              		.loc 1 226 0 is_stmt 0 discriminator 1
+ 453 016a 4FF41651 		mov	r1, #9600
+ 454 016e 03E0     		b	.L28
+ 455              	.L22:
+ 456              		.loc 1 226 0 discriminator 2
+ 457 0170 11F5165F 		cmn	r1, #9600
+ 458 0174 01DA     		bge	.L23
+ 459              		.loc 1 226 0 discriminator 3
+ 460 0176 1A49     		ldr	r1, .L30+44
+ 461              	.L28:
+ 462 0178 1960     		str	r1, [r3, #0]
+ 463              	.L23:
+ 227:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   BoundAbs(stabilization_cmd[COMMAND_PITCH], MAX_PPRZ);
+ 464              		.loc 1 227 0 is_stmt 1
+ 465 017a B2F5165F 		cmp	r2, #9600
+ 466 017e 02DD     		ble	.L24
+ 467              		.loc 1 227 0 is_stmt 0 discriminator 1
+ 468 0180 4FF41652 		mov	r2, #9600
+ 469 0184 03E0     		b	.L29
+ 470              	.L24:
+ 471              		.loc 1 227 0 discriminator 2
+ 472 0186 12F5165F 		cmn	r2, #9600
+ 473 018a 01DA     		bge	.L25
+ 474              		.loc 1 227 0 discriminator 3
+ 475 018c 144A     		ldr	r2, .L30+44
+ 476              	.L29:
+ 477 018e 5A60     		str	r2, [r3, #4]
+ 478              	.L25:
+ 228:firmwares/rotorcraft/stabilization/stabilization_rate.c ****   BoundAbs(stabilization_cmd[COMMAND_YAW], MAX_PPRZ);
+ 479              		.loc 1 228 0 is_stmt 1
+ 480 0190 9B68     		ldr	r3, [r3, #8]
+ 481 0192 124A     		ldr	r2, .L30+40
+ 482 0194 B3F5165F 		cmp	r3, #9600
+ 483 0198 04DD     		ble	.L26
+ 484              		.loc 1 228 0 is_stmt 0 discriminator 1
+ 485 019a 4FF41653 		mov	r3, #9600
+ 486 019e 9360     		str	r3, [r2, #8]
+ 487 01a0 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, sl, fp, pc}
+ 488              	.L26:
+ 489              		.loc 1 228 0 discriminator 2
+ 490 01a4 13F5165F 		cmn	r3, #9600
+ 491 01a8 BCBF     		itt	lt
+ 492 01aa 0D4B     		ldrlt	r3, .L30+44
+ 493 01ac 9360     		strlt	r3, [r2, #8]
+ 494 01ae BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, sl, fp, pc}
+ 495              	.L31:
+ 496 01b2 00BF     		.align	2
+ 497              	.L30:
+ 498 01b4 00000000 		.word	.LANCHOR0
+ 499 01b8 00000000 		.word	.LANCHOR4
+ 500 01bc 00000000 		.word	.LANCHOR5
+ 501 01c0 00000000 		.word	.LANCHOR3
+ 502 01c4 00000000 		.word	.LANCHOR7
+ 503 01c8 00000000 		.word	ahrs
+ 504 01cc 00000000 		.word	.LANCHOR6
+ 505 01d0 00F7C2FF 		.word	-4000000
+ 506 01d4 00000000 		.word	.LANCHOR1
+ 507 01d8 00000000 		.word	.LANCHOR8
+ 508 01dc 00000000 		.word	stabilization_cmd
+ 509 01e0 80DAFFFF 		.word	-9600
+ 510 01e4 00093D00 		.word	4000000
+ 511 01e8 00000000 		.word	.LANCHOR2
+ 512              		.cfi_endproc
+ 513              	.LFE35:
+ 515              		.global	stabilization_rate_ff_cmd
+ 516              		.global	stabilization_rate_fb_cmd
+ 517              		.global	stabilization_rate_sum_err
+ 518              		.global	stabilization_rate_refdot
+ 519              		.global	stabilization_rate_ref
+ 520              		.global	stabilization_rate_ddgain
+ 521              		.global	stabilization_rate_igain
+ 522              		.global	stabilization_rate_gain
+ 523              		.global	stabilization_rate_sp
+ 524              		.section	.bss.stabilization_rate_sum_err,"aw",%nobits
+ 525              		.align	2
+ 526              		.set	.LANCHOR6,. + 0
+ 529              	stabilization_rate_sum_err:
+ 530 0000 00000000 		.space	12
+ 530      00000000 
+ 530      00000000 
+ 531              		.section	.bss.stabilization_rate_ff_cmd,"aw",%nobits
+ 532              		.align	2
+ 533              		.set	.LANCHOR7,. + 0
+ 536              	stabilization_rate_ff_cmd:
+ 537 0000 00000000 		.space	12
+ 537      00000000 
+ 537      00000000 
+ 538              		.section	.bss.stabilization_rate_igain,"aw",%nobits
+ 539              		.align	2
+ 540              		.set	.LANCHOR2,. + 0
+ 543              	stabilization_rate_igain:
+ 544 0000 00000000 		.space	12
+ 544      00000000 
+ 544      00000000 
+ 545              		.section	.bss.stabilization_rate_refdot,"aw",%nobits
+ 546              		.align	2
+ 547              		.set	.LANCHOR5,. + 0
+ 550              	stabilization_rate_refdot:
+ 551 0000 00000000 		.space	12
+ 551      00000000 
+ 551      00000000 
+ 552              		.section	.bss.stabilization_rate_ref,"aw",%nobits
+ 553              		.align	2
+ 554              		.set	.LANCHOR4,. + 0
+ 557              	stabilization_rate_ref:
+ 558 0000 00000000 		.space	12
+ 558      00000000 
+ 558      00000000 
+ 559              		.section	.bss.stabilization_rate_gain,"aw",%nobits
+ 560              		.align	2
+ 561              		.set	.LANCHOR1,. + 0
+ 564              	stabilization_rate_gain:
+ 565 0000 00000000 		.space	12
+ 565      00000000 
+ 565      00000000 
+ 566              		.section	.bss.stabilization_rate_fb_cmd,"aw",%nobits
+ 567              		.align	2
+ 568              		.set	.LANCHOR8,. + 0
+ 571              	stabilization_rate_fb_cmd:
+ 572 0000 00000000 		.space	12
+ 572      00000000 
+ 572      00000000 
+ 573              		.section	.bss.stabilization_rate_ddgain,"aw",%nobits
+ 574              		.align	2
+ 575              		.set	.LANCHOR3,. + 0
+ 578              	stabilization_rate_ddgain:
+ 579 0000 00000000 		.space	12
+ 579      00000000 
+ 579      00000000 
+ 580              		.section	.bss.stabilization_rate_sp,"aw",%nobits
+ 581              		.align	2
+ 582              		.set	.LANCHOR0,. + 0
+ 585              	stabilization_rate_sp:
+ 586 0000 00000000 		.space	12
+ 586      00000000 
+ 586      00000000 
+ 587              		.text
+ 588              	.Letext0:
+ 589              		.file 2 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
+ 590              		.file 3 "/home/uav/paparazzi/sw/include/std.h"
+ 591              		.file 4 "./math/pprz_algebra_int.h"
+ 592              		.file 5 "./subsystems/ahrs.h"
+ 593              		.file 6 "./subsystems/imu.h"
+ 594              		.file 7 "./subsystems/imu/imu_aspirin2.h"
+ 595              		.file 8 "./paparazzi.h"
+ 596              		.file 9 "./subsystems/radio_control.h"
+ 597              		.file 10 "./firmwares/rotorcraft/stabilization/stabilization_rate.h"
+ 598              		.file 11 "firmwares/rotorcraft/stabilization/stabilization_attitude_ref_int.h"
+ 599              		.file 12 "./firmwares/rotorcraft/stabilization.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 stabilization_rate.c
+     /tmp/ccf0kwxO.s:18     .text.stabilization_rate_init:0000000000000000 $t
+     /tmp/ccf0kwxO.s:23     .text.stabilization_rate_init:0000000000000000 stabilization_rate_init
+     /tmp/ccf0kwxO.s:77     .text.stabilization_rate_init:000000000000004c $d
+     /tmp/ccf0kwxO.s:88     .text.stabilization_rate_read_rc:0000000000000000 $t
+     /tmp/ccf0kwxO.s:93     .text.stabilization_rate_read_rc:0000000000000000 stabilization_rate_read_rc
+     /tmp/ccf0kwxO.s:175    .text.stabilization_rate_read_rc:0000000000000088 $d
+     /tmp/ccf0kwxO.s:181    .text.stabilization_rate_enter:0000000000000000 $t
+     /tmp/ccf0kwxO.s:186    .text.stabilization_rate_enter:0000000000000000 stabilization_rate_enter
+     /tmp/ccf0kwxO.s:213    .text.stabilization_rate_enter:000000000000001c $d
+     /tmp/ccf0kwxO.s:220    .text.stabilization_rate_run:0000000000000000 $t
+     /tmp/ccf0kwxO.s:225    .text.stabilization_rate_run:0000000000000000 stabilization_rate_run
+     /tmp/ccf0kwxO.s:498    .text.stabilization_rate_run:00000000000001b4 $d
+     /tmp/ccf0kwxO.s:536    .bss.stabilization_rate_ff_cmd:0000000000000000 stabilization_rate_ff_cmd
+     /tmp/ccf0kwxO.s:571    .bss.stabilization_rate_fb_cmd:0000000000000000 stabilization_rate_fb_cmd
+     /tmp/ccf0kwxO.s:529    .bss.stabilization_rate_sum_err:0000000000000000 stabilization_rate_sum_err
+     /tmp/ccf0kwxO.s:550    .bss.stabilization_rate_refdot:0000000000000000 stabilization_rate_refdot
+     /tmp/ccf0kwxO.s:557    .bss.stabilization_rate_ref:0000000000000000 stabilization_rate_ref
+     /tmp/ccf0kwxO.s:578    .bss.stabilization_rate_ddgain:0000000000000000 stabilization_rate_ddgain
+     /tmp/ccf0kwxO.s:543    .bss.stabilization_rate_igain:0000000000000000 stabilization_rate_igain
+     /tmp/ccf0kwxO.s:564    .bss.stabilization_rate_gain:0000000000000000 stabilization_rate_gain
+     /tmp/ccf0kwxO.s:585    .bss.stabilization_rate_sp:0000000000000000 stabilization_rate_sp
+     /tmp/ccf0kwxO.s:525    .bss.stabilization_rate_sum_err:0000000000000000 $d
+     /tmp/ccf0kwxO.s:532    .bss.stabilization_rate_ff_cmd:0000000000000000 $d
+     /tmp/ccf0kwxO.s:539    .bss.stabilization_rate_igain:0000000000000000 $d
+     /tmp/ccf0kwxO.s:546    .bss.stabilization_rate_refdot:0000000000000000 $d
+     /tmp/ccf0kwxO.s:553    .bss.stabilization_rate_ref:0000000000000000 $d
+     /tmp/ccf0kwxO.s:560    .bss.stabilization_rate_gain:0000000000000000 $d
+     /tmp/ccf0kwxO.s:567    .bss.stabilization_rate_fb_cmd:0000000000000000 $d
+     /tmp/ccf0kwxO.s:574    .bss.stabilization_rate_ddgain:0000000000000000 $d
+     /tmp/ccf0kwxO.s:581    .bss.stabilization_rate_sp:0000000000000000 $d
+                     .debug_frame:0000000000000010 $d
+
+UNDEFINED SYMBOLS
+radio_control
+ahrs
+stabilization_cmd

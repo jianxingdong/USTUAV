@@ -14,6 +14,7 @@
 
 // For centripedal corrections
 #include "subsystems/gps.h"
+#include "subsystems/ahrs.h"
 
 // Telemetry
 #ifndef DOWNLINK_DEVICE
@@ -98,3 +99,7 @@ void ins_periodic_task( void )
   // Downlink Send
 }
 
+void ahrs_update_gps( void )
+{
+
+}

@@ -1,4 +1,4 @@
-/* Generated from /home/neil/paparazzi/conf/xsens_MTi-G.xml */
+/* Generated from /home/uav/paparazzi/conf/xsens_MTi-G.xml */
 /* Please DO NOT EDIT */
 
 #define XSENS_START 0xFA

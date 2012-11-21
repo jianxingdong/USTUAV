@@ -1,0 +1,583 @@
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/main.o: firmwares/rotorcraft/main.c mcu.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_arch.h \
+ mcu_periph/sys_time.h /home/uav/paparazzi/sw/include/std.h \
+ boards/lisa_m_2.0.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_periph/sys_time_arch.h \
+ led.h /home/uav/paparazzi/sw/airborne/arch/stm32/led_hw.h \
+ subsystems/datalink/downlink.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/modules.h \
+ /home/uav/paparazzi/var/include/messages.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/airframe.h \
+ subsystems/datalink/pprz_transport.h subsystems/datalink/datalink.h \
+ /home/uav/paparazzi/var/include/dl_protocol.h \
+ subsystems/datalink/transport.h subsystems/datalink/xbee.h \
+ subsystems/datalink/xbee24.h firmwares/rotorcraft/telemetry.h \
+ mcu_periph/uart.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_periph/uart_arch.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/periodic_telemetry.h \
+ subsystems/radio_control.h paparazzi.h \
+ subsystems/radio_control/spektrum.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/subsystems/radio_control/spektrum_arch.h \
+ firmwares/rotorcraft/autopilot.h subsystems/ins.h \
+ math/pprz_geodetic_int.h math/pprz_geodetic.h math/pprz_algebra_int.h \
+ math/pprz_algebra.h math/pprz_trig_int.h math/pprz_algebra_int.h \
+ math/pprz_algebra_float.h math/pprz_algebra.h \
+ firmwares/rotorcraft/guidance.h \
+ firmwares/rotorcraft/guidance/guidance_h.h \
+ firmwares/rotorcraft/guidance/guidance_h_ref.h \
+ firmwares/rotorcraft/guidance/guidance_v.h \
+ firmwares/rotorcraft/guidance/guidance_v_ref.h \
+ firmwares/rotorcraft/guidance/guidance_v_adpt.h \
+ firmwares/rotorcraft/actuators.h subsystems/electrical.h \
+ subsystems/imu.h subsystems/imu/imu_aspirin2.h subsystems/gps.h \
+ subsystems/gps/gps_ubx.h /home/uav/paparazzi/var/include/ubx_protocol.h \
+ subsystems/ahrs.h subsystems/ahrs/ahrs_int_cmpl_quat.h mcu_periph/i2c.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_periph/i2c_arch.h \
+ subsystems/sensors/baro.h boards/lisa_m/baro_board.h \
+ firmwares/rotorcraft/stabilization.h \
+ firmwares/rotorcraft/stabilization/stabilization_none.h \
+ firmwares/rotorcraft/stabilization/stabilization_rate.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_int.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref_quat_int.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref_int.h \
+ subsystems/ahrs/ahrs_aligner.h subsystems/ins/vf_float.h \
+ firmwares/rotorcraft/navigation.h math/pprz_geodetic_float.h \
+ math/pprz_algebra_float.h subsystems/navigation/common_flight_plan.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h \
+ firmwares/rotorcraft/autopilot.h \
+ firmwares/rotorcraft/guidance/guidance_h.h \
+ firmwares/rotorcraft/guidance/guidance_v.h \
+ firmwares/rotorcraft/navigation.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude.h \
+ firmwares/rotorcraft/stabilization/stabilization_rate.h \
+ subsystems/settings.h firmwares/rotorcraft/commands.h \
+ firmwares/rotorcraft/main.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/mcu.o: mcu.c mcu.h /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_arch.h \
+ mcu_periph/sys_time.h /home/uav/paparazzi/sw/include/std.h \
+ boards/lisa_m_2.0.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_periph/sys_time_arch.h \
+ mcu_periph/sys_time.h led.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/led_hw.h \
+ subsystems/radio_control.h led.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/airframe.h paparazzi.h \
+ subsystems/radio_control/spektrum.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/subsystems/radio_control/spektrum_arch.h \
+ mcu_periph/uart.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_periph/uart_arch.h \
+ mcu_periph/i2c.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_periph/i2c_arch.h \
+ mcu_periph/i2c.h mcu_periph/adc.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_periph/adc_arch.h \
+ mcu_periph/spi.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_periph/spi_arch.h \
+ mcu_periph/spi.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/mcu_arch.o: arch/stm32/mcu_arch.c mcu.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_arch.h \
+ boards/lisa_m_2.0.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/pprz_geodetic_int.o: math/pprz_geodetic_int.c math/pprz_geodetic_int.h \
+ math/pprz_geodetic.h /home/uav/paparazzi/sw/include/std.h \
+ math/pprz_algebra_int.h math/pprz_algebra.h math/pprz_trig_int.h \
+ math/pprz_algebra_int.h math/pprz_geodetic_float.h \
+ math/pprz_algebra_float.h math/pprz_algebra.h \
+ math/pprz_geodetic_double.h math/pprz_algebra_double.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/pprz_geodetic_float.o: math/pprz_geodetic_float.c \
+ math/pprz_geodetic_float.h math/pprz_geodetic.h \
+ math/pprz_algebra_float.h math/pprz_algebra.h \
+ /home/uav/paparazzi/sw/include/std.h math/pprz_geodetic_double.h \
+ math/pprz_algebra_double.h math/pprz_geodetic_utm.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/pprz_geodetic_double.o: math/pprz_geodetic_double.c \
+ math/pprz_geodetic_double.h math/pprz_geodetic.h \
+ math/pprz_algebra_double.h math/pprz_algebra.h \
+ /home/uav/paparazzi/sw/include/std.h math/pprz_algebra_float.h \
+ math/pprz_geodetic_utm.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/pprz_trig_int.o: math/pprz_trig_int.c math/pprz_trig_int.h \
+ /home/uav/paparazzi/sw/include/std.h math/pprz_algebra_int.h \
+ math/pprz_algebra.h math/pprz_trig_int.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/plug_sys.o: lisa/plug_sys.c
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/stm32_exceptions.o: arch/stm32/stm32_exceptions.c \
+ arch/stm32/stm32_exceptions.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/stm32_vector_table.o: arch/stm32/stm32_vector_table.c \
+ arch/stm32/stm32_vector_table.h arch/stm32/stm32_exceptions.h \
+ mcu_periph/sys_time.h /home/uav/paparazzi/sw/include/std.h \
+ boards/lisa_m_2.0.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_periph/sys_time_arch.h \
+ mcu_periph/uart.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_periph/uart_arch.h \
+ arch/stm32/mcu_periph/i2c_arch.h mcu_periph/i2c.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_periph/i2c_arch.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/led_hw.o: arch/stm32/led_hw.c led.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/led_hw.h boards/lisa_m_2.0.h \
+ /home/uav/paparazzi/sw/include/std.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/sys_time.o: mcu_periph/sys_time.c mcu_periph/sys_time.h \
+ /home/uav/paparazzi/sw/include/std.h boards/lisa_m_2.0.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_periph/sys_time_arch.h \
+ mcu.h /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_arch.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/sys_time_arch.o: arch/stm32/mcu_periph/sys_time_arch.c \
+ mcu_periph/sys_time.h /home/uav/paparazzi/sw/include/std.h \
+ boards/lisa_m_2.0.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_periph/sys_time_arch.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/stm32_vector_table.h led.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/led_hw.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/settings.o: subsystems/settings.c subsystems/settings.h \
+ /home/uav/paparazzi/sw/include/std.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h \
+ firmwares/rotorcraft/autopilot.h led.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/led_hw.h boards/lisa_m_2.0.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/airframe.h \
+ subsystems/ins.h math/pprz_geodetic_int.h math/pprz_geodetic.h \
+ math/pprz_algebra_int.h math/pprz_algebra.h math/pprz_trig_int.h \
+ math/pprz_algebra_int.h math/pprz_algebra_float.h math/pprz_algebra.h \
+ firmwares/rotorcraft/guidance/guidance_h.h \
+ firmwares/rotorcraft/guidance/guidance_h_ref.h \
+ firmwares/rotorcraft/guidance/guidance_v.h \
+ firmwares/rotorcraft/guidance/guidance_v_ref.h \
+ firmwares/rotorcraft/guidance/guidance_v_adpt.h paparazzi.h \
+ firmwares/rotorcraft/navigation.h math/pprz_geodetic_float.h \
+ math/pprz_algebra_float.h subsystems/navigation/common_flight_plan.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_int.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref_quat_int.h \
+ firmwares/rotorcraft/stabilization.h \
+ firmwares/rotorcraft/stabilization/stabilization_none.h \
+ firmwares/rotorcraft/stabilization/stabilization_rate.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref_int.h \
+ subsystems/ahrs.h subsystems/ahrs/ahrs_int_cmpl_quat.h \
+ firmwares/rotorcraft/stabilization/stabilization_rate.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/modules.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/periodic_telemetry.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/settings_arch.o: arch/stm32/subsystems/settings_arch.c \
+ subsystems/settings.h /home/uav/paparazzi/sw/include/std.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h \
+ firmwares/rotorcraft/autopilot.h led.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/led_hw.h boards/lisa_m_2.0.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/airframe.h \
+ subsystems/ins.h math/pprz_geodetic_int.h math/pprz_geodetic.h \
+ math/pprz_algebra_int.h math/pprz_algebra.h math/pprz_trig_int.h \
+ math/pprz_algebra_int.h math/pprz_algebra_float.h math/pprz_algebra.h \
+ firmwares/rotorcraft/guidance/guidance_h.h \
+ firmwares/rotorcraft/guidance/guidance_h_ref.h \
+ firmwares/rotorcraft/guidance/guidance_v.h \
+ firmwares/rotorcraft/guidance/guidance_v_ref.h \
+ firmwares/rotorcraft/guidance/guidance_v_adpt.h paparazzi.h \
+ firmwares/rotorcraft/navigation.h math/pprz_geodetic_float.h \
+ math/pprz_algebra_float.h subsystems/navigation/common_flight_plan.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_int.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref_quat_int.h \
+ firmwares/rotorcraft/stabilization.h \
+ firmwares/rotorcraft/stabilization/stabilization_none.h \
+ firmwares/rotorcraft/stabilization/stabilization_rate.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref_int.h \
+ subsystems/ahrs.h subsystems/ahrs/ahrs_int_cmpl_quat.h \
+ firmwares/rotorcraft/stabilization/stabilization_rate.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/modules.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/periodic_telemetry.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/uart.o: mcu_periph/uart.c mcu_periph/uart.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_periph/uart_arch.h \
+ /home/uav/paparazzi/sw/include/std.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/uart_arch.o: arch/stm32/mcu_periph/uart_arch.c mcu_periph/uart.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_periph/uart_arch.h \
+ /home/uav/paparazzi/sw/include/std.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/pprz_baudrate.h \
+ boards/lisa_m_2.0.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/i2c.o: mcu_periph/i2c.c mcu_periph/i2c.h \
+ /home/uav/paparazzi/sw/include/std.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_periph/i2c_arch.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/i2c_arch.o: arch/stm32/mcu_periph/i2c_arch.c mcu_periph/i2c.h \
+ /home/uav/paparazzi/sw/include/std.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_periph/i2c_arch.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/my_debug_servo.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/commands.o: firmwares/rotorcraft/commands.c \
+ firmwares/rotorcraft/commands.h paparazzi.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/airframe.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/baro_board.o: boards/lisa_m/baro_board.c subsystems/sensors/baro.h \
+ /home/uav/paparazzi/sw/include/std.h boards/lisa_m_2.0.h \
+ boards/lisa_m/baro_board.h mcu_periph/i2c.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_periph/i2c_arch.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/adc_arch.o: arch/stm32/mcu_periph/adc_arch.c mcu_periph/adc.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_periph/adc_arch.h \
+ /home/uav/paparazzi/sw/include/std.h led.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/led_hw.h boards/lisa_m_2.0.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/electrical.o: subsystems/electrical.c subsystems/electrical.h \
+ /home/uav/paparazzi/sw/include/std.h mcu_periph/adc.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_periph/adc_arch.h \
+ commands.h paparazzi.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/airframe.h \
+ boards/lisa_m_2.0.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/autopilot.o: firmwares/rotorcraft/autopilot.c \
+ firmwares/rotorcraft/autopilot.h /home/uav/paparazzi/sw/include/std.h \
+ led.h /home/uav/paparazzi/sw/airborne/arch/stm32/led_hw.h \
+ boards/lisa_m_2.0.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/airframe.h \
+ subsystems/ins.h math/pprz_geodetic_int.h math/pprz_geodetic.h \
+ math/pprz_algebra_int.h math/pprz_algebra.h math/pprz_trig_int.h \
+ math/pprz_algebra_int.h math/pprz_algebra_float.h math/pprz_algebra.h \
+ subsystems/radio_control.h paparazzi.h \
+ subsystems/radio_control/spektrum.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/subsystems/radio_control/spektrum_arch.h \
+ firmwares/rotorcraft/commands.h firmwares/rotorcraft/navigation.h \
+ math/pprz_geodetic_float.h math/pprz_algebra_float.h \
+ subsystems/navigation/common_flight_plan.h \
+ firmwares/rotorcraft/guidance.h \
+ firmwares/rotorcraft/guidance/guidance_h.h \
+ firmwares/rotorcraft/guidance/guidance_h_ref.h \
+ firmwares/rotorcraft/guidance/guidance_v.h \
+ firmwares/rotorcraft/guidance/guidance_v_ref.h \
+ firmwares/rotorcraft/guidance/guidance_v_adpt.h \
+ firmwares/rotorcraft/stabilization.h \
+ firmwares/rotorcraft/stabilization/stabilization_none.h \
+ firmwares/rotorcraft/stabilization/stabilization_rate.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_int.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref_quat_int.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref_int.h \
+ subsystems/ahrs.h subsystems/ahrs/ahrs_int_cmpl_quat.h \
+ firmwares/rotorcraft/autopilot_arming_yaw.h \
+ firmwares/rotorcraft/autopilot_rc_helpers.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/stabilization.o: firmwares/rotorcraft/stabilization.c \
+ firmwares/rotorcraft/stabilization.h \
+ /home/uav/paparazzi/sw/include/std.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/airframe.h \
+ firmwares/rotorcraft/stabilization/stabilization_none.h \
+ math/pprz_algebra_int.h math/pprz_algebra.h math/pprz_trig_int.h \
+ firmwares/rotorcraft/stabilization/stabilization_rate.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_int.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref_quat_int.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref_int.h \
+ subsystems/ahrs.h math/pprz_algebra_float.h math/pprz_algebra.h \
+ subsystems/ahrs/ahrs_int_cmpl_quat.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/stabilization_none.o: \
+ firmwares/rotorcraft/stabilization/stabilization_none.c \
+ firmwares/rotorcraft/stabilization.h \
+ /home/uav/paparazzi/sw/include/std.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/airframe.h \
+ firmwares/rotorcraft/stabilization/stabilization_none.h \
+ math/pprz_algebra_int.h math/pprz_algebra.h math/pprz_trig_int.h \
+ firmwares/rotorcraft/stabilization/stabilization_rate.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_int.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref_quat_int.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref_int.h \
+ subsystems/ahrs.h math/pprz_algebra_float.h math/pprz_algebra.h \
+ subsystems/ahrs/ahrs_int_cmpl_quat.h subsystems/radio_control.h led.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/led_hw.h boards/lisa_m_2.0.h \
+ paparazzi.h subsystems/radio_control/spektrum.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/subsystems/radio_control/spektrum_arch.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/stabilization_rate.o: \
+ firmwares/rotorcraft/stabilization/stabilization_rate.c \
+ firmwares/rotorcraft/stabilization.h \
+ /home/uav/paparazzi/sw/include/std.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/airframe.h \
+ firmwares/rotorcraft/stabilization/stabilization_none.h \
+ math/pprz_algebra_int.h math/pprz_algebra.h math/pprz_trig_int.h \
+ firmwares/rotorcraft/stabilization/stabilization_rate.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_int.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref_quat_int.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref_int.h \
+ subsystems/ahrs.h math/pprz_algebra_float.h math/pprz_algebra.h \
+ subsystems/ahrs/ahrs_int_cmpl_quat.h subsystems/imu.h \
+ subsystems/imu/imu_aspirin2.h subsystems/radio_control.h led.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/led_hw.h boards/lisa_m_2.0.h \
+ paparazzi.h subsystems/radio_control/spektrum.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/subsystems/radio_control/spektrum_arch.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/guidance_h.o: firmwares/rotorcraft/guidance/guidance_h.c \
+ firmwares/rotorcraft/guidance/guidance_h.h math/pprz_algebra_int.h \
+ /home/uav/paparazzi/sw/include/std.h math/pprz_algebra.h \
+ math/pprz_trig_int.h firmwares/rotorcraft/guidance/guidance_h_ref.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/airframe.h \
+ firmwares/rotorcraft/stabilization.h \
+ firmwares/rotorcraft/stabilization/stabilization_none.h \
+ firmwares/rotorcraft/stabilization/stabilization_rate.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_int.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref_quat_int.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref_int.h \
+ subsystems/ahrs.h math/pprz_algebra_float.h math/pprz_algebra.h \
+ subsystems/ahrs/ahrs_int_cmpl_quat.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_rc_setpoint.h \
+ subsystems/radio_control.h led.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/led_hw.h boards/lisa_m_2.0.h \
+ paparazzi.h subsystems/radio_control/spektrum.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/subsystems/radio_control/spektrum_arch.h \
+ subsystems/ins.h math/pprz_geodetic_int.h math/pprz_geodetic.h \
+ math/pprz_algebra_int.h firmwares/rotorcraft/navigation.h \
+ math/pprz_geodetic_float.h math/pprz_algebra_float.h \
+ subsystems/navigation/common_flight_plan.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/guidance_v.o: firmwares/rotorcraft/guidance/guidance_v.c \
+ firmwares/rotorcraft/guidance/guidance_v.h \
+ /home/uav/paparazzi/sw/include/std.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/airframe.h \
+ firmwares/rotorcraft/guidance/guidance_v_ref.h math/pprz_algebra.h \
+ math/pprz_algebra_int.h math/pprz_trig_int.h \
+ firmwares/rotorcraft/guidance/guidance_v_adpt.h paparazzi.h \
+ subsystems/radio_control.h led.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/led_hw.h boards/lisa_m_2.0.h \
+ subsystems/radio_control/spektrum.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/subsystems/radio_control/spektrum_arch.h \
+ firmwares/rotorcraft/stabilization.h \
+ firmwares/rotorcraft/stabilization/stabilization_none.h \
+ firmwares/rotorcraft/stabilization/stabilization_rate.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_int.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref_quat_int.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref_int.h \
+ subsystems/ahrs.h math/pprz_algebra_float.h math/pprz_algebra.h \
+ subsystems/ahrs/ahrs_int_cmpl_quat.h firmwares/rotorcraft/navigation.h \
+ math/pprz_geodetic_int.h math/pprz_geodetic.h math/pprz_algebra_int.h \
+ math/pprz_geodetic_float.h math/pprz_algebra_float.h \
+ subsystems/navigation/common_flight_plan.h subsystems/ins.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/ins.o: subsystems/ins.c subsystems/ins.h \
+ /home/uav/paparazzi/sw/include/std.h math/pprz_geodetic_int.h \
+ math/pprz_geodetic.h math/pprz_algebra_int.h math/pprz_algebra.h \
+ math/pprz_trig_int.h math/pprz_algebra_int.h math/pprz_algebra_float.h \
+ math/pprz_algebra.h subsystems/imu.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/airframe.h \
+ subsystems/imu/imu_aspirin2.h subsystems/sensors/baro.h \
+ boards/lisa_m_2.0.h boards/lisa_m/baro_board.h mcu_periph/i2c.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_periph/i2c_arch.h \
+ subsystems/gps.h subsystems/gps/gps_ubx.h mcu_periph/uart.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_periph/uart_arch.h \
+ /home/uav/paparazzi/var/include/ubx_protocol.h subsystems/ahrs.h \
+ subsystems/ahrs/ahrs_int_cmpl_quat.h subsystems/ins/vf_float.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/flight_plan.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/modules.h \
+ firmwares/rotorcraft/autopilot.h led.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/led_hw.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/vf_float.o: subsystems/ins/vf_float.c subsystems/ins/vf_float.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/navigation.o: firmwares/rotorcraft/navigation.c \
+ firmwares/rotorcraft/navigation.h /home/uav/paparazzi/sw/include/std.h \
+ math/pprz_geodetic_int.h math/pprz_geodetic.h math/pprz_algebra_int.h \
+ math/pprz_algebra.h math/pprz_trig_int.h math/pprz_algebra_int.h \
+ math/pprz_geodetic_float.h math/pprz_algebra_float.h math/pprz_algebra.h \
+ subsystems/navigation/common_flight_plan.h pprz_debug.h subsystems/gps.h \
+ subsystems/gps/gps_ubx.h mcu_periph/uart.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_periph/uart_arch.h \
+ /home/uav/paparazzi/var/include/ubx_protocol.h subsystems/ins.h \
+ math/pprz_algebra_float.h firmwares/rotorcraft/autopilot.h led.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/led_hw.h boards/lisa_m_2.0.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/airframe.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/modules.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/flight_plan.h \
+ firmwares/rotorcraft/autopilot.h subsystems/datalink/downlink.h \
+ /home/uav/paparazzi/var/include/messages.h \
+ subsystems/datalink/pprz_transport.h subsystems/datalink/datalink.h \
+ /home/uav/paparazzi/var/include/dl_protocol.h \
+ subsystems/datalink/transport.h subsystems/datalink/xbee.h \
+ subsystems/datalink/xbee24.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/common_flight_plan.o: subsystems/navigation/common_flight_plan.c \
+ subsystems/navigation/common_flight_plan.h \
+ /home/uav/paparazzi/sw/include/std.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/flight_plan.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/modules.h \
+ firmwares/rotorcraft/autopilot.h led.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/led_hw.h boards/lisa_m_2.0.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/airframe.h \
+ subsystems/ins.h math/pprz_geodetic_int.h math/pprz_geodetic.h \
+ math/pprz_algebra_int.h math/pprz_algebra.h math/pprz_trig_int.h \
+ math/pprz_algebra_int.h math/pprz_algebra_float.h math/pprz_algebra.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/radio_control.o: subsystems/radio_control.c subsystems/radio_control.h \
+ led.h /home/uav/paparazzi/sw/airborne/arch/stm32/led_hw.h \
+ boards/lisa_m_2.0.h /home/uav/paparazzi/sw/include/std.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/airframe.h paparazzi.h \
+ subsystems/radio_control/spektrum.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/subsystems/radio_control/spektrum_arch.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/spektrum.o: subsystems/radio_control/spektrum.c \
+ subsystems/radio_control/spektrum.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/subsystems/radio_control/spektrum_arch.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/spektrum_arch.o: arch/stm32/subsystems/radio_control/spektrum_arch.c \
+ subsystems/radio_control.h led.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/led_hw.h boards/lisa_m_2.0.h \
+ /home/uav/paparazzi/sw/include/std.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/airframe.h paparazzi.h \
+ subsystems/radio_control/spektrum.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/subsystems/radio_control/spektrum_arch.h \
+ mcu_periph/uart.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_periph/uart_arch.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/pprz_baudrate.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/supervision.o: firmwares/rotorcraft/actuators/supervision.c \
+ firmwares/rotorcraft/actuators/supervision.h \
+ /home/uav/paparazzi/sw/include/std.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/airframe.h paparazzi.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/actuators_pwm_supervision.o: \
+ firmwares/rotorcraft/actuators/actuators_pwm_supervision.c \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/airframe.h \
+ firmwares/rotorcraft/actuators.h /home/uav/paparazzi/sw/include/std.h \
+ firmwares/rotorcraft/commands.h paparazzi.h subsystems/radio_control.h \
+ led.h /home/uav/paparazzi/sw/airborne/arch/stm32/led_hw.h \
+ boards/lisa_m_2.0.h subsystems/radio_control/spektrum.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/subsystems/radio_control/spektrum_arch.h \
+ firmwares/rotorcraft/actuators/actuators_pwm_supervision.h \
+ firmwares/rotorcraft/actuators/supervision.h \
+ firmwares/rotorcraft/actuators/actuators_pwm.h \
+ firmwares/rotorcraft/actuators/arch/stm32/actuators_pwm_arch.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/actuators_pwm_arch.o: \
+ firmwares/rotorcraft/actuators/arch/stm32/actuators_pwm_arch.c \
+ firmwares/rotorcraft/actuators/actuators_pwm.h \
+ /home/uav/paparazzi/sw/include/std.h firmwares/rotorcraft/actuators.h \
+ boards/lisa_m_2.0.h \
+ firmwares/rotorcraft/actuators/arch/stm32/actuators_pwm_arch.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/downlink.o: subsystems/datalink/downlink.c \
+ /home/uav/paparazzi/sw/include/std.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/airframe.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/pprz_transport.o: subsystems/datalink/pprz_transport.c \
+ subsystems/datalink/pprz_transport.h \
+ /home/uav/paparazzi/sw/include/std.h subsystems/datalink/datalink.h \
+ /home/uav/paparazzi/var/include/dl_protocol.h \
+ subsystems/datalink/transport.h mcu_periph/uart.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_periph/uart_arch.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/datalink.o: firmwares/rotorcraft/datalink.c \
+ subsystems/datalink/datalink.h /home/uav/paparazzi/sw/include/std.h \
+ /home/uav/paparazzi/var/include/dl_protocol.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/modules.h \
+ /home/uav/paparazzi/var/include/messages.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/airframe.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/settings.h \
+ firmwares/rotorcraft/autopilot.h led.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/led_hw.h boards/lisa_m_2.0.h \
+ subsystems/ins.h math/pprz_geodetic_int.h math/pprz_geodetic.h \
+ math/pprz_algebra_int.h math/pprz_algebra.h math/pprz_trig_int.h \
+ math/pprz_algebra_int.h math/pprz_algebra_float.h math/pprz_algebra.h \
+ firmwares/rotorcraft/guidance/guidance_h.h \
+ firmwares/rotorcraft/guidance/guidance_h_ref.h \
+ firmwares/rotorcraft/guidance/guidance_v.h \
+ firmwares/rotorcraft/guidance/guidance_v_ref.h \
+ firmwares/rotorcraft/guidance/guidance_v_adpt.h paparazzi.h \
+ firmwares/rotorcraft/navigation.h math/pprz_geodetic_float.h \
+ math/pprz_algebra_float.h subsystems/navigation/common_flight_plan.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_int.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref_quat_int.h \
+ firmwares/rotorcraft/stabilization.h \
+ firmwares/rotorcraft/stabilization/stabilization_none.h \
+ firmwares/rotorcraft/stabilization/stabilization_rate.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref_int.h \
+ subsystems/ahrs.h subsystems/ahrs/ahrs_int_cmpl_quat.h \
+ firmwares/rotorcraft/stabilization/stabilization_rate.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/periodic_telemetry.h \
+ subsystems/datalink/downlink.h subsystems/datalink/pprz_transport.h \
+ subsystems/datalink/transport.h subsystems/datalink/xbee.h \
+ subsystems/datalink/xbee24.h mcu_periph/uart.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_periph/uart_arch.h \
+ firmwares/rotorcraft/navigation.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/telemetry.o: firmwares/rotorcraft/telemetry.c \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/periodic_telemetry.h \
+ /home/uav/paparazzi/sw/include/std.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/airframe.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/imu.o: subsystems/imu.c subsystems/imu.h math/pprz_algebra_int.h \
+ /home/uav/paparazzi/sw/include/std.h math/pprz_algebra.h \
+ math/pprz_trig_int.h math/pprz_algebra_float.h math/pprz_algebra.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/airframe.h \
+ subsystems/imu/imu_aspirin2.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/imu_aspirin2.o: subsystems/imu/imu_aspirin2.c subsystems/imu.h \
+ math/pprz_algebra_int.h /home/uav/paparazzi/sw/include/std.h \
+ math/pprz_algebra.h math/pprz_trig_int.h math/pprz_algebra_float.h \
+ math/pprz_algebra.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/airframe.h \
+ subsystems/imu/imu_aspirin2.h led.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/led_hw.h boards/lisa_m_2.0.h \
+ mcu_periph/spi.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_periph/spi_arch.h \
+ peripherals/mpu60X0.h peripherals/hmc58xx.h mcu_periph/i2c.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_periph/i2c_arch.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/spi_arch.o: arch/stm32/mcu_periph/spi_arch.c subsystems/imu.h \
+ math/pprz_algebra_int.h /home/uav/paparazzi/sw/include/std.h \
+ math/pprz_algebra.h math/pprz_trig_int.h math/pprz_algebra_float.h \
+ math/pprz_algebra.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/airframe.h \
+ subsystems/imu/imu_aspirin2.h mcu_periph/spi.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_periph/spi_arch.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/spi.o: mcu_periph/spi.c /home/uav/paparazzi/sw/include/std.h \
+ mcu_periph/spi.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_periph/spi_arch.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/gps.o: subsystems/gps.c subsystems/gps.h \
+ /home/uav/paparazzi/sw/include/std.h math/pprz_geodetic_int.h \
+ math/pprz_geodetic.h math/pprz_algebra_int.h math/pprz_algebra.h \
+ math/pprz_trig_int.h math/pprz_algebra_int.h subsystems/gps/gps_ubx.h \
+ mcu_periph/uart.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_periph/uart_arch.h \
+ /home/uav/paparazzi/var/include/ubx_protocol.h led.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/led_hw.h boards/lisa_m_2.0.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/gps_ubx.o: subsystems/gps/gps_ubx.c subsystems/gps.h \
+ /home/uav/paparazzi/sw/include/std.h math/pprz_geodetic_int.h \
+ math/pprz_geodetic.h math/pprz_algebra_int.h math/pprz_algebra.h \
+ math/pprz_trig_int.h math/pprz_algebra_int.h subsystems/gps/gps_ubx.h \
+ mcu_periph/uart.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_periph/uart_arch.h \
+ /home/uav/paparazzi/var/include/ubx_protocol.h led.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/led_hw.h boards/lisa_m_2.0.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/stabilization_attitude_ref_quat_int.o: \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref_quat_int.c \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/airframe.h \
+ firmwares/rotorcraft/stabilization.h \
+ /home/uav/paparazzi/sw/include/std.h \
+ firmwares/rotorcraft/stabilization/stabilization_none.h \
+ math/pprz_algebra_int.h math/pprz_algebra.h math/pprz_trig_int.h \
+ firmwares/rotorcraft/stabilization/stabilization_rate.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_int.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref_quat_int.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref_int.h \
+ subsystems/ahrs.h math/pprz_algebra_float.h math/pprz_algebra.h \
+ subsystems/ahrs/ahrs_int_cmpl_quat.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/stabilization_attitude_quat_int.o: \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_quat_int.c \
+ firmwares/rotorcraft/stabilization.h \
+ /home/uav/paparazzi/sw/include/std.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/airframe.h \
+ firmwares/rotorcraft/stabilization/stabilization_none.h \
+ math/pprz_algebra_int.h math/pprz_algebra.h math/pprz_trig_int.h \
+ firmwares/rotorcraft/stabilization/stabilization_rate.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_int.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref_quat_int.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_ref_int.h \
+ subsystems/ahrs.h math/pprz_algebra_float.h math/pprz_algebra.h \
+ subsystems/ahrs/ahrs_int_cmpl_quat.h \
+ firmwares/rotorcraft/stabilization/stabilization_attitude_rc_setpoint.h \
+ subsystems/radio_control.h led.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/led_hw.h boards/lisa_m_2.0.h \
+ paparazzi.h subsystems/radio_control/spektrum.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/subsystems/radio_control/spektrum_arch.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/ahrs.o: subsystems/ahrs.c subsystems/ahrs.h \
+ /home/uav/paparazzi/sw/include/std.h math/pprz_algebra_int.h \
+ math/pprz_algebra.h math/pprz_trig_int.h math/pprz_algebra_float.h \
+ math/pprz_algebra.h subsystems/ahrs/ahrs_int_cmpl_quat.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/ahrs_int_cmpl_quat.o: subsystems/ahrs/ahrs_int_cmpl_quat.c \
+ subsystems/ahrs/ahrs_int_cmpl_quat.h subsystems/ahrs.h \
+ /home/uav/paparazzi/sw/include/std.h math/pprz_algebra_int.h \
+ math/pprz_algebra.h math/pprz_trig_int.h math/pprz_algebra_float.h \
+ math/pprz_algebra.h subsystems/ahrs/ahrs_aligner.h \
+ subsystems/ahrs/ahrs_int_utils.h \
+ subsystems/ahrs/ahrs_magnetic_field_model.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/airframe.h \
+ subsystems/ahrs/ahrs_float_utils.h subsystems/imu.h \
+ subsystems/imu/imu_aspirin2.h subsystems/gps.h math/pprz_geodetic_int.h \
+ math/pprz_geodetic.h math/pprz_algebra_int.h subsystems/gps/gps_ubx.h \
+ mcu_periph/uart.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/mcu_periph/uart_arch.h \
+ /home/uav/paparazzi/var/include/ubx_protocol.h
+/home/uav/paparazzi/var/Quad_LisaM_2/ap/ahrs_aligner.o: subsystems/ahrs/ahrs_aligner.c \
+ subsystems/ahrs/ahrs_aligner.h /home/uav/paparazzi/sw/include/std.h \
+ math/pprz_algebra_int.h math/pprz_algebra.h math/pprz_trig_int.h \
+ subsystems/imu.h math/pprz_algebra_float.h math/pprz_algebra.h \
+ /home/uav/paparazzi/var/Quad_LisaM_2/generated/airframe.h \
+ subsystems/imu/imu_aspirin2.h led.h \
+ /home/uav/paparazzi/sw/airborne/arch/stm32/led_hw.h boards/lisa_m_2.0.h

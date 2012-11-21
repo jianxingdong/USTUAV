@@ -72,6 +72,7 @@ endif
 ifndef MODEM_PORT
 MODEM_PORT=UART2
 endif
+
 ifndef MODEM_BAUD
 MODEM_BAUD=B57600
 endif
