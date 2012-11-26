@@ -175,4 +175,8 @@
     <define name="HOME_RADIUS" value="90" unit="m"/>
   </section>
 
+  <modules>
+    <load name="gps_ubx_ucenter.xml"/>
+  </modules>
+
 </airframe>

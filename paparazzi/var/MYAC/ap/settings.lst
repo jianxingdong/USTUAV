@@ -86,17 +86,18 @@
   72              		.file 7 "./estimator.h"
   73              		.file 8 "firmwares/fixedwing/autopilot.h"
   74              		.file 9 "./subsystems/nav.h"
-  75              		.file 10 "/home/uav/paparazzi/var/MYAC/generated/periodic_telemetry.h"
-  76              		.file 11 "/home/uav/paparazzi/var/MYAC/generated/settings.h"
+  75              		.file 10 "/home/uav/paparazzi/var/MYAC/generated/modules.h"
+  76              		.file 11 "/home/uav/paparazzi/var/MYAC/generated/periodic_telemetry.h"
+  77              		.file 12 "/home/uav/paparazzi/var/MYAC/generated/settings.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 settings.c
-     /tmp/cckMuXDj.s:18     .text.settings_init:0000000000000000 $t
-     /tmp/cckMuXDj.s:23     .text.settings_init:0000000000000000 settings_init
-     /tmp/cckMuXDj.s:37     .text.settings_store:0000000000000000 $t
-     /tmp/cckMuXDj.s:42     .text.settings_store:0000000000000000 settings_store
-     /tmp/cckMuXDj.s:59     .bss.settings_store_now:0000000000000000 settings_store_now
-     /tmp/cckMuXDj.s:64     .bss.pers_settings:0000000000000000 pers_settings
-     /tmp/cckMuXDj.s:60     .bss.settings_store_now:0000000000000000 $d
+     /tmp/cc3OPGQX.s:18     .text.settings_init:0000000000000000 $t
+     /tmp/cc3OPGQX.s:23     .text.settings_init:0000000000000000 settings_init
+     /tmp/cc3OPGQX.s:37     .text.settings_store:0000000000000000 $t
+     /tmp/cc3OPGQX.s:42     .text.settings_store:0000000000000000 settings_store
+     /tmp/cc3OPGQX.s:59     .bss.settings_store_now:0000000000000000 settings_store_now
+     /tmp/cc3OPGQX.s:64     .bss.pers_settings:0000000000000000 pers_settings
+     /tmp/cc3OPGQX.s:60     .bss.settings_store_now:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 NO UNDEFINED SYMBOLS

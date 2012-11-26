@@ -6581,35 +6581,35 @@
  5151              		.set	.LANCHOR5,. + 0
  5154              	nav_circle_radians:
  5155 0000 00000000 		.space	4
- 5156              		.section	.bss.last_nav_altitude.4496,"aw",%nobits
+ 5156              		.section	.bss.nav_ground_speed_setpoint,"aw",%nobits
  5157              		.align	2
- 5158              		.set	.LANCHOR1,. + 0
- 5161              	last_nav_altitude.4496:
- 5162 0000 00000000 		.space	4
- 5163              		.section	.bss.nav_ground_speed_setpoint,"aw",%nobits
- 5164              		.align	2
- 5167              	nav_ground_speed_setpoint:
+ 5160              	nav_ground_speed_setpoint:
+ 5161 0000 00000000 		.space	4
+ 5162              		.section	.bss.nav_leg_progress,"aw",%nobits
+ 5163              		.align	2
+ 5164              		.set	.LANCHOR21,. + 0
+ 5167              	nav_leg_progress:
  5168 0000 00000000 		.space	4
- 5169              		.section	.bss.nav_leg_progress,"aw",%nobits
+ 5169              		.section	.data.nav_utm_north0,"aw",%progbits
  5170              		.align	2
- 5171              		.set	.LANCHOR21,. + 0
- 5174              	nav_leg_progress:
- 5175 0000 00000000 		.space	4
- 5176              		.section	.data.nav_utm_north0,"aw",%progbits
+ 5171              		.set	.LANCHOR31,. + 0
+ 5174              	nav_utm_north0:
+ 5175 0000 1B734900 		.word	4813595
+ 5176              		.section	.bss.last_nav_altitude.4515,"aw",%nobits
  5177              		.align	2
- 5178              		.set	.LANCHOR31,. + 0
- 5181              	nav_utm_north0:
- 5182 0000 1B734900 		.word	4813595
+ 5178              		.set	.LANCHOR1,. + 0
+ 5181              	last_nav_altitude.4515:
+ 5182 0000 00000000 		.space	4
  5183              		.section	.bss.dist2_to_wp,"aw",%nobits
  5184              		.align	2
  5185              		.set	.LANCHOR10,. + 0
  5188              	dist2_to_wp:
  5189 0000 00000000 		.space	4
- 5190              		.section	.bss.prescaler.4484,"aw",%nobits
- 5191              		.align	1
- 5192              		.set	.LANCHOR34,. + 0
- 5195              	prescaler.4484:
- 5196 0000 0000     		.space	2
+ 5190              		.section	.bss.nav_circle_radius,"aw",%nobits
+ 5191              		.align	2
+ 5192              		.set	.LANCHOR19,. + 0
+ 5195              	nav_circle_radius:
+ 5196 0000 00000000 		.space	4
  5197              		.section	.bss.nav_in_circle,"aw",%nobits
  5198              		.set	.LANCHOR6,. + 0
  5201              	nav_in_circle:
@@ -6667,59 +6667,59 @@
  5261 0084 0000E5C2 		.word	3269787648
  5262 0088 CD4C2243 		.word	1126321357
  5263 008c 00009642 		.word	1117126656
- 5264              		.section	.bss.dist2_to_home,"aw",%nobits
- 5265              		.align	2
- 5266              		.set	.LANCHOR27,. + 0
- 5269              	dist2_to_home:
- 5270 0000 00000000 		.space	4
- 5271              		.section	.bss.last_wp,"aw",%nobits
- 5272              		.set	.LANCHOR44,. + 0
- 5275              	last_wp:
- 5276 0000 00       		.space	1
- 5277              		.section	.bss.nav_oval_count,"aw",%nobits
- 5278              		.set	.LANCHOR42,. + 0
- 5281              	nav_oval_count:
- 5282 0000 00       		.space	1
- 5283              		.section	.bss.rc_pitch,"aw",%nobits
- 5284              		.align	2
- 5287              	rc_pitch:
- 5288 0000 00000000 		.space	4
- 5289              		.section	.bss.nav_ground_speed_pgain,"aw",%nobits
- 5290              		.align	2
- 5293              	nav_ground_speed_pgain:
- 5294 0000 00000000 		.space	4
- 5295              		.section	.bss.too_far_from_home,"aw",%nobits
- 5296              		.set	.LANCHOR28,. + 0
- 5299              	too_far_from_home:
- 5300 0000 00       		.space	1
- 5301              		.section	.bss.circle_bank,"aw",%nobits
- 5302              		.align	2
- 5303              		.set	.LANCHOR15,. + 0
- 5306              	circle_bank:
- 5307 0000 00000000 		.space	4
- 5308              		.section	.bss.nav_pitch,"aw",%nobits
+ 5264              		.section	.bss.prescaler.4503,"aw",%nobits
+ 5265              		.align	1
+ 5266              		.set	.LANCHOR34,. + 0
+ 5269              	prescaler.4503:
+ 5270 0000 0000     		.space	2
+ 5271              		.section	.bss.dist2_to_home,"aw",%nobits
+ 5272              		.align	2
+ 5273              		.set	.LANCHOR27,. + 0
+ 5276              	dist2_to_home:
+ 5277 0000 00000000 		.space	4
+ 5278              		.section	.bss.last_wp,"aw",%nobits
+ 5279              		.set	.LANCHOR44,. + 0
+ 5282              	last_wp:
+ 5283 0000 00       		.space	1
+ 5284              		.section	.bss.nav_oval_count,"aw",%nobits
+ 5285              		.set	.LANCHOR42,. + 0
+ 5288              	nav_oval_count:
+ 5289 0000 00       		.space	1
+ 5290              		.section	.bss.rc_pitch,"aw",%nobits
+ 5291              		.align	2
+ 5294              	rc_pitch:
+ 5295 0000 00000000 		.space	4
+ 5296              		.section	.bss.nav_ground_speed_pgain,"aw",%nobits
+ 5297              		.align	2
+ 5300              	nav_ground_speed_pgain:
+ 5301 0000 00000000 		.space	4
+ 5302              		.section	.bss.too_far_from_home,"aw",%nobits
+ 5303              		.set	.LANCHOR28,. + 0
+ 5306              	too_far_from_home:
+ 5307 0000 00       		.space	1
+ 5308              		.section	.bss.circle_bank,"aw",%nobits
  5309              		.align	2
- 5310              		.set	.LANCHOR9,. + 0
- 5313              	nav_pitch:
+ 5310              		.set	.LANCHOR15,. + 0
+ 5313              	circle_bank:
  5314 0000 00000000 		.space	4
- 5315              		.section	.data.nav_utm_east0,"aw",%progbits
+ 5315              		.section	.bss.nav_pitch,"aw",%nobits
  5316              		.align	2
- 5317              		.set	.LANCHOR30,. + 0
- 5320              	nav_utm_east0:
- 5321 0000 5D7F0500 		.word	360285
- 5322              		.section	.bss.horizontal_mode,"aw",%nobits
- 5323              		.set	.LANCHOR16,. + 0
- 5326              	horizontal_mode:
- 5327 0000 00       		.space	1
- 5328              		.section	.bss.nav_circle_trigo_qdr,"aw",%nobits
- 5329              		.align	2
- 5330              		.set	.LANCHOR14,. + 0
- 5333              	nav_circle_trigo_qdr:
- 5334 0000 00000000 		.space	4
- 5335              		.section	.bss.nav_circle_radius,"aw",%nobits
+ 5317              		.set	.LANCHOR9,. + 0
+ 5320              	nav_pitch:
+ 5321 0000 00000000 		.space	4
+ 5322              		.section	.data.nav_utm_east0,"aw",%progbits
+ 5323              		.align	2
+ 5324              		.set	.LANCHOR30,. + 0
+ 5327              	nav_utm_east0:
+ 5328 0000 5D7F0500 		.word	360285
+ 5329              		.section	.bss.horizontal_mode,"aw",%nobits
+ 5330              		.set	.LANCHOR16,. + 0
+ 5333              	horizontal_mode:
+ 5334 0000 00       		.space	1
+ 5335              		.section	.bss.nav_circle_trigo_qdr,"aw",%nobits
  5336              		.align	2
- 5337              		.set	.LANCHOR19,. + 0
- 5340              	nav_circle_radius:
+ 5337              		.set	.LANCHOR14,. + 0
+ 5340              	nav_circle_trigo_qdr:
  5341 0000 00000000 		.space	4
  5342              		.section	.bss.nav_survey_south,"aw",%nobits
  5343              		.align	2
@@ -6797,204 +6797,204 @@
  5437              		.file 22 "./subsystems/navigation/nav_survey_rectangle.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 nav.c
-     /tmp/ccWcx9Ob.s:20     .text.nav_set_altitude:0000000000000000 $t
-     /tmp/ccWcx9Ob.s:24     .text.nav_set_altitude:0000000000000000 nav_set_altitude
-     /tmp/ccWcx9Ob.s:64     .text.nav_set_altitude:000000000000002c $d
-     /tmp/ccWcx9Ob.s:72     .text.nav_init_stage:0000000000000000 $t
-     /tmp/ccWcx9Ob.s:77     .text.nav_init_stage:0000000000000000 nav_init_stage
-     /tmp/ccWcx9Ob.s:120    .text.nav_init_stage:0000000000000030 $d
-     /tmp/ccWcx9Ob.s:137    .text.nav_approaching_xy:0000000000000000 $t
-     /tmp/ccWcx9Ob.s:142    .text.nav_approaching_xy:0000000000000000 nav_approaching_xy
-     /tmp/ccWcx9Ob.s:255    .text.nav_approaching_xy:000000000000009c $d
-     /tmp/ccWcx9Ob.s:270    .text.fly_to_xy:0000000000000000 $t
-     /tmp/ccWcx9Ob.s:275    .text.fly_to_xy:0000000000000000 fly_to_xy
-     /tmp/ccWcx9Ob.s:528    .text.fly_to_xy:00000000000001a0 $d
-     /tmp/ccWcx9Ob.s:561    .text.nav_circle_XY:0000000000000000 $t
-     /tmp/ccWcx9Ob.s:566    .text.nav_circle_XY:0000000000000000 nav_circle_XY
-     /tmp/ccWcx9Ob.s:802    .text.nav_circle_XY:0000000000000190 $d
-     /tmp/ccWcx9Ob.s:821    .text.nav_circle_XY:00000000000001d4 $t
-     /tmp/ccWcx9Ob.s:984    .text.nav_circle_XY:0000000000000308 $d
-     /tmp/ccWcx9Ob.s:1002   .text.nav_route_xy:0000000000000000 $t
-     /tmp/ccWcx9Ob.s:1007   .text.nav_route_xy:0000000000000000 nav_route_xy
-     /tmp/ccWcx9Ob.s:1206   .text.nav_route_xy:0000000000000150 $d
-     /tmp/ccWcx9Ob.s:1222   .text.compute_dist2_to_home:0000000000000000 $t
-     /tmp/ccWcx9Ob.s:1227   .text.compute_dist2_to_home:0000000000000000 compute_dist2_to_home
-     /tmp/ccWcx9Ob.s:1291   .text.compute_dist2_to_home:000000000000004c $d
-     /tmp/ccWcx9Ob.s:1304   .text.nav_reset_reference:0000000000000000 $t
-     /tmp/ccWcx9Ob.s:1309   .text.nav_reset_reference:0000000000000000 nav_reset_reference
-     /tmp/ccWcx9Ob.s:1413   .text.nav_reset_reference:00000000000000a8 $d
-     /tmp/ccWcx9Ob.s:1431   .text.nav_update_waypoints_alt:0000000000000000 $t
-     /tmp/ccWcx9Ob.s:1436   .text.nav_update_waypoints_alt:0000000000000000 nav_update_waypoints_alt
-     /tmp/ccWcx9Ob.s:1480   .text.nav_update_waypoints_alt:000000000000002c $d
-     /tmp/ccWcx9Ob.s:1487   .text.common_nav_periodic_task_4Hz:0000000000000000 $t
-     /tmp/ccWcx9Ob.s:1492   .text.common_nav_periodic_task_4Hz:0000000000000000 common_nav_periodic_task_4Hz
-     /tmp/ccWcx9Ob.s:1524   .text.common_nav_periodic_task_4Hz:0000000000000024 $d
-     /tmp/ccWcx9Ob.s:1533   .text.nav_move_waypoint:0000000000000000 $t
-     /tmp/ccWcx9Ob.s:1538   .text.nav_move_waypoint:0000000000000000 nav_move_waypoint
-     /tmp/ccWcx9Ob.s:1665   .text.nav_move_waypoint:00000000000000b8 $d
-     /tmp/ccWcx9Ob.s:1674   .text.nav_home:0000000000000000 $t
-     /tmp/ccWcx9Ob.s:1679   .text.nav_home:0000000000000000 nav_home
-     /tmp/ccWcx9Ob.s:1725   .text.nav_home:000000000000003c $d
-     /tmp/ccWcx9Ob.s:1738   .text.nav_init:0000000000000000 $t
-     /tmp/ccWcx9Ob.s:1743   .text.nav_init:0000000000000000 nav_init
-     /tmp/ccWcx9Ob.s:1781   .text.nav_init:0000000000000028 $d
-     /tmp/ccWcx9Ob.s:1794   .text.nav_without_gps:0000000000000000 $t
-     /tmp/ccWcx9Ob.s:1799   .text.nav_without_gps:0000000000000000 nav_without_gps
-     /tmp/ccWcx9Ob.s:1831   .text.nav_without_gps:0000000000000024 $d
-     /tmp/ccWcx9Ob.s:1841   .text.nav_eight_init:0000000000000000 $t
-     /tmp/ccWcx9Ob.s:1846   .text.nav_eight_init:0000000000000000 nav_eight_init
-     /tmp/ccWcx9Ob.s:1862   .text.nav_eight_init:0000000000000008 $d
-     /tmp/ccWcx9Ob.s:1868   .text.nav_eight:0000000000000000 $t
-     /tmp/ccWcx9Ob.s:1873   .text.nav_eight:0000000000000000 nav_eight
-     /tmp/ccWcx9Ob.s:2194   .text.nav_eight:00000000000001ec $d
-     /tmp/ccWcx9Ob.s:2202   .text.nav_eight:00000000000001f8 $t
-     /tmp/ccWcx9Ob.s:2283   .text.nav_eight:0000000000000280 $d
-     /tmp/ccWcx9Ob.s:2297   .text.nav_eight:00000000000002ac $t
-     /tmp/ccWcx9Ob.s:2676   .text.nav_eight:0000000000000500 $d
-     /tmp/ccWcx9Ob.s:2689   .text.nav_eight:000000000000052c $t
-     /tmp/ccWcx9Ob.s:2695   .text.nav_oval_init:0000000000000000 $t
-     /tmp/ccWcx9Ob.s:2700   .text.nav_oval_init:0000000000000000 nav_oval_init
-     /tmp/ccWcx9Ob.s:2720   .text.nav_oval_init:0000000000000010 $d
-     /tmp/ccWcx9Ob.s:2726   .text.nav_oval:0000000000000000 $t
-     /tmp/ccWcx9Ob.s:2731   .text.nav_oval:0000000000000000 nav_oval
-     /tmp/ccWcx9Ob.s:2936   .text.nav_oval:0000000000000138 $d
-     /tmp/ccWcx9Ob.s:2942   .text.nav_oval:0000000000000140 $t
-     /tmp/ccWcx9Ob.s:3137   .text.nav_oval:0000000000000270 $d
-     /tmp/ccWcx9Ob.s:3154   .text.nav_oval:00000000000002a8 $t
-     /tmp/ccWcx9Ob.s:3462   .text.nav_oval:0000000000000498 $d
-     /tmp/ccWcx9Ob.s:3477   .text.nav_periodic_task:0000000000000000 $t
-     /tmp/ccWcx9Ob.s:3482   .text.nav_periodic_task:0000000000000000 nav_periodic_task
-     /tmp/ccWcx9Ob.s:3523   .text.nav_periodic_task:0000000000000022 $d
-     /tmp/ccWcx9Ob.s:3542   .text.nav_periodic_task:0000000000000044 $t
-     /tmp/ccWcx9Ob.s:3887   .text.nav_periodic_task:0000000000000238 $d
-     /tmp/ccWcx9Ob.s:3916   .text.nav_periodic_task:00000000000002a4 $t
-     /tmp/ccWcx9Ob.s:4024   .text.nav_periodic_task:0000000000000340 $d
-     /tmp/ccWcx9Ob.s:4253   .text.nav_periodic_task:00000000000004a4 $d
-     /tmp/ccWcx9Ob.s:4272   .text.nav_periodic_task:00000000000004dc $t
-     /tmp/ccWcx9Ob.s:4605   .text.nav_periodic_task:0000000000000730 $d
-     /tmp/ccWcx9Ob.s:4628   .text.nav_periodic_task:0000000000000784 $t
-     /tmp/ccWcx9Ob.s:4915   .text.nav_periodic_task:0000000000000934 $d
-     /tmp/ccWcx9Ob.s:5281   .bss.nav_oval_count:0000000000000000 nav_oval_count
-     /tmp/ccWcx9Ob.s:4998   .data.max_dist_from_home:0000000000000000 max_dist_from_home
-     /tmp/ccWcx9Ob.s:5084   .data.nav_utm_zone0:0000000000000000 nav_utm_zone0
-     /tmp/ccWcx9Ob.s:5181   .data.nav_utm_north0:0000000000000000 nav_utm_north0
-     /tmp/ccWcx9Ob.s:5320   .data.nav_utm_east0:0000000000000000 nav_utm_east0
-     /tmp/ccWcx9Ob.s:5005   .bss.ground_alt:0000000000000000 ground_alt
-     /tmp/ccWcx9Ob.s:5227   .data.waypoints:0000000000000000 waypoints
-     /tmp/ccWcx9Ob.s:5089   .rodata.nb_waypoint:0000000000000000 nb_waypoint
-     /tmp/ccWcx9Ob.s:5299   .bss.too_far_from_home:0000000000000000 too_far_from_home
-     /tmp/ccWcx9Ob.s:5188   .bss.dist2_to_wp:0000000000000000 dist2_to_wp
-     /tmp/ccWcx9Ob.s:5269   .bss.dist2_to_home:0000000000000000 dist2_to_home
-     /tmp/ccWcx9Ob.s:5064   .bss.fp_pitch:0000000000000000 fp_pitch
-     /tmp/ccWcx9Ob.s:5313   .bss.nav_pitch:0000000000000000 nav_pitch
-     /tmp/ccWcx9Ob.s:5078   .bss.nav_throttle_setpoint:0000000000000000 nav_throttle_setpoint
-     /tmp/ccWcx9Ob.s:5039   .bss.desired_y:0000000000000000 desired_y
-     /tmp/ccWcx9Ob.s:5032   .bss.desired_x:0000000000000000 desired_x
-     /tmp/ccWcx9Ob.s:5025   .data.nav_altitude:0000000000000000 nav_altitude
-     /tmp/ccWcx9Ob.s:5018   .bss.nav_mode:0000000000000000 nav_mode
-     /tmp/ccWcx9Ob.s:5102   .bss.nav_survey_active:0000000000000000 nav_survey_active
-     /tmp/ccWcx9Ob.s:5346   .bss.nav_survey_south:0000000000000000 nav_survey_south
-     /tmp/ccWcx9Ob.s:5213   .bss.nav_survey_north:0000000000000000 nav_survey_north
-     /tmp/ccWcx9Ob.s:5011   .bss.nav_survey_east:0000000000000000 nav_survey_east
-     /tmp/ccWcx9Ob.s:5108   .bss.nav_survey_west:0000000000000000 nav_survey_west
-     /tmp/ccWcx9Ob.s:5387   .bss.nav_survey_shift:0000000000000000 nav_survey_shift
-     /tmp/ccWcx9Ob.s:5293   .bss.nav_ground_speed_pgain:0000000000000000 nav_ground_speed_pgain
-     /tmp/ccWcx9Ob.s:5167   .bss.nav_ground_speed_setpoint:0000000000000000 nav_ground_speed_setpoint
-     /tmp/ccWcx9Ob.s:5220   .bss.nav_glide_pitch_trim:0000000000000000 nav_glide_pitch_trim
-     /tmp/ccWcx9Ob.s:5096   .bss.flight_altitude:0000000000000000 flight_altitude
-     /tmp/ccWcx9Ob.s:5306   .bss.circle_bank:0000000000000000 circle_bank
-     /tmp/ccWcx9Ob.s:5326   .bss.horizontal_mode:0000000000000000 horizontal_mode
-     /tmp/ccWcx9Ob.s:5141   .bss.nav_segment_y_2:0000000000000000 nav_segment_y_2
-     /tmp/ccWcx9Ob.s:5415   .bss.nav_segment_x_2:0000000000000000 nav_segment_x_2
-     /tmp/ccWcx9Ob.s:5134   .bss.nav_segment_y_1:0000000000000000 nav_segment_y_1
-     /tmp/ccWcx9Ob.s:5408   .bss.nav_segment_x_1:0000000000000000 nav_segment_x_1
-     /tmp/ccWcx9Ob.s:5340   .bss.nav_circle_radius:0000000000000000 nav_circle_radius
-     /tmp/ccWcx9Ob.s:5373   .bss.nav_circle_y:0000000000000000 nav_circle_y
-     /tmp/ccWcx9Ob.s:5366   .bss.nav_circle_x:0000000000000000 nav_circle_x
-     /tmp/ccWcx9Ob.s:5147   .bss.nav_in_segment:0000000000000000 nav_in_segment
-     /tmp/ccWcx9Ob.s:5201   .bss.nav_in_circle:0000000000000000 nav_in_circle
-     /tmp/ccWcx9Ob.s:5071   .bss.nav_shift:0000000000000000 nav_shift
-     /tmp/ccWcx9Ob.s:5114   .bss.nav_climb:0000000000000000 nav_climb
-     /tmp/ccWcx9Ob.s:5207   .bss.nav_course:0000000000000000 nav_course
-     /tmp/ccWcx9Ob.s:5121   .bss.nav_radius:0000000000000000 nav_radius
-     /tmp/ccWcx9Ob.s:5333   .bss.nav_circle_trigo_qdr:0000000000000000 nav_circle_trigo_qdr
-     /tmp/ccWcx9Ob.s:5154   .bss.nav_circle_radians:0000000000000000 nav_circle_radians
-     /tmp/ccWcx9Ob.s:5058   .bss.carrot_y:0000000000000000 carrot_y
-     /tmp/ccWcx9Ob.s:5052   .bss.carrot_x:0000000000000000 carrot_x
-     /tmp/ccWcx9Ob.s:5287   .bss.rc_pitch:0000000000000000 rc_pitch
-     /tmp/ccWcx9Ob.s:5401   .bss.last_y:0000000000000000 last_y
-     /tmp/ccWcx9Ob.s:5359   .bss.last_x:0000000000000000 last_x
-     /tmp/ccWcx9Ob.s:5127   .bss.oval_status:0000000000000000 oval_status
-     /tmp/ccWcx9Ob.s:4994   .data.max_dist_from_home:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5001   .bss.ground_alt:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5008   .bss.nav_survey_east:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5014   .bss.nav_mode:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5021   .data.nav_altitude:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5028   .bss.desired_x:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5035   .bss.desired_y:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5042   .bss.previous_ground_alt:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5046   .bss.previous_ground_alt:0000000000000000 previous_ground_alt
-     /tmp/ccWcx9Ob.s:5049   .bss.carrot_x:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5055   .bss.carrot_y:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5061   .bss.fp_pitch:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5067   .bss.nav_shift:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5074   .bss.nav_throttle_setpoint:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5092   .bss.flight_altitude:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5103   .bss.nav_survey_active:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5105   .bss.nav_survey_west:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5111   .bss.nav_climb:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5117   .bss.nav_radius:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5128   .bss.oval_status:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5130   .bss.nav_segment_y_1:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5137   .bss.nav_segment_y_2:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5148   .bss.nav_in_segment:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5150   .bss.nav_circle_radians:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5157   .bss.last_nav_altitude.4496:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5161   .bss.last_nav_altitude.4496:0000000000000000 last_nav_altitude.4496
-     /tmp/ccWcx9Ob.s:5164   .bss.nav_ground_speed_setpoint:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5170   .bss.nav_leg_progress:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5174   .bss.nav_leg_progress:0000000000000000 nav_leg_progress
-     /tmp/ccWcx9Ob.s:5177   .data.nav_utm_north0:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5184   .bss.dist2_to_wp:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5191   .bss.prescaler.4484:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5195   .bss.prescaler.4484:0000000000000000 prescaler.4484
-     /tmp/ccWcx9Ob.s:5202   .bss.nav_in_circle:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5204   .bss.nav_course:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5210   .bss.nav_survey_north:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5216   .bss.nav_glide_pitch_trim:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5223   .data.waypoints:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5265   .bss.dist2_to_home:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5275   .bss.last_wp:0000000000000000 last_wp
-     /tmp/ccWcx9Ob.s:5276   .bss.last_wp:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5282   .bss.nav_oval_count:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5284   .bss.rc_pitch:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5290   .bss.nav_ground_speed_pgain:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5300   .bss.too_far_from_home:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5302   .bss.circle_bank:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5309   .bss.nav_pitch:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5316   .data.nav_utm_east0:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5327   .bss.horizontal_mode:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5329   .bss.nav_circle_trigo_qdr:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5336   .bss.nav_circle_radius:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5343   .bss.nav_survey_south:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5352   .bss.eight_status:0000000000000000 eight_status
-     /tmp/ccWcx9Ob.s:5353   .bss.eight_status:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5355   .bss.last_x:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5362   .bss.nav_circle_x:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5369   .bss.nav_circle_y:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5376   .bss.nav_leg_length:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5380   .bss.nav_leg_length:0000000000000000 nav_leg_length
-     /tmp/ccWcx9Ob.s:5383   .bss.nav_survey_shift:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5390   .bss.baseleg_out_qdr:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5394   .bss.baseleg_out_qdr:0000000000000000 baseleg_out_qdr
-     /tmp/ccWcx9Ob.s:5397   .bss.last_y:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5404   .bss.nav_segment_x_1:0000000000000000 $d
-     /tmp/ccWcx9Ob.s:5411   .bss.nav_segment_x_2:0000000000000000 $d
+     /tmp/cclVC9D7.s:20     .text.nav_set_altitude:0000000000000000 $t
+     /tmp/cclVC9D7.s:24     .text.nav_set_altitude:0000000000000000 nav_set_altitude
+     /tmp/cclVC9D7.s:64     .text.nav_set_altitude:000000000000002c $d
+     /tmp/cclVC9D7.s:72     .text.nav_init_stage:0000000000000000 $t
+     /tmp/cclVC9D7.s:77     .text.nav_init_stage:0000000000000000 nav_init_stage
+     /tmp/cclVC9D7.s:120    .text.nav_init_stage:0000000000000030 $d
+     /tmp/cclVC9D7.s:137    .text.nav_approaching_xy:0000000000000000 $t
+     /tmp/cclVC9D7.s:142    .text.nav_approaching_xy:0000000000000000 nav_approaching_xy
+     /tmp/cclVC9D7.s:255    .text.nav_approaching_xy:000000000000009c $d
+     /tmp/cclVC9D7.s:270    .text.fly_to_xy:0000000000000000 $t
+     /tmp/cclVC9D7.s:275    .text.fly_to_xy:0000000000000000 fly_to_xy
+     /tmp/cclVC9D7.s:528    .text.fly_to_xy:00000000000001a0 $d
+     /tmp/cclVC9D7.s:561    .text.nav_circle_XY:0000000000000000 $t
+     /tmp/cclVC9D7.s:566    .text.nav_circle_XY:0000000000000000 nav_circle_XY
+     /tmp/cclVC9D7.s:802    .text.nav_circle_XY:0000000000000190 $d
+     /tmp/cclVC9D7.s:821    .text.nav_circle_XY:00000000000001d4 $t
+     /tmp/cclVC9D7.s:984    .text.nav_circle_XY:0000000000000308 $d
+     /tmp/cclVC9D7.s:1002   .text.nav_route_xy:0000000000000000 $t
+     /tmp/cclVC9D7.s:1007   .text.nav_route_xy:0000000000000000 nav_route_xy
+     /tmp/cclVC9D7.s:1206   .text.nav_route_xy:0000000000000150 $d
+     /tmp/cclVC9D7.s:1222   .text.compute_dist2_to_home:0000000000000000 $t
+     /tmp/cclVC9D7.s:1227   .text.compute_dist2_to_home:0000000000000000 compute_dist2_to_home
+     /tmp/cclVC9D7.s:1291   .text.compute_dist2_to_home:000000000000004c $d
+     /tmp/cclVC9D7.s:1304   .text.nav_reset_reference:0000000000000000 $t
+     /tmp/cclVC9D7.s:1309   .text.nav_reset_reference:0000000000000000 nav_reset_reference
+     /tmp/cclVC9D7.s:1413   .text.nav_reset_reference:00000000000000a8 $d
+     /tmp/cclVC9D7.s:1431   .text.nav_update_waypoints_alt:0000000000000000 $t
+     /tmp/cclVC9D7.s:1436   .text.nav_update_waypoints_alt:0000000000000000 nav_update_waypoints_alt
+     /tmp/cclVC9D7.s:1480   .text.nav_update_waypoints_alt:000000000000002c $d
+     /tmp/cclVC9D7.s:1487   .text.common_nav_periodic_task_4Hz:0000000000000000 $t
+     /tmp/cclVC9D7.s:1492   .text.common_nav_periodic_task_4Hz:0000000000000000 common_nav_periodic_task_4Hz
+     /tmp/cclVC9D7.s:1524   .text.common_nav_periodic_task_4Hz:0000000000000024 $d
+     /tmp/cclVC9D7.s:1533   .text.nav_move_waypoint:0000000000000000 $t
+     /tmp/cclVC9D7.s:1538   .text.nav_move_waypoint:0000000000000000 nav_move_waypoint
+     /tmp/cclVC9D7.s:1665   .text.nav_move_waypoint:00000000000000b8 $d
+     /tmp/cclVC9D7.s:1674   .text.nav_home:0000000000000000 $t
+     /tmp/cclVC9D7.s:1679   .text.nav_home:0000000000000000 nav_home
+     /tmp/cclVC9D7.s:1725   .text.nav_home:000000000000003c $d
+     /tmp/cclVC9D7.s:1738   .text.nav_init:0000000000000000 $t
+     /tmp/cclVC9D7.s:1743   .text.nav_init:0000000000000000 nav_init
+     /tmp/cclVC9D7.s:1781   .text.nav_init:0000000000000028 $d
+     /tmp/cclVC9D7.s:1794   .text.nav_without_gps:0000000000000000 $t
+     /tmp/cclVC9D7.s:1799   .text.nav_without_gps:0000000000000000 nav_without_gps
+     /tmp/cclVC9D7.s:1831   .text.nav_without_gps:0000000000000024 $d
+     /tmp/cclVC9D7.s:1841   .text.nav_eight_init:0000000000000000 $t
+     /tmp/cclVC9D7.s:1846   .text.nav_eight_init:0000000000000000 nav_eight_init
+     /tmp/cclVC9D7.s:1862   .text.nav_eight_init:0000000000000008 $d
+     /tmp/cclVC9D7.s:1868   .text.nav_eight:0000000000000000 $t
+     /tmp/cclVC9D7.s:1873   .text.nav_eight:0000000000000000 nav_eight
+     /tmp/cclVC9D7.s:2194   .text.nav_eight:00000000000001ec $d
+     /tmp/cclVC9D7.s:2202   .text.nav_eight:00000000000001f8 $t
+     /tmp/cclVC9D7.s:2283   .text.nav_eight:0000000000000280 $d
+     /tmp/cclVC9D7.s:2297   .text.nav_eight:00000000000002ac $t
+     /tmp/cclVC9D7.s:2676   .text.nav_eight:0000000000000500 $d
+     /tmp/cclVC9D7.s:2689   .text.nav_eight:000000000000052c $t
+     /tmp/cclVC9D7.s:2695   .text.nav_oval_init:0000000000000000 $t
+     /tmp/cclVC9D7.s:2700   .text.nav_oval_init:0000000000000000 nav_oval_init
+     /tmp/cclVC9D7.s:2720   .text.nav_oval_init:0000000000000010 $d
+     /tmp/cclVC9D7.s:2726   .text.nav_oval:0000000000000000 $t
+     /tmp/cclVC9D7.s:2731   .text.nav_oval:0000000000000000 nav_oval
+     /tmp/cclVC9D7.s:2936   .text.nav_oval:0000000000000138 $d
+     /tmp/cclVC9D7.s:2942   .text.nav_oval:0000000000000140 $t
+     /tmp/cclVC9D7.s:3137   .text.nav_oval:0000000000000270 $d
+     /tmp/cclVC9D7.s:3154   .text.nav_oval:00000000000002a8 $t
+     /tmp/cclVC9D7.s:3462   .text.nav_oval:0000000000000498 $d
+     /tmp/cclVC9D7.s:3477   .text.nav_periodic_task:0000000000000000 $t
+     /tmp/cclVC9D7.s:3482   .text.nav_periodic_task:0000000000000000 nav_periodic_task
+     /tmp/cclVC9D7.s:3523   .text.nav_periodic_task:0000000000000022 $d
+     /tmp/cclVC9D7.s:3542   .text.nav_periodic_task:0000000000000044 $t
+     /tmp/cclVC9D7.s:3887   .text.nav_periodic_task:0000000000000238 $d
+     /tmp/cclVC9D7.s:3916   .text.nav_periodic_task:00000000000002a4 $t
+     /tmp/cclVC9D7.s:4024   .text.nav_periodic_task:0000000000000340 $d
+     /tmp/cclVC9D7.s:4253   .text.nav_periodic_task:00000000000004a4 $d
+     /tmp/cclVC9D7.s:4272   .text.nav_periodic_task:00000000000004dc $t
+     /tmp/cclVC9D7.s:4605   .text.nav_periodic_task:0000000000000730 $d
+     /tmp/cclVC9D7.s:4628   .text.nav_periodic_task:0000000000000784 $t
+     /tmp/cclVC9D7.s:4915   .text.nav_periodic_task:0000000000000934 $d
+     /tmp/cclVC9D7.s:5288   .bss.nav_oval_count:0000000000000000 nav_oval_count
+     /tmp/cclVC9D7.s:4998   .data.max_dist_from_home:0000000000000000 max_dist_from_home
+     /tmp/cclVC9D7.s:5084   .data.nav_utm_zone0:0000000000000000 nav_utm_zone0
+     /tmp/cclVC9D7.s:5174   .data.nav_utm_north0:0000000000000000 nav_utm_north0
+     /tmp/cclVC9D7.s:5327   .data.nav_utm_east0:0000000000000000 nav_utm_east0
+     /tmp/cclVC9D7.s:5005   .bss.ground_alt:0000000000000000 ground_alt
+     /tmp/cclVC9D7.s:5227   .data.waypoints:0000000000000000 waypoints
+     /tmp/cclVC9D7.s:5089   .rodata.nb_waypoint:0000000000000000 nb_waypoint
+     /tmp/cclVC9D7.s:5306   .bss.too_far_from_home:0000000000000000 too_far_from_home
+     /tmp/cclVC9D7.s:5188   .bss.dist2_to_wp:0000000000000000 dist2_to_wp
+     /tmp/cclVC9D7.s:5276   .bss.dist2_to_home:0000000000000000 dist2_to_home
+     /tmp/cclVC9D7.s:5064   .bss.fp_pitch:0000000000000000 fp_pitch
+     /tmp/cclVC9D7.s:5320   .bss.nav_pitch:0000000000000000 nav_pitch
+     /tmp/cclVC9D7.s:5078   .bss.nav_throttle_setpoint:0000000000000000 nav_throttle_setpoint
+     /tmp/cclVC9D7.s:5039   .bss.desired_y:0000000000000000 desired_y
+     /tmp/cclVC9D7.s:5032   .bss.desired_x:0000000000000000 desired_x
+     /tmp/cclVC9D7.s:5025   .data.nav_altitude:0000000000000000 nav_altitude
+     /tmp/cclVC9D7.s:5018   .bss.nav_mode:0000000000000000 nav_mode
+     /tmp/cclVC9D7.s:5102   .bss.nav_survey_active:0000000000000000 nav_survey_active
+     /tmp/cclVC9D7.s:5346   .bss.nav_survey_south:0000000000000000 nav_survey_south
+     /tmp/cclVC9D7.s:5213   .bss.nav_survey_north:0000000000000000 nav_survey_north
+     /tmp/cclVC9D7.s:5011   .bss.nav_survey_east:0000000000000000 nav_survey_east
+     /tmp/cclVC9D7.s:5108   .bss.nav_survey_west:0000000000000000 nav_survey_west
+     /tmp/cclVC9D7.s:5387   .bss.nav_survey_shift:0000000000000000 nav_survey_shift
+     /tmp/cclVC9D7.s:5300   .bss.nav_ground_speed_pgain:0000000000000000 nav_ground_speed_pgain
+     /tmp/cclVC9D7.s:5160   .bss.nav_ground_speed_setpoint:0000000000000000 nav_ground_speed_setpoint
+     /tmp/cclVC9D7.s:5220   .bss.nav_glide_pitch_trim:0000000000000000 nav_glide_pitch_trim
+     /tmp/cclVC9D7.s:5096   .bss.flight_altitude:0000000000000000 flight_altitude
+     /tmp/cclVC9D7.s:5313   .bss.circle_bank:0000000000000000 circle_bank
+     /tmp/cclVC9D7.s:5333   .bss.horizontal_mode:0000000000000000 horizontal_mode
+     /tmp/cclVC9D7.s:5141   .bss.nav_segment_y_2:0000000000000000 nav_segment_y_2
+     /tmp/cclVC9D7.s:5415   .bss.nav_segment_x_2:0000000000000000 nav_segment_x_2
+     /tmp/cclVC9D7.s:5134   .bss.nav_segment_y_1:0000000000000000 nav_segment_y_1
+     /tmp/cclVC9D7.s:5408   .bss.nav_segment_x_1:0000000000000000 nav_segment_x_1
+     /tmp/cclVC9D7.s:5195   .bss.nav_circle_radius:0000000000000000 nav_circle_radius
+     /tmp/cclVC9D7.s:5373   .bss.nav_circle_y:0000000000000000 nav_circle_y
+     /tmp/cclVC9D7.s:5366   .bss.nav_circle_x:0000000000000000 nav_circle_x
+     /tmp/cclVC9D7.s:5147   .bss.nav_in_segment:0000000000000000 nav_in_segment
+     /tmp/cclVC9D7.s:5201   .bss.nav_in_circle:0000000000000000 nav_in_circle
+     /tmp/cclVC9D7.s:5071   .bss.nav_shift:0000000000000000 nav_shift
+     /tmp/cclVC9D7.s:5114   .bss.nav_climb:0000000000000000 nav_climb
+     /tmp/cclVC9D7.s:5207   .bss.nav_course:0000000000000000 nav_course
+     /tmp/cclVC9D7.s:5121   .bss.nav_radius:0000000000000000 nav_radius
+     /tmp/cclVC9D7.s:5340   .bss.nav_circle_trigo_qdr:0000000000000000 nav_circle_trigo_qdr
+     /tmp/cclVC9D7.s:5154   .bss.nav_circle_radians:0000000000000000 nav_circle_radians
+     /tmp/cclVC9D7.s:5058   .bss.carrot_y:0000000000000000 carrot_y
+     /tmp/cclVC9D7.s:5052   .bss.carrot_x:0000000000000000 carrot_x
+     /tmp/cclVC9D7.s:5294   .bss.rc_pitch:0000000000000000 rc_pitch
+     /tmp/cclVC9D7.s:5401   .bss.last_y:0000000000000000 last_y
+     /tmp/cclVC9D7.s:5359   .bss.last_x:0000000000000000 last_x
+     /tmp/cclVC9D7.s:5127   .bss.oval_status:0000000000000000 oval_status
+     /tmp/cclVC9D7.s:4994   .data.max_dist_from_home:0000000000000000 $d
+     /tmp/cclVC9D7.s:5001   .bss.ground_alt:0000000000000000 $d
+     /tmp/cclVC9D7.s:5008   .bss.nav_survey_east:0000000000000000 $d
+     /tmp/cclVC9D7.s:5014   .bss.nav_mode:0000000000000000 $d
+     /tmp/cclVC9D7.s:5021   .data.nav_altitude:0000000000000000 $d
+     /tmp/cclVC9D7.s:5028   .bss.desired_x:0000000000000000 $d
+     /tmp/cclVC9D7.s:5035   .bss.desired_y:0000000000000000 $d
+     /tmp/cclVC9D7.s:5042   .bss.previous_ground_alt:0000000000000000 $d
+     /tmp/cclVC9D7.s:5046   .bss.previous_ground_alt:0000000000000000 previous_ground_alt
+     /tmp/cclVC9D7.s:5049   .bss.carrot_x:0000000000000000 $d
+     /tmp/cclVC9D7.s:5055   .bss.carrot_y:0000000000000000 $d
+     /tmp/cclVC9D7.s:5061   .bss.fp_pitch:0000000000000000 $d
+     /tmp/cclVC9D7.s:5067   .bss.nav_shift:0000000000000000 $d
+     /tmp/cclVC9D7.s:5074   .bss.nav_throttle_setpoint:0000000000000000 $d
+     /tmp/cclVC9D7.s:5092   .bss.flight_altitude:0000000000000000 $d
+     /tmp/cclVC9D7.s:5103   .bss.nav_survey_active:0000000000000000 $d
+     /tmp/cclVC9D7.s:5105   .bss.nav_survey_west:0000000000000000 $d
+     /tmp/cclVC9D7.s:5111   .bss.nav_climb:0000000000000000 $d
+     /tmp/cclVC9D7.s:5117   .bss.nav_radius:0000000000000000 $d
+     /tmp/cclVC9D7.s:5128   .bss.oval_status:0000000000000000 $d
+     /tmp/cclVC9D7.s:5130   .bss.nav_segment_y_1:0000000000000000 $d
+     /tmp/cclVC9D7.s:5137   .bss.nav_segment_y_2:0000000000000000 $d
+     /tmp/cclVC9D7.s:5148   .bss.nav_in_segment:0000000000000000 $d
+     /tmp/cclVC9D7.s:5150   .bss.nav_circle_radians:0000000000000000 $d
+     /tmp/cclVC9D7.s:5157   .bss.nav_ground_speed_setpoint:0000000000000000 $d
+     /tmp/cclVC9D7.s:5163   .bss.nav_leg_progress:0000000000000000 $d
+     /tmp/cclVC9D7.s:5167   .bss.nav_leg_progress:0000000000000000 nav_leg_progress
+     /tmp/cclVC9D7.s:5170   .data.nav_utm_north0:0000000000000000 $d
+     /tmp/cclVC9D7.s:5177   .bss.last_nav_altitude.4515:0000000000000000 $d
+     /tmp/cclVC9D7.s:5181   .bss.last_nav_altitude.4515:0000000000000000 last_nav_altitude.4515
+     /tmp/cclVC9D7.s:5184   .bss.dist2_to_wp:0000000000000000 $d
+     /tmp/cclVC9D7.s:5191   .bss.nav_circle_radius:0000000000000000 $d
+     /tmp/cclVC9D7.s:5202   .bss.nav_in_circle:0000000000000000 $d
+     /tmp/cclVC9D7.s:5204   .bss.nav_course:0000000000000000 $d
+     /tmp/cclVC9D7.s:5210   .bss.nav_survey_north:0000000000000000 $d
+     /tmp/cclVC9D7.s:5216   .bss.nav_glide_pitch_trim:0000000000000000 $d
+     /tmp/cclVC9D7.s:5223   .data.waypoints:0000000000000000 $d
+     /tmp/cclVC9D7.s:5265   .bss.prescaler.4503:0000000000000000 $d
+     /tmp/cclVC9D7.s:5269   .bss.prescaler.4503:0000000000000000 prescaler.4503
+     /tmp/cclVC9D7.s:5272   .bss.dist2_to_home:0000000000000000 $d
+     /tmp/cclVC9D7.s:5282   .bss.last_wp:0000000000000000 last_wp
+     /tmp/cclVC9D7.s:5283   .bss.last_wp:0000000000000000 $d
+     /tmp/cclVC9D7.s:5289   .bss.nav_oval_count:0000000000000000 $d
+     /tmp/cclVC9D7.s:5291   .bss.rc_pitch:0000000000000000 $d
+     /tmp/cclVC9D7.s:5297   .bss.nav_ground_speed_pgain:0000000000000000 $d
+     /tmp/cclVC9D7.s:5307   .bss.too_far_from_home:0000000000000000 $d
+     /tmp/cclVC9D7.s:5309   .bss.circle_bank:0000000000000000 $d
+     /tmp/cclVC9D7.s:5316   .bss.nav_pitch:0000000000000000 $d
+     /tmp/cclVC9D7.s:5323   .data.nav_utm_east0:0000000000000000 $d
+     /tmp/cclVC9D7.s:5334   .bss.horizontal_mode:0000000000000000 $d
+     /tmp/cclVC9D7.s:5336   .bss.nav_circle_trigo_qdr:0000000000000000 $d
+     /tmp/cclVC9D7.s:5343   .bss.nav_survey_south:0000000000000000 $d
+     /tmp/cclVC9D7.s:5352   .bss.eight_status:0000000000000000 eight_status
+     /tmp/cclVC9D7.s:5353   .bss.eight_status:0000000000000000 $d
+     /tmp/cclVC9D7.s:5355   .bss.last_x:0000000000000000 $d
+     /tmp/cclVC9D7.s:5362   .bss.nav_circle_x:0000000000000000 $d
+     /tmp/cclVC9D7.s:5369   .bss.nav_circle_y:0000000000000000 $d
+     /tmp/cclVC9D7.s:5376   .bss.nav_leg_length:0000000000000000 $d
+     /tmp/cclVC9D7.s:5380   .bss.nav_leg_length:0000000000000000 nav_leg_length
+     /tmp/cclVC9D7.s:5383   .bss.nav_survey_shift:0000000000000000 $d
+     /tmp/cclVC9D7.s:5390   .bss.baseleg_out_qdr:0000000000000000 $d
+     /tmp/cclVC9D7.s:5394   .bss.baseleg_out_qdr:0000000000000000 baseleg_out_qdr
+     /tmp/cclVC9D7.s:5397   .bss.last_y:0000000000000000 $d
+     /tmp/cclVC9D7.s:5404   .bss.nav_segment_x_1:0000000000000000 $d
+     /tmp/cclVC9D7.s:5411   .bss.nav_segment_x_2:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
-     /tmp/ccWcx9Ob.s:3476   .text.nav_oval:00000000000004c4 $t
-     /tmp/ccWcx9Ob.s:4993   .text.nav_periodic_task:0000000000000994 $t
-     /tmp/ccWcx9Ob.s:4029   .text.nav_periodic_task:0000000000000345 $d
-     /tmp/ccWcx9Ob.s:4029   .text.nav_periodic_task:0000000000000346 $t
+     /tmp/cclVC9D7.s:3476   .text.nav_oval:00000000000004c4 $t
+     /tmp/cclVC9D7.s:4993   .text.nav_periodic_task:0000000000000994 $t
+     /tmp/cclVC9D7.s:4029   .text.nav_periodic_task:0000000000000345 $d
+     /tmp/cclVC9D7.s:4029   .text.nav_periodic_task:0000000000000346 $t
 
 UNDEFINED SYMBOLS
 __aeabi_fsub

@@ -2800,43 +2800,43 @@
  2106              		.global	fbw_periodic_tid
  2107              		.global	fbw_new_actuators
  2108              		.global	fbw_mode
- 2109              		.section	.bss.i300.3563,"aw",%nobits
- 2110              		.align	1
- 2111              		.set	.LANCHOR6,. + 0
- 2114              	i300.3563:
- 2115 0000 0000     		.space	2
- 2116              		.section	.bss.fbw_mode,"aw",%nobits
- 2117              		.set	.LANCHOR0,. + 0
- 2120              	fbw_mode:
- 2121 0000 00       		.space	1
- 2122              		.section	.bss.fbw_periodic_tid,"aw",%nobits
- 2123              		.set	.LANCHOR2,. + 0
- 2126              	fbw_periodic_tid:
+ 2109              		.section	.bss.i120.3581,"aw",%nobits
+ 2110              		.set	.LANCHOR5,. + 0
+ 2113              	i120.3581:
+ 2114 0000 00       		.space	1
+ 2115              		.section	.bss.i300.3608,"aw",%nobits
+ 2116              		.align	1
+ 2117              		.set	.LANCHOR9,. + 0
+ 2120              	i300.3608:
+ 2121 0000 0000     		.space	2
+ 2122              		.section	.bss.fbw_mode,"aw",%nobits
+ 2123              		.set	.LANCHOR0,. + 0
+ 2126              	fbw_mode:
  2127 0000 00       		.space	1
- 2128              		.section	.bss._1Hz.3375,"aw",%nobits
- 2129              		.set	.LANCHOR4,. + 0
- 2132              	_1Hz.3375:
+ 2128              		.section	.bss.i60.3607,"aw",%nobits
+ 2129              		.set	.LANCHOR8,. + 0
+ 2132              	i60.3607:
  2133 0000 00       		.space	1
- 2134              		.section	.bss.fbw_new_actuators,"aw",%nobits
- 2135              		.set	.LANCHOR1,. + 0
- 2138              	fbw_new_actuators:
+ 2134              		.section	.bss.fbw_periodic_tid,"aw",%nobits
+ 2135              		.set	.LANCHOR2,. + 0
+ 2138              	fbw_periodic_tid:
  2139 0000 00       		.space	1
- 2140              		.section	.bss.i60.3588,"aw",%nobits
- 2141              		.set	.LANCHOR8,. + 0
- 2144              	i60.3588:
+ 2140              		.section	.bss._1Hz.3375,"aw",%nobits
+ 2141              		.set	.LANCHOR4,. + 0
+ 2144              	_1Hz.3375:
  2145 0000 00       		.space	1
- 2146              		.section	.bss.i30.3587,"aw",%nobits
- 2147              		.set	.LANCHOR7,. + 0
- 2150              	i30.3587:
+ 2146              		.section	.bss.fbw_new_actuators,"aw",%nobits
+ 2147              		.set	.LANCHOR1,. + 0
+ 2150              	fbw_new_actuators:
  2151 0000 00       		.space	1
- 2152              		.section	.bss.i300.3589,"aw",%nobits
+ 2152              		.section	.bss.i300.3582,"aw",%nobits
  2153              		.align	1
- 2154              		.set	.LANCHOR9,. + 0
- 2157              	i300.3589:
+ 2154              		.set	.LANCHOR6,. + 0
+ 2157              	i300.3582:
  2158 0000 0000     		.space	2
- 2159              		.section	.bss.i120.3562,"aw",%nobits
- 2160              		.set	.LANCHOR5,. + 0
- 2163              	i120.3562:
+ 2159              		.section	.bss.i30.3606,"aw",%nobits
+ 2160              		.set	.LANCHOR7,. + 0
+ 2163              	i30.3606:
  2164 0000 00       		.space	1
  2165              		.section	.bss.electrical_tid,"aw",%nobits
  2166              		.set	.LANCHOR3,. + 0
@@ -2861,50 +2861,50 @@
  2187              		.file 20 "./subsystems/datalink/downlink.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 main_fbw.c
-     /tmp/ccCbeXwE.s:18     .text.inter_mcu_fill_fbw_state:0000000000000000 $t
-     /tmp/ccCbeXwE.s:22     .text.inter_mcu_fill_fbw_state:0000000000000000 inter_mcu_fill_fbw_state
-     /tmp/ccCbeXwE.s:116    .text.inter_mcu_fill_fbw_state:0000000000000064 $d
-     /tmp/ccCbeXwE.s:125    .text.handle_rc_frame:0000000000000000 $t
-     /tmp/ccCbeXwE.s:129    .text.handle_rc_frame:0000000000000000 handle_rc_frame
-     /tmp/ccCbeXwE.s:169    .text.handle_rc_frame:0000000000000030 $d
-     /tmp/ccCbeXwE.s:179    .text.init_fbw:0000000000000000 $t
-     /tmp/ccCbeXwE.s:184    .text.init_fbw:0000000000000000 init_fbw
-     /tmp/ccCbeXwE.s:322    .text.init_fbw:000000000000007c $d
-     /tmp/ccCbeXwE.s:345    .text.event_task_fbw:0000000000000000 $t
-     /tmp/ccCbeXwE.s:350    .text.event_task_fbw:0000000000000000 event_task_fbw
-     /tmp/ccCbeXwE.s:736    .text.event_task_fbw:0000000000000268 $d
-     /tmp/ccCbeXwE.s:767    .text.periodic_task_fbw:0000000000000000 $t
-     /tmp/ccCbeXwE.s:772    .text.periodic_task_fbw:0000000000000000 periodic_task_fbw
-     /tmp/ccCbeXwE.s:1143   .text.periodic_task_fbw:00000000000001f4 $d
-     /tmp/ccCbeXwE.s:1163   .text.periodic_task_fbw:000000000000023c $t
-     /tmp/ccCbeXwE.s:1540   .text.periodic_task_fbw:00000000000004c0 $d
-     /tmp/ccCbeXwE.s:1557   .text.periodic_task_fbw:00000000000004f8 $t
-     /tmp/ccCbeXwE.s:1871   .text.periodic_task_fbw:00000000000006ec $d
-     /tmp/ccCbeXwE.s:1884   .text.periodic_task_fbw:0000000000000718 $t
-     /tmp/ccCbeXwE.s:2020   .text.periodic_task_fbw:00000000000007f4 $d
-     /tmp/ccCbeXwE.s:2035   .text.handle_periodic_tasks_fbw:0000000000000000 $t
-     /tmp/ccCbeXwE.s:2040   .text.handle_periodic_tasks_fbw:0000000000000000 handle_periodic_tasks_fbw
-     /tmp/ccCbeXwE.s:2099   .text.handle_periodic_tasks_fbw:000000000000003c $d
-     /tmp/ccCbeXwE.s:2169   .bss.electrical_tid:0000000000000000 electrical_tid
-     /tmp/ccCbeXwE.s:2126   .bss.fbw_periodic_tid:0000000000000000 fbw_periodic_tid
-     /tmp/ccCbeXwE.s:2138   .bss.fbw_new_actuators:0000000000000000 fbw_new_actuators
-     /tmp/ccCbeXwE.s:2120   .bss.fbw_mode:0000000000000000 fbw_mode
-     /tmp/ccCbeXwE.s:2110   .bss.i300.3563:0000000000000000 $d
-     /tmp/ccCbeXwE.s:2114   .bss.i300.3563:0000000000000000 i300.3563
-     /tmp/ccCbeXwE.s:2121   .bss.fbw_mode:0000000000000000 $d
-     /tmp/ccCbeXwE.s:2127   .bss.fbw_periodic_tid:0000000000000000 $d
-     /tmp/ccCbeXwE.s:2132   .bss._1Hz.3375:0000000000000000 _1Hz.3375
-     /tmp/ccCbeXwE.s:2133   .bss._1Hz.3375:0000000000000000 $d
-     /tmp/ccCbeXwE.s:2139   .bss.fbw_new_actuators:0000000000000000 $d
-     /tmp/ccCbeXwE.s:2144   .bss.i60.3588:0000000000000000 i60.3588
-     /tmp/ccCbeXwE.s:2145   .bss.i60.3588:0000000000000000 $d
-     /tmp/ccCbeXwE.s:2150   .bss.i30.3587:0000000000000000 i30.3587
-     /tmp/ccCbeXwE.s:2151   .bss.i30.3587:0000000000000000 $d
-     /tmp/ccCbeXwE.s:2153   .bss.i300.3589:0000000000000000 $d
-     /tmp/ccCbeXwE.s:2157   .bss.i300.3589:0000000000000000 i300.3589
-     /tmp/ccCbeXwE.s:2163   .bss.i120.3562:0000000000000000 i120.3562
-     /tmp/ccCbeXwE.s:2164   .bss.i120.3562:0000000000000000 $d
-     /tmp/ccCbeXwE.s:2170   .bss.electrical_tid:0000000000000000 $d
+     /tmp/ccWe2gFm.s:18     .text.inter_mcu_fill_fbw_state:0000000000000000 $t
+     /tmp/ccWe2gFm.s:22     .text.inter_mcu_fill_fbw_state:0000000000000000 inter_mcu_fill_fbw_state
+     /tmp/ccWe2gFm.s:116    .text.inter_mcu_fill_fbw_state:0000000000000064 $d
+     /tmp/ccWe2gFm.s:125    .text.handle_rc_frame:0000000000000000 $t
+     /tmp/ccWe2gFm.s:129    .text.handle_rc_frame:0000000000000000 handle_rc_frame
+     /tmp/ccWe2gFm.s:169    .text.handle_rc_frame:0000000000000030 $d
+     /tmp/ccWe2gFm.s:179    .text.init_fbw:0000000000000000 $t
+     /tmp/ccWe2gFm.s:184    .text.init_fbw:0000000000000000 init_fbw
+     /tmp/ccWe2gFm.s:322    .text.init_fbw:000000000000007c $d
+     /tmp/ccWe2gFm.s:345    .text.event_task_fbw:0000000000000000 $t
+     /tmp/ccWe2gFm.s:350    .text.event_task_fbw:0000000000000000 event_task_fbw
+     /tmp/ccWe2gFm.s:736    .text.event_task_fbw:0000000000000268 $d
+     /tmp/ccWe2gFm.s:767    .text.periodic_task_fbw:0000000000000000 $t
+     /tmp/ccWe2gFm.s:772    .text.periodic_task_fbw:0000000000000000 periodic_task_fbw
+     /tmp/ccWe2gFm.s:1143   .text.periodic_task_fbw:00000000000001f4 $d
+     /tmp/ccWe2gFm.s:1163   .text.periodic_task_fbw:000000000000023c $t
+     /tmp/ccWe2gFm.s:1540   .text.periodic_task_fbw:00000000000004c0 $d
+     /tmp/ccWe2gFm.s:1557   .text.periodic_task_fbw:00000000000004f8 $t
+     /tmp/ccWe2gFm.s:1871   .text.periodic_task_fbw:00000000000006ec $d
+     /tmp/ccWe2gFm.s:1884   .text.periodic_task_fbw:0000000000000718 $t
+     /tmp/ccWe2gFm.s:2020   .text.periodic_task_fbw:00000000000007f4 $d
+     /tmp/ccWe2gFm.s:2035   .text.handle_periodic_tasks_fbw:0000000000000000 $t
+     /tmp/ccWe2gFm.s:2040   .text.handle_periodic_tasks_fbw:0000000000000000 handle_periodic_tasks_fbw
+     /tmp/ccWe2gFm.s:2099   .text.handle_periodic_tasks_fbw:000000000000003c $d
+     /tmp/ccWe2gFm.s:2169   .bss.electrical_tid:0000000000000000 electrical_tid
+     /tmp/ccWe2gFm.s:2138   .bss.fbw_periodic_tid:0000000000000000 fbw_periodic_tid
+     /tmp/ccWe2gFm.s:2150   .bss.fbw_new_actuators:0000000000000000 fbw_new_actuators
+     /tmp/ccWe2gFm.s:2126   .bss.fbw_mode:0000000000000000 fbw_mode
+     /tmp/ccWe2gFm.s:2113   .bss.i120.3581:0000000000000000 i120.3581
+     /tmp/ccWe2gFm.s:2114   .bss.i120.3581:0000000000000000 $d
+     /tmp/ccWe2gFm.s:2116   .bss.i300.3608:0000000000000000 $d
+     /tmp/ccWe2gFm.s:2120   .bss.i300.3608:0000000000000000 i300.3608
+     /tmp/ccWe2gFm.s:2127   .bss.fbw_mode:0000000000000000 $d
+     /tmp/ccWe2gFm.s:2132   .bss.i60.3607:0000000000000000 i60.3607
+     /tmp/ccWe2gFm.s:2133   .bss.i60.3607:0000000000000000 $d
+     /tmp/ccWe2gFm.s:2139   .bss.fbw_periodic_tid:0000000000000000 $d
+     /tmp/ccWe2gFm.s:2144   .bss._1Hz.3375:0000000000000000 _1Hz.3375
+     /tmp/ccWe2gFm.s:2145   .bss._1Hz.3375:0000000000000000 $d
+     /tmp/ccWe2gFm.s:2151   .bss.fbw_new_actuators:0000000000000000 $d
+     /tmp/ccWe2gFm.s:2153   .bss.i300.3582:0000000000000000 $d
+     /tmp/ccWe2gFm.s:2157   .bss.i300.3582:0000000000000000 i300.3582
+     /tmp/ccWe2gFm.s:2163   .bss.i30.3606:0000000000000000 i30.3606
+     /tmp/ccWe2gFm.s:2164   .bss.i30.3606:0000000000000000 $d
+     /tmp/ccWe2gFm.s:2170   .bss.electrical_tid:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

@@ -1009,23 +1009,23 @@
  454              		.file 9 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 adc_arch.c
-     /tmp/ccJ2gTzk.s:18     .text.adc_buf_channel:0000000000000000 $t
-     /tmp/ccJ2gTzk.s:23     .text.adc_buf_channel:0000000000000000 adc_buf_channel
-     /tmp/ccJ2gTzk.s:43     .text.adc_buf_channel:000000000000000c $d
-     /tmp/ccJ2gTzk.s:48     .text.adc_init:0000000000000000 $t
-     /tmp/ccJ2gTzk.s:53     .text.adc_init:0000000000000000 adc_init
-     /tmp/ccJ2gTzk.s:314    .text.adc_init:0000000000000168 $d
-     /tmp/ccJ2gTzk.s:324    .text.adc1_2_irq_handler:0000000000000000 $t
-     /tmp/ccJ2gTzk.s:329    .text.adc1_2_irq_handler:0000000000000000 adc1_2_irq_handler
-     /tmp/ccJ2gTzk.s:412    .text.adc1_2_irq_handler:0000000000000058 $d
-     /tmp/ccJ2gTzk.s:424    .bss.adc_new_data_trigger:0000000000000000 adc_new_data_trigger
-     /tmp/ccJ2gTzk.s:425    .bss.adc_new_data_trigger:0000000000000000 $d
-     /tmp/ccJ2gTzk.s:427    .bss.adc1_buffers:0000000000000000 $d
-     /tmp/ccJ2gTzk.s:431    .bss.adc1_buffers:0000000000000000 adc1_buffers
-     /tmp/ccJ2gTzk.s:437    .bss.adc_channel_map:0000000000000000 adc_channel_map
-     /tmp/ccJ2gTzk.s:438    .bss.adc_channel_map:0000000000000000 $d
-     /tmp/ccJ2gTzk.s:443    .bss.adc_injected_channels:0000000000000000 adc_injected_channels
-     /tmp/ccJ2gTzk.s:444    .bss.adc_injected_channels:0000000000000000 $d
+     /tmp/ccef7rm6.s:18     .text.adc_buf_channel:0000000000000000 $t
+     /tmp/ccef7rm6.s:23     .text.adc_buf_channel:0000000000000000 adc_buf_channel
+     /tmp/ccef7rm6.s:43     .text.adc_buf_channel:000000000000000c $d
+     /tmp/ccef7rm6.s:48     .text.adc_init:0000000000000000 $t
+     /tmp/ccef7rm6.s:53     .text.adc_init:0000000000000000 adc_init
+     /tmp/ccef7rm6.s:314    .text.adc_init:0000000000000168 $d
+     /tmp/ccef7rm6.s:324    .text.adc1_2_irq_handler:0000000000000000 $t
+     /tmp/ccef7rm6.s:329    .text.adc1_2_irq_handler:0000000000000000 adc1_2_irq_handler
+     /tmp/ccef7rm6.s:412    .text.adc1_2_irq_handler:0000000000000058 $d
+     /tmp/ccef7rm6.s:424    .bss.adc_new_data_trigger:0000000000000000 adc_new_data_trigger
+     /tmp/ccef7rm6.s:425    .bss.adc_new_data_trigger:0000000000000000 $d
+     /tmp/ccef7rm6.s:427    .bss.adc1_buffers:0000000000000000 $d
+     /tmp/ccef7rm6.s:431    .bss.adc1_buffers:0000000000000000 adc1_buffers
+     /tmp/ccef7rm6.s:437    .bss.adc_channel_map:0000000000000000 adc_channel_map
+     /tmp/ccef7rm6.s:438    .bss.adc_channel_map:0000000000000000 $d
+     /tmp/ccef7rm6.s:443    .bss.adc_injected_channels:0000000000000000 adc_injected_channels
+     /tmp/ccef7rm6.s:444    .bss.adc_injected_channels:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

@@ -1,4 +1,4 @@
-# This file has been generated from /home/uav/paparazzi/conf/airframes/examples/LisaM2_Nov14_2012.xml by /home/uav/paparazzi/sw/tools/gen_aircraft.ml
+# This file has been generated from /home/uav/paparazzi/conf/airframes/examples/LisaM2_Nov26_2012.xml by /home/uav/paparazzi/sw/tools/gen_aircraft.ml
 # Please DO NOT EDIT
 
 ####################################################
@@ -123,3 +123,7 @@ endif
 
 # include modules directory for all targets
 $(TARGET).CFLAGS += -I modules -I arch/$(ARCH)/modules
+GPS_DIR = modules/gps
+
+# makefile for module gps_ubx in modules/gps
+ap.CFLAGS += -DGPS_UBX_UCENTER=\"modules/gps/gps_ubx_ucenter.c\"

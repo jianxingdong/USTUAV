@@ -370,20 +370,20 @@
  281              		.file 4 "./mcu_periph/sys_time.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 sys_time.c
-     /tmp/ccnY9dFR.s:22     .text.sys_time_register_timer:0000000000000000 $t
-     /tmp/ccnY9dFR.s:27     .text.sys_time_register_timer:0000000000000000 sys_time_register_timer
-     /tmp/ccnY9dFR.s:105    .text.sys_time_register_timer:0000000000000050 $d
-     /tmp/ccnY9dFR.s:113    .text.sys_time_cancel_timer:0000000000000000 $t
-     /tmp/ccnY9dFR.s:118    .text.sys_time_cancel_timer:0000000000000000 sys_time_cancel_timer
-     /tmp/ccnY9dFR.s:137    .text.sys_time_cancel_timer:0000000000000010 $d
-     /tmp/ccnY9dFR.s:142    .text.sys_time_update_timer:0000000000000000 $t
-     /tmp/ccnY9dFR.s:147    .text.sys_time_update_timer:0000000000000000 sys_time_update_timer
-     /tmp/ccnY9dFR.s:189    .text.sys_time_update_timer:0000000000000038 $d
-     /tmp/ccnY9dFR.s:197    .text.sys_time_init:0000000000000000 $t
-     /tmp/ccnY9dFR.s:202    .text.sys_time_init:0000000000000000 sys_time_init
-     /tmp/ccnY9dFR.s:265    .text.sys_time_init:0000000000000030 $d
-     /tmp/ccnY9dFR.s:275    .bss.sys_time:0000000000000000 sys_time
-     /tmp/ccnY9dFR.s:271    .bss.sys_time:0000000000000000 $d
+     /tmp/ccPPAMcA.s:22     .text.sys_time_register_timer:0000000000000000 $t
+     /tmp/ccPPAMcA.s:27     .text.sys_time_register_timer:0000000000000000 sys_time_register_timer
+     /tmp/ccPPAMcA.s:105    .text.sys_time_register_timer:0000000000000050 $d
+     /tmp/ccPPAMcA.s:113    .text.sys_time_cancel_timer:0000000000000000 $t
+     /tmp/ccPPAMcA.s:118    .text.sys_time_cancel_timer:0000000000000000 sys_time_cancel_timer
+     /tmp/ccPPAMcA.s:137    .text.sys_time_cancel_timer:0000000000000010 $d
+     /tmp/ccPPAMcA.s:142    .text.sys_time_update_timer:0000000000000000 $t
+     /tmp/ccPPAMcA.s:147    .text.sys_time_update_timer:0000000000000000 sys_time_update_timer
+     /tmp/ccPPAMcA.s:189    .text.sys_time_update_timer:0000000000000038 $d
+     /tmp/ccPPAMcA.s:197    .text.sys_time_init:0000000000000000 $t
+     /tmp/ccPPAMcA.s:202    .text.sys_time_init:0000000000000000 sys_time_init
+     /tmp/ccPPAMcA.s:265    .text.sys_time_init:0000000000000030 $d
+     /tmp/ccPPAMcA.s:275    .bss.sys_time:0000000000000000 sys_time
+     /tmp/ccPPAMcA.s:271    .bss.sys_time:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

@@ -23,5 +23,8 @@
       <dl_setting step="1" min="0" var="kill_throttle" max="1"/>
       <dl_setting step="1" handler="Reset" shortname="GPS reset" module="subsystems/gps" min="0" var="gps.reset" max="2"/>
     </dl_settings>
+    <dl_settings name="Modules">
+      <dl_setting min="2" max="3" step="1" var="gps_ubx_gps_ubx_ucenter_periodic_status" shortname="gps_ubx_ucenter_periodic" values="START|STOP"/>
+    </dl_settings>
   </dl_settings>
 </settings>

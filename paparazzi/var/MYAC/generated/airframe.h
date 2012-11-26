@@ -1,4 +1,4 @@
-/* This file has been generated from /home/uav/paparazzi/conf/airframes/examples/LisaM2_Nov14_2012.xml */
+/* This file has been generated from /home/uav/paparazzi/conf/airframes/examples/LisaM2_Nov26_2012.xml */
 /* Please DO NOT EDIT */
 
 #ifndef AIRFRAME_H
@@ -6,7 +6,7 @@
 
 #define AIRFRAME_NAME "MYAC"
 #define AC_ID 1
-#define MD5SUM ((uint8_t*)"\104\346\311\261\345\323\100\070\111\175\055\002\161\365\333\052")
+#define MD5SUM ((uint8_t*)"\152\162\370\326\126\366\101\116\136\222\271\275\311\133\070\112")
 
 #define SERVOS_NB 6
 

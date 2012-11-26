@@ -3873,13 +3873,11 @@
  2996              		.global	ahrs_impl
  2997              		.global	ins_pitch_neutral
  2998              		.global	ins_roll_neutral
- 2999              		.section	.bss.Omega_Vector,"aw",%nobits
+ 2999              		.section	.bss.ins_pitch_neutral,"aw",%nobits
  3000              		.align	2
- 3001              		.set	.LANCHOR11,. + 0
- 3004              	Omega_Vector:
- 3005 0000 00000000 		.space	12
- 3005      00000000 
- 3005      00000000 
+ 3001              		.set	.LANCHOR15,. + 0
+ 3004              	ins_pitch_neutral:
+ 3005 0000 00000000 		.space	4
  3006              		.section	.bss.Temporary_Matrix,"aw",%nobits
  3007              		.align	2
  3008              		.set	.LANCHOR13,. + 0
@@ -3898,89 +3896,91 @@
  3019      00000000 
  3019      00000000 
  3019      00000000 
- 3020              		.section	.bss.Scaled_Omega_I.4134,"aw",%nobits
+ 3020              		.section	.bss.Omega,"aw",%nobits
  3021              		.align	2
- 3022              		.set	.LANCHOR7,. + 0
- 3025              	Scaled_Omega_I.4134:
+ 3022              		.set	.LANCHOR10,. + 0
+ 3025              	Omega:
  3026 0000 00000000 		.space	12
  3026      00000000 
  3026      00000000 
- 3027              		.section	.bss.Omega,"aw",%nobits
+ 3027              		.section	.rodata.G_Dt,"a",%progbits
  3028              		.align	2
- 3029              		.set	.LANCHOR10,. + 0
- 3032              	Omega:
- 3033 0000 00000000 		.space	12
- 3033      00000000 
- 3033      00000000 
- 3034              		.section	.rodata.G_Dt,"a",%progbits
- 3035              		.align	2
- 3038              	G_Dt:
- 3039 0000 0AD7233C 		.word	1008981770
- 3040              		.section	.bss.renorm_sqrt_count,"aw",%nobits
+ 3031              	G_Dt:
+ 3032 0000 0AD7233C 		.word	1008981770
+ 3033              		.section	.bss.renorm_sqrt_count,"aw",%nobits
+ 3034              		.align	2
+ 3035              		.set	.LANCHOR2,. + 0
+ 3038              	renorm_sqrt_count:
+ 3039 0000 00000000 		.space	4
+ 3040              		.section	.bss.renorm_blowup_count,"aw",%nobits
  3041              		.align	2
- 3042              		.set	.LANCHOR2,. + 0
- 3045              	renorm_sqrt_count:
+ 3042              		.set	.LANCHOR3,. + 0
+ 3045              	renorm_blowup_count:
  3046 0000 00000000 		.space	4
- 3047              		.section	.bss.renorm_blowup_count,"aw",%nobits
+ 3047              		.section	.bss.Scaled_Omega_I.4153,"aw",%nobits
  3048              		.align	2
- 3049              		.set	.LANCHOR3,. + 0
- 3052              	renorm_blowup_count:
- 3053 0000 00000000 		.space	4
- 3054              		.section	.bss.ins_pitch_neutral,"aw",%nobits
+ 3049              		.set	.LANCHOR7,. + 0
+ 3052              	Scaled_Omega_I.4153:
+ 3053 0000 00000000 		.space	12
+ 3053      00000000 
+ 3053      00000000 
+ 3054              		.section	.bss.Omega_Vector,"aw",%nobits
  3055              		.align	2
- 3056              		.set	.LANCHOR15,. + 0
- 3059              	ins_pitch_neutral:
- 3060 0000 00000000 		.space	4
- 3061              		.section	.bss.Scaled_Omega_P.4133,"aw",%nobits
+ 3056              		.set	.LANCHOR11,. + 0
+ 3059              	Omega_Vector:
+ 3060 0000 00000000 		.space	12
+ 3060      00000000 
+ 3060      00000000 
+ 3061              		.section	.bss.ins_roll_neutral,"aw",%nobits
  3062              		.align	2
- 3063              		.set	.LANCHOR9,. + 0
- 3066              	Scaled_Omega_P.4133:
- 3067 0000 00000000 		.space	12
- 3067      00000000 
- 3067      00000000 
- 3068              		.section	.bss.ins_roll_neutral,"aw",%nobits
+ 3063              		.set	.LANCHOR14,. + 0
+ 3066              	ins_roll_neutral:
+ 3067 0000 00000000 		.space	4
+ 3068              		.section	.bss.imu_health,"aw",%nobits
  3069              		.align	2
- 3070              		.set	.LANCHOR14,. + 0
- 3073              	ins_roll_neutral:
+ 3070              		.set	.LANCHOR5,. + 0
+ 3073              	imu_health:
  3074 0000 00000000 		.space	4
- 3075              		.section	.bss.imu_health,"aw",%nobits
+ 3075              		.section	.data.Update_Matrix,"aw",%progbits
  3076              		.align	2
- 3077              		.set	.LANCHOR5,. + 0
- 3080              	imu_health:
- 3081 0000 00000000 		.space	4
- 3082              		.section	.data.Update_Matrix,"aw",%progbits
- 3083              		.align	2
- 3084              		.set	.LANCHOR12,. + 0
- 3087              	Update_Matrix:
- 3088 0000 00000000 		.word	0
- 3089 0004 0000803F 		.word	1065353216
- 3090 0008 00000040 		.word	1073741824
- 3091 000c 00004040 		.word	1077936128
- 3092 0010 00008040 		.word	1082130432
- 3093 0014 0000A040 		.word	1084227584
- 3094 0018 0000C040 		.word	1086324736
- 3095 001c 0000E040 		.word	1088421888
- 3096 0020 00000041 		.word	1090519040
- 3097              		.section	.bss.Omega_I,"aw",%nobits
+ 3077              		.set	.LANCHOR12,. + 0
+ 3080              	Update_Matrix:
+ 3081 0000 00000000 		.word	0
+ 3082 0004 0000803F 		.word	1065353216
+ 3083 0008 00000040 		.word	1073741824
+ 3084 000c 00004040 		.word	1077936128
+ 3085 0010 00008040 		.word	1082130432
+ 3086 0014 0000A040 		.word	1084227584
+ 3087 0018 0000C040 		.word	1086324736
+ 3088 001c 0000E040 		.word	1088421888
+ 3089 0020 00000041 		.word	1090519040
+ 3090              		.section	.bss.Omega_I,"aw",%nobits
+ 3091              		.align	2
+ 3092              		.set	.LANCHOR8,. + 0
+ 3095              	Omega_I:
+ 3096 0000 00000000 		.space	12
+ 3096      00000000 
+ 3096      00000000 
+ 3097              		.section	.data.DCM_Matrix,"aw",%progbits
  3098              		.align	2
- 3099              		.set	.LANCHOR8,. + 0
- 3102              	Omega_I:
- 3103 0000 00000000 		.space	12
- 3103      00000000 
- 3103      00000000 
- 3104              		.section	.data.DCM_Matrix,"aw",%progbits
- 3105              		.align	2
- 3106              		.set	.LANCHOR0,. + 0
- 3109              	DCM_Matrix:
- 3110 0000 0000803F 		.word	1065353216
- 3111 0004 00000000 		.word	0
- 3112 0008 00000000 		.word	0
- 3113 000c 00000000 		.word	0
- 3114 0010 0000803F 		.word	1065353216
- 3115 0014 00000000 		.word	0
- 3116 0018 00000000 		.word	0
- 3117 001c 00000000 		.word	0
- 3118 0020 0000803F 		.word	1065353216
+ 3099              		.set	.LANCHOR0,. + 0
+ 3102              	DCM_Matrix:
+ 3103 0000 0000803F 		.word	1065353216
+ 3104 0004 00000000 		.word	0
+ 3105 0008 00000000 		.word	0
+ 3106 000c 00000000 		.word	0
+ 3107 0010 0000803F 		.word	1065353216
+ 3108 0014 00000000 		.word	0
+ 3109 0018 00000000 		.word	0
+ 3110 001c 00000000 		.word	0
+ 3111 0020 0000803F 		.word	1065353216
+ 3112              		.section	.bss.Scaled_Omega_P.4152,"aw",%nobits
+ 3113              		.align	2
+ 3114              		.set	.LANCHOR9,. + 0
+ 3117              	Scaled_Omega_P.4152:
+ 3118 0000 00000000 		.space	12
+ 3118      00000000 
+ 3118      00000000 
  3119              		.section	.bss.Omega_P,"aw",%nobits
  3120              		.align	2
  3121              		.set	.LANCHOR6,. + 0
@@ -4013,87 +4013,87 @@
  3148              		.file 17 "./estimator.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 ahrs_float_dcm.c
-     /tmp/ccL01qsC.s:20     .text.Vector_Dot_Product:0000000000000000 $t
-     /tmp/ccL01qsC.s:24     .text.Vector_Dot_Product:0000000000000000 Vector_Dot_Product
-     /tmp/ccL01qsC.s:68     .text.Vector_Scale:0000000000000000 $t
-     /tmp/ccL01qsC.s:72     .text.Vector_Scale:0000000000000000 Vector_Scale
-     /tmp/ccL01qsC.s:116    .text.Vector_Add:0000000000000000 $t
-     /tmp/ccL01qsC.s:120    .text.Vector_Add:0000000000000000 Vector_Add
-     /tmp/ccL01qsC.s:164    .text.set_dcm_matrix_from_rmat:0000000000000000 $t
-     /tmp/ccL01qsC.s:168    .text.set_dcm_matrix_from_rmat:0000000000000000 set_dcm_matrix_from_rmat
-     /tmp/ccL01qsC.s:215    .text.set_dcm_matrix_from_rmat:0000000000000028 $d
-     /tmp/ccL01qsC.s:221    .text.compute_body_orientation_and_rates:0000000000000000 $t
-     /tmp/ccL01qsC.s:225    .text.compute_body_orientation_and_rates:0000000000000000 compute_body_orientation_and_rates
-     /tmp/ccL01qsC.s:509    .text.compute_body_orientation_and_rates:0000000000000288 $d
-     /tmp/ccL01qsC.s:512    .text.compute_body_orientation_and_rates:0000000000000290 $t
-     /tmp/ccL01qsC.s:690    .text.ahrs_init:0000000000000000 $t
-     /tmp/ccL01qsC.s:695    .text.ahrs_init:0000000000000000 ahrs_init
-     /tmp/ccL01qsC.s:811    .text.ahrs_init:00000000000000a4 $d
-     /tmp/ccL01qsC.s:826    .text.ahrs_align:0000000000000000 $t
-     /tmp/ccL01qsC.s:831    .text.ahrs_align:0000000000000000 ahrs_align
-     /tmp/ccL01qsC.s:1202   .text.ahrs_align:00000000000002a8 $d
-     /tmp/ccL01qsC.s:1213   .text.ahrs_align:00000000000002d0 $t
-     /tmp/ccL01qsC.s:1381   .text.ahrs_align:0000000000000430 $d
-     /tmp/ccL01qsC.s:1390   .text.ahrs_update_mag:0000000000000000 $t
-     /tmp/ccL01qsC.s:1395   .text.ahrs_update_mag:0000000000000000 ahrs_update_mag
-     /tmp/ccL01qsC.s:1408   .text.ahrs_update_gps:0000000000000000 $t
-     /tmp/ccL01qsC.s:1413   .text.ahrs_update_gps:0000000000000000 ahrs_update_gps
-     /tmp/ccL01qsC.s:1429   .text.Normalize:0000000000000000 $t
-     /tmp/ccL01qsC.s:1434   .text.Normalize:0000000000000000 Normalize
-     /tmp/ccL01qsC.s:1795   .text.Normalize:0000000000000238 $d
-     /tmp/ccL01qsC.s:1811   .text.Drift_correction:0000000000000000 $t
-     /tmp/ccL01qsC.s:1816   .text.Drift_correction:0000000000000000 Drift_correction
-     /tmp/ccL01qsC.s:2141   .text.Drift_correction:0000000000000270 $d
-     /tmp/ccL01qsC.s:2175   .text.ahrs_update_accel:0000000000000000 $t
-     /tmp/ccL01qsC.s:2180   .text.ahrs_update_accel:0000000000000000 ahrs_update_accel
-     /tmp/ccL01qsC.s:2292   .text.ahrs_update_accel:00000000000000cc $d
-     /tmp/ccL01qsC.s:2301   .text.Matrix_update:0000000000000000 $t
-     /tmp/ccL01qsC.s:2306   .text.Matrix_update:0000000000000000 Matrix_update
-     /tmp/ccL01qsC.s:2525   .text.Matrix_update:0000000000000100 $d
-     /tmp/ccL01qsC.s:2539   .text.ahrs_propagate:0000000000000000 $t
-     /tmp/ccL01qsC.s:2544   .text.ahrs_propagate:0000000000000000 ahrs_propagate
-     /tmp/ccL01qsC.s:2893   .text.ahrs_propagate:00000000000002a8 $d
-     /tmp/ccL01qsC.s:2900   .text.ahrs_propagate:00000000000002c0 $t
-     /tmp/ccL01qsC.s:2918   .text.ahrs_update_fw_estimator:0000000000000000 $t
-     /tmp/ccL01qsC.s:2923   .text.ahrs_update_fw_estimator:0000000000000000 ahrs_update_fw_estimator
-     /tmp/ccL01qsC.s:2972   .text.ahrs_update_fw_estimator:0000000000000040 $d
-     /tmp/ccL01qsC.s:3080   .bss.imu_health:0000000000000000 imu_health
-     /tmp/ccL01qsC.s:3052   .bss.renorm_blowup_count:0000000000000000 renorm_blowup_count
-     /tmp/ccL01qsC.s:3045   .bss.renorm_sqrt_count:0000000000000000 renorm_sqrt_count
-     /tmp/ccL01qsC.s:3011   .bss.Temporary_Matrix:0000000000000000 Temporary_Matrix
-     /tmp/ccL01qsC.s:3087   .data.Update_Matrix:0000000000000000 Update_Matrix
-     /tmp/ccL01qsC.s:3109   .data.DCM_Matrix:0000000000000000 DCM_Matrix
-     /tmp/ccL01qsC.s:3032   .bss.Omega:0000000000000000 Omega
-     /tmp/ccL01qsC.s:3102   .bss.Omega_I:0000000000000000 Omega_I
-     /tmp/ccL01qsC.s:3124   .bss.Omega_P:0000000000000000 Omega_P
-     /tmp/ccL01qsC.s:3004   .bss.Omega_Vector:0000000000000000 Omega_Vector
-     /tmp/ccL01qsC.s:3131   .bss.accel_float:0000000000000000 accel_float
-     /tmp/ccL01qsC.s:3038   .rodata.G_Dt:0000000000000000 G_Dt
-     /tmp/ccL01qsC.s:3018   .bss.ahrs_impl:0000000000000000 ahrs_impl
-     /tmp/ccL01qsC.s:3059   .bss.ins_pitch_neutral:0000000000000000 ins_pitch_neutral
-     /tmp/ccL01qsC.s:3073   .bss.ins_roll_neutral:0000000000000000 ins_roll_neutral
-     /tmp/ccL01qsC.s:3000   .bss.Omega_Vector:0000000000000000 $d
-     /tmp/ccL01qsC.s:3007   .bss.Temporary_Matrix:0000000000000000 $d
-     /tmp/ccL01qsC.s:3014   .bss.ahrs_impl:0000000000000000 $d
-     /tmp/ccL01qsC.s:3021   .bss.Scaled_Omega_I.4134:0000000000000000 $d
-     /tmp/ccL01qsC.s:3025   .bss.Scaled_Omega_I.4134:0000000000000000 Scaled_Omega_I.4134
-     /tmp/ccL01qsC.s:3028   .bss.Omega:0000000000000000 $d
-     /tmp/ccL01qsC.s:3035   .rodata.G_Dt:0000000000000000 $d
-     /tmp/ccL01qsC.s:3041   .bss.renorm_sqrt_count:0000000000000000 $d
-     /tmp/ccL01qsC.s:3048   .bss.renorm_blowup_count:0000000000000000 $d
-     /tmp/ccL01qsC.s:3055   .bss.ins_pitch_neutral:0000000000000000 $d
-     /tmp/ccL01qsC.s:3062   .bss.Scaled_Omega_P.4133:0000000000000000 $d
-     /tmp/ccL01qsC.s:3066   .bss.Scaled_Omega_P.4133:0000000000000000 Scaled_Omega_P.4133
-     /tmp/ccL01qsC.s:3069   .bss.ins_roll_neutral:0000000000000000 $d
-     /tmp/ccL01qsC.s:3076   .bss.imu_health:0000000000000000 $d
-     /tmp/ccL01qsC.s:3083   .data.Update_Matrix:0000000000000000 $d
-     /tmp/ccL01qsC.s:3098   .bss.Omega_I:0000000000000000 $d
-     /tmp/ccL01qsC.s:3105   .data.DCM_Matrix:0000000000000000 $d
-     /tmp/ccL01qsC.s:3120   .bss.Omega_P:0000000000000000 $d
-     /tmp/ccL01qsC.s:3127   .bss.accel_float:0000000000000000 $d
+     /tmp/ccP6U77d.s:20     .text.Vector_Dot_Product:0000000000000000 $t
+     /tmp/ccP6U77d.s:24     .text.Vector_Dot_Product:0000000000000000 Vector_Dot_Product
+     /tmp/ccP6U77d.s:68     .text.Vector_Scale:0000000000000000 $t
+     /tmp/ccP6U77d.s:72     .text.Vector_Scale:0000000000000000 Vector_Scale
+     /tmp/ccP6U77d.s:116    .text.Vector_Add:0000000000000000 $t
+     /tmp/ccP6U77d.s:120    .text.Vector_Add:0000000000000000 Vector_Add
+     /tmp/ccP6U77d.s:164    .text.set_dcm_matrix_from_rmat:0000000000000000 $t
+     /tmp/ccP6U77d.s:168    .text.set_dcm_matrix_from_rmat:0000000000000000 set_dcm_matrix_from_rmat
+     /tmp/ccP6U77d.s:215    .text.set_dcm_matrix_from_rmat:0000000000000028 $d
+     /tmp/ccP6U77d.s:221    .text.compute_body_orientation_and_rates:0000000000000000 $t
+     /tmp/ccP6U77d.s:225    .text.compute_body_orientation_and_rates:0000000000000000 compute_body_orientation_and_rates
+     /tmp/ccP6U77d.s:509    .text.compute_body_orientation_and_rates:0000000000000288 $d
+     /tmp/ccP6U77d.s:512    .text.compute_body_orientation_and_rates:0000000000000290 $t
+     /tmp/ccP6U77d.s:690    .text.ahrs_init:0000000000000000 $t
+     /tmp/ccP6U77d.s:695    .text.ahrs_init:0000000000000000 ahrs_init
+     /tmp/ccP6U77d.s:811    .text.ahrs_init:00000000000000a4 $d
+     /tmp/ccP6U77d.s:826    .text.ahrs_align:0000000000000000 $t
+     /tmp/ccP6U77d.s:831    .text.ahrs_align:0000000000000000 ahrs_align
+     /tmp/ccP6U77d.s:1202   .text.ahrs_align:00000000000002a8 $d
+     /tmp/ccP6U77d.s:1213   .text.ahrs_align:00000000000002d0 $t
+     /tmp/ccP6U77d.s:1381   .text.ahrs_align:0000000000000430 $d
+     /tmp/ccP6U77d.s:1390   .text.ahrs_update_mag:0000000000000000 $t
+     /tmp/ccP6U77d.s:1395   .text.ahrs_update_mag:0000000000000000 ahrs_update_mag
+     /tmp/ccP6U77d.s:1408   .text.ahrs_update_gps:0000000000000000 $t
+     /tmp/ccP6U77d.s:1413   .text.ahrs_update_gps:0000000000000000 ahrs_update_gps
+     /tmp/ccP6U77d.s:1429   .text.Normalize:0000000000000000 $t
+     /tmp/ccP6U77d.s:1434   .text.Normalize:0000000000000000 Normalize
+     /tmp/ccP6U77d.s:1795   .text.Normalize:0000000000000238 $d
+     /tmp/ccP6U77d.s:1811   .text.Drift_correction:0000000000000000 $t
+     /tmp/ccP6U77d.s:1816   .text.Drift_correction:0000000000000000 Drift_correction
+     /tmp/ccP6U77d.s:2141   .text.Drift_correction:0000000000000270 $d
+     /tmp/ccP6U77d.s:2175   .text.ahrs_update_accel:0000000000000000 $t
+     /tmp/ccP6U77d.s:2180   .text.ahrs_update_accel:0000000000000000 ahrs_update_accel
+     /tmp/ccP6U77d.s:2292   .text.ahrs_update_accel:00000000000000cc $d
+     /tmp/ccP6U77d.s:2301   .text.Matrix_update:0000000000000000 $t
+     /tmp/ccP6U77d.s:2306   .text.Matrix_update:0000000000000000 Matrix_update
+     /tmp/ccP6U77d.s:2525   .text.Matrix_update:0000000000000100 $d
+     /tmp/ccP6U77d.s:2539   .text.ahrs_propagate:0000000000000000 $t
+     /tmp/ccP6U77d.s:2544   .text.ahrs_propagate:0000000000000000 ahrs_propagate
+     /tmp/ccP6U77d.s:2893   .text.ahrs_propagate:00000000000002a8 $d
+     /tmp/ccP6U77d.s:2900   .text.ahrs_propagate:00000000000002c0 $t
+     /tmp/ccP6U77d.s:2918   .text.ahrs_update_fw_estimator:0000000000000000 $t
+     /tmp/ccP6U77d.s:2923   .text.ahrs_update_fw_estimator:0000000000000000 ahrs_update_fw_estimator
+     /tmp/ccP6U77d.s:2972   .text.ahrs_update_fw_estimator:0000000000000040 $d
+     /tmp/ccP6U77d.s:3073   .bss.imu_health:0000000000000000 imu_health
+     /tmp/ccP6U77d.s:3045   .bss.renorm_blowup_count:0000000000000000 renorm_blowup_count
+     /tmp/ccP6U77d.s:3038   .bss.renorm_sqrt_count:0000000000000000 renorm_sqrt_count
+     /tmp/ccP6U77d.s:3011   .bss.Temporary_Matrix:0000000000000000 Temporary_Matrix
+     /tmp/ccP6U77d.s:3080   .data.Update_Matrix:0000000000000000 Update_Matrix
+     /tmp/ccP6U77d.s:3102   .data.DCM_Matrix:0000000000000000 DCM_Matrix
+     /tmp/ccP6U77d.s:3025   .bss.Omega:0000000000000000 Omega
+     /tmp/ccP6U77d.s:3095   .bss.Omega_I:0000000000000000 Omega_I
+     /tmp/ccP6U77d.s:3124   .bss.Omega_P:0000000000000000 Omega_P
+     /tmp/ccP6U77d.s:3059   .bss.Omega_Vector:0000000000000000 Omega_Vector
+     /tmp/ccP6U77d.s:3131   .bss.accel_float:0000000000000000 accel_float
+     /tmp/ccP6U77d.s:3031   .rodata.G_Dt:0000000000000000 G_Dt
+     /tmp/ccP6U77d.s:3018   .bss.ahrs_impl:0000000000000000 ahrs_impl
+     /tmp/ccP6U77d.s:3004   .bss.ins_pitch_neutral:0000000000000000 ins_pitch_neutral
+     /tmp/ccP6U77d.s:3066   .bss.ins_roll_neutral:0000000000000000 ins_roll_neutral
+     /tmp/ccP6U77d.s:3000   .bss.ins_pitch_neutral:0000000000000000 $d
+     /tmp/ccP6U77d.s:3007   .bss.Temporary_Matrix:0000000000000000 $d
+     /tmp/ccP6U77d.s:3014   .bss.ahrs_impl:0000000000000000 $d
+     /tmp/ccP6U77d.s:3021   .bss.Omega:0000000000000000 $d
+     /tmp/ccP6U77d.s:3028   .rodata.G_Dt:0000000000000000 $d
+     /tmp/ccP6U77d.s:3034   .bss.renorm_sqrt_count:0000000000000000 $d
+     /tmp/ccP6U77d.s:3041   .bss.renorm_blowup_count:0000000000000000 $d
+     /tmp/ccP6U77d.s:3048   .bss.Scaled_Omega_I.4153:0000000000000000 $d
+     /tmp/ccP6U77d.s:3052   .bss.Scaled_Omega_I.4153:0000000000000000 Scaled_Omega_I.4153
+     /tmp/ccP6U77d.s:3055   .bss.Omega_Vector:0000000000000000 $d
+     /tmp/ccP6U77d.s:3062   .bss.ins_roll_neutral:0000000000000000 $d
+     /tmp/ccP6U77d.s:3069   .bss.imu_health:0000000000000000 $d
+     /tmp/ccP6U77d.s:3076   .data.Update_Matrix:0000000000000000 $d
+     /tmp/ccP6U77d.s:3091   .bss.Omega_I:0000000000000000 $d
+     /tmp/ccP6U77d.s:3098   .data.DCM_Matrix:0000000000000000 $d
+     /tmp/ccP6U77d.s:3113   .bss.Scaled_Omega_P.4152:0000000000000000 $d
+     /tmp/ccP6U77d.s:3117   .bss.Scaled_Omega_P.4152:0000000000000000 Scaled_Omega_P.4152
+     /tmp/ccP6U77d.s:3120   .bss.Omega_P:0000000000000000 $d
+     /tmp/ccP6U77d.s:3127   .bss.accel_float:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
-     /tmp/ccL01qsC.s:1389   .text.ahrs_align:0000000000000444 $t
-     /tmp/ccL01qsC.s:2174   .text.Drift_correction:00000000000002e4 $t
+     /tmp/ccP6U77d.s:1389   .text.ahrs_align:0000000000000444 $t
+     /tmp/ccP6U77d.s:2174   .text.Drift_correction:00000000000002e4 $t
 
 UNDEFINED SYMBOLS
 __aeabi_fmul

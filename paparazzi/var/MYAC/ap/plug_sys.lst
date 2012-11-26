@@ -195,22 +195,22 @@
  187              		.file 5 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 plug_sys.c
-     /tmp/cceznOx7.s:18     .text._lseek:0000000000000000 $t
-     /tmp/cceznOx7.s:23     .text._lseek:0000000000000000 _lseek
-     /tmp/cceznOx7.s:40     .text.abort:0000000000000000 $t
-     /tmp/cceznOx7.s:45     .text.abort:0000000000000000 abort
-     /tmp/cceznOx7.s:59     .text.getpid:0000000000000000 $t
-     /tmp/cceznOx7.s:64     .text.getpid:0000000000000000 getpid
-     /tmp/cceznOx7.s:78     .text.kill:0000000000000000 $t
-     /tmp/cceznOx7.s:83     .text.kill:0000000000000000 kill
-     /tmp/cceznOx7.s:99     .text._sbrk:0000000000000000 $t
-     /tmp/cceznOx7.s:104    .text._sbrk:0000000000000000 _sbrk
-     /tmp/cceznOx7.s:120    .text._write:0000000000000000 $t
-     /tmp/cceznOx7.s:125    .text._write:0000000000000000 _write
-     /tmp/cceznOx7.s:141    .text._close:0000000000000000 $t
-     /tmp/cceznOx7.s:146    .text._close:0000000000000000 _close
-     /tmp/cceznOx7.s:162    .text._read:0000000000000000 $t
-     /tmp/cceznOx7.s:167    .text._read:0000000000000000 _read
+     /tmp/ccJBxGtK.s:18     .text._lseek:0000000000000000 $t
+     /tmp/ccJBxGtK.s:23     .text._lseek:0000000000000000 _lseek
+     /tmp/ccJBxGtK.s:40     .text.abort:0000000000000000 $t
+     /tmp/ccJBxGtK.s:45     .text.abort:0000000000000000 abort
+     /tmp/ccJBxGtK.s:59     .text.getpid:0000000000000000 $t
+     /tmp/ccJBxGtK.s:64     .text.getpid:0000000000000000 getpid
+     /tmp/ccJBxGtK.s:78     .text.kill:0000000000000000 $t
+     /tmp/ccJBxGtK.s:83     .text.kill:0000000000000000 kill
+     /tmp/ccJBxGtK.s:99     .text._sbrk:0000000000000000 $t
+     /tmp/ccJBxGtK.s:104    .text._sbrk:0000000000000000 _sbrk
+     /tmp/ccJBxGtK.s:120    .text._write:0000000000000000 $t
+     /tmp/ccJBxGtK.s:125    .text._write:0000000000000000 _write
+     /tmp/ccJBxGtK.s:141    .text._close:0000000000000000 $t
+     /tmp/ccJBxGtK.s:146    .text._close:0000000000000000 _close
+     /tmp/ccJBxGtK.s:162    .text._read:0000000000000000 $t
+     /tmp/ccJBxGtK.s:167    .text._read:0000000000000000 _read
                      .debug_frame:0000000000000010 $d
 
 NO UNDEFINED SYMBOLS

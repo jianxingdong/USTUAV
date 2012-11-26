@@ -26,13 +26,14 @@
     case 8: launch = _value; break;\
     case 9: kill_throttle = _value; break;\
     case 10: gps_Reset( _value ); _value = gps.reset; break;\
+    case 11: gps_ubx_gps_ubx_ucenter_periodic_status = _value; break;\
     default: break;\
   }\
 }
 #define PeriodicSendDlValue(_trans, _dev) { \
   static uint8_t i;\
   float var;\
-  if (i >= 11) i = 0;\
+  if (i >= 12) i = 0;\
   switch (i) { \
     case 0: var = telemetry_mode_Ap; break;\
     case 1: var = telemetry_mode_Fbw; break;\
@@ -45,6 +46,7 @@
     case 8: var = launch; break;\
     case 9: var = kill_throttle; break;\
     case 10: var = gps.reset; break;\
+    case 11: var = gps_ubx_gps_ubx_ucenter_periodic_status; break;\
     default: var = 0.; break;\
   }\
   DOWNLINK_SEND_DL_VALUE(_trans, _dev, &i, &var);\
@@ -63,6 +65,7 @@ static inline float settings_get_value(uint8_t i) {
     case 8: return launch;
     case 9: return kill_throttle;
     case 10: return gps.reset;
+    case 11: return gps_ubx_gps_ubx_ucenter_periodic_status;
     default: return 0.;
     }
   }

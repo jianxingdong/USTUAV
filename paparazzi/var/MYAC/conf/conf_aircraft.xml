@@ -1,6 +1,6 @@
 <configuration>
   <conf>
-    <aircraft name="MYAC" ac_id="1" airframe="airframes/examples/LisaM2_Nov14_2012.xml" radio="radios/SpektrumDX6i_Nov12.xml" telemetry="telemetry/default_fixedwing.xml" flight_plan="flight_plans/basic.xml" settings=" settings/fixedwing_basic.xml" gui_color="blue">
+    <aircraft name="MYAC" ac_id="1" airframe="airframes/examples/LisaM2_Nov26_2012.xml" radio="radios/SpektrumDX6i_Nov12.xml" telemetry="telemetry/default_fixedwing.xml" flight_plan="flight_plans/basic.xml" settings=" settings/fixedwing_basic.xml" gui_color="#354fd3428d54">
       <radio data_max="2100" sync_max="15000" pulse_type="NEGATIVE" name="SpektrumDX6i" data_min="900" sync_min="5000">
         <channel ctl="A" neutral="1100" max="1900" function="THROTTLE" min="1100" average="0"/>
         <channel ctl="B" neutral="1500" max="1900" function="ROLL" min="1100" average="0"/>
@@ -214,6 +214,9 @@
           <define unit="deg" name="DEFAULT_PITCH" value="0"/>
           <define unit="m" name="HOME_RADIUS" value="90"/>
         </section>
+        <modules>
+          <load name="gps_ubx_ucenter.xml"/>
+        </modules>
       </airframe>
       <telemetry>
         <process name="Ap">
