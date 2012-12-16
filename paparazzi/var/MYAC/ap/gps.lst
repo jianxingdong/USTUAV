@@ -112,11 +112,11 @@
   65              		.file 5 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 gps.c
-     /tmp/ccsbxP95.s:18     .text.gps_init:0000000000000000 $t
-     /tmp/ccsbxP95.s:23     .text.gps_init:0000000000000000 gps_init
-     /tmp/ccsbxP95.s:47     .text.gps_init:0000000000000014 $d
-     /tmp/ccsbxP95.s:58     .bss.gps:0000000000000000 gps
-     /tmp/ccsbxP95.s:54     .bss.gps:0000000000000000 $d
+     /tmp/ccyllDah.s:18     .text.gps_init:0000000000000000 $t
+     /tmp/ccyllDah.s:23     .text.gps_init:0000000000000000 gps_init
+     /tmp/ccyllDah.s:47     .text.gps_init:0000000000000014 $d
+     /tmp/ccyllDah.s:58     .bss.gps:0000000000000000 gps
+     /tmp/ccyllDah.s:54     .bss.gps:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

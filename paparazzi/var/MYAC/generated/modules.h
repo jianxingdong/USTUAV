@@ -1,4 +1,4 @@
-/* This file has been generated from /home/uav/paparazzi/conf/airframes/examples/LisaM2_Nov26_2012.xml */
+/* This file has been generated from /home/uav/USTUAV/paparazzi/conf/airframes/examples/LisaM2_Nov26_2012.xml */
 /* Please DO NOT EDIT */
 
 #ifndef MODULES_H
@@ -16,9 +16,14 @@
 #endif
 #include "std.h"
 #include "gps/gps_ubx_ucenter.h"
+#include "core/sys_mon.h"
 
 #define GPS_UBX_UCENTER_PERIODIC_PERIOD 0.250000
 #define GPS_UBX_UCENTER_PERIODIC_FREQ 4.000000
+#define PERIODIC_REPORT_SYSMON_PERIOD 1.000000
+#define PERIODIC_REPORT_SYSMON_FREQ 1.000000
+#define PERIODIC_SYSMON_PERIOD 0.016667
+#define PERIODIC_SYSMON_FREQ 60.000000
 
 EXTERN_MODULES uint8_t gps_ubx_gps_ubx_ucenter_periodic_status;
 
@@ -27,20 +32,29 @@ EXTERN_MODULES uint8_t gps_ubx_gps_ubx_ucenter_periodic_status;
 static inline void modules_init(void) {
   gps_ubx_ucenter_init();
   gps_ubx_gps_ubx_ucenter_periodic_status = MODULES_START;
+  init_sysmon();
 }
 
 static inline void modules_periodic_task(void) {
+  static uint8_t i1; i1++; if (i1>=1) i1=0;
   static uint8_t i15; i15++; if (i15>=15) i15=0;
+  static uint8_t i60; i60++; if (i60>=60) i60=0;
 
   if (gps_ubx_gps_ubx_ucenter_periodic_status == MODULES_START) { gps_ubx_ucenter_init(); gps_ubx_gps_ubx_ucenter_periodic_status = MODULES_RUN; }
   if (gps_ubx_gps_ubx_ucenter_periodic_status == MODULES_STOP) { ; gps_ubx_gps_ubx_ucenter_periodic_status = MODULES_IDLE; }
 
+
+  periodic_sysmon();
   if (i15 == 0 && gps_ubx_gps_ubx_ucenter_periodic_status == MODULES_RUN) {
     gps_ubx_ucenter_periodic();
+  }
+  if (i60 == 7) {
+    periodic_report_sysmon();
   }
 }
 
 static inline void modules_event_task(void) {
+  event_sysmon();
 }
 
 #endif // MODULES_C

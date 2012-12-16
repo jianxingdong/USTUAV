@@ -144,16 +144,16 @@
  113              	.Letext0:
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 stm32_exceptions.c
-     /tmp/ccyBOu5B.s:18     .text.nmi_exception:0000000000000000 $t
-     /tmp/ccyBOu5B.s:23     .text.nmi_exception:0000000000000000 nmi_exception
-     /tmp/ccyBOu5B.s:37     .text.hard_fault_exception:0000000000000000 $t
-     /tmp/ccyBOu5B.s:42     .text.hard_fault_exception:0000000000000000 hard_fault_exception
-     /tmp/ccyBOu5B.s:56     .text.mem_manage_exception:0000000000000000 $t
-     /tmp/ccyBOu5B.s:61     .text.mem_manage_exception:0000000000000000 mem_manage_exception
-     /tmp/ccyBOu5B.s:75     .text.bus_fault_exception:0000000000000000 $t
-     /tmp/ccyBOu5B.s:80     .text.bus_fault_exception:0000000000000000 bus_fault_exception
-     /tmp/ccyBOu5B.s:94     .text.usage_fault_exception:0000000000000000 $t
-     /tmp/ccyBOu5B.s:99     .text.usage_fault_exception:0000000000000000 usage_fault_exception
+     /tmp/ccCpUjJO.s:18     .text.nmi_exception:0000000000000000 $t
+     /tmp/ccCpUjJO.s:23     .text.nmi_exception:0000000000000000 nmi_exception
+     /tmp/ccCpUjJO.s:37     .text.hard_fault_exception:0000000000000000 $t
+     /tmp/ccCpUjJO.s:42     .text.hard_fault_exception:0000000000000000 hard_fault_exception
+     /tmp/ccCpUjJO.s:56     .text.mem_manage_exception:0000000000000000 $t
+     /tmp/ccCpUjJO.s:61     .text.mem_manage_exception:0000000000000000 mem_manage_exception
+     /tmp/ccCpUjJO.s:75     .text.bus_fault_exception:0000000000000000 $t
+     /tmp/ccCpUjJO.s:80     .text.bus_fault_exception:0000000000000000 bus_fault_exception
+     /tmp/ccCpUjJO.s:94     .text.usage_fault_exception:0000000000000000 $t
+     /tmp/ccCpUjJO.s:99     .text.usage_fault_exception:0000000000000000 usage_fault_exception
                      .debug_frame:0000000000000010 $d
 
 NO UNDEFINED SYMBOLS

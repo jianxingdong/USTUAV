@@ -12,7 +12,7 @@
         <channel ctl="H" neutral="1500" max="1900" function="SWITCH1" min="1100" average="1"/>
         <channel ctl="I" neutral="1500" max="1900" function="UNUSED" min="1100" average="1"/>
       </radio>
-      <flight_plan name="Basic" lon0="1.27289" max_dist_from_home="1500" ground_alt="0" security_height="25" alt="75" lat0="43.46223">
+      <flight_plan name="Basic" lon0="-93.193915" max_dist_from_home="1500" ground_alt="0" security_height="25" alt="75" lat0="44.940506">
         <header>#include "subsystems/navigation/nav_line.h"
 #include "subsystems/datalink/datalink.h"</header>
         <waypoints>
@@ -114,7 +114,9 @@
           </subsystem>
           <subsystem name="telemetry" type="transparent"/>
           <subsystem name="control"/>
-          <subsystem name="imu" type="aspirin_v2.1"/>
+          <subsystem name="imu" type="aspirin_v2.1">
+            <define name="LISA_M_AXIS_SWITCH"/>
+          </subsystem>
           <subsystem name="ahrs" type="float_dcm"/>
           <subsystem name="gps" type="ublox"/>
           <subsystem name="navigation"/>
@@ -163,9 +165,9 @@
         </section>
         <section name="BAT">
           <define unit="mA" name="MILLIAMP_AT_FULL_THROTTLE" value="20000"/>
-          <define unit="V" name="CATASTROPHIC_BAT_LEVEL" value="9.0"/>
-          <define unit="V" name="CRITIC_BAT_LEVEL" value="9.5"/>
-          <define unit="V" name="LOW_BAT_LEVEL" value="10.0"/>
+          <define unit="V" name="CATASTROPHIC_BAT_LEVEL" value="0.0"/>
+          <define unit="V" name="CRITIC_BAT_LEVEL" value="0.0"/>
+          <define unit="V" name="LOW_BAT_LEVEL" value="0.0"/>
           <define unit="V" name="MAX_BAT_LEVEL" value="12.5"/>
         </section>
         <section name="MISC">
@@ -216,6 +218,7 @@
         </section>
         <modules>
           <load name="gps_ubx_ucenter.xml"/>
+          <load name="sys_mon.xml"/>
         </modules>
       </airframe>
       <telemetry>

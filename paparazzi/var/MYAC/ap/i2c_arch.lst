@@ -1595,17 +1595,17 @@
  173              		.text
  174              	.Letext0:
  175              		.file 3 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
- 176              		.file 4 "/home/uav/paparazzi/sw/include/std.h"
+ 176              		.file 4 "/home/uav/USTUAV/paparazzi/sw/include/std.h"
  177              		.file 5 "./mcu_periph/i2c.h"
  178              		.file 6 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 i2c_arch.c
-     /tmp/ccONrSwi.s:18     .text.i2c_event:0000000000000000 $t
-     /tmp/ccONrSwi.s:23     .text.i2c_event:0000000000000000 i2c_event
-     /tmp/ccONrSwi.s:37     .text.i2c_idle:0000000000000000 $t
-     /tmp/ccONrSwi.s:42     .text.i2c_idle:0000000000000000 i2c_idle
-     /tmp/ccONrSwi.s:68     .text.i2c_submit:0000000000000000 $t
-     /tmp/ccONrSwi.s:73     .text.i2c_submit:0000000000000000 i2c_submit
+     /tmp/ccRocv3w.s:18     .text.i2c_event:0000000000000000 $t
+     /tmp/ccRocv3w.s:23     .text.i2c_event:0000000000000000 i2c_event
+     /tmp/ccRocv3w.s:37     .text.i2c_idle:0000000000000000 $t
+     /tmp/ccRocv3w.s:42     .text.i2c_idle:0000000000000000 i2c_idle
+     /tmp/ccRocv3w.s:68     .text.i2c_submit:0000000000000000 $t
+     /tmp/ccRocv3w.s:73     .text.i2c_submit:0000000000000000 i2c_submit
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

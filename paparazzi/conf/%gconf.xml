@@ -3,6 +3,6 @@
   <entry name="height" value="876" application="paparazzi center"/>
   <entry name="width" value="1551" application="paparazzi center"/>
   <entry name="last target" value="ap" application="paparazzi center"/>
-  <entry name="last session" value="Flight USB-serial@57600" application="paparazzi center"/>
+  <entry name="last session" value="Flight USB-XBee-API@57600" application="paparazzi center"/>
   <entry name="last A/C" value="MYAC" application="paparazzi center"/>
 </gconf>

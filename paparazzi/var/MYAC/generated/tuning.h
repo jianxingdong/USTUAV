@@ -1,4 +1,4 @@
-/* This file has been generated from /home/uav/paparazzi/conf/settings/fixedwing_basic.xml */
+/* This file has been generated from /home/uav/USTUAV/paparazzi/conf/settings/fixedwing_basic.xml */
 /* Please DO NOT EDIT */
 
 #ifndef TUNING_H

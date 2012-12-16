@@ -79,25 +79,25 @@
   65              		.text
   66              	.Letext0:
   67              		.file 2 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
-  68              		.file 3 "/home/uav/paparazzi/sw/include/std.h"
+  68              		.file 3 "/home/uav/USTUAV/paparazzi/sw/include/std.h"
   69              		.file 4 "./mcu_periph/sys_time.h"
   70              		.file 5 "./math/pprz_geodetic_int.h"
   71              		.file 6 "./subsystems/gps.h"
   72              		.file 7 "./estimator.h"
   73              		.file 8 "firmwares/fixedwing/autopilot.h"
   74              		.file 9 "./subsystems/nav.h"
-  75              		.file 10 "/home/uav/paparazzi/var/MYAC/generated/modules.h"
-  76              		.file 11 "/home/uav/paparazzi/var/MYAC/generated/periodic_telemetry.h"
-  77              		.file 12 "/home/uav/paparazzi/var/MYAC/generated/settings.h"
+  75              		.file 10 "/home/uav/USTUAV/paparazzi/var/MYAC/generated/modules.h"
+  76              		.file 11 "/home/uav/USTUAV/paparazzi/var/MYAC/generated/periodic_telemetry.h"
+  77              		.file 12 "/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 settings.c
-     /tmp/cc3OPGQX.s:18     .text.settings_init:0000000000000000 $t
-     /tmp/cc3OPGQX.s:23     .text.settings_init:0000000000000000 settings_init
-     /tmp/cc3OPGQX.s:37     .text.settings_store:0000000000000000 $t
-     /tmp/cc3OPGQX.s:42     .text.settings_store:0000000000000000 settings_store
-     /tmp/cc3OPGQX.s:59     .bss.settings_store_now:0000000000000000 settings_store_now
-     /tmp/cc3OPGQX.s:64     .bss.pers_settings:0000000000000000 pers_settings
-     /tmp/cc3OPGQX.s:60     .bss.settings_store_now:0000000000000000 $d
+     /tmp/ccj1MRB4.s:18     .text.settings_init:0000000000000000 $t
+     /tmp/ccj1MRB4.s:23     .text.settings_init:0000000000000000 settings_init
+     /tmp/ccj1MRB4.s:37     .text.settings_store:0000000000000000 $t
+     /tmp/ccj1MRB4.s:42     .text.settings_store:0000000000000000 settings_store
+     /tmp/ccj1MRB4.s:59     .bss.settings_store_now:0000000000000000 settings_store_now
+     /tmp/ccj1MRB4.s:64     .bss.pers_settings:0000000000000000 pers_settings
+     /tmp/ccj1MRB4.s:60     .bss.settings_store_now:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 NO UNDEFINED SYMBOLS

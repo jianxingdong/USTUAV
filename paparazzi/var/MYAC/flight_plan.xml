@@ -1,5 +1,5 @@
 <dump>
-  <flight_plan name="Basic" lon0="1.27289" max_dist_from_home="1500" ground_alt="0" security_height="25" alt="75" lat0="43.46223">
+  <flight_plan name="Basic" lon0="-93.193915" max_dist_from_home="1500" ground_alt="0" security_height="25" alt="75" lat0="44.940506">
     <header>#include "subsystems/navigation/nav_line.h"
 #include "subsystems/datalink/datalink.h"</header>
     <waypoints>

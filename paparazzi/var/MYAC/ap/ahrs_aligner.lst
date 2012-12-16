@@ -550,26 +550,26 @@
  416              		.file 7 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 ahrs_aligner.c
-     /tmp/ccIbhYMg.s:18     .text.ahrs_aligner_init:0000000000000000 $t
-     /tmp/ccIbhYMg.s:23     .text.ahrs_aligner_init:0000000000000000 ahrs_aligner_init
-     /tmp/ccIbhYMg.s:67     .text.ahrs_aligner_init:000000000000002c $d
-     /tmp/ccIbhYMg.s:76     .text.ahrs_aligner_run:0000000000000000 $t
-     /tmp/ccIbhYMg.s:81     .text.ahrs_aligner_run:0000000000000000 ahrs_aligner_run
-     /tmp/ccIbhYMg.s:346    .text.ahrs_aligner_run:0000000000000180 $d
-     /tmp/ccIbhYMg.s:386    .bss.ahrs_aligner:0000000000000000 ahrs_aligner
-     /tmp/ccIbhYMg.s:361    .bss.gyro_sum:0000000000000000 $d
-     /tmp/ccIbhYMg.s:365    .bss.gyro_sum:0000000000000000 gyro_sum
-     /tmp/ccIbhYMg.s:368    .bss.mag_sum:0000000000000000 $d
-     /tmp/ccIbhYMg.s:372    .bss.mag_sum:0000000000000000 mag_sum
-     /tmp/ccIbhYMg.s:375    .bss.samples_idx:0000000000000000 $d
-     /tmp/ccIbhYMg.s:379    .bss.samples_idx:0000000000000000 samples_idx
-     /tmp/ccIbhYMg.s:382    .bss.ahrs_aligner:0000000000000000 $d
-     /tmp/ccIbhYMg.s:389    .bss.ref_sensor_samples:0000000000000000 $d
-     /tmp/ccIbhYMg.s:393    .bss.ref_sensor_samples:0000000000000000 ref_sensor_samples
-     /tmp/ccIbhYMg.s:396    .bss.accel_sum:0000000000000000 $d
-     /tmp/ccIbhYMg.s:400    .bss.accel_sum:0000000000000000 accel_sum
-     /tmp/ccIbhYMg.s:403    .bss.prescaler.3617:0000000000000000 $d
-     /tmp/ccIbhYMg.s:407    .bss.prescaler.3617:0000000000000000 prescaler.3617
+     /tmp/ccCZPykr.s:18     .text.ahrs_aligner_init:0000000000000000 $t
+     /tmp/ccCZPykr.s:23     .text.ahrs_aligner_init:0000000000000000 ahrs_aligner_init
+     /tmp/ccCZPykr.s:67     .text.ahrs_aligner_init:000000000000002c $d
+     /tmp/ccCZPykr.s:76     .text.ahrs_aligner_run:0000000000000000 $t
+     /tmp/ccCZPykr.s:81     .text.ahrs_aligner_run:0000000000000000 ahrs_aligner_run
+     /tmp/ccCZPykr.s:346    .text.ahrs_aligner_run:0000000000000180 $d
+     /tmp/ccCZPykr.s:386    .bss.ahrs_aligner:0000000000000000 ahrs_aligner
+     /tmp/ccCZPykr.s:361    .bss.gyro_sum:0000000000000000 $d
+     /tmp/ccCZPykr.s:365    .bss.gyro_sum:0000000000000000 gyro_sum
+     /tmp/ccCZPykr.s:368    .bss.mag_sum:0000000000000000 $d
+     /tmp/ccCZPykr.s:372    .bss.mag_sum:0000000000000000 mag_sum
+     /tmp/ccCZPykr.s:375    .bss.samples_idx:0000000000000000 $d
+     /tmp/ccCZPykr.s:379    .bss.samples_idx:0000000000000000 samples_idx
+     /tmp/ccCZPykr.s:382    .bss.ahrs_aligner:0000000000000000 $d
+     /tmp/ccCZPykr.s:389    .bss.ref_sensor_samples:0000000000000000 $d
+     /tmp/ccCZPykr.s:393    .bss.ref_sensor_samples:0000000000000000 ref_sensor_samples
+     /tmp/ccCZPykr.s:396    .bss.accel_sum:0000000000000000 $d
+     /tmp/ccCZPykr.s:400    .bss.accel_sum:0000000000000000 accel_sum
+     /tmp/ccCZPykr.s:403    .bss.prescaler.3617:0000000000000000 $d
+     /tmp/ccCZPykr.s:407    .bss.prescaler.3617:0000000000000000 prescaler.3617
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

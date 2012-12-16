@@ -166,18 +166,18 @@
  106              		.text
  107              	.Letext0:
  108              		.file 2 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
- 109              		.file 3 "/home/uav/paparazzi/sw/include/std.h"
+ 109              		.file 3 "/home/uav/USTUAV/paparazzi/sw/include/std.h"
  110              		.file 4 "./mcu_periph/uart.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 uart.c
-     /tmp/cc3fWaPP.s:18     .text.uart_periph_init:0000000000000000 $t
-     /tmp/cc3fWaPP.s:23     .text.uart_periph_init:0000000000000000 uart_periph_init
-     /tmp/cc3fWaPP.s:49     .text.uart_check_free_space:0000000000000000 $t
-     /tmp/cc3fWaPP.s:54     .text.uart_check_free_space:0000000000000000 uart_check_free_space
-     /tmp/cc3fWaPP.s:104    .bss.uart3:0000000000000000 uart3
-     /tmp/cc3fWaPP.s:98     .bss.uart2:0000000000000000 uart2
-     /tmp/cc3fWaPP.s:95     .bss.uart2:0000000000000000 $d
-     /tmp/cc3fWaPP.s:101    .bss.uart3:0000000000000000 $d
+     /tmp/cc6ieNqX.s:18     .text.uart_periph_init:0000000000000000 $t
+     /tmp/cc6ieNqX.s:23     .text.uart_periph_init:0000000000000000 uart_periph_init
+     /tmp/cc6ieNqX.s:49     .text.uart_check_free_space:0000000000000000 $t
+     /tmp/cc6ieNqX.s:54     .text.uart_check_free_space:0000000000000000 uart_check_free_space
+     /tmp/cc6ieNqX.s:104    .bss.uart3:0000000000000000 uart3
+     /tmp/cc6ieNqX.s:98     .bss.uart2:0000000000000000 uart2
+     /tmp/cc6ieNqX.s:95     .bss.uart2:0000000000000000 $d
+     /tmp/cc6ieNqX.s:101    .bss.uart3:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 NO UNDEFINED SYMBOLS

@@ -1,4 +1,4 @@
-/* This file has been generated from /home/uav/paparazzi/conf/radios/SpektrumDX6i_Nov12.xml */
+/* This file has been generated from /home/uav/USTUAV/paparazzi/conf/radios/SpektrumDX6i_Nov12.xml */
 /* Please DO NOT EDIT */
 
 #ifndef RADIO_H

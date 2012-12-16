@@ -35,17 +35,17 @@
   43              		.text
   44              	.Letext0:
   45              		.file 1 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
-  46              		.file 2 "/home/uav/paparazzi/sw/include/std.h"
+  46              		.file 2 "/home/uav/USTUAV/paparazzi/sw/include/std.h"
   47              		.file 3 "mcu_periph/spi.c"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 spi.c
-     /tmp/cc7DqOid.s:35     .bss.spi_message_received:0000000000000000 spi_message_received
-     /tmp/cc7DqOid.s:24     .bss.spi_buffer_length:0000000000000000 spi_buffer_length
-     /tmp/cc7DqOid.s:41     .bss.spi_buffer_output:0000000000000000 spi_buffer_output
-     /tmp/cc7DqOid.s:30     .bss.spi_buffer_input:0000000000000000 spi_buffer_input
-     /tmp/cc7DqOid.s:25     .bss.spi_buffer_length:0000000000000000 $d
-     /tmp/cc7DqOid.s:27     .bss.spi_buffer_input:0000000000000000 $d
-     /tmp/cc7DqOid.s:36     .bss.spi_message_received:0000000000000000 $d
-     /tmp/cc7DqOid.s:38     .bss.spi_buffer_output:0000000000000000 $d
+     /tmp/ccb3z98n.s:35     .bss.spi_message_received:0000000000000000 spi_message_received
+     /tmp/ccb3z98n.s:24     .bss.spi_buffer_length:0000000000000000 spi_buffer_length
+     /tmp/ccb3z98n.s:41     .bss.spi_buffer_output:0000000000000000 spi_buffer_output
+     /tmp/ccb3z98n.s:30     .bss.spi_buffer_input:0000000000000000 spi_buffer_input
+     /tmp/ccb3z98n.s:25     .bss.spi_buffer_length:0000000000000000 $d
+     /tmp/ccb3z98n.s:27     .bss.spi_buffer_input:0000000000000000 $d
+     /tmp/ccb3z98n.s:36     .bss.spi_message_received:0000000000000000 $d
+     /tmp/ccb3z98n.s:38     .bss.spi_buffer_output:0000000000000000 $d
 
 NO UNDEFINED SYMBOLS

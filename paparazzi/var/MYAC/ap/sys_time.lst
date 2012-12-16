@@ -366,24 +366,24 @@
  277              		.text
  278              	.Letext0:
  279              		.file 2 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
- 280              		.file 3 "/home/uav/paparazzi/sw/include/std.h"
+ 280              		.file 3 "/home/uav/USTUAV/paparazzi/sw/include/std.h"
  281              		.file 4 "./mcu_periph/sys_time.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 sys_time.c
-     /tmp/ccPPAMcA.s:22     .text.sys_time_register_timer:0000000000000000 $t
-     /tmp/ccPPAMcA.s:27     .text.sys_time_register_timer:0000000000000000 sys_time_register_timer
-     /tmp/ccPPAMcA.s:105    .text.sys_time_register_timer:0000000000000050 $d
-     /tmp/ccPPAMcA.s:113    .text.sys_time_cancel_timer:0000000000000000 $t
-     /tmp/ccPPAMcA.s:118    .text.sys_time_cancel_timer:0000000000000000 sys_time_cancel_timer
-     /tmp/ccPPAMcA.s:137    .text.sys_time_cancel_timer:0000000000000010 $d
-     /tmp/ccPPAMcA.s:142    .text.sys_time_update_timer:0000000000000000 $t
-     /tmp/ccPPAMcA.s:147    .text.sys_time_update_timer:0000000000000000 sys_time_update_timer
-     /tmp/ccPPAMcA.s:189    .text.sys_time_update_timer:0000000000000038 $d
-     /tmp/ccPPAMcA.s:197    .text.sys_time_init:0000000000000000 $t
-     /tmp/ccPPAMcA.s:202    .text.sys_time_init:0000000000000000 sys_time_init
-     /tmp/ccPPAMcA.s:265    .text.sys_time_init:0000000000000030 $d
-     /tmp/ccPPAMcA.s:275    .bss.sys_time:0000000000000000 sys_time
-     /tmp/ccPPAMcA.s:271    .bss.sys_time:0000000000000000 $d
+     /tmp/ccCSCMEI.s:22     .text.sys_time_register_timer:0000000000000000 $t
+     /tmp/ccCSCMEI.s:27     .text.sys_time_register_timer:0000000000000000 sys_time_register_timer
+     /tmp/ccCSCMEI.s:105    .text.sys_time_register_timer:0000000000000050 $d
+     /tmp/ccCSCMEI.s:113    .text.sys_time_cancel_timer:0000000000000000 $t
+     /tmp/ccCSCMEI.s:118    .text.sys_time_cancel_timer:0000000000000000 sys_time_cancel_timer
+     /tmp/ccCSCMEI.s:137    .text.sys_time_cancel_timer:0000000000000010 $d
+     /tmp/ccCSCMEI.s:142    .text.sys_time_update_timer:0000000000000000 $t
+     /tmp/ccCSCMEI.s:147    .text.sys_time_update_timer:0000000000000000 sys_time_update_timer
+     /tmp/ccCSCMEI.s:189    .text.sys_time_update_timer:0000000000000038 $d
+     /tmp/ccCSCMEI.s:197    .text.sys_time_init:0000000000000000 $t
+     /tmp/ccCSCMEI.s:202    .text.sys_time_init:0000000000000000 sys_time_init
+     /tmp/ccCSCMEI.s:265    .text.sys_time_init:0000000000000030 $d
+     /tmp/ccCSCMEI.s:275    .bss.sys_time:0000000000000000 sys_time
+     /tmp/ccCSCMEI.s:271    .bss.sys_time:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

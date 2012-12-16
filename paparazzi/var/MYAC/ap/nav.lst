@@ -4506,77 +4506,77 @@
  3512 0012 1C60     		str	r4, [r3, #0]	@ float
  3513              	.LBB64:
  3514              	.LBB65:
- 3515              		.file 3 "/home/uav/paparazzi/var/MYAC/generated/flight_plan.h"
-   1:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** /* This file has been generated from /home/uav/paparazzi/conf/flight_plans/basic.xml */
-   2:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** /* Please DO NOT EDIT */
-   3:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** 
-   4:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #ifndef FLIGHT_PLAN_H
-   5:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #define FLIGHT_PLAN_H
-   6:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** 
-   7:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #include "std.h"
-   8:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #include "generated/modules.h"
-   9:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #include "subsystems/navigation/nav_line.h"
-  10:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #include "subsystems/datalink/datalink.h"
-  11:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #define FLIGHT_PLAN_NAME "Basic"
-  12:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #define NAV_UTM_EAST0 360285
-  13:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #define NAV_UTM_NORTH0 4813595
-  14:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #define NAV_UTM_ZONE0 31
-  15:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #define NAV_LAT0 434622300 /* 1e7deg */
-  16:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #define NAV_LON0 12728900 /* 1e7deg */
-  17:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #define NAV_ALT0 0 /* mm above msl */
-  18:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #define NAV_MSL0 51850 /* mm, EGM96 geoid-height (msl) over ellipsoid */
-  19:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #define QFU 0.0
-  20:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #define WP_dummy 0
-  21:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #define WP_HOME 1
-  22:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #define WP_STDBY 2
-  23:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #define WP_1 3
-  24:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #define WP_2 4
-  25:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #define WP_MOB 5
-  26:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #define WP_S1 6
-  27:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #define WP_S2 7
-  28:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #define WP_AF 8
-  29:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #define WP_TD 9
-  30:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #define WP__BASELEG 10
-  31:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #define WP_CLIMB 11
-  32:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #define WAYPOINTS { \
-  33:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****  {42.0, 42.0, 75},\
-  34:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****  {0.0, 0.0, 75},\
-  35:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****  {49.5, 100.1, 75},\
-  36:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****  {10.1, 189.9, 75},\
-  37:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****  {132.3, 139.1, 75},\
-  38:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****  {137.0, -11.6, 75},\
-  39:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****  {-119.2, 69.6, 75},\
-  40:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****  {274.4, 209.5, 75},\
-  41:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****  {177.4, 45.1, 30.0},\
-  42:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****  {28.8, 57.0, 0.0},\
-  43:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****  {168.8, -13.8, 75},\
-  44:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****  {-114.5, 162.3, 75},\
-  45:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** };
-  46:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #define WAYPOINTS_LLA { \
-  47:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****  {434626158, 12733981, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=51.85m) */ \
-  48:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****  {434622299, 12728900, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=51.85m) */ \
-  49:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****  {434631401, 12734759, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=51.85m) */ \
-  50:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****  {434639410, 12729661, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=51.85m) */ \
-  51:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****  {434635066, 12744890, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=51.85m) */ \
-  52:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****  {434621511, 12745857, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=51.85m) */ \
-  53:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****  {434628341, 12713992, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=51.85m) */ \
-  54:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****  {434641667, 12762269, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=51.85m) */ \
-  55:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****  {434626690, 12750704, 3000}, /* 1e7deg, 1e7deg, cm (hmsl=51.85m) */ \
-  56:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****  {434627483, 12732312, 0}, /* 1e7deg, 1e7deg, cm (hmsl=51.85m) */ \
-  57:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****  {434621372, 12749792, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=51.85m) */ \
-  58:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****  {434636693, 12714335, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=51.85m) */ \
-  59:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** };
-  60:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #define NB_WAYPOINT 12
-  61:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #define NB_BLOCK 17
-  62:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #define GROUND_ALT 0.
-  63:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #define GROUND_ALT_CM 0
-  64:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #define SECURITY_HEIGHT 25.
-  65:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #define SECURITY_ALT 25.
-  66:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #define MAX_DIST_FROM_HOME 1500.
-  67:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** #ifdef NAV_C
-  68:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** 
-  69:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** static inline void auto_nav(void) {
-  70:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****   switch (nav_block) {
+ 3515              		.file 3 "/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h"
+   1:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** /* This file has been generated from /home/uav/USTUAV/paparazzi/conf/flight_plans/basic.xml */
+   2:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** /* Please DO NOT EDIT */
+   3:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** 
+   4:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #ifndef FLIGHT_PLAN_H
+   5:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #define FLIGHT_PLAN_H
+   6:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** 
+   7:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #include "std.h"
+   8:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #include "generated/modules.h"
+   9:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #include "subsystems/navigation/nav_line.h"
+  10:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #include "subsystems/datalink/datalink.h"
+  11:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #define FLIGHT_PLAN_NAME "Basic"
+  12:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #define NAV_UTM_EAST0 484701
+  13:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #define NAV_UTM_NORTH0 4976360
+  14:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #define NAV_UTM_ZONE0 15
+  15:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #define NAV_LAT0 449405060 /* 1e7deg */
+  16:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #define NAV_LON0 -931939150 /* 1e7deg */
+  17:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #define NAV_ALT0 0 /* mm above msl */
+  18:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #define NAV_MSL0 625980 /* mm, EGM96 geoid-height (msl) over ellipsoid */
+  19:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #define QFU 0.0
+  20:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #define WP_dummy 0
+  21:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #define WP_HOME 1
+  22:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #define WP_STDBY 2
+  23:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #define WP_1 3
+  24:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #define WP_2 4
+  25:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #define WP_MOB 5
+  26:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #define WP_S1 6
+  27:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #define WP_S2 7
+  28:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #define WP_AF 8
+  29:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #define WP_TD 9
+  30:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #define WP__BASELEG 10
+  31:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #define WP_CLIMB 11
+  32:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #define WAYPOINTS { \
+  33:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****  {42.0, 42.0, 75},\
+  34:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****  {0.0, 0.0, 75},\
+  35:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****  {49.5, 100.1, 75},\
+  36:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****  {10.1, 189.9, 75},\
+  37:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****  {132.3, 139.1, 75},\
+  38:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****  {137.0, -11.6, 75},\
+  39:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****  {-119.2, 69.6, 75},\
+  40:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****  {274.4, 209.5, 75},\
+  41:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****  {177.4, 45.1, 30.0},\
+  42:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****  {28.8, 57.0, 0.0},\
+  43:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****  {168.8, -13.8, 75},\
+  44:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****  {-114.5, 162.3, 75},\
+  45:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** };
+  46:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #define WAYPOINTS_LLA { \
+  47:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****  {449408849, -931933839, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=625.98m) */ \
+  48:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****  {449405059, -931939149, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=625.98m) */ \
+  49:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****  {449414081, -931932906, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=625.98m) */ \
+  50:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****  {449422156, -931937927, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=625.98m) */ \
+  51:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****  {449417610, -931922423, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=625.98m) */ \
+  52:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****  {449404045, -931921782, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=625.98m) */ \
+  53:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****  {449411299, -931954279, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=625.98m) */ \
+  54:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****  {449423977, -931904432, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=625.98m) */ \
+  55:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****  {449409157, -931916678, 3000}, /* 1e7deg, 1e7deg, cm (hmsl=625.98m) */ \
+  56:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****  {449410197, -931935516, 0}, /* 1e7deg, 1e7deg, cm (hmsl=625.98m) */ \
+  57:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****  {449403853, -931917750, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=625.98m) */ \
+  58:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****  {449419645, -931953712, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=625.98m) */ \
+  59:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** };
+  60:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #define NB_WAYPOINT 12
+  61:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #define NB_BLOCK 17
+  62:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #define GROUND_ALT 0.
+  63:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #define GROUND_ALT_CM 0
+  64:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #define SECURITY_HEIGHT 25.
+  65:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #define SECURITY_ALT 25.
+  66:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #define MAX_DIST_FROM_HOME 1500.
+  67:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** #ifdef NAV_C
+  68:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** 
+  69:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** static inline void auto_nav(void) {
+  70:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****   switch (nav_block) {
  3516              		.loc 3 70 0
  3517 0014 8A4B     		ldr	r3, .L430+8
  3518 0016 1A78     		ldrb	r2, [r3, #0]	@ zero_extendqisi2
@@ -4602,9 +4602,9 @@
  3538 0040 2C04     		.2byte	(.L271-.L273)/2
  3539 0042 6F04     		.2byte	(.L272-.L273)/2
  3540              	.L256:
-  71:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     Block(0) // Wait GPS
-  72:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // pre_call
-  73:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     switch(nav_stage) {
+  71:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     Block(0) // Wait GPS
+  72:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // pre_call
+  73:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     switch(nav_stage) {
  3541              		.loc 3 73 0
  3542 0044 7F4B     		ldr	r3, .L430+12
  3543 0046 0122     		movs	r2, #1
@@ -4614,40 +4614,40 @@
  3547 004e 0229     		cmp	r1, #2
  3548 0050 05D8     		bhi	.L274
  3549              	.L276:
-  74:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(0)
-  75:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         kill_throttle = 1;
-  76:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NextStageAndBreak();
-  77:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
-  78:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Label(while_1)
-  79:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(1)
-  80:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         if (! (!(GpsFixValid()))) Goto(endwhile_2) else NextStageAndBreak();
+  74:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(0)
+  75:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         kill_throttle = 1;
+  76:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NextStageAndBreak();
+  77:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+  78:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Label(while_1)
+  79:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(1)
+  80:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         if (! (!(GpsFixValid()))) Goto(endwhile_2) else NextStageAndBreak();
  3550              		.loc 3 80 0
  3551 0052 7D4A     		ldr	r2, .L430+16
  3552 0054 92F85B20 		ldrb	r2, [r2, #91]	@ zero_extendqisi2
  3553 0058 032A     		cmp	r2, #3
  3554 005a 40F0EB80 		bne	.L410
  3555              	.L274:
-  81:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         Stage(2)
-  82:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           Goto(while_1)
-  83:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         Label(endwhile_2)
-  84:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       default:
-  85:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(3)
+  81:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         Stage(2)
+  82:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           Goto(while_1)
+  83:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         Label(endwhile_2)
+  84:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       default:
+  85:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(3)
  3556              		.loc 3 85 0
  3557 005e 0323     		movs	r3, #3
  3558 0060 0370     		strb	r3, [r0, #0]
-  86:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NextBlock();
+  86:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NextBlock();
  3559              		.loc 3 86 0
  3560 0062 0122     		movs	r2, #1
  3561 0064 00F04ABC 		b	.L406
  3562              	.L257:
-  87:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
-  88:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     }
-  89:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // post_call
-  90:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     break;
-  91:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** 
-  92:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     Block(1) // Geo init
-  93:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // pre_call
-  94:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     switch(nav_stage) {
+  87:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+  88:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     }
+  89:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // post_call
+  90:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     break;
+  91:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** 
+  92:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     Block(1) // Geo init
+  93:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // pre_call
+  94:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     switch(nav_stage) {
  3563              		.loc 3 94 0
  3564 0068 764B     		ldr	r3, .L430+12
  3565 006a 1A78     		ldrb	r2, [r3, #0]	@ zero_extendqisi2
@@ -4658,50 +4658,50 @@
  3570 0074 0CD1     		bne	.L376
  3571 0076 04E0     		b	.L279
  3572              	.L278:
-  95:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Label(while_3)
-  96:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(0)
-  97:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         if (! (LessThan(NavBlockTime(),10))) Goto(endwhile_4) else NextStageAndBreak();
+  95:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Label(while_3)
+  96:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(0)
+  97:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         if (! (LessThan(NavBlockTime(),10))) Goto(endwhile_4) else NextStageAndBreak();
  3573              		.loc 3 97 0
  3574 0078 744A     		ldr	r2, .L430+20
  3575 007a 1288     		ldrh	r2, [r2, #0]
  3576 007c 092A     		cmp	r2, #9
  3577 007e 40F2D480 		bls	.L408
  3578              	.L279:
-  98:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         Stage(1)
-  99:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           Goto(while_3)
- 100:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         Label(endwhile_4)
- 101:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(2)
+  98:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         Stage(1)
+  99:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           Goto(while_3)
+ 100:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         Label(endwhile_4)
+ 101:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(2)
  3579              		.loc 3 101 0
  3580 0082 0223     		movs	r3, #2
  3581 0084 2370     		strb	r3, [r4, #0]
  3582              	.LBB66:
- 102:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         if (! (NavSetGroundReferenceHere()))
+ 102:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         if (! (NavSetGroundReferenceHere()))
  3583              		.loc 3 102 0
  3584 0086 FFF7FEFF 		bl	nav_reset_reference
  3585 008a FFF7FEFF 		bl	nav_update_waypoints_alt
  3586 008e 44E1     		b	.L412
  3587              	.L376:
  3588              	.LBE66:
- 103:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NextStageAndBreak();
- 104:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 105:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       default:
- 106:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(3)
+ 103:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NextStageAndBreak();
+ 104:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 105:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       default:
+ 106:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(3)
  3589              		.loc 3 106 0
  3590 0090 0322     		movs	r2, #3
  3591 0092 1A70     		strb	r2, [r3, #0]
- 107:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NextBlock();
+ 107:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NextBlock();
  3592              		.loc 3 107 0
  3593 0094 0222     		movs	r2, #2
  3594 0096 00F031BC 		b	.L406
  3595              	.L258:
- 108:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 109:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     }
- 110:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // post_call
- 111:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     break;
- 112:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** 
- 113:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     Block(2) // Holding point
- 114:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // pre_call
- 115:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     switch(nav_stage) {
+ 108:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 109:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     }
+ 110:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // post_call
+ 111:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     break;
+ 112:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** 
+ 113:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     Block(2) // Holding point
+ 114:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // pre_call
+ 115:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     switch(nav_stage) {
  3596              		.loc 3 115 0
  3597 009a 6A4B     		ldr	r3, .L430+12
  3598 009c 1A78     		ldrb	r2, [r3, #0]	@ zero_extendqisi2
@@ -4711,49 +4711,49 @@
  3602 00a6 09D1     		bne	.L377
  3603 00a8 04E0     		b	.L420
  3604              	.L281:
- 116:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(0)
- 117:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         kill_throttle = 1;
+ 116:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(0)
+ 117:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         kill_throttle = 1;
  3605              		.loc 3 117 0
  3606 00aa 0122     		movs	r2, #1
  3607              	.L411:
  3608 00ac 6849     		ldr	r1, .L430+24
  3609 00ae 0A70     		strb	r2, [r1, #0]
  3610              	.L401:
- 118:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NextStageAndBreak();
+ 118:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NextStageAndBreak();
  3611              		.loc 3 118 0
  3612 00b0 1A70     		strb	r2, [r3, #0]
  3613 00b2 FAE3     		b	.L397
  3614              	.L420:
- 119:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 120:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(1)
- 121:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         {
- 122:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NavAttitude(RadOfDeg(0));
+ 119:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 120:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(1)
+ 121:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         {
+ 122:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NavAttitude(RadOfDeg(0));
  3615              		.loc 3 122 0
  3616 00b4 674B     		ldr	r3, .L430+28
  3617 00b6 1A70     		strb	r2, [r3, #0]
  3618 00b8 00F00DBC 		b	.L417
  3619              	.L377:
- 123:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
- 124:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalThrottleMode(9600*(0));
- 125:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         }
- 126:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 127:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       default:
- 128:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(2)
+ 123:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
+ 124:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalThrottleMode(9600*(0));
+ 125:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         }
+ 126:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 127:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       default:
+ 128:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(2)
  3620              		.loc 3 128 0
  3621 00bc 1A70     		strb	r2, [r3, #0]
- 129:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NextBlock();
+ 129:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NextBlock();
  3622              		.loc 3 129 0
  3623 00be 0322     		movs	r2, #3
  3624 00c0 00F01CBC 		b	.L406
  3625              	.L259:
- 130:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 131:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     }
- 132:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // post_call
- 133:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     break;
- 134:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** 
- 135:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     Block(3) // Takeoff
- 136:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // pre_call
- 137:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     if ((nav_block != 4) && (estimator_z>(ground_alt+25))) { GotoBlock(4); return; }
+ 130:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 131:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     }
+ 132:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // post_call
+ 133:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     break;
+ 134:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** 
+ 135:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     Block(3) // Takeoff
+ 136:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // pre_call
+ 137:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     if ((nav_block != 4) && (estimator_z>(ground_alt+25))) { GotoBlock(4); return; }
  3626              		.loc 3 137 0
  3627 00c4 644B     		ldr	r3, .L430+32
  3628 00c6 6549     		ldr	r1, .L430+36
@@ -4766,7 +4766,7 @@
  3635 00d8 0028     		cmp	r0, #0
  3636 00da 3BD1     		bne	.L419
  3637              	.L378:
- 138:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     switch(nav_stage) {
+ 138:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     switch(nav_stage) {
  3638              		.loc 3 138 0
  3639 00dc 594C     		ldr	r4, .L430+12
  3640 00de 2378     		ldrb	r3, [r4, #0]	@ zero_extendqisi2
@@ -4777,34 +4777,34 @@
  3645 00e8 32D1     		bne	.L379
  3646 00ea 0AE0     		b	.L421
  3647              	.L287:
- 139:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(0)
- 140:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         kill_throttle = 0;
+ 139:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(0)
+ 140:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         kill_throttle = 0;
  3648              		.loc 3 140 0
  3649 00ec 584B     		ldr	r3, .L430+24
  3650 00ee 0022     		movs	r2, #0
  3651 00f0 1A70     		strb	r2, [r3, #0]
- 141:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NextStageAndBreak();
+ 141:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NextStageAndBreak();
  3652              		.loc 3 141 0
  3653 00f2 0123     		movs	r3, #1
  3654              	.L402:
  3655 00f4 2370     		strb	r3, [r4, #0]
  3656 00f6 D8E3     		b	.L397
  3657              	.L288:
- 142:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 143:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(1)
- 144:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         estimator_flight_time = 0;
+ 142:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 143:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(1)
+ 144:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         estimator_flight_time = 0;
  3658              		.loc 3 144 0
  3659 00f8 5A4B     		ldr	r3, .L430+44
  3660 00fa 0022     		movs	r2, #0
  3661 00fc 1A80     		strh	r2, [r3, #0]	@ movhi
- 145:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NextStageAndBreak();
+ 145:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NextStageAndBreak();
  3662              		.loc 3 145 0
  3663 00fe 0223     		movs	r3, #2
  3664 0100 F8E7     		b	.L402
  3665              	.L421:
- 146:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 147:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(2)
- 148:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         if (NavApproachingFrom(11,1,CARROT)) NextStageAndBreakFrom(11) else {
+ 146:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 147:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(2)
+ 148:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         if (NavApproachingFrom(11,1,CARROT)) NextStageAndBreakFrom(11) else {
  3666              		.loc 3 148 0
  3667 0102 594D     		ldr	r5, .L430+48
  3668 0104 4FF08143 		mov	r3, #1082130432
@@ -4821,21 +4821,21 @@
  3679 0122 1A70     		strb	r2, [r3, #0]
  3680 0124 F9E0     		b	.L412
  3681              	.L290:
- 149:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NavGotoWaypoint(11);
+ 149:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NavGotoWaypoint(11);
  3682              		.loc 3 149 0
  3683 0126 524B     		ldr	r3, .L430+56
  3684 0128 D5F88810 		ldr	r1, [r5, #136]	@ float
  3685 012c 1870     		strb	r0, [r3, #0]
  3686 012e D5F88400 		ldr	r0, [r5, #132]	@ float
  3687 0132 FFF7FEFF 		bl	fly_to_xy
- 150:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalAutoThrottleMode(RadOfDeg(15));
+ 150:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalAutoThrottleMode(RadOfDeg(15));
  3688              		.loc 3 150 0
  3689 0136 4F4B     		ldr	r3, .L430+60
  3690 0138 4F4A     		ldr	r2, .L430+64
  3691 013a 1E70     		strb	r6, [r3, #0]
  3692 013c 4F4B     		ldr	r3, .L430+68
  3693 013e 1A60     		str	r2, [r3, #0]	@ float
- 151:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalThrottleMode(9600*(1.000000));
+ 151:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalThrottleMode(9600*(1.000000));
  3694              		.loc 3 151 0
  3695 0140 4F4B     		ldr	r3, .L430+72
  3696 0142 0122     		movs	r2, #1
@@ -4845,39 +4845,39 @@
  3700 014c 1A80     		strh	r2, [r3, #0]	@ movhi
  3701 014e E3E3     		b	.L255
  3702              	.L379:
- 152:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         }
- 153:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 154:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       default:
- 155:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(3)
+ 152:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         }
+ 153:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 154:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       default:
+ 155:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(3)
  3703              		.loc 3 155 0
  3704 0150 0323     		movs	r3, #3
  3705 0152 2370     		strb	r3, [r4, #0]
  3706              	.L419:
- 156:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NextBlock();
+ 156:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NextBlock();
  3707              		.loc 3 156 0
  3708 0154 0422     		movs	r2, #4
  3709 0156 D1E3     		b	.L406
  3710              	.L260:
- 157:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 158:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     }
- 159:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // post_call
- 160:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     break;
- 161:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** 
- 162:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     Block(4) // Standby
- 163:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // pre_call
- 164:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     switch(nav_stage) {
+ 157:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 158:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     }
+ 159:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // post_call
+ 160:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     break;
+ 161:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** 
+ 162:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     Block(4) // Standby
+ 163:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // pre_call
+ 164:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     switch(nav_stage) {
  3711              		.loc 3 164 0
  3712 0158 3A4A     		ldr	r2, .L430+12
  3713 015a 1178     		ldrb	r1, [r2, #0]	@ zero_extendqisi2
  3714 015c 79B9     		cbnz	r1, .L380
- 165:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(0)
- 166:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
+ 165:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(0)
+ 166:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
  3715              		.loc 3 166 0
  3716 015e 454B     		ldr	r3, .L430+60
- 167:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAltitudeMode(WaypointAlt(2), 0.);
+ 167:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAltitudeMode(WaypointAlt(2), 0.);
  3717              		.loc 3 167 0
  3718 0160 0322     		movs	r2, #3
- 166:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
+ 166:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
  3719              		.loc 3 166 0
  3720 0162 1970     		strb	r1, [r3, #0]
  3721 0164 454B     		ldr	r3, .L430+68
@@ -4889,40 +4889,40 @@
  3727 016c 3E4B     		ldr	r3, .L430+48
  3728 016e 464A     		ldr	r2, .L430+80
  3729 0170 196A     		ldr	r1, [r3, #32]	@ float
- 168:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NavCircleWaypoint(2, nav_radius);
+ 168:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NavCircleWaypoint(2, nav_radius);
  3730              		.loc 3 168 0
  3731 0172 9869     		ldr	r0, [r3, #24]	@ float
- 167:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAltitudeMode(WaypointAlt(2), 0.);
+ 167:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAltitudeMode(WaypointAlt(2), 0.);
  3732              		.loc 3 167 0
  3733 0174 1160     		str	r1, [r2, #0]	@ float
  3734 0176 454A     		ldr	r2, .L430+84
  3735              		.loc 3 168 0
  3736 0178 D969     		ldr	r1, [r3, #28]	@ float
- 167:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAltitudeMode(WaypointAlt(2), 0.);
+ 167:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAltitudeMode(WaypointAlt(2), 0.);
  3737              		.loc 3 167 0
  3738 017a 1460     		str	r4, [r2, #0]	@ float
  3739 017c A2E0     		b	.L398
  3740              	.LVL291:
  3741              	.L380:
- 169:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 170:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       default:
- 171:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(1)
+ 169:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 170:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       default:
+ 171:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(1)
  3742              		.loc 3 171 0
  3743 017e 0121     		movs	r1, #1
  3744 0180 1170     		strb	r1, [r2, #0]
- 172:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NextBlock();
+ 172:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NextBlock();
  3745              		.loc 3 172 0
  3746 0182 0522     		movs	r2, #5
  3747 0184 C5E3     		b	.L395
  3748              	.L261:
- 173:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 174:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     }
- 175:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // post_call
- 176:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     break;
- 177:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** 
- 178:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     Block(5) // Figure 8 around wp 1
- 179:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // pre_call
- 180:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     switch(nav_stage) {
+ 173:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 174:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     }
+ 175:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // post_call
+ 176:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     break;
+ 177:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** 
+ 178:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     Block(5) // Figure 8 around wp 1
+ 179:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // pre_call
+ 180:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     switch(nav_stage) {
  3749              		.loc 3 180 0
  3750 0186 2F4B     		ldr	r3, .L430+12
  3751 0188 1A78     		ldrb	r2, [r3, #0]	@ zero_extendqisi2
@@ -4942,29 +4942,29 @@
  3764              	.L422:
  3765              	.LBE68:
  3766              	.LBE67:
- 181:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(0)
- 182:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         nav_eight_init();
- 183:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NextStageAndBreak();
- 184:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(1)
- 185:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
+ 181:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(0)
+ 182:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         nav_eight_init();
+ 183:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NextStageAndBreak();
+ 184:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(1)
+ 185:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
  3767              		.loc 3 185 0
  3768 019a 364B     		ldr	r3, .L430+60
  3769 019c 0022     		movs	r2, #0
  3770 019e 1A70     		strb	r2, [r3, #0]
  3771 01a0 364B     		ldr	r3, .L430+68
- 186:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAltitudeMode(WaypointAlt(3), 0.);
+ 186:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAltitudeMode(WaypointAlt(3), 0.);
  3772              		.loc 3 186 0
  3773 01a2 0320     		movs	r0, #3
  3774              	.LVL292:
- 185:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
+ 185:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
  3775              		.loc 3 185 0
  3776 01a4 1C60     		str	r4, [r3, #0]	@ float
  3777              		.loc 3 186 0
  3778 01a6 364B     		ldr	r3, .L430+72
- 187:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         Eight(3, 4, nav_radius);
+ 187:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         Eight(3, 4, nav_radius);
  3779              		.loc 3 187 0
  3780 01a8 0421     		movs	r1, #4
- 186:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAltitudeMode(WaypointAlt(3), 0.);
+ 186:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAltitudeMode(WaypointAlt(3), 0.);
  3781              		.loc 3 186 0
  3782 01aa 1870     		strb	r0, [r3, #0]
  3783 01ac 2E4B     		ldr	r3, .L430+48
@@ -4980,25 +4980,25 @@
  3793 01c0 AAE3     		b	.L255
  3794              	.LVL293:
  3795              	.L381:
- 188:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 189:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       default:
- 190:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(2)
+ 188:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 189:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       default:
+ 190:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(2)
  3796              		.loc 3 190 0
  3797 01c2 0222     		movs	r2, #2
  3798 01c4 1A70     		strb	r2, [r3, #0]
- 191:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NextBlock();
+ 191:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NextBlock();
  3799              		.loc 3 191 0
  3800 01c6 0622     		movs	r2, #6
  3801 01c8 98E3     		b	.L406
  3802              	.L262:
- 192:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 193:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     }
- 194:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // post_call
- 195:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     break;
- 196:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** 
- 197:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     Block(6) // Oval 1-2
- 198:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // pre_call
- 199:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     switch(nav_stage) {
+ 192:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 193:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     }
+ 194:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // post_call
+ 195:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     break;
+ 196:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** 
+ 197:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     Block(6) // Oval 1-2
+ 198:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // pre_call
+ 199:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     switch(nav_stage) {
  3803              		.loc 3 199 0
  3804 01ca 1E4D     		ldr	r5, .L430+12
  3805 01cc 2B78     		ldrb	r3, [r5, #0]	@ zero_extendqisi2
@@ -5007,33 +5007,33 @@
  3808 01d2 17D1     		bne	.L382
  3809 01d4 02E0     		b	.L423
  3810              	.L297:
- 200:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(0)
- 201:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         nav_oval_init();
+ 200:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(0)
+ 201:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         nav_oval_init();
  3811              		.loc 3 201 0
  3812 01d6 FFF7FEFF 		bl	nav_oval_init
  3813 01da 14E2     		b	.L404
  3814              	.L423:
- 202:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NextStageAndBreak();
- 203:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(1)
- 204:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
+ 202:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NextStageAndBreak();
+ 203:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(1)
+ 204:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
  3815              		.loc 3 204 0
  3816 01dc 254B     		ldr	r3, .L430+60
  3817 01de 0022     		movs	r2, #0
  3818 01e0 1A70     		strb	r2, [r3, #0]
  3819 01e2 264B     		ldr	r3, .L430+68
- 205:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAltitudeMode(WaypointAlt(3), 0.);
+ 205:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAltitudeMode(WaypointAlt(3), 0.);
  3820              		.loc 3 205 0
  3821 01e4 0321     		movs	r1, #3
  3822              	.LVL294:
- 204:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
+ 204:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
  3823              		.loc 3 204 0
  3824 01e6 1C60     		str	r4, [r3, #0]	@ float
  3825              		.loc 3 205 0
  3826 01e8 254B     		ldr	r3, .L430+72
- 206:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         Oval(3, 4, nav_radius);
+ 206:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         Oval(3, 4, nav_radius);
  3827              		.loc 3 206 0
  3828 01ea 0420     		movs	r0, #4
- 205:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAltitudeMode(WaypointAlt(3), 0.);
+ 205:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAltitudeMode(WaypointAlt(3), 0.);
  3829              		.loc 3 205 0
  3830 01ec 1970     		strb	r1, [r3, #0]
  3831 01ee 1E4B     		ldr	r3, .L430+48
@@ -5049,25 +5049,25 @@
  3841 0202 89E3     		b	.L255
  3842              	.LVL295:
  3843              	.L382:
- 207:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 208:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       default:
- 209:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(2)
+ 207:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 208:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       default:
+ 209:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(2)
  3844              		.loc 3 209 0
  3845 0204 0223     		movs	r3, #2
  3846 0206 2B70     		strb	r3, [r5, #0]
- 210:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NextBlock();
+ 210:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NextBlock();
  3847              		.loc 3 210 0
  3848 0208 0722     		movs	r2, #7
  3849 020a 77E3     		b	.L406
  3850              	.L263:
- 211:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 212:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     }
- 213:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // post_call
- 214:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     break;
- 215:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** 
- 216:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     Block(7) // MOB
- 217:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // pre_call
- 218:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     switch(nav_stage) {
+ 211:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 212:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     }
+ 213:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // post_call
+ 214:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     break;
+ 215:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** 
+ 216:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     Block(7) // MOB
+ 217:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // pre_call
+ 218:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     switch(nav_stage) {
  3851              		.loc 3 218 0
  3852 020c 0D4B     		ldr	r3, .L430+12
  3853 020e 1A78     		ldrb	r2, [r3, #0]	@ zero_extendqisi2
@@ -5079,8 +5079,8 @@
  3859 021a 43E0     		b	.L424
  3860              	.L300:
  3861              	.LBB69:
- 219:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(0)
- 220:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         if (! (NavSetWaypointHere(WP_MOB)))
+ 219:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(0)
+ 220:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         if (! (NavSetWaypointHere(WP_MOB)))
  3862              		.loc 3 220 0
  3863 021c 1E49     		ldr	r1, .L430+96
  3864 021e 124A     		ldr	r2, .L430+48
@@ -5091,20 +5091,20 @@
  3869 0228 1164     		str	r1, [r2, #64]	@ float
  3870              	.L408:
  3871              	.LBE69:
- 221:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NextStageAndBreak();
+ 221:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NextStageAndBreak();
  3872              		.loc 3 221 0
  3873 022a 0122     		movs	r2, #1
  3874 022c 40E7     		b	.L401
  3875              	.L301:
- 222:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 223:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(1)
- 224:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         nav_radius = DEFAULT_CIRCLE_RADIUS;
+ 222:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 223:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(1)
+ 224:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         nav_radius = DEFAULT_CIRCLE_RADIUS;
  3876              		.loc 3 224 0
  3877 022e 1C49     		ldr	r1, .L430+104
  3878 0230 184A     		ldr	r2, .L430+92
  3879 0232 1160     		str	r1, [r2, #0]	@ float
  3880              	.L410:
- 225:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NextStageAndBreak();
+ 225:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NextStageAndBreak();
  3881              		.loc 3 225 0
  3882 0234 0222     		movs	r2, #2
  3883 0236 3BE7     		b	.L401
@@ -5139,19 +5139,19 @@
  3912 029c 00000000 		.word	estimator_y
  3913 02a0 0000C842 		.word	1120403456
  3914              	.L424:
- 226:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 227:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(2)
- 228:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
+ 226:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 227:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(2)
+ 228:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
  3915              		.loc 3 228 0
  3916 02a4 7F4B     		ldr	r3, .L432
  3917 02a6 0022     		movs	r2, #0
  3918 02a8 1A70     		strb	r2, [r3, #0]
  3919 02aa 7F4B     		ldr	r3, .L432+4
- 229:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAltitudeMode(WaypointAlt(5), 0.);
+ 229:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAltitudeMode(WaypointAlt(5), 0.);
  3920              		.loc 3 229 0
  3921 02ac 0322     		movs	r2, #3
  3922              	.LVL296:
- 228:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
+ 228:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
  3923              		.loc 3 228 0
  3924 02ae 1C60     		str	r4, [r3, #0]	@ float
  3925              		.loc 3 229 0
@@ -5160,16 +5160,16 @@
  3928 02b4 7E4B     		ldr	r3, .L432+12
  3929 02b6 7F4A     		ldr	r2, .L432+16
  3930 02b8 596C     		ldr	r1, [r3, #68]	@ float
- 230:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NavCircleWaypoint(5, nav_radius);
+ 230:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NavCircleWaypoint(5, nav_radius);
  3931              		.loc 3 230 0
  3932 02ba D86B     		ldr	r0, [r3, #60]	@ float
- 229:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAltitudeMode(WaypointAlt(5), 0.);
+ 229:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAltitudeMode(WaypointAlt(5), 0.);
  3933              		.loc 3 229 0
  3934 02bc 1160     		str	r1, [r2, #0]	@ float
  3935 02be 7E4A     		ldr	r2, .L432+20
  3936              		.loc 3 230 0
  3937 02c0 196C     		ldr	r1, [r3, #64]	@ float
- 229:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAltitudeMode(WaypointAlt(5), 0.);
+ 229:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAltitudeMode(WaypointAlt(5), 0.);
  3938              		.loc 3 229 0
  3939 02c2 1460     		str	r4, [r2, #0]	@ float
  3940              	.L398:
@@ -5180,25 +5180,25 @@
  3945 02cc 24E3     		b	.L255
  3946              	.LVL297:
  3947              	.L383:
- 231:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 232:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       default:
- 233:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(3)
+ 231:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 232:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       default:
+ 233:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(3)
  3948              		.loc 3 233 0
  3949 02ce 0322     		movs	r2, #3
  3950 02d0 1A70     		strb	r2, [r3, #0]
- 234:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NextBlock();
+ 234:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NextBlock();
  3951              		.loc 3 234 0
  3952 02d2 0822     		movs	r2, #8
  3953 02d4 12E3     		b	.L406
  3954              	.L264:
- 235:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 236:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     }
- 237:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // post_call
- 238:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     break;
- 239:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** 
- 240:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     Block(8) // Line 1-2
- 241:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // pre_call
- 242:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     switch(nav_stage) {
+ 235:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 236:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     }
+ 237:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // post_call
+ 238:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     break;
+ 239:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** 
+ 240:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     Block(8) // Line 1-2
+ 241:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // pre_call
+ 242:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     switch(nav_stage) {
  3955              		.loc 3 242 0
  3956 02d6 7A4C     		ldr	r4, .L432+28
  3957 02d8 2378     		ldrb	r3, [r4, #0]	@ zero_extendqisi2
@@ -5207,16 +5207,16 @@
  3960 02de 0DD1     		bne	.L384
  3961 02e0 02E0     		b	.L425
  3962              	.L304:
- 243:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(0)
- 244:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         if (! (nav_line_init()))
+ 243:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(0)
+ 244:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         if (! (nav_line_init()))
  3963              		.loc 3 244 0
  3964 02e2 FFF7FEFF 		bl	nav_line_init
  3965 02e6 05E0     		b	.L414
  3966              	.L425:
- 245:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NextStageAndBreak();
- 246:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 247:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(1)
- 248:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         if (! (nav_line(WP_1, WP_2, nav_radius)))
+ 245:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NextStageAndBreak();
+ 246:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 247:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(1)
+ 248:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         if (! (nav_line(WP_1, WP_2, nav_radius)))
  3967              		.loc 3 248 0
  3968 02e8 744B     		ldr	r3, .L432+24
  3969 02ea 0320     		movs	r0, #3
@@ -5228,26 +5228,26 @@
  3975 02f6 40F00F83 		bne	.L255
  3976 02fa 0EE0     		b	.L412
  3977              	.L384:
- 249:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NextStageAndBreak();
- 250:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 251:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       default:
- 252:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(2)
+ 249:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NextStageAndBreak();
+ 250:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 251:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       default:
+ 252:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(2)
  3978              		.loc 3 252 0
  3979 02fc 0223     		movs	r3, #2
  3980 02fe 2370     		strb	r3, [r4, #0]
- 253:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NextBlock();
+ 253:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NextBlock();
  3981              		.loc 3 253 0
  3982 0300 0922     		movs	r2, #9
  3983 0302 FBE2     		b	.L406
  3984              	.L265:
- 254:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 255:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     }
- 256:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // post_call
- 257:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     break;
- 258:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** 
- 259:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     Block(9) // Survey S1-S2
- 260:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // pre_call
- 261:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     switch(nav_stage) {
+ 254:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 255:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     }
+ 256:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // post_call
+ 257:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     break;
+ 258:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** 
+ 259:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     Block(9) // Survey S1-S2
+ 260:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // pre_call
+ 261:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     switch(nav_stage) {
  3985              		.loc 3 261 0
  3986 0304 6E4C     		ldr	r4, .L432+28
  3987 0306 2378     		ldrb	r3, [r4, #0]	@ zero_extendqisi2
@@ -5256,47 +5256,47 @@
  3990 030c 0DD1     		bne	.L385
  3991 030e 07E0     		b	.L426
  3992              	.L307:
- 262:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(0)
- 263:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NavSurveyRectangleInit(6, 7, 150, NS);
+ 262:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(0)
+ 263:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NavSurveyRectangleInit(6, 7, 150, NS);
  3993              		.loc 3 263 0
  3994 0310 0620     		movs	r0, #6
  3995 0312 0721     		movs	r1, #7
  3996 0314 6B4A     		ldr	r2, .L432+32
  3997 0316 FFF7FEFF 		bl	nav_survey_rectangle_init
  3998              	.L412:
- 264:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NextStageAndBreak();
+ 264:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NextStageAndBreak();
  3999              		.loc 3 264 0
  4000 031a 2378     		ldrb	r3, [r4, #0]	@ zero_extendqisi2
  4001 031c 0133     		adds	r3, r3, #1
  4002 031e E9E6     		b	.L402
  4003              	.L426:
- 265:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(1)
- 266:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NavSurveyRectangle(6, 7);
+ 265:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(1)
+ 266:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NavSurveyRectangle(6, 7);
  4004              		.loc 3 266 0
  4005 0320 0620     		movs	r0, #6
  4006 0322 0721     		movs	r1, #7
  4007 0324 FFF7FEFF 		bl	nav_survey_rectangle
  4008 0328 F6E2     		b	.L255
  4009              	.L385:
- 267:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 268:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       default:
- 269:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(2)
+ 267:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 268:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       default:
+ 269:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(2)
  4010              		.loc 3 269 0
  4011 032a 0223     		movs	r3, #2
  4012 032c 2370     		strb	r3, [r4, #0]
- 270:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NextBlock();
+ 270:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NextBlock();
  4013              		.loc 3 270 0
  4014 032e 0A22     		movs	r2, #10
  4015 0330 E4E2     		b	.L406
  4016              	.L266:
- 271:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 272:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     }
- 273:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // post_call
- 274:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     break;
- 275:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** 
- 276:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     Block(10) // Path 1,2,S1,S2,STDBY
- 277:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // pre_call
- 278:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     switch(nav_stage) {
+ 271:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 272:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     }
+ 273:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // post_call
+ 274:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     break;
+ 275:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** 
+ 276:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     Block(10) // Path 1,2,S1,S2,STDBY
+ 277:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // pre_call
+ 278:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     switch(nav_stage) {
  4017              		.loc 3 278 0
  4018 0332 6349     		ldr	r1, .L432+28
  4019 0334 0A78     		ldrb	r2, [r1, #0]	@ zero_extendqisi2
@@ -5311,8 +5311,8 @@
  4028 0344 81       		.byte	(.L314-.L315)/2
  4029 0345 00       		.align	1
  4030              	.L310:
- 279:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(0)
- 280:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         if (NavApproachingFrom(4,3,CARROT)) NextStageAndBreakFrom(4) else {
+ 279:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(0)
+ 280:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         if (NavApproachingFrom(4,3,CARROT)) NextStageAndBreakFrom(4) else {
  4031              		.loc 3 280 0
  4032 0346 5A4D     		ldr	r5, .L432+12
  4033 0348 4FF08143 		mov	r3, #1082130432
@@ -5327,20 +5327,20 @@
  4042 035e 0422     		movs	r2, #4
  4043 0360 56E0     		b	.L415
  4044              	.L316:
- 281:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NavSegment(3, 4);
+ 281:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NavSegment(3, 4);
  4045              		.loc 3 281 0
  4046 0362 2A6B     		ldr	r2, [r5, #48]	@ float
  4047 0364 6B6B     		ldr	r3, [r5, #52]	@ float
  4048 0366 686A     		ldr	r0, [r5, #36]	@ float
  4049 0368 A96A     		ldr	r1, [r5, #40]	@ float
  4050 036a FFF7FEFF 		bl	nav_route_xy
- 282:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
+ 282:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
  4051              		.loc 3 282 0
  4052 036e 4D4B     		ldr	r3, .L432
- 283:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalAltitudeMode(WaypointAlt(4), 0.);
+ 283:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalAltitudeMode(WaypointAlt(4), 0.);
  4053              		.loc 3 283 0
  4054 0370 0322     		movs	r2, #3
- 282:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
+ 282:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
  4055              		.loc 3 282 0
  4056 0372 1E70     		strb	r6, [r3, #0]
  4057 0374 4C4B     		ldr	r3, .L432+4
@@ -5353,10 +5353,10 @@
  4064 037e 5BE0     		b	.L399
  4065              	.LVL299:
  4066              	.L311:
- 284:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         }
- 285:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 286:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(1)
- 287:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         if (NavApproachingFrom(6,4,CARROT)) NextStageAndBreakFrom(6) else {
+ 284:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         }
+ 285:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 286:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(1)
+ 287:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         if (NavApproachingFrom(6,4,CARROT)) NextStageAndBreakFrom(6) else {
  4067              		.loc 3 287 0
  4068 0380 4B4D     		ldr	r5, .L432+12
  4069 0382 4FF08143 		mov	r3, #1082130432
@@ -5371,20 +5371,20 @@
  4078 0398 0622     		movs	r2, #6
  4079 039a 39E0     		b	.L415
  4080              	.L317:
- 288:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NavSegment(4, 6);
+ 288:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NavSegment(4, 6);
  4081              		.loc 3 288 0
  4082 039c AA6C     		ldr	r2, [r5, #72]	@ float
  4083 039e EB6C     		ldr	r3, [r5, #76]	@ float
  4084 03a0 286B     		ldr	r0, [r5, #48]	@ float
  4085 03a2 696B     		ldr	r1, [r5, #52]	@ float
  4086 03a4 FFF7FEFF 		bl	nav_route_xy
- 289:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
+ 289:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
  4087              		.loc 3 289 0
  4088 03a8 3E4B     		ldr	r3, .L432
- 290:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalAltitudeMode(WaypointAlt(6), 0.);
+ 290:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalAltitudeMode(WaypointAlt(6), 0.);
  4089              		.loc 3 290 0
  4090 03aa 0322     		movs	r2, #3
- 289:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
+ 289:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
  4091              		.loc 3 289 0
  4092 03ac 1E70     		strb	r6, [r3, #0]
  4093 03ae 3E4B     		ldr	r3, .L432+4
@@ -5397,10 +5397,10 @@
  4100 03b8 3EE0     		b	.L399
  4101              	.LVL301:
  4102              	.L312:
- 291:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         }
- 292:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 293:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(2)
- 294:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         if (NavApproachingFrom(7,6,1)) NextStageAndBreakFrom(7) else {
+ 291:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         }
+ 292:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 293:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(2)
+ 294:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         if (NavApproachingFrom(7,6,1)) NextStageAndBreakFrom(7) else {
  4103              		.loc 3 294 0
  4104 03ba 3D4D     		ldr	r5, .L432+12
  4105 03bc 4FF07E53 		mov	r3, #1065353216
@@ -5414,14 +5414,14 @@
  4113 03d0 0722     		movs	r2, #7
  4114 03d2 1DE0     		b	.L415
  4115              	.L318:
- 295:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NavSegment(6, 7);
+ 295:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NavSegment(6, 7);
  4116              		.loc 3 295 0
  4117 03d4 6A6D     		ldr	r2, [r5, #84]	@ float
  4118 03d6 AB6D     		ldr	r3, [r5, #88]	@ float
  4119 03d8 A86C     		ldr	r0, [r5, #72]	@ float
  4120 03da E96C     		ldr	r1, [r5, #76]	@ float
  4121 03dc FFF7FEFF 		bl	nav_route_xy
- 296:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalAutoPitchMode(9600*(0.400000));
+ 296:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalAutoPitchMode(9600*(0.400000));
  4122              		.loc 3 296 0
  4123 03e0 304B     		ldr	r3, .L432
  4124 03e2 0122     		movs	r2, #1
@@ -5429,7 +5429,7 @@
  4126 03e6 384B     		ldr	r3, .L432+36
  4127 03e8 4FF47062 		mov	r2, #3840
  4128 03ec 1A80     		strh	r2, [r3, #0]	@ movhi
- 297:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalAltitudeMode(WaypointAlt(7), 0.);
+ 297:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalAltitudeMode(WaypointAlt(7), 0.);
  4129              		.loc 3 297 0
  4130 03ee 2F4B     		ldr	r3, .L432+8
  4131 03f0 0322     		movs	r2, #3
@@ -5437,10 +5437,10 @@
  4133 03f4 EA6D     		ldr	r2, [r5, #92]	@ float
  4134 03f6 1FE0     		b	.L399
  4135              	.L313:
- 298:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         }
- 299:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 300:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(3)
- 301:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         if (NavApproachingFrom(2,7,1)) NextStageAndBreakFrom(2) else {
+ 298:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         }
+ 299:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 300:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(3)
+ 301:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         if (NavApproachingFrom(2,7,1)) NextStageAndBreakFrom(2) else {
  4136              		.loc 3 301 0
  4137 03f8 2D4D     		ldr	r5, .L432+12
  4138 03fa 4FF07E53 		mov	r3, #1065353216
@@ -5457,14 +5457,14 @@
  4149 0412 1A70     		strb	r2, [r3, #0]
  4150 0414 DFE1     		b	.L409
  4151              	.L319:
- 302:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NavSegment(7, 2);
+ 302:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NavSegment(7, 2);
  4152              		.loc 3 302 0
  4153 0416 AA69     		ldr	r2, [r5, #24]	@ float
  4154 0418 EB69     		ldr	r3, [r5, #28]	@ float
  4155 041a 686D     		ldr	r0, [r5, #84]	@ float
  4156 041c A96D     		ldr	r1, [r5, #88]	@ float
  4157 041e FFF7FEFF 		bl	nav_route_xy
- 303:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalAutoPitchMode(9600*(0.400000));
+ 303:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalAutoPitchMode(9600*(0.400000));
  4158              		.loc 3 303 0
  4159 0422 204B     		ldr	r3, .L432
  4160 0424 0122     		movs	r2, #1
@@ -5472,7 +5472,7 @@
  4162 0428 274B     		ldr	r3, .L432+36
  4163 042a 4FF47062 		mov	r2, #3840
  4164 042e 1A80     		strh	r2, [r3, #0]	@ movhi
- 304:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalAltitudeMode(WaypointAlt(2), 0.);
+ 304:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalAltitudeMode(WaypointAlt(2), 0.);
  4165              		.loc 3 304 0
  4166 0430 1E4B     		ldr	r3, .L432+8
  4167 0432 0322     		movs	r2, #3
@@ -5487,33 +5487,33 @@
  4176 0440 6AE2     		b	.L255
  4177              	.LVL303:
  4178              	.L314:
- 305:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         }
- 306:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 307:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(4)
- 308:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         GotoBlock(4);
+ 305:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         }
+ 306:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 307:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(4)
+ 308:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         GotoBlock(4);
  4179              		.loc 3 308 0
  4180 0442 0422     		movs	r2, #4
  4181 0444 65E2     		b	.L395
  4182              	.L309:
- 309:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 310:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       default:
- 311:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(5)
+ 309:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 310:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       default:
+ 311:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(5)
  4183              		.loc 3 311 0
  4184 0446 0522     		movs	r2, #5
  4185 0448 0A70     		strb	r2, [r1, #0]
- 312:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NextBlock();
+ 312:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NextBlock();
  4186              		.loc 3 312 0
  4187 044a 0B22     		movs	r2, #11
  4188 044c 61E2     		b	.L395
  4189              	.L267:
- 313:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 314:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     }
- 315:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // post_call
- 316:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     break;
- 317:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** 
- 318:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     Block(11) // Land Right AF-TD
- 319:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // pre_call
- 320:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     switch(nav_stage) {
+ 313:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 314:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     }
+ 315:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // post_call
+ 316:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     break;
+ 317:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** 
+ 318:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     Block(11) // Land Right AF-TD
+ 319:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // pre_call
+ 320:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     switch(nav_stage) {
  4190              		.loc 3 320 0
  4191 044e 1C4A     		ldr	r2, .L432+28
  4192 0450 1178     		ldrb	r1, [r2, #0]	@ zero_extendqisi2
@@ -5522,39 +5522,39 @@
  4195 0456 04D1     		bne	.L386
  4196 0458 01E0     		b	.L427
  4197              	.L321:
- 321:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(0)
- 322:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         nav_radius = DEFAULT_CIRCLE_RADIUS;
+ 321:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(0)
+ 322:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         nav_radius = DEFAULT_CIRCLE_RADIUS;
  4198              		.loc 3 322 0
  4199 045a 1D49     		ldr	r1, .L432+44
  4200 045c 0EE0     		b	.L403
  4201              	.L427:
- 323:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NextStageAndBreak();
- 324:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 325:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(1)
- 326:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         GotoBlock(13);
+ 323:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NextStageAndBreak();
+ 324:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 325:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(1)
+ 326:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         GotoBlock(13);
  4202              		.loc 3 326 0
  4203 045e 0D22     		movs	r2, #13
  4204 0460 57E2     		b	.L395
  4205              	.L386:
- 327:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 328:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       default:
- 329:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(2)
+ 327:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 328:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       default:
+ 329:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(2)
  4206              		.loc 3 329 0
  4207 0462 0223     		movs	r3, #2
  4208 0464 1370     		strb	r3, [r2, #0]
- 330:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NextBlock();
+ 330:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NextBlock();
  4209              		.loc 3 330 0
  4210 0466 0C22     		movs	r2, #12
  4211 0468 48E2     		b	.L406
  4212              	.L268:
- 331:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 332:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     }
- 333:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // post_call
- 334:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     break;
- 335:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** 
- 336:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     Block(12) // Land Left AF-TD
- 337:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // pre_call
- 338:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     switch(nav_stage) {
+ 331:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 332:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     }
+ 333:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // post_call
+ 334:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     break;
+ 335:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** 
+ 336:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     Block(12) // Land Left AF-TD
+ 337:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // pre_call
+ 338:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     switch(nav_stage) {
  4213              		.loc 3 338 0
  4214 046a 154A     		ldr	r2, .L432+28
  4215 046c 1178     		ldrb	r1, [r2, #0]	@ zero_extendqisi2
@@ -5564,43 +5564,43 @@
  4219 0476 06D1     		bne	.L387
  4220 0478 08E0     		b	.L407
  4221              	.L324:
- 339:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(0)
- 340:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         nav_radius = -(DEFAULT_CIRCLE_RADIUS);
+ 339:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(0)
+ 340:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         nav_radius = -(DEFAULT_CIRCLE_RADIUS);
  4222              		.loc 3 340 0
  4223 047a 1649     		ldr	r1, .L432+48
  4224              	.L403:
  4225 047c 0F4B     		ldr	r3, .L432+24
  4226 047e 1960     		str	r1, [r3, #0]	@ float
- 341:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NextStageAndBreak();
+ 341:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NextStageAndBreak();
  4227              		.loc 3 341 0
  4228 0480 0123     		movs	r3, #1
  4229 0482 1370     		strb	r3, [r2, #0]
  4230 0484 11E2     		b	.L397
  4231              	.L387:
- 342:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 343:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(1)
- 344:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         GotoBlock(13);
- 345:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 346:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       default:
- 347:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(2)
+ 342:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 343:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(1)
+ 344:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         GotoBlock(13);
+ 345:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 346:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       default:
+ 347:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(2)
  4232              		.loc 3 347 0
  4233 0486 0223     		movs	r3, #2
  4234 0488 1370     		strb	r3, [r2, #0]
- 348:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NextBlock();
+ 348:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NextBlock();
  4235              		.loc 3 348 0
  4236 048a 134B     		ldr	r3, .L432+52
  4237              	.L407:
  4238 048c 1970     		strb	r1, [r3, #0]
  4239 048e 41E2     		b	.L400
  4240              	.L269:
- 349:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 350:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     }
- 351:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // post_call
- 352:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     break;
- 353:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** 
- 354:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     Block(13) // land
- 355:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // pre_call
- 356:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     switch(nav_stage) {
+ 349:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 350:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     }
+ 351:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // post_call
+ 352:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     break;
+ 353:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** 
+ 354:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     Block(13) // land
+ 355:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // pre_call
+ 356:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     switch(nav_stage) {
  4241              		.loc 3 356 0
  4242 0490 0B4D     		ldr	r5, .L432+28
  4243 0492 2B78     		ldrb	r3, [r5, #0]	@ zero_extendqisi2
@@ -5777,22 +5777,22 @@
  4391              	.L328:
  4392              	.LBE71:
  4393              	.LBE70:
- 357:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(0)
- 358:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         if (! (nav_compute_baseleg(WP_AF, WP_TD, WP__BASELEG, nav_radius)))
- 359:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NextStageAndBreak();
- 360:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 361:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(1)
- 362:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
+ 357:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(0)
+ 358:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         if (! (nav_compute_baseleg(WP_AF, WP_TD, WP__BASELEG, nav_radius)))
+ 359:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NextStageAndBreak();
+ 360:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 361:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(1)
+ 362:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
  4394              		.loc 3 362 0
  4395 05b8 684B     		ldr	r3, .L434+44
  4396 05ba 0022     		movs	r2, #0
  4397 05bc 1A70     		strb	r2, [r3, #0]
  4398 05be 684B     		ldr	r3, .L434+48
- 363:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAltitudeMode(WaypointAlt(10), 0.);
+ 363:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAltitudeMode(WaypointAlt(10), 0.);
  4399              		.loc 3 363 0
  4400 05c0 0322     		movs	r2, #3
  4401              	.LVL321:
- 362:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
+ 362:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
  4402              		.loc 3 362 0
  4403 05c2 1C60     		str	r4, [r3, #0]	@ float
  4404              		.loc 3 363 0
@@ -5801,26 +5801,26 @@
  4407 05c8 614B     		ldr	r3, .L434+32
  4408 05ca 674A     		ldr	r2, .L434+56
  4409 05cc D3F88010 		ldr	r1, [r3, #128]	@ float
- 364:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NavCircleWaypoint(10, nav_radius);
+ 364:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NavCircleWaypoint(10, nav_radius);
  4410              		.loc 3 364 0
  4411 05d0 986F     		ldr	r0, [r3, #120]	@ float
- 363:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAltitudeMode(WaypointAlt(10), 0.);
+ 363:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAltitudeMode(WaypointAlt(10), 0.);
  4412              		.loc 3 363 0
  4413 05d2 1160     		str	r1, [r2, #0]	@ float
  4414              		.loc 3 364 0
  4415 05d4 D96F     		ldr	r1, [r3, #124]	@ float
- 363:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAltitudeMode(WaypointAlt(10), 0.);
+ 363:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAltitudeMode(WaypointAlt(10), 0.);
  4416              		.loc 3 363 0
  4417 05d6 654A     		ldr	r2, .L434+60
  4418              		.loc 3 364 0
  4419 05d8 5E4B     		ldr	r3, .L434+36
- 363:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAltitudeMode(WaypointAlt(10), 0.);
+ 363:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAltitudeMode(WaypointAlt(10), 0.);
  4420              		.loc 3 363 0
  4421 05da 1460     		str	r4, [r2, #0]	@ float
  4422              		.loc 3 364 0
  4423 05dc 1A68     		ldr	r2, [r3, #0]	@ float
  4424 05de FFF7FEFF 		bl	nav_circle_XY
- 365:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         if ((NavCircleCount()>0.500000)) NextStageAndBreak();
+ 365:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         if ((NavCircleCount()>0.500000)) NextStageAndBreak();
  4425              		.loc 3 365 0
  4426 05e2 634B     		ldr	r3, .L434+64
  4427 05e4 1868     		ldr	r0, [r3, #0]
@@ -5841,19 +5841,19 @@
  4442 060c 4DE1     		b	.L397
  4443              	.LVL322:
  4444              	.L428:
- 366:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 367:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(2)
- 368:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
+ 366:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 367:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(2)
+ 368:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
  4445              		.loc 3 368 0
  4446 060e 534B     		ldr	r3, .L434+44
  4447 0610 0025     		movs	r5, #0
  4448 0612 1D70     		strb	r5, [r3, #0]
  4449 0614 524B     		ldr	r3, .L434+48
- 369:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAltitudeMode(WaypointAlt(10), 0.);
+ 369:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAltitudeMode(WaypointAlt(10), 0.);
  4450              		.loc 3 369 0
  4451 0616 0322     		movs	r2, #3
  4452              	.LVL323:
- 368:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
+ 368:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
  4453              		.loc 3 368 0
  4454 0618 1C60     		str	r4, [r3, #0]	@ float
  4455              		.loc 3 369 0
@@ -5862,16 +5862,16 @@
  4458 061e 4C4B     		ldr	r3, .L434+32
  4459 0620 514A     		ldr	r2, .L434+56
  4460 0622 D3F88010 		ldr	r1, [r3, #128]	@ float
- 370:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NavCircleWaypoint(10, nav_radius);
+ 370:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NavCircleWaypoint(10, nav_radius);
  4461              		.loc 3 370 0
  4462 0626 986F     		ldr	r0, [r3, #120]	@ float
- 369:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAltitudeMode(WaypointAlt(10), 0.);
+ 369:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAltitudeMode(WaypointAlt(10), 0.);
  4463              		.loc 3 369 0
  4464 0628 1160     		str	r1, [r2, #0]	@ float
  4465 062a 504A     		ldr	r2, .L434+60
  4466              		.loc 3 370 0
  4467 062c D96F     		ldr	r1, [r3, #124]	@ float
- 369:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAltitudeMode(WaypointAlt(10), 0.);
+ 369:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NavVerticalAltitudeMode(WaypointAlt(10), 0.);
  4468              		.loc 3 369 0
  4469 062e 1460     		str	r4, [r2, #0]	@ float
  4470              		.loc 3 370 0
@@ -5880,7 +5880,7 @@
  4473 0632 2268     		ldr	r2, [r4, #0]	@ float
  4474 0634 FFF7FEFF 		bl	nav_circle_XY
  4475              	.LBB72:
- 371:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         if (And(NavQdrCloseTo((DegOfRad(baseleg_out_qdr)-((nav_radius/fabs(nav_radius))*10))),(10>f
+ 371:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         if (And(NavQdrCloseTo((DegOfRad(baseleg_out_qdr)-((nav_radius/fabs(nav_radius))*10))),(10>f
  4476              		.loc 3 371 0
  4477 0638 474B     		ldr	r3, .L434+40
  4478 063a 2468     		ldr	r4, [r4, #0]	@ float
@@ -6080,25 +6080,25 @@
  4672 07da 0132     		adds	r2, r2, #1
  4673 07dc 68E4     		b	.L401
  4674              	.L388:
- 372:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 373:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       default:
- 374:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(3)
+ 372:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 373:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       default:
+ 374:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(3)
  4675              		.loc 3 374 0
  4676 07de 0323     		movs	r3, #3
  4677 07e0 2B70     		strb	r3, [r5, #0]
- 375:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NextBlock();
+ 375:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NextBlock();
  4678              		.loc 3 375 0
  4679 07e2 0E22     		movs	r2, #14
  4680 07e4 8AE0     		b	.L406
  4681              	.L270:
- 376:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 377:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     }
- 378:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // post_call
- 379:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     break;
- 380:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** 
- 381:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     Block(14) // final
- 382:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // pre_call
- 383:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     if ((nav_block != 15) && ((ground_alt+10)>estimator_z)) { GotoBlock(15); return; }
+ 376:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 377:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     }
+ 378:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // post_call
+ 379:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     break;
+ 380:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** 
+ 381:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     Block(14) // final
+ 382:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // pre_call
+ 383:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     if ((nav_block != 15) && ((ground_alt+10)>estimator_z)) { GotoBlock(15); return; }
  4682              		.loc 3 383 0
  4683 07e6 594B     		ldr	r3, .L436+24
  4684 07e8 5449     		ldr	r1, .L436+8
@@ -6110,14 +6110,14 @@
  4690 07f8 0028     		cmp	r0, #0
  4691 07fa 3CD1     		bne	.L418
  4692              	.L391:
- 384:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     switch(nav_stage) {
+ 384:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     switch(nav_stage) {
  4693              		.loc 3 384 0
  4694 07fc 524E     		ldr	r6, .L436+20
  4695 07fe 3378     		ldrb	r3, [r6, #0]	@ zero_extendqisi2
  4696 0800 002B     		cmp	r3, #0
  4697 0802 36D1     		bne	.L392
- 385:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(0)
- 386:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         if (NavApproachingFrom(9,8,CARROT)) NextStageAndBreakFrom(9) else {
+ 385:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(0)
+ 386:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         if (NavApproachingFrom(9,8,CARROT)) NextStageAndBreakFrom(9) else {
  4698              		.loc 3 386 0
  4699 0804 4F4D     		ldr	r5, .L436+16
  4700 0806 4FF08143 		mov	r3, #1082130432
@@ -6131,22 +6131,22 @@
  4708 081a 0028     		cmp	r0, #0
  4709 081c 3FD1     		bne	.L396
  4710              	.L356:
- 387:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NavSegment(8, 9);
+ 387:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NavSegment(8, 9);
  4711              		.loc 3 387 0
  4712 081e EA6E     		ldr	r2, [r5, #108]	@ float
  4713 0820 286E     		ldr	r0, [r5, #96]	@ float
  4714 0822 696E     		ldr	r1, [r5, #100]	@ float
  4715 0824 2B6F     		ldr	r3, [r5, #112]	@ float
  4716 0826 FFF7FEFF 		bl	nav_route_xy
- 388:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
+ 388:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
  4717              		.loc 3 388 0
  4718 082a 494B     		ldr	r3, .L436+28
  4719              	.LBB78:
- 389:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NavGlide(8, 9);
+ 389:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NavGlide(8, 9);
  4720              		.loc 3 389 0
  4721 082c 686F     		ldr	r0, [r5, #116]	@ float
  4722              	.LBE78:
- 388:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
+ 388:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
  4723              		.loc 3 388 0
  4724 082e 1F70     		strb	r7, [r3, #0]
  4725 0830 484B     		ldr	r3, .L436+32
@@ -6190,27 +6190,27 @@
  4763              	.LVL352:
  4764              	.L392:
  4765              	.LBE79:
- 390:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         }
- 391:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 392:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       default:
- 393:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(1)
+ 390:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         }
+ 391:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 392:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       default:
+ 393:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(1)
  4766              		.loc 3 393 0
  4767 0872 0123     		movs	r3, #1
  4768 0874 3370     		strb	r3, [r6, #0]
  4769              	.L418:
- 394:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NextBlock();
+ 394:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NextBlock();
  4770              		.loc 3 394 0
  4771 0876 0F22     		movs	r2, #15
  4772 0878 40E0     		b	.L406
  4773              	.L271:
- 395:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 396:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     }
- 397:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // post_call
- 398:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     break;
- 399:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** 
- 400:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     Block(15) // flare
- 401:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // pre_call
- 402:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     switch(nav_stage) {
+ 395:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 396:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     }
+ 397:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // post_call
+ 398:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     break;
+ 399:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** 
+ 400:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     Block(15) // flare
+ 401:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // pre_call
+ 402:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     switch(nav_stage) {
  4774              		.loc 3 402 0
  4775 087a 334E     		ldr	r6, .L436+20
  4776 087c 3378     		ldrb	r3, [r6, #0]	@ zero_extendqisi2
@@ -6220,8 +6220,8 @@
  4780 0886 37D1     		bne	.L393
  4781 0888 23E0     		b	.L429
  4782              	.L358:
- 403:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(0)
- 404:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         if (NavApproachingFrom(9,8,0)) NextStageAndBreakFrom(9) else {
+ 403:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(0)
+ 404:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         if (NavApproachingFrom(9,8,0)) NextStageAndBreakFrom(9) else {
  4783              		.loc 3 404 0
  4784 088a 2E4D     		ldr	r5, .L436+16
  4785              	.LVL353:
@@ -6247,21 +6247,21 @@
  4805 08ae 33E0     		b	.L255
  4806              	.LVL356:
  4807              	.L360:
- 405:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NavSegment(8, 9);
+ 405:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NavSegment(8, 9);
  4808              		.loc 3 405 0
  4809 08b0 EA6E     		ldr	r2, [r5, #108]	@ float
  4810 08b2 2B6F     		ldr	r3, [r5, #112]	@ float
  4811 08b4 286E     		ldr	r0, [r5, #96]	@ float
  4812 08b6 696E     		ldr	r1, [r5, #100]	@ float
  4813 08b8 FFF7FEFF 		bl	nav_route_xy
- 406:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
+ 406:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
  4814              		.loc 3 406 0
  4815 08bc 244B     		ldr	r3, .L436+28
  4816 08be 0022     		movs	r2, #0
  4817 08c0 1C70     		strb	r4, [r3, #0]
  4818 08c2 244B     		ldr	r3, .L436+32
  4819 08c4 1A60     		str	r2, [r3, #0]	@ float
- 407:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalThrottleMode(9600*(0.000000));
+ 407:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalThrottleMode(9600*(0.000000));
  4820              		.loc 3 407 0
  4821 08c6 274B     		ldr	r3, .L436+48
  4822 08c8 0122     		movs	r2, #1
@@ -6270,20 +6270,20 @@
  4825 08ce 1C80     		strh	r4, [r3, #0]	@ movhi
  4826 08d0 22E0     		b	.L255
  4827              	.L429:
- 408:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         }
- 409:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 410:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(1)
- 411:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         if (FALSE) NextStageAndBreak() else {
- 412:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NavAttitude(RadOfDeg(0.000000));
+ 408:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         }
+ 409:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 410:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(1)
+ 411:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         if (FALSE) NextStageAndBreak() else {
+ 412:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NavAttitude(RadOfDeg(0.000000));
  4828              		.loc 3 412 0
  4829 08d2 294A     		ldr	r2, .L436+68
  4830 08d4 1370     		strb	r3, [r2, #0]
  4831              	.L417:
  4832 08d6 294B     		ldr	r3, .L436+72
- 413:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
+ 413:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
  4833              		.loc 3 413 0
  4834 08d8 1D4A     		ldr	r2, .L436+28
- 412:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NavAttitude(RadOfDeg(0.000000));
+ 412:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NavAttitude(RadOfDeg(0.000000));
  4835              		.loc 3 412 0
  4836 08da 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
  4837 08dc 012B     		cmp	r3, #1
@@ -6295,10 +6295,10 @@
  4843 08e4 0023     		movs	r3, #0
  4844 08e6 1370     		strb	r3, [r2, #0]
  4845 08e8 1A4A     		ldr	r2, .L436+32
- 414:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalThrottleMode(9600*(0.000000));
+ 414:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalThrottleMode(9600*(0.000000));
  4846              		.loc 3 414 0
  4847 08ea 0121     		movs	r1, #1
- 413:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
+ 413:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****           NavVerticalAutoThrottleMode(RadOfDeg(0.000000));
  4848              		.loc 3 413 0
  4849 08ec 1460     		str	r4, [r2, #0]	@ float
  4850              		.loc 3 414 0
@@ -6309,44 +6309,44 @@
  4855 08f6 0FE0     		b	.L255
  4856              	.LVL358:
  4857              	.L393:
- 415:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         }
- 416:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 417:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       default:
- 418:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(2)
+ 415:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         }
+ 416:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 417:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       default:
+ 418:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(2)
  4858              		.loc 3 418 0
  4859 08f8 3370     		strb	r3, [r6, #0]
- 419:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NextBlock();
+ 419:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NextBlock();
  4860              		.loc 3 419 0
  4861 08fa 1022     		movs	r2, #16
  4862              	.L406:
  4863 08fc 214B     		ldr	r3, .L436+80
  4864 08fe 08E0     		b	.L395
  4865              	.L272:
- 420:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 421:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     }
- 422:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // post_call
- 423:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     break;
- 424:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h **** 
- 425:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     Block(16) // HOME
- 426:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // pre_call
- 427:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****     switch(nav_stage) {
+ 420:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 421:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     }
+ 422:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // post_call
+ 423:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     break;
+ 424:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h **** 
+ 425:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     Block(16) // HOME
+ 426:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     ; // pre_call
+ 427:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****     switch(nav_stage) {
  4866              		.loc 3 427 0
  4867 0900 114A     		ldr	r2, .L436+20
  4868 0902 1178     		ldrb	r1, [r2, #0]	@ zero_extendqisi2
  4869 0904 11B9     		cbnz	r1, .L394
- 428:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(0)
- 429:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         nav_home();
+ 428:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(0)
+ 429:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         nav_home();
  4870              		.loc 3 429 0
  4871 0906 FFF7FEFF 		bl	nav_home
  4872 090a 05E0     		b	.L255
  4873              	.L394:
- 430:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
- 431:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       default:
- 432:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(1)
+ 430:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         break;
+ 431:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       default:
+ 432:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****       Stage(1)
  4874              		.loc 3 432 0
  4875 090c 0121     		movs	r1, #1
  4876 090e 1170     		strb	r1, [r2, #0]
- 433:/home/uav/paparazzi/var/MYAC/generated/flight_plan.h ****         NextBlock();
+ 433:/home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h ****         NextBlock();
  4877              		.loc 3 433 0
  4878 0910 1122     		movs	r2, #17
  4879              	.L395:
@@ -6529,86 +6529,86 @@
  5075              		.set	.LANCHOR39,. + 0
  5078              	nav_throttle_setpoint:
  5079 0000 0000     		.space	2
- 5080              		.section	.data.nav_utm_zone0,"aw",%progbits
- 5081              		.set	.LANCHOR29,. + 0
- 5084              	nav_utm_zone0:
- 5085 0000 1F       		.byte	31
- 5086              		.section	.rodata.nb_waypoint,"a",%progbits
- 5089              	nb_waypoint:
- 5090 0000 0C       		.byte	12
- 5091              		.section	.bss.flight_altitude,"aw",%nobits
- 5092              		.align	2
- 5093              		.set	.LANCHOR2,. + 0
- 5096              	flight_altitude:
- 5097 0000 00000000 		.space	4
- 5098              		.section	.bss.nav_survey_active,"aw",%nobits
- 5099              		.set	.LANCHOR43,. + 0
- 5102              	nav_survey_active:
- 5103 0000 00       		.space	1
- 5104              		.section	.bss.nav_survey_west,"aw",%nobits
- 5105              		.align	2
- 5108              	nav_survey_west:
- 5109 0000 00000000 		.space	4
- 5110              		.section	.bss.nav_climb,"aw",%nobits
- 5111              		.align	2
- 5114              	nav_climb:
- 5115 0000 00000000 		.space	4
- 5116              		.section	.bss.nav_radius,"aw",%nobits
- 5117              		.align	2
- 5118              		.set	.LANCHOR37,. + 0
- 5121              	nav_radius:
+ 5080              		.section	.rodata.nb_waypoint,"a",%progbits
+ 5083              	nb_waypoint:
+ 5084 0000 0C       		.byte	12
+ 5085              		.section	.data.nav_utm_zone0,"aw",%progbits
+ 5086              		.set	.LANCHOR29,. + 0
+ 5089              	nav_utm_zone0:
+ 5090 0000 0F       		.byte	15
+ 5091              		.section	.bss.prescaler.4519,"aw",%nobits
+ 5092              		.align	1
+ 5093              		.set	.LANCHOR34,. + 0
+ 5096              	prescaler.4519:
+ 5097 0000 0000     		.space	2
+ 5098              		.section	.bss.flight_altitude,"aw",%nobits
+ 5099              		.align	2
+ 5100              		.set	.LANCHOR2,. + 0
+ 5103              	flight_altitude:
+ 5104 0000 00000000 		.space	4
+ 5105              		.section	.bss.nav_survey_active,"aw",%nobits
+ 5106              		.set	.LANCHOR43,. + 0
+ 5109              	nav_survey_active:
+ 5110 0000 00       		.space	1
+ 5111              		.section	.bss.nav_survey_west,"aw",%nobits
+ 5112              		.align	2
+ 5115              	nav_survey_west:
+ 5116 0000 00000000 		.space	4
+ 5117              		.section	.bss.nav_climb,"aw",%nobits
+ 5118              		.align	2
+ 5121              	nav_climb:
  5122 0000 00000000 		.space	4
- 5123              		.section	.bss.oval_status,"aw",%nobits
- 5124              		.set	.LANCHOR41,. + 0
- 5127              	oval_status:
- 5128 0000 00       		.space	1
- 5129              		.section	.bss.nav_segment_y_1,"aw",%nobits
- 5130              		.align	2
- 5131              		.set	.LANCHOR23,. + 0
- 5134              	nav_segment_y_1:
- 5135 0000 00000000 		.space	4
- 5136              		.section	.bss.nav_segment_y_2,"aw",%nobits
+ 5123              		.section	.bss.nav_radius,"aw",%nobits
+ 5124              		.align	2
+ 5125              		.set	.LANCHOR37,. + 0
+ 5128              	nav_radius:
+ 5129 0000 00000000 		.space	4
+ 5130              		.section	.bss.oval_status,"aw",%nobits
+ 5131              		.set	.LANCHOR41,. + 0
+ 5134              	oval_status:
+ 5135 0000 00       		.space	1
+ 5136              		.section	.bss.nav_segment_y_1,"aw",%nobits
  5137              		.align	2
- 5138              		.set	.LANCHOR25,. + 0
- 5141              	nav_segment_y_2:
+ 5138              		.set	.LANCHOR23,. + 0
+ 5141              	nav_segment_y_1:
  5142 0000 00000000 		.space	4
- 5143              		.section	.bss.nav_in_segment,"aw",%nobits
- 5144              		.set	.LANCHOR7,. + 0
- 5147              	nav_in_segment:
- 5148 0000 00       		.space	1
- 5149              		.section	.bss.nav_circle_radians,"aw",%nobits
- 5150              		.align	2
- 5151              		.set	.LANCHOR5,. + 0
- 5154              	nav_circle_radians:
- 5155 0000 00000000 		.space	4
- 5156              		.section	.bss.nav_ground_speed_setpoint,"aw",%nobits
+ 5143              		.section	.bss.nav_segment_y_2,"aw",%nobits
+ 5144              		.align	2
+ 5145              		.set	.LANCHOR25,. + 0
+ 5148              	nav_segment_y_2:
+ 5149 0000 00000000 		.space	4
+ 5150              		.section	.bss.nav_in_segment,"aw",%nobits
+ 5151              		.set	.LANCHOR7,. + 0
+ 5154              	nav_in_segment:
+ 5155 0000 00       		.space	1
+ 5156              		.section	.bss.nav_circle_radians,"aw",%nobits
  5157              		.align	2
- 5160              	nav_ground_speed_setpoint:
- 5161 0000 00000000 		.space	4
- 5162              		.section	.bss.nav_leg_progress,"aw",%nobits
- 5163              		.align	2
- 5164              		.set	.LANCHOR21,. + 0
- 5167              	nav_leg_progress:
+ 5158              		.set	.LANCHOR5,. + 0
+ 5161              	nav_circle_radians:
+ 5162 0000 00000000 		.space	4
+ 5163              		.section	.bss.nav_ground_speed_setpoint,"aw",%nobits
+ 5164              		.align	2
+ 5167              	nav_ground_speed_setpoint:
  5168 0000 00000000 		.space	4
- 5169              		.section	.data.nav_utm_north0,"aw",%progbits
+ 5169              		.section	.bss.nav_leg_progress,"aw",%nobits
  5170              		.align	2
- 5171              		.set	.LANCHOR31,. + 0
- 5174              	nav_utm_north0:
- 5175 0000 1B734900 		.word	4813595
- 5176              		.section	.bss.last_nav_altitude.4515,"aw",%nobits
+ 5171              		.set	.LANCHOR21,. + 0
+ 5174              	nav_leg_progress:
+ 5175 0000 00000000 		.space	4
+ 5176              		.section	.data.nav_utm_north0,"aw",%progbits
  5177              		.align	2
- 5178              		.set	.LANCHOR1,. + 0
- 5181              	last_nav_altitude.4515:
- 5182 0000 00000000 		.space	4
+ 5178              		.set	.LANCHOR31,. + 0
+ 5181              	nav_utm_north0:
+ 5182 0000 E8EE4B00 		.word	4976360
  5183              		.section	.bss.dist2_to_wp,"aw",%nobits
  5184              		.align	2
  5185              		.set	.LANCHOR10,. + 0
  5188              	dist2_to_wp:
  5189 0000 00000000 		.space	4
- 5190              		.section	.bss.nav_circle_radius,"aw",%nobits
+ 5190              		.section	.bss.last_nav_altitude.4531,"aw",%nobits
  5191              		.align	2
- 5192              		.set	.LANCHOR19,. + 0
- 5195              	nav_circle_radius:
+ 5192              		.set	.LANCHOR1,. + 0
+ 5195              	last_nav_altitude.4531:
  5196 0000 00000000 		.space	4
  5197              		.section	.bss.nav_in_circle,"aw",%nobits
  5198              		.set	.LANCHOR6,. + 0
@@ -6667,59 +6667,59 @@
  5261 0084 0000E5C2 		.word	3269787648
  5262 0088 CD4C2243 		.word	1126321357
  5263 008c 00009642 		.word	1117126656
- 5264              		.section	.bss.prescaler.4503,"aw",%nobits
- 5265              		.align	1
- 5266              		.set	.LANCHOR34,. + 0
- 5269              	prescaler.4503:
- 5270 0000 0000     		.space	2
- 5271              		.section	.bss.dist2_to_home,"aw",%nobits
- 5272              		.align	2
- 5273              		.set	.LANCHOR27,. + 0
- 5276              	dist2_to_home:
- 5277 0000 00000000 		.space	4
- 5278              		.section	.bss.last_wp,"aw",%nobits
- 5279              		.set	.LANCHOR44,. + 0
- 5282              	last_wp:
- 5283 0000 00       		.space	1
- 5284              		.section	.bss.nav_oval_count,"aw",%nobits
- 5285              		.set	.LANCHOR42,. + 0
- 5288              	nav_oval_count:
- 5289 0000 00       		.space	1
- 5290              		.section	.bss.rc_pitch,"aw",%nobits
- 5291              		.align	2
- 5294              	rc_pitch:
- 5295 0000 00000000 		.space	4
- 5296              		.section	.bss.nav_ground_speed_pgain,"aw",%nobits
- 5297              		.align	2
- 5300              	nav_ground_speed_pgain:
- 5301 0000 00000000 		.space	4
- 5302              		.section	.bss.too_far_from_home,"aw",%nobits
- 5303              		.set	.LANCHOR28,. + 0
- 5306              	too_far_from_home:
- 5307 0000 00       		.space	1
- 5308              		.section	.bss.circle_bank,"aw",%nobits
+ 5264              		.section	.bss.dist2_to_home,"aw",%nobits
+ 5265              		.align	2
+ 5266              		.set	.LANCHOR27,. + 0
+ 5269              	dist2_to_home:
+ 5270 0000 00000000 		.space	4
+ 5271              		.section	.bss.last_wp,"aw",%nobits
+ 5272              		.set	.LANCHOR44,. + 0
+ 5275              	last_wp:
+ 5276 0000 00       		.space	1
+ 5277              		.section	.bss.nav_oval_count,"aw",%nobits
+ 5278              		.set	.LANCHOR42,. + 0
+ 5281              	nav_oval_count:
+ 5282 0000 00       		.space	1
+ 5283              		.section	.bss.rc_pitch,"aw",%nobits
+ 5284              		.align	2
+ 5287              	rc_pitch:
+ 5288 0000 00000000 		.space	4
+ 5289              		.section	.bss.nav_ground_speed_pgain,"aw",%nobits
+ 5290              		.align	2
+ 5293              	nav_ground_speed_pgain:
+ 5294 0000 00000000 		.space	4
+ 5295              		.section	.bss.too_far_from_home,"aw",%nobits
+ 5296              		.set	.LANCHOR28,. + 0
+ 5299              	too_far_from_home:
+ 5300 0000 00       		.space	1
+ 5301              		.section	.bss.circle_bank,"aw",%nobits
+ 5302              		.align	2
+ 5303              		.set	.LANCHOR15,. + 0
+ 5306              	circle_bank:
+ 5307 0000 00000000 		.space	4
+ 5308              		.section	.bss.nav_pitch,"aw",%nobits
  5309              		.align	2
- 5310              		.set	.LANCHOR15,. + 0
- 5313              	circle_bank:
+ 5310              		.set	.LANCHOR9,. + 0
+ 5313              	nav_pitch:
  5314 0000 00000000 		.space	4
- 5315              		.section	.bss.nav_pitch,"aw",%nobits
+ 5315              		.section	.data.nav_utm_east0,"aw",%progbits
  5316              		.align	2
- 5317              		.set	.LANCHOR9,. + 0
- 5320              	nav_pitch:
- 5321 0000 00000000 		.space	4
- 5322              		.section	.data.nav_utm_east0,"aw",%progbits
- 5323              		.align	2
- 5324              		.set	.LANCHOR30,. + 0
- 5327              	nav_utm_east0:
- 5328 0000 5D7F0500 		.word	360285
- 5329              		.section	.bss.horizontal_mode,"aw",%nobits
- 5330              		.set	.LANCHOR16,. + 0
- 5333              	horizontal_mode:
- 5334 0000 00       		.space	1
- 5335              		.section	.bss.nav_circle_trigo_qdr,"aw",%nobits
+ 5317              		.set	.LANCHOR30,. + 0
+ 5320              	nav_utm_east0:
+ 5321 0000 5D650700 		.word	484701
+ 5322              		.section	.bss.horizontal_mode,"aw",%nobits
+ 5323              		.set	.LANCHOR16,. + 0
+ 5326              	horizontal_mode:
+ 5327 0000 00       		.space	1
+ 5328              		.section	.bss.nav_circle_trigo_qdr,"aw",%nobits
+ 5329              		.align	2
+ 5330              		.set	.LANCHOR14,. + 0
+ 5333              	nav_circle_trigo_qdr:
+ 5334 0000 00000000 		.space	4
+ 5335              		.section	.bss.nav_circle_radius,"aw",%nobits
  5336              		.align	2
- 5337              		.set	.LANCHOR14,. + 0
- 5340              	nav_circle_trigo_qdr:
+ 5337              		.set	.LANCHOR19,. + 0
+ 5340              	nav_circle_radius:
  5341 0000 00000000 		.space	4
  5342              		.section	.bss.nav_survey_south,"aw",%nobits
  5343              		.align	2
@@ -6777,7 +6777,7 @@
  5417              		.text
  5418              	.Letext0:
  5419              		.file 4 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
- 5420              		.file 5 "/home/uav/paparazzi/sw/include/std.h"
+ 5420              		.file 5 "/home/uav/USTUAV/paparazzi/sw/include/std.h"
  5421              		.file 6 "./paparazzi.h"
  5422              		.file 7 "./subsystems/navigation/common_nav.h"
  5423              		.file 8 "./math/pprz_geodetic_int.h"
@@ -6797,204 +6797,204 @@
  5437              		.file 22 "./subsystems/navigation/nav_survey_rectangle.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 nav.c
-     /tmp/cclVC9D7.s:20     .text.nav_set_altitude:0000000000000000 $t
-     /tmp/cclVC9D7.s:24     .text.nav_set_altitude:0000000000000000 nav_set_altitude
-     /tmp/cclVC9D7.s:64     .text.nav_set_altitude:000000000000002c $d
-     /tmp/cclVC9D7.s:72     .text.nav_init_stage:0000000000000000 $t
-     /tmp/cclVC9D7.s:77     .text.nav_init_stage:0000000000000000 nav_init_stage
-     /tmp/cclVC9D7.s:120    .text.nav_init_stage:0000000000000030 $d
-     /tmp/cclVC9D7.s:137    .text.nav_approaching_xy:0000000000000000 $t
-     /tmp/cclVC9D7.s:142    .text.nav_approaching_xy:0000000000000000 nav_approaching_xy
-     /tmp/cclVC9D7.s:255    .text.nav_approaching_xy:000000000000009c $d
-     /tmp/cclVC9D7.s:270    .text.fly_to_xy:0000000000000000 $t
-     /tmp/cclVC9D7.s:275    .text.fly_to_xy:0000000000000000 fly_to_xy
-     /tmp/cclVC9D7.s:528    .text.fly_to_xy:00000000000001a0 $d
-     /tmp/cclVC9D7.s:561    .text.nav_circle_XY:0000000000000000 $t
-     /tmp/cclVC9D7.s:566    .text.nav_circle_XY:0000000000000000 nav_circle_XY
-     /tmp/cclVC9D7.s:802    .text.nav_circle_XY:0000000000000190 $d
-     /tmp/cclVC9D7.s:821    .text.nav_circle_XY:00000000000001d4 $t
-     /tmp/cclVC9D7.s:984    .text.nav_circle_XY:0000000000000308 $d
-     /tmp/cclVC9D7.s:1002   .text.nav_route_xy:0000000000000000 $t
-     /tmp/cclVC9D7.s:1007   .text.nav_route_xy:0000000000000000 nav_route_xy
-     /tmp/cclVC9D7.s:1206   .text.nav_route_xy:0000000000000150 $d
-     /tmp/cclVC9D7.s:1222   .text.compute_dist2_to_home:0000000000000000 $t
-     /tmp/cclVC9D7.s:1227   .text.compute_dist2_to_home:0000000000000000 compute_dist2_to_home
-     /tmp/cclVC9D7.s:1291   .text.compute_dist2_to_home:000000000000004c $d
-     /tmp/cclVC9D7.s:1304   .text.nav_reset_reference:0000000000000000 $t
-     /tmp/cclVC9D7.s:1309   .text.nav_reset_reference:0000000000000000 nav_reset_reference
-     /tmp/cclVC9D7.s:1413   .text.nav_reset_reference:00000000000000a8 $d
-     /tmp/cclVC9D7.s:1431   .text.nav_update_waypoints_alt:0000000000000000 $t
-     /tmp/cclVC9D7.s:1436   .text.nav_update_waypoints_alt:0000000000000000 nav_update_waypoints_alt
-     /tmp/cclVC9D7.s:1480   .text.nav_update_waypoints_alt:000000000000002c $d
-     /tmp/cclVC9D7.s:1487   .text.common_nav_periodic_task_4Hz:0000000000000000 $t
-     /tmp/cclVC9D7.s:1492   .text.common_nav_periodic_task_4Hz:0000000000000000 common_nav_periodic_task_4Hz
-     /tmp/cclVC9D7.s:1524   .text.common_nav_periodic_task_4Hz:0000000000000024 $d
-     /tmp/cclVC9D7.s:1533   .text.nav_move_waypoint:0000000000000000 $t
-     /tmp/cclVC9D7.s:1538   .text.nav_move_waypoint:0000000000000000 nav_move_waypoint
-     /tmp/cclVC9D7.s:1665   .text.nav_move_waypoint:00000000000000b8 $d
-     /tmp/cclVC9D7.s:1674   .text.nav_home:0000000000000000 $t
-     /tmp/cclVC9D7.s:1679   .text.nav_home:0000000000000000 nav_home
-     /tmp/cclVC9D7.s:1725   .text.nav_home:000000000000003c $d
-     /tmp/cclVC9D7.s:1738   .text.nav_init:0000000000000000 $t
-     /tmp/cclVC9D7.s:1743   .text.nav_init:0000000000000000 nav_init
-     /tmp/cclVC9D7.s:1781   .text.nav_init:0000000000000028 $d
-     /tmp/cclVC9D7.s:1794   .text.nav_without_gps:0000000000000000 $t
-     /tmp/cclVC9D7.s:1799   .text.nav_without_gps:0000000000000000 nav_without_gps
-     /tmp/cclVC9D7.s:1831   .text.nav_without_gps:0000000000000024 $d
-     /tmp/cclVC9D7.s:1841   .text.nav_eight_init:0000000000000000 $t
-     /tmp/cclVC9D7.s:1846   .text.nav_eight_init:0000000000000000 nav_eight_init
-     /tmp/cclVC9D7.s:1862   .text.nav_eight_init:0000000000000008 $d
-     /tmp/cclVC9D7.s:1868   .text.nav_eight:0000000000000000 $t
-     /tmp/cclVC9D7.s:1873   .text.nav_eight:0000000000000000 nav_eight
-     /tmp/cclVC9D7.s:2194   .text.nav_eight:00000000000001ec $d
-     /tmp/cclVC9D7.s:2202   .text.nav_eight:00000000000001f8 $t
-     /tmp/cclVC9D7.s:2283   .text.nav_eight:0000000000000280 $d
-     /tmp/cclVC9D7.s:2297   .text.nav_eight:00000000000002ac $t
-     /tmp/cclVC9D7.s:2676   .text.nav_eight:0000000000000500 $d
-     /tmp/cclVC9D7.s:2689   .text.nav_eight:000000000000052c $t
-     /tmp/cclVC9D7.s:2695   .text.nav_oval_init:0000000000000000 $t
-     /tmp/cclVC9D7.s:2700   .text.nav_oval_init:0000000000000000 nav_oval_init
-     /tmp/cclVC9D7.s:2720   .text.nav_oval_init:0000000000000010 $d
-     /tmp/cclVC9D7.s:2726   .text.nav_oval:0000000000000000 $t
-     /tmp/cclVC9D7.s:2731   .text.nav_oval:0000000000000000 nav_oval
-     /tmp/cclVC9D7.s:2936   .text.nav_oval:0000000000000138 $d
-     /tmp/cclVC9D7.s:2942   .text.nav_oval:0000000000000140 $t
-     /tmp/cclVC9D7.s:3137   .text.nav_oval:0000000000000270 $d
-     /tmp/cclVC9D7.s:3154   .text.nav_oval:00000000000002a8 $t
-     /tmp/cclVC9D7.s:3462   .text.nav_oval:0000000000000498 $d
-     /tmp/cclVC9D7.s:3477   .text.nav_periodic_task:0000000000000000 $t
-     /tmp/cclVC9D7.s:3482   .text.nav_periodic_task:0000000000000000 nav_periodic_task
-     /tmp/cclVC9D7.s:3523   .text.nav_periodic_task:0000000000000022 $d
-     /tmp/cclVC9D7.s:3542   .text.nav_periodic_task:0000000000000044 $t
-     /tmp/cclVC9D7.s:3887   .text.nav_periodic_task:0000000000000238 $d
-     /tmp/cclVC9D7.s:3916   .text.nav_periodic_task:00000000000002a4 $t
-     /tmp/cclVC9D7.s:4024   .text.nav_periodic_task:0000000000000340 $d
-     /tmp/cclVC9D7.s:4253   .text.nav_periodic_task:00000000000004a4 $d
-     /tmp/cclVC9D7.s:4272   .text.nav_periodic_task:00000000000004dc $t
-     /tmp/cclVC9D7.s:4605   .text.nav_periodic_task:0000000000000730 $d
-     /tmp/cclVC9D7.s:4628   .text.nav_periodic_task:0000000000000784 $t
-     /tmp/cclVC9D7.s:4915   .text.nav_periodic_task:0000000000000934 $d
-     /tmp/cclVC9D7.s:5288   .bss.nav_oval_count:0000000000000000 nav_oval_count
-     /tmp/cclVC9D7.s:4998   .data.max_dist_from_home:0000000000000000 max_dist_from_home
-     /tmp/cclVC9D7.s:5084   .data.nav_utm_zone0:0000000000000000 nav_utm_zone0
-     /tmp/cclVC9D7.s:5174   .data.nav_utm_north0:0000000000000000 nav_utm_north0
-     /tmp/cclVC9D7.s:5327   .data.nav_utm_east0:0000000000000000 nav_utm_east0
-     /tmp/cclVC9D7.s:5005   .bss.ground_alt:0000000000000000 ground_alt
-     /tmp/cclVC9D7.s:5227   .data.waypoints:0000000000000000 waypoints
-     /tmp/cclVC9D7.s:5089   .rodata.nb_waypoint:0000000000000000 nb_waypoint
-     /tmp/cclVC9D7.s:5306   .bss.too_far_from_home:0000000000000000 too_far_from_home
-     /tmp/cclVC9D7.s:5188   .bss.dist2_to_wp:0000000000000000 dist2_to_wp
-     /tmp/cclVC9D7.s:5276   .bss.dist2_to_home:0000000000000000 dist2_to_home
-     /tmp/cclVC9D7.s:5064   .bss.fp_pitch:0000000000000000 fp_pitch
-     /tmp/cclVC9D7.s:5320   .bss.nav_pitch:0000000000000000 nav_pitch
-     /tmp/cclVC9D7.s:5078   .bss.nav_throttle_setpoint:0000000000000000 nav_throttle_setpoint
-     /tmp/cclVC9D7.s:5039   .bss.desired_y:0000000000000000 desired_y
-     /tmp/cclVC9D7.s:5032   .bss.desired_x:0000000000000000 desired_x
-     /tmp/cclVC9D7.s:5025   .data.nav_altitude:0000000000000000 nav_altitude
-     /tmp/cclVC9D7.s:5018   .bss.nav_mode:0000000000000000 nav_mode
-     /tmp/cclVC9D7.s:5102   .bss.nav_survey_active:0000000000000000 nav_survey_active
-     /tmp/cclVC9D7.s:5346   .bss.nav_survey_south:0000000000000000 nav_survey_south
-     /tmp/cclVC9D7.s:5213   .bss.nav_survey_north:0000000000000000 nav_survey_north
-     /tmp/cclVC9D7.s:5011   .bss.nav_survey_east:0000000000000000 nav_survey_east
-     /tmp/cclVC9D7.s:5108   .bss.nav_survey_west:0000000000000000 nav_survey_west
-     /tmp/cclVC9D7.s:5387   .bss.nav_survey_shift:0000000000000000 nav_survey_shift
-     /tmp/cclVC9D7.s:5300   .bss.nav_ground_speed_pgain:0000000000000000 nav_ground_speed_pgain
-     /tmp/cclVC9D7.s:5160   .bss.nav_ground_speed_setpoint:0000000000000000 nav_ground_speed_setpoint
-     /tmp/cclVC9D7.s:5220   .bss.nav_glide_pitch_trim:0000000000000000 nav_glide_pitch_trim
-     /tmp/cclVC9D7.s:5096   .bss.flight_altitude:0000000000000000 flight_altitude
-     /tmp/cclVC9D7.s:5313   .bss.circle_bank:0000000000000000 circle_bank
-     /tmp/cclVC9D7.s:5333   .bss.horizontal_mode:0000000000000000 horizontal_mode
-     /tmp/cclVC9D7.s:5141   .bss.nav_segment_y_2:0000000000000000 nav_segment_y_2
-     /tmp/cclVC9D7.s:5415   .bss.nav_segment_x_2:0000000000000000 nav_segment_x_2
-     /tmp/cclVC9D7.s:5134   .bss.nav_segment_y_1:0000000000000000 nav_segment_y_1
-     /tmp/cclVC9D7.s:5408   .bss.nav_segment_x_1:0000000000000000 nav_segment_x_1
-     /tmp/cclVC9D7.s:5195   .bss.nav_circle_radius:0000000000000000 nav_circle_radius
-     /tmp/cclVC9D7.s:5373   .bss.nav_circle_y:0000000000000000 nav_circle_y
-     /tmp/cclVC9D7.s:5366   .bss.nav_circle_x:0000000000000000 nav_circle_x
-     /tmp/cclVC9D7.s:5147   .bss.nav_in_segment:0000000000000000 nav_in_segment
-     /tmp/cclVC9D7.s:5201   .bss.nav_in_circle:0000000000000000 nav_in_circle
-     /tmp/cclVC9D7.s:5071   .bss.nav_shift:0000000000000000 nav_shift
-     /tmp/cclVC9D7.s:5114   .bss.nav_climb:0000000000000000 nav_climb
-     /tmp/cclVC9D7.s:5207   .bss.nav_course:0000000000000000 nav_course
-     /tmp/cclVC9D7.s:5121   .bss.nav_radius:0000000000000000 nav_radius
-     /tmp/cclVC9D7.s:5340   .bss.nav_circle_trigo_qdr:0000000000000000 nav_circle_trigo_qdr
-     /tmp/cclVC9D7.s:5154   .bss.nav_circle_radians:0000000000000000 nav_circle_radians
-     /tmp/cclVC9D7.s:5058   .bss.carrot_y:0000000000000000 carrot_y
-     /tmp/cclVC9D7.s:5052   .bss.carrot_x:0000000000000000 carrot_x
-     /tmp/cclVC9D7.s:5294   .bss.rc_pitch:0000000000000000 rc_pitch
-     /tmp/cclVC9D7.s:5401   .bss.last_y:0000000000000000 last_y
-     /tmp/cclVC9D7.s:5359   .bss.last_x:0000000000000000 last_x
-     /tmp/cclVC9D7.s:5127   .bss.oval_status:0000000000000000 oval_status
-     /tmp/cclVC9D7.s:4994   .data.max_dist_from_home:0000000000000000 $d
-     /tmp/cclVC9D7.s:5001   .bss.ground_alt:0000000000000000 $d
-     /tmp/cclVC9D7.s:5008   .bss.nav_survey_east:0000000000000000 $d
-     /tmp/cclVC9D7.s:5014   .bss.nav_mode:0000000000000000 $d
-     /tmp/cclVC9D7.s:5021   .data.nav_altitude:0000000000000000 $d
-     /tmp/cclVC9D7.s:5028   .bss.desired_x:0000000000000000 $d
-     /tmp/cclVC9D7.s:5035   .bss.desired_y:0000000000000000 $d
-     /tmp/cclVC9D7.s:5042   .bss.previous_ground_alt:0000000000000000 $d
-     /tmp/cclVC9D7.s:5046   .bss.previous_ground_alt:0000000000000000 previous_ground_alt
-     /tmp/cclVC9D7.s:5049   .bss.carrot_x:0000000000000000 $d
-     /tmp/cclVC9D7.s:5055   .bss.carrot_y:0000000000000000 $d
-     /tmp/cclVC9D7.s:5061   .bss.fp_pitch:0000000000000000 $d
-     /tmp/cclVC9D7.s:5067   .bss.nav_shift:0000000000000000 $d
-     /tmp/cclVC9D7.s:5074   .bss.nav_throttle_setpoint:0000000000000000 $d
-     /tmp/cclVC9D7.s:5092   .bss.flight_altitude:0000000000000000 $d
-     /tmp/cclVC9D7.s:5103   .bss.nav_survey_active:0000000000000000 $d
-     /tmp/cclVC9D7.s:5105   .bss.nav_survey_west:0000000000000000 $d
-     /tmp/cclVC9D7.s:5111   .bss.nav_climb:0000000000000000 $d
-     /tmp/cclVC9D7.s:5117   .bss.nav_radius:0000000000000000 $d
-     /tmp/cclVC9D7.s:5128   .bss.oval_status:0000000000000000 $d
-     /tmp/cclVC9D7.s:5130   .bss.nav_segment_y_1:0000000000000000 $d
-     /tmp/cclVC9D7.s:5137   .bss.nav_segment_y_2:0000000000000000 $d
-     /tmp/cclVC9D7.s:5148   .bss.nav_in_segment:0000000000000000 $d
-     /tmp/cclVC9D7.s:5150   .bss.nav_circle_radians:0000000000000000 $d
-     /tmp/cclVC9D7.s:5157   .bss.nav_ground_speed_setpoint:0000000000000000 $d
-     /tmp/cclVC9D7.s:5163   .bss.nav_leg_progress:0000000000000000 $d
-     /tmp/cclVC9D7.s:5167   .bss.nav_leg_progress:0000000000000000 nav_leg_progress
-     /tmp/cclVC9D7.s:5170   .data.nav_utm_north0:0000000000000000 $d
-     /tmp/cclVC9D7.s:5177   .bss.last_nav_altitude.4515:0000000000000000 $d
-     /tmp/cclVC9D7.s:5181   .bss.last_nav_altitude.4515:0000000000000000 last_nav_altitude.4515
-     /tmp/cclVC9D7.s:5184   .bss.dist2_to_wp:0000000000000000 $d
-     /tmp/cclVC9D7.s:5191   .bss.nav_circle_radius:0000000000000000 $d
-     /tmp/cclVC9D7.s:5202   .bss.nav_in_circle:0000000000000000 $d
-     /tmp/cclVC9D7.s:5204   .bss.nav_course:0000000000000000 $d
-     /tmp/cclVC9D7.s:5210   .bss.nav_survey_north:0000000000000000 $d
-     /tmp/cclVC9D7.s:5216   .bss.nav_glide_pitch_trim:0000000000000000 $d
-     /tmp/cclVC9D7.s:5223   .data.waypoints:0000000000000000 $d
-     /tmp/cclVC9D7.s:5265   .bss.prescaler.4503:0000000000000000 $d
-     /tmp/cclVC9D7.s:5269   .bss.prescaler.4503:0000000000000000 prescaler.4503
-     /tmp/cclVC9D7.s:5272   .bss.dist2_to_home:0000000000000000 $d
-     /tmp/cclVC9D7.s:5282   .bss.last_wp:0000000000000000 last_wp
-     /tmp/cclVC9D7.s:5283   .bss.last_wp:0000000000000000 $d
-     /tmp/cclVC9D7.s:5289   .bss.nav_oval_count:0000000000000000 $d
-     /tmp/cclVC9D7.s:5291   .bss.rc_pitch:0000000000000000 $d
-     /tmp/cclVC9D7.s:5297   .bss.nav_ground_speed_pgain:0000000000000000 $d
-     /tmp/cclVC9D7.s:5307   .bss.too_far_from_home:0000000000000000 $d
-     /tmp/cclVC9D7.s:5309   .bss.circle_bank:0000000000000000 $d
-     /tmp/cclVC9D7.s:5316   .bss.nav_pitch:0000000000000000 $d
-     /tmp/cclVC9D7.s:5323   .data.nav_utm_east0:0000000000000000 $d
-     /tmp/cclVC9D7.s:5334   .bss.horizontal_mode:0000000000000000 $d
-     /tmp/cclVC9D7.s:5336   .bss.nav_circle_trigo_qdr:0000000000000000 $d
-     /tmp/cclVC9D7.s:5343   .bss.nav_survey_south:0000000000000000 $d
-     /tmp/cclVC9D7.s:5352   .bss.eight_status:0000000000000000 eight_status
-     /tmp/cclVC9D7.s:5353   .bss.eight_status:0000000000000000 $d
-     /tmp/cclVC9D7.s:5355   .bss.last_x:0000000000000000 $d
-     /tmp/cclVC9D7.s:5362   .bss.nav_circle_x:0000000000000000 $d
-     /tmp/cclVC9D7.s:5369   .bss.nav_circle_y:0000000000000000 $d
-     /tmp/cclVC9D7.s:5376   .bss.nav_leg_length:0000000000000000 $d
-     /tmp/cclVC9D7.s:5380   .bss.nav_leg_length:0000000000000000 nav_leg_length
-     /tmp/cclVC9D7.s:5383   .bss.nav_survey_shift:0000000000000000 $d
-     /tmp/cclVC9D7.s:5390   .bss.baseleg_out_qdr:0000000000000000 $d
-     /tmp/cclVC9D7.s:5394   .bss.baseleg_out_qdr:0000000000000000 baseleg_out_qdr
-     /tmp/cclVC9D7.s:5397   .bss.last_y:0000000000000000 $d
-     /tmp/cclVC9D7.s:5404   .bss.nav_segment_x_1:0000000000000000 $d
-     /tmp/cclVC9D7.s:5411   .bss.nav_segment_x_2:0000000000000000 $d
+     /tmp/ccKaVPoi.s:20     .text.nav_set_altitude:0000000000000000 $t
+     /tmp/ccKaVPoi.s:24     .text.nav_set_altitude:0000000000000000 nav_set_altitude
+     /tmp/ccKaVPoi.s:64     .text.nav_set_altitude:000000000000002c $d
+     /tmp/ccKaVPoi.s:72     .text.nav_init_stage:0000000000000000 $t
+     /tmp/ccKaVPoi.s:77     .text.nav_init_stage:0000000000000000 nav_init_stage
+     /tmp/ccKaVPoi.s:120    .text.nav_init_stage:0000000000000030 $d
+     /tmp/ccKaVPoi.s:137    .text.nav_approaching_xy:0000000000000000 $t
+     /tmp/ccKaVPoi.s:142    .text.nav_approaching_xy:0000000000000000 nav_approaching_xy
+     /tmp/ccKaVPoi.s:255    .text.nav_approaching_xy:000000000000009c $d
+     /tmp/ccKaVPoi.s:270    .text.fly_to_xy:0000000000000000 $t
+     /tmp/ccKaVPoi.s:275    .text.fly_to_xy:0000000000000000 fly_to_xy
+     /tmp/ccKaVPoi.s:528    .text.fly_to_xy:00000000000001a0 $d
+     /tmp/ccKaVPoi.s:561    .text.nav_circle_XY:0000000000000000 $t
+     /tmp/ccKaVPoi.s:566    .text.nav_circle_XY:0000000000000000 nav_circle_XY
+     /tmp/ccKaVPoi.s:802    .text.nav_circle_XY:0000000000000190 $d
+     /tmp/ccKaVPoi.s:821    .text.nav_circle_XY:00000000000001d4 $t
+     /tmp/ccKaVPoi.s:984    .text.nav_circle_XY:0000000000000308 $d
+     /tmp/ccKaVPoi.s:1002   .text.nav_route_xy:0000000000000000 $t
+     /tmp/ccKaVPoi.s:1007   .text.nav_route_xy:0000000000000000 nav_route_xy
+     /tmp/ccKaVPoi.s:1206   .text.nav_route_xy:0000000000000150 $d
+     /tmp/ccKaVPoi.s:1222   .text.compute_dist2_to_home:0000000000000000 $t
+     /tmp/ccKaVPoi.s:1227   .text.compute_dist2_to_home:0000000000000000 compute_dist2_to_home
+     /tmp/ccKaVPoi.s:1291   .text.compute_dist2_to_home:000000000000004c $d
+     /tmp/ccKaVPoi.s:1304   .text.nav_reset_reference:0000000000000000 $t
+     /tmp/ccKaVPoi.s:1309   .text.nav_reset_reference:0000000000000000 nav_reset_reference
+     /tmp/ccKaVPoi.s:1413   .text.nav_reset_reference:00000000000000a8 $d
+     /tmp/ccKaVPoi.s:1431   .text.nav_update_waypoints_alt:0000000000000000 $t
+     /tmp/ccKaVPoi.s:1436   .text.nav_update_waypoints_alt:0000000000000000 nav_update_waypoints_alt
+     /tmp/ccKaVPoi.s:1480   .text.nav_update_waypoints_alt:000000000000002c $d
+     /tmp/ccKaVPoi.s:1487   .text.common_nav_periodic_task_4Hz:0000000000000000 $t
+     /tmp/ccKaVPoi.s:1492   .text.common_nav_periodic_task_4Hz:0000000000000000 common_nav_periodic_task_4Hz
+     /tmp/ccKaVPoi.s:1524   .text.common_nav_periodic_task_4Hz:0000000000000024 $d
+     /tmp/ccKaVPoi.s:1533   .text.nav_move_waypoint:0000000000000000 $t
+     /tmp/ccKaVPoi.s:1538   .text.nav_move_waypoint:0000000000000000 nav_move_waypoint
+     /tmp/ccKaVPoi.s:1665   .text.nav_move_waypoint:00000000000000b8 $d
+     /tmp/ccKaVPoi.s:1674   .text.nav_home:0000000000000000 $t
+     /tmp/ccKaVPoi.s:1679   .text.nav_home:0000000000000000 nav_home
+     /tmp/ccKaVPoi.s:1725   .text.nav_home:000000000000003c $d
+     /tmp/ccKaVPoi.s:1738   .text.nav_init:0000000000000000 $t
+     /tmp/ccKaVPoi.s:1743   .text.nav_init:0000000000000000 nav_init
+     /tmp/ccKaVPoi.s:1781   .text.nav_init:0000000000000028 $d
+     /tmp/ccKaVPoi.s:1794   .text.nav_without_gps:0000000000000000 $t
+     /tmp/ccKaVPoi.s:1799   .text.nav_without_gps:0000000000000000 nav_without_gps
+     /tmp/ccKaVPoi.s:1831   .text.nav_without_gps:0000000000000024 $d
+     /tmp/ccKaVPoi.s:1841   .text.nav_eight_init:0000000000000000 $t
+     /tmp/ccKaVPoi.s:1846   .text.nav_eight_init:0000000000000000 nav_eight_init
+     /tmp/ccKaVPoi.s:1862   .text.nav_eight_init:0000000000000008 $d
+     /tmp/ccKaVPoi.s:1868   .text.nav_eight:0000000000000000 $t
+     /tmp/ccKaVPoi.s:1873   .text.nav_eight:0000000000000000 nav_eight
+     /tmp/ccKaVPoi.s:2194   .text.nav_eight:00000000000001ec $d
+     /tmp/ccKaVPoi.s:2202   .text.nav_eight:00000000000001f8 $t
+     /tmp/ccKaVPoi.s:2283   .text.nav_eight:0000000000000280 $d
+     /tmp/ccKaVPoi.s:2297   .text.nav_eight:00000000000002ac $t
+     /tmp/ccKaVPoi.s:2676   .text.nav_eight:0000000000000500 $d
+     /tmp/ccKaVPoi.s:2689   .text.nav_eight:000000000000052c $t
+     /tmp/ccKaVPoi.s:2695   .text.nav_oval_init:0000000000000000 $t
+     /tmp/ccKaVPoi.s:2700   .text.nav_oval_init:0000000000000000 nav_oval_init
+     /tmp/ccKaVPoi.s:2720   .text.nav_oval_init:0000000000000010 $d
+     /tmp/ccKaVPoi.s:2726   .text.nav_oval:0000000000000000 $t
+     /tmp/ccKaVPoi.s:2731   .text.nav_oval:0000000000000000 nav_oval
+     /tmp/ccKaVPoi.s:2936   .text.nav_oval:0000000000000138 $d
+     /tmp/ccKaVPoi.s:2942   .text.nav_oval:0000000000000140 $t
+     /tmp/ccKaVPoi.s:3137   .text.nav_oval:0000000000000270 $d
+     /tmp/ccKaVPoi.s:3154   .text.nav_oval:00000000000002a8 $t
+     /tmp/ccKaVPoi.s:3462   .text.nav_oval:0000000000000498 $d
+     /tmp/ccKaVPoi.s:3477   .text.nav_periodic_task:0000000000000000 $t
+     /tmp/ccKaVPoi.s:3482   .text.nav_periodic_task:0000000000000000 nav_periodic_task
+     /tmp/ccKaVPoi.s:3523   .text.nav_periodic_task:0000000000000022 $d
+     /tmp/ccKaVPoi.s:3542   .text.nav_periodic_task:0000000000000044 $t
+     /tmp/ccKaVPoi.s:3887   .text.nav_periodic_task:0000000000000238 $d
+     /tmp/ccKaVPoi.s:3916   .text.nav_periodic_task:00000000000002a4 $t
+     /tmp/ccKaVPoi.s:4024   .text.nav_periodic_task:0000000000000340 $d
+     /tmp/ccKaVPoi.s:4253   .text.nav_periodic_task:00000000000004a4 $d
+     /tmp/ccKaVPoi.s:4272   .text.nav_periodic_task:00000000000004dc $t
+     /tmp/ccKaVPoi.s:4605   .text.nav_periodic_task:0000000000000730 $d
+     /tmp/ccKaVPoi.s:4628   .text.nav_periodic_task:0000000000000784 $t
+     /tmp/ccKaVPoi.s:4915   .text.nav_periodic_task:0000000000000934 $d
+     /tmp/ccKaVPoi.s:5281   .bss.nav_oval_count:0000000000000000 nav_oval_count
+     /tmp/ccKaVPoi.s:4998   .data.max_dist_from_home:0000000000000000 max_dist_from_home
+     /tmp/ccKaVPoi.s:5089   .data.nav_utm_zone0:0000000000000000 nav_utm_zone0
+     /tmp/ccKaVPoi.s:5181   .data.nav_utm_north0:0000000000000000 nav_utm_north0
+     /tmp/ccKaVPoi.s:5320   .data.nav_utm_east0:0000000000000000 nav_utm_east0
+     /tmp/ccKaVPoi.s:5005   .bss.ground_alt:0000000000000000 ground_alt
+     /tmp/ccKaVPoi.s:5227   .data.waypoints:0000000000000000 waypoints
+     /tmp/ccKaVPoi.s:5083   .rodata.nb_waypoint:0000000000000000 nb_waypoint
+     /tmp/ccKaVPoi.s:5299   .bss.too_far_from_home:0000000000000000 too_far_from_home
+     /tmp/ccKaVPoi.s:5188   .bss.dist2_to_wp:0000000000000000 dist2_to_wp
+     /tmp/ccKaVPoi.s:5269   .bss.dist2_to_home:0000000000000000 dist2_to_home
+     /tmp/ccKaVPoi.s:5064   .bss.fp_pitch:0000000000000000 fp_pitch
+     /tmp/ccKaVPoi.s:5313   .bss.nav_pitch:0000000000000000 nav_pitch
+     /tmp/ccKaVPoi.s:5078   .bss.nav_throttle_setpoint:0000000000000000 nav_throttle_setpoint
+     /tmp/ccKaVPoi.s:5039   .bss.desired_y:0000000000000000 desired_y
+     /tmp/ccKaVPoi.s:5032   .bss.desired_x:0000000000000000 desired_x
+     /tmp/ccKaVPoi.s:5025   .data.nav_altitude:0000000000000000 nav_altitude
+     /tmp/ccKaVPoi.s:5018   .bss.nav_mode:0000000000000000 nav_mode
+     /tmp/ccKaVPoi.s:5109   .bss.nav_survey_active:0000000000000000 nav_survey_active
+     /tmp/ccKaVPoi.s:5346   .bss.nav_survey_south:0000000000000000 nav_survey_south
+     /tmp/ccKaVPoi.s:5213   .bss.nav_survey_north:0000000000000000 nav_survey_north
+     /tmp/ccKaVPoi.s:5011   .bss.nav_survey_east:0000000000000000 nav_survey_east
+     /tmp/ccKaVPoi.s:5115   .bss.nav_survey_west:0000000000000000 nav_survey_west
+     /tmp/ccKaVPoi.s:5387   .bss.nav_survey_shift:0000000000000000 nav_survey_shift
+     /tmp/ccKaVPoi.s:5293   .bss.nav_ground_speed_pgain:0000000000000000 nav_ground_speed_pgain
+     /tmp/ccKaVPoi.s:5167   .bss.nav_ground_speed_setpoint:0000000000000000 nav_ground_speed_setpoint
+     /tmp/ccKaVPoi.s:5220   .bss.nav_glide_pitch_trim:0000000000000000 nav_glide_pitch_trim
+     /tmp/ccKaVPoi.s:5103   .bss.flight_altitude:0000000000000000 flight_altitude
+     /tmp/ccKaVPoi.s:5306   .bss.circle_bank:0000000000000000 circle_bank
+     /tmp/ccKaVPoi.s:5326   .bss.horizontal_mode:0000000000000000 horizontal_mode
+     /tmp/ccKaVPoi.s:5148   .bss.nav_segment_y_2:0000000000000000 nav_segment_y_2
+     /tmp/ccKaVPoi.s:5415   .bss.nav_segment_x_2:0000000000000000 nav_segment_x_2
+     /tmp/ccKaVPoi.s:5141   .bss.nav_segment_y_1:0000000000000000 nav_segment_y_1
+     /tmp/ccKaVPoi.s:5408   .bss.nav_segment_x_1:0000000000000000 nav_segment_x_1
+     /tmp/ccKaVPoi.s:5340   .bss.nav_circle_radius:0000000000000000 nav_circle_radius
+     /tmp/ccKaVPoi.s:5373   .bss.nav_circle_y:0000000000000000 nav_circle_y
+     /tmp/ccKaVPoi.s:5366   .bss.nav_circle_x:0000000000000000 nav_circle_x
+     /tmp/ccKaVPoi.s:5154   .bss.nav_in_segment:0000000000000000 nav_in_segment
+     /tmp/ccKaVPoi.s:5201   .bss.nav_in_circle:0000000000000000 nav_in_circle
+     /tmp/ccKaVPoi.s:5071   .bss.nav_shift:0000000000000000 nav_shift
+     /tmp/ccKaVPoi.s:5121   .bss.nav_climb:0000000000000000 nav_climb
+     /tmp/ccKaVPoi.s:5207   .bss.nav_course:0000000000000000 nav_course
+     /tmp/ccKaVPoi.s:5128   .bss.nav_radius:0000000000000000 nav_radius
+     /tmp/ccKaVPoi.s:5333   .bss.nav_circle_trigo_qdr:0000000000000000 nav_circle_trigo_qdr
+     /tmp/ccKaVPoi.s:5161   .bss.nav_circle_radians:0000000000000000 nav_circle_radians
+     /tmp/ccKaVPoi.s:5058   .bss.carrot_y:0000000000000000 carrot_y
+     /tmp/ccKaVPoi.s:5052   .bss.carrot_x:0000000000000000 carrot_x
+     /tmp/ccKaVPoi.s:5287   .bss.rc_pitch:0000000000000000 rc_pitch
+     /tmp/ccKaVPoi.s:5401   .bss.last_y:0000000000000000 last_y
+     /tmp/ccKaVPoi.s:5359   .bss.last_x:0000000000000000 last_x
+     /tmp/ccKaVPoi.s:5134   .bss.oval_status:0000000000000000 oval_status
+     /tmp/ccKaVPoi.s:4994   .data.max_dist_from_home:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5001   .bss.ground_alt:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5008   .bss.nav_survey_east:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5014   .bss.nav_mode:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5021   .data.nav_altitude:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5028   .bss.desired_x:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5035   .bss.desired_y:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5042   .bss.previous_ground_alt:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5046   .bss.previous_ground_alt:0000000000000000 previous_ground_alt
+     /tmp/ccKaVPoi.s:5049   .bss.carrot_x:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5055   .bss.carrot_y:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5061   .bss.fp_pitch:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5067   .bss.nav_shift:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5074   .bss.nav_throttle_setpoint:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5092   .bss.prescaler.4519:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5096   .bss.prescaler.4519:0000000000000000 prescaler.4519
+     /tmp/ccKaVPoi.s:5099   .bss.flight_altitude:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5110   .bss.nav_survey_active:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5112   .bss.nav_survey_west:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5118   .bss.nav_climb:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5124   .bss.nav_radius:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5135   .bss.oval_status:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5137   .bss.nav_segment_y_1:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5144   .bss.nav_segment_y_2:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5155   .bss.nav_in_segment:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5157   .bss.nav_circle_radians:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5164   .bss.nav_ground_speed_setpoint:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5170   .bss.nav_leg_progress:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5174   .bss.nav_leg_progress:0000000000000000 nav_leg_progress
+     /tmp/ccKaVPoi.s:5177   .data.nav_utm_north0:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5184   .bss.dist2_to_wp:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5191   .bss.last_nav_altitude.4531:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5195   .bss.last_nav_altitude.4531:0000000000000000 last_nav_altitude.4531
+     /tmp/ccKaVPoi.s:5202   .bss.nav_in_circle:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5204   .bss.nav_course:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5210   .bss.nav_survey_north:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5216   .bss.nav_glide_pitch_trim:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5223   .data.waypoints:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5265   .bss.dist2_to_home:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5275   .bss.last_wp:0000000000000000 last_wp
+     /tmp/ccKaVPoi.s:5276   .bss.last_wp:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5282   .bss.nav_oval_count:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5284   .bss.rc_pitch:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5290   .bss.nav_ground_speed_pgain:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5300   .bss.too_far_from_home:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5302   .bss.circle_bank:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5309   .bss.nav_pitch:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5316   .data.nav_utm_east0:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5327   .bss.horizontal_mode:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5329   .bss.nav_circle_trigo_qdr:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5336   .bss.nav_circle_radius:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5343   .bss.nav_survey_south:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5352   .bss.eight_status:0000000000000000 eight_status
+     /tmp/ccKaVPoi.s:5353   .bss.eight_status:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5355   .bss.last_x:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5362   .bss.nav_circle_x:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5369   .bss.nav_circle_y:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5376   .bss.nav_leg_length:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5380   .bss.nav_leg_length:0000000000000000 nav_leg_length
+     /tmp/ccKaVPoi.s:5383   .bss.nav_survey_shift:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5390   .bss.baseleg_out_qdr:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5394   .bss.baseleg_out_qdr:0000000000000000 baseleg_out_qdr
+     /tmp/ccKaVPoi.s:5397   .bss.last_y:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5404   .bss.nav_segment_x_1:0000000000000000 $d
+     /tmp/ccKaVPoi.s:5411   .bss.nav_segment_x_2:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
-     /tmp/cclVC9D7.s:3476   .text.nav_oval:00000000000004c4 $t
-     /tmp/cclVC9D7.s:4993   .text.nav_periodic_task:0000000000000994 $t
-     /tmp/cclVC9D7.s:4029   .text.nav_periodic_task:0000000000000345 $d
-     /tmp/cclVC9D7.s:4029   .text.nav_periodic_task:0000000000000346 $t
+     /tmp/ccKaVPoi.s:3476   .text.nav_oval:00000000000004c4 $t
+     /tmp/ccKaVPoi.s:4993   .text.nav_periodic_task:0000000000000994 $t
+     /tmp/ccKaVPoi.s:4029   .text.nav_periodic_task:0000000000000345 $d
+     /tmp/ccKaVPoi.s:4029   .text.nav_periodic_task:0000000000000346 $t
 
 UNDEFINED SYMBOLS
 __aeabi_fsub

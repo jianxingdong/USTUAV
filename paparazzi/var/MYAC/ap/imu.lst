@@ -390,13 +390,13 @@
  306              		.file 7 "./math/pprz_trig_int.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 imu.c
-     /tmp/ccmECn6X.s:18     .text.imu_init:0000000000000000 $t
-     /tmp/ccmECn6X.s:23     .text.imu_init:0000000000000000 imu_init
-     /tmp/ccmECn6X.s:228    .text.imu_init:000000000000012c $d
-     /tmp/ccmECn6X.s:234    .text.imu_float_init:0000000000000000 $t
-     /tmp/ccmECn6X.s:239    .text.imu_float_init:0000000000000000 imu_float_init
-     /tmp/ccmECn6X.s:297    .bss.imu:0000000000000000 imu
-     /tmp/ccmECn6X.s:293    .bss.imu:0000000000000000 $d
+     /tmp/ccjoDuZ5.s:18     .text.imu_init:0000000000000000 $t
+     /tmp/ccjoDuZ5.s:23     .text.imu_init:0000000000000000 imu_init
+     /tmp/ccjoDuZ5.s:228    .text.imu_init:000000000000012c $d
+     /tmp/ccjoDuZ5.s:234    .text.imu_float_init:0000000000000000 $t
+     /tmp/ccjoDuZ5.s:239    .text.imu_float_init:0000000000000000 imu_float_init
+     /tmp/ccjoDuZ5.s:297    .bss.imu:0000000000000000 imu
+     /tmp/ccjoDuZ5.s:293    .bss.imu:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

@@ -1,4 +1,4 @@
-/* This file has been generated from /home/uav/paparazzi/conf/airframes/examples/LisaM2_Nov26_2012.xml */
+/* This file has been generated from /home/uav/USTUAV/paparazzi/conf/airframes/examples/LisaM2_Nov26_2012.xml */
 /* Please DO NOT EDIT */
 
 #ifndef AIRFRAME_H
@@ -6,7 +6,7 @@
 
 #define AIRFRAME_NAME "MYAC"
 #define AC_ID 1
-#define MD5SUM ((uint8_t*)"\152\162\370\326\126\366\101\116\136\222\271\275\311\133\070\112")
+#define MD5SUM ((uint8_t*)"\071\303\057\157\260\001\323\137\326\315\332\016\263\312\242\305")
 
 #define SERVOS_NB 6
 
@@ -124,9 +124,9 @@
 
 #define SECTION_BAT 1
 #define MILLIAMP_AT_FULL_THROTTLE 20000
-#define CATASTROPHIC_BAT_LEVEL 9.0
-#define CRITIC_BAT_LEVEL 9.5
-#define LOW_BAT_LEVEL 10.0
+#define CATASTROPHIC_BAT_LEVEL 0.0
+#define CRITIC_BAT_LEVEL 0.0
+#define LOW_BAT_LEVEL 0.0
 #define MAX_BAT_LEVEL 12.5
 
 #define SECTION_MISC 1

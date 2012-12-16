@@ -685,7 +685,7 @@
  466              		.text
  467              	.Letext0:
  468              		.file 2 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
- 469              		.file 3 "/home/uav/paparazzi/sw/include/std.h"
+ 469              		.file 3 "/home/uav/USTUAV/paparazzi/sw/include/std.h"
  470              		.file 4 "./math/pprz_algebra_int.h"
  471              		.file 5 "./subsystems/imu.h"
  472              		.file 6 "./subsystems/imu/imu_aspirin2.h"
@@ -697,22 +697,22 @@
  478              		.file 12 "./mcu_periph/spi.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 spi_arch.c
-     /tmp/ccXhU2I7.s:18     .text.spi_arch_int_enable:0000000000000000 $t
-     /tmp/ccXhU2I7.s:23     .text.spi_arch_int_enable:0000000000000000 spi_arch_int_enable
-     /tmp/ccXhU2I7.s:50     .text.spi_arch_int_enable:0000000000000014 $d
-     /tmp/ccXhU2I7.s:55     .text.spi_arch_int_disable:0000000000000000 $t
-     /tmp/ccXhU2I7.s:60     .text.spi_arch_int_disable:0000000000000000 spi_arch_int_disable
-     /tmp/ccXhU2I7.s:91     .text.spi_init:0000000000000000 $t
-     /tmp/ccXhU2I7.s:96     .text.spi_init:0000000000000000 spi_init
-     /tmp/ccXhU2I7.s:217    .text.spi_init:00000000000000b0 $d
-     /tmp/ccXhU2I7.s:223    .text.spi_rw:0000000000000000 $t
-     /tmp/ccXhU2I7.s:228    .text.spi_rw:0000000000000000 spi_rw
-     /tmp/ccXhU2I7.s:361    .text.spi_rw:00000000000000c8 $d
-     /tmp/ccXhU2I7.s:371    .text.dma1_c4_irq_handler:0000000000000000 $t
-     /tmp/ccXhU2I7.s:376    .text.dma1_c4_irq_handler:0000000000000000 dma1_c4_irq_handler
-     /tmp/ccXhU2I7.s:442    .text.dma1_c4_irq_handler:0000000000000060 $d
-     /tmp/ccXhU2I7.s:464    .bss.slave0:0000000000000000 slave0
-     /tmp/ccXhU2I7.s:460    .bss.slave0:0000000000000000 $d
+     /tmp/ccJTuTGi.s:18     .text.spi_arch_int_enable:0000000000000000 $t
+     /tmp/ccJTuTGi.s:23     .text.spi_arch_int_enable:0000000000000000 spi_arch_int_enable
+     /tmp/ccJTuTGi.s:50     .text.spi_arch_int_enable:0000000000000014 $d
+     /tmp/ccJTuTGi.s:55     .text.spi_arch_int_disable:0000000000000000 $t
+     /tmp/ccJTuTGi.s:60     .text.spi_arch_int_disable:0000000000000000 spi_arch_int_disable
+     /tmp/ccJTuTGi.s:91     .text.spi_init:0000000000000000 $t
+     /tmp/ccJTuTGi.s:96     .text.spi_init:0000000000000000 spi_init
+     /tmp/ccJTuTGi.s:217    .text.spi_init:00000000000000b0 $d
+     /tmp/ccJTuTGi.s:223    .text.spi_rw:0000000000000000 $t
+     /tmp/ccJTuTGi.s:228    .text.spi_rw:0000000000000000 spi_rw
+     /tmp/ccJTuTGi.s:361    .text.spi_rw:00000000000000c8 $d
+     /tmp/ccJTuTGi.s:371    .text.dma1_c4_irq_handler:0000000000000000 $t
+     /tmp/ccJTuTGi.s:376    .text.dma1_c4_irq_handler:0000000000000000 dma1_c4_irq_handler
+     /tmp/ccJTuTGi.s:442    .text.dma1_c4_irq_handler:0000000000000060 $d
+     /tmp/ccJTuTGi.s:464    .bss.slave0:0000000000000000 slave0
+     /tmp/ccJTuTGi.s:460    .bss.slave0:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

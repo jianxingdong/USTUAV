@@ -1001,7 +1001,7 @@
  446              	.Letext0:
  447              		.file 2 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
  448              		.file 3 "./mcu_periph/adc.h"
- 449              		.file 4 "/home/uav/paparazzi/sw/airborne/arch/stm32/mcu_periph/adc_arch.h"
+ 449              		.file 4 "/home/uav/USTUAV/paparazzi/sw/airborne/arch/stm32/mcu_periph/adc_arch.h"
  450              		.file 5 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
  451              		.file 6 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
  452              		.file 7 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
@@ -1009,23 +1009,23 @@
  454              		.file 9 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 adc_arch.c
-     /tmp/ccef7rm6.s:18     .text.adc_buf_channel:0000000000000000 $t
-     /tmp/ccef7rm6.s:23     .text.adc_buf_channel:0000000000000000 adc_buf_channel
-     /tmp/ccef7rm6.s:43     .text.adc_buf_channel:000000000000000c $d
-     /tmp/ccef7rm6.s:48     .text.adc_init:0000000000000000 $t
-     /tmp/ccef7rm6.s:53     .text.adc_init:0000000000000000 adc_init
-     /tmp/ccef7rm6.s:314    .text.adc_init:0000000000000168 $d
-     /tmp/ccef7rm6.s:324    .text.adc1_2_irq_handler:0000000000000000 $t
-     /tmp/ccef7rm6.s:329    .text.adc1_2_irq_handler:0000000000000000 adc1_2_irq_handler
-     /tmp/ccef7rm6.s:412    .text.adc1_2_irq_handler:0000000000000058 $d
-     /tmp/ccef7rm6.s:424    .bss.adc_new_data_trigger:0000000000000000 adc_new_data_trigger
-     /tmp/ccef7rm6.s:425    .bss.adc_new_data_trigger:0000000000000000 $d
-     /tmp/ccef7rm6.s:427    .bss.adc1_buffers:0000000000000000 $d
-     /tmp/ccef7rm6.s:431    .bss.adc1_buffers:0000000000000000 adc1_buffers
-     /tmp/ccef7rm6.s:437    .bss.adc_channel_map:0000000000000000 adc_channel_map
-     /tmp/ccef7rm6.s:438    .bss.adc_channel_map:0000000000000000 $d
-     /tmp/ccef7rm6.s:443    .bss.adc_injected_channels:0000000000000000 adc_injected_channels
-     /tmp/ccef7rm6.s:444    .bss.adc_injected_channels:0000000000000000 $d
+     /tmp/ccMvaKni.s:18     .text.adc_buf_channel:0000000000000000 $t
+     /tmp/ccMvaKni.s:23     .text.adc_buf_channel:0000000000000000 adc_buf_channel
+     /tmp/ccMvaKni.s:43     .text.adc_buf_channel:000000000000000c $d
+     /tmp/ccMvaKni.s:48     .text.adc_init:0000000000000000 $t
+     /tmp/ccMvaKni.s:53     .text.adc_init:0000000000000000 adc_init
+     /tmp/ccMvaKni.s:314    .text.adc_init:0000000000000168 $d
+     /tmp/ccMvaKni.s:324    .text.adc1_2_irq_handler:0000000000000000 $t
+     /tmp/ccMvaKni.s:329    .text.adc1_2_irq_handler:0000000000000000 adc1_2_irq_handler
+     /tmp/ccMvaKni.s:412    .text.adc1_2_irq_handler:0000000000000058 $d
+     /tmp/ccMvaKni.s:424    .bss.adc_new_data_trigger:0000000000000000 adc_new_data_trigger
+     /tmp/ccMvaKni.s:425    .bss.adc_new_data_trigger:0000000000000000 $d
+     /tmp/ccMvaKni.s:427    .bss.adc1_buffers:0000000000000000 $d
+     /tmp/ccMvaKni.s:431    .bss.adc1_buffers:0000000000000000 adc1_buffers
+     /tmp/ccMvaKni.s:437    .bss.adc_channel_map:0000000000000000 adc_channel_map
+     /tmp/ccMvaKni.s:438    .bss.adc_channel_map:0000000000000000 $d
+     /tmp/ccMvaKni.s:443    .bss.adc_injected_channels:0000000000000000 adc_injected_channels
+     /tmp/ccMvaKni.s:444    .bss.adc_injected_channels:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

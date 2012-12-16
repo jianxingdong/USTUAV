@@ -2800,52 +2800,52 @@
  2106              		.global	fbw_periodic_tid
  2107              		.global	fbw_new_actuators
  2108              		.global	fbw_mode
- 2109              		.section	.bss.i120.3581,"aw",%nobits
- 2110              		.set	.LANCHOR5,. + 0
- 2113              	i120.3581:
+ 2109              		.section	.bss.i30.3622,"aw",%nobits
+ 2110              		.set	.LANCHOR7,. + 0
+ 2113              	i30.3622:
  2114 0000 00       		.space	1
- 2115              		.section	.bss.i300.3608,"aw",%nobits
+ 2115              		.section	.bss.i300.3624,"aw",%nobits
  2116              		.align	1
  2117              		.set	.LANCHOR9,. + 0
- 2120              	i300.3608:
+ 2120              	i300.3624:
  2121 0000 0000     		.space	2
- 2122              		.section	.bss.fbw_mode,"aw",%nobits
- 2123              		.set	.LANCHOR0,. + 0
- 2126              	fbw_mode:
+ 2122              		.section	.bss.i60.3623,"aw",%nobits
+ 2123              		.set	.LANCHOR8,. + 0
+ 2126              	i60.3623:
  2127 0000 00       		.space	1
- 2128              		.section	.bss.i60.3607,"aw",%nobits
- 2129              		.set	.LANCHOR8,. + 0
- 2132              	i60.3607:
+ 2128              		.section	.bss.fbw_mode,"aw",%nobits
+ 2129              		.set	.LANCHOR0,. + 0
+ 2132              	fbw_mode:
  2133 0000 00       		.space	1
  2134              		.section	.bss.fbw_periodic_tid,"aw",%nobits
  2135              		.set	.LANCHOR2,. + 0
  2138              	fbw_periodic_tid:
  2139 0000 00       		.space	1
- 2140              		.section	.bss._1Hz.3375,"aw",%nobits
- 2141              		.set	.LANCHOR4,. + 0
- 2144              	_1Hz.3375:
+ 2140              		.section	.bss.i120.3597,"aw",%nobits
+ 2141              		.set	.LANCHOR5,. + 0
+ 2144              	i120.3597:
  2145 0000 00       		.space	1
- 2146              		.section	.bss.fbw_new_actuators,"aw",%nobits
- 2147              		.set	.LANCHOR1,. + 0
- 2150              	fbw_new_actuators:
+ 2146              		.section	.bss._1Hz.3375,"aw",%nobits
+ 2147              		.set	.LANCHOR4,. + 0
+ 2150              	_1Hz.3375:
  2151 0000 00       		.space	1
- 2152              		.section	.bss.i300.3582,"aw",%nobits
- 2153              		.align	1
- 2154              		.set	.LANCHOR6,. + 0
- 2157              	i300.3582:
- 2158 0000 0000     		.space	2
- 2159              		.section	.bss.i30.3606,"aw",%nobits
- 2160              		.set	.LANCHOR7,. + 0
- 2163              	i30.3606:
- 2164 0000 00       		.space	1
- 2165              		.section	.bss.electrical_tid,"aw",%nobits
- 2166              		.set	.LANCHOR3,. + 0
- 2169              	electrical_tid:
- 2170 0000 00       		.space	1
+ 2152              		.section	.bss.fbw_new_actuators,"aw",%nobits
+ 2153              		.set	.LANCHOR1,. + 0
+ 2156              	fbw_new_actuators:
+ 2157 0000 00       		.space	1
+ 2158              		.section	.bss.electrical_tid,"aw",%nobits
+ 2159              		.set	.LANCHOR3,. + 0
+ 2162              	electrical_tid:
+ 2163 0000 00       		.space	1
+ 2164              		.section	.bss.i300.3598,"aw",%nobits
+ 2165              		.align	1
+ 2166              		.set	.LANCHOR6,. + 0
+ 2169              	i300.3598:
+ 2170 0000 0000     		.space	2
  2171              		.text
  2172              	.Letext0:
  2173              		.file 6 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
- 2174              		.file 7 "/home/uav/paparazzi/sw/include/std.h"
+ 2174              		.file 7 "/home/uav/USTUAV/paparazzi/sw/include/std.h"
  2175              		.file 8 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
  2176              		.file 9 "./paparazzi.h"
  2177              		.file 10 "./subsystems/electrical.h"
@@ -2853,58 +2853,58 @@
  2179              		.file 12 "./firmwares/fixedwing/main_fbw.h"
  2180              		.file 13 "./commands.h"
  2181              		.file 14 "./firmwares/fixedwing/actuators.h"
- 2182              		.file 15 "/home/uav/paparazzi/sw/airborne/arch/stm32/servos_direct_hw.h"
- 2183              		.file 16 "/home/uav/paparazzi/var/MYAC/generated/periodic_telemetry.h"
+ 2182              		.file 15 "/home/uav/USTUAV/paparazzi/sw/airborne/arch/stm32/servos_direct_hw.h"
+ 2183              		.file 16 "/home/uav/USTUAV/paparazzi/var/MYAC/generated/periodic_telemetry.h"
  2184              		.file 17 "./subsystems/datalink/datalink.h"
  2185              		.file 18 "./subsystems/datalink/pprz_transport.h"
  2186              		.file 19 "./subsystems/datalink/xbee.h"
  2187              		.file 20 "./subsystems/datalink/downlink.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 main_fbw.c
-     /tmp/ccWe2gFm.s:18     .text.inter_mcu_fill_fbw_state:0000000000000000 $t
-     /tmp/ccWe2gFm.s:22     .text.inter_mcu_fill_fbw_state:0000000000000000 inter_mcu_fill_fbw_state
-     /tmp/ccWe2gFm.s:116    .text.inter_mcu_fill_fbw_state:0000000000000064 $d
-     /tmp/ccWe2gFm.s:125    .text.handle_rc_frame:0000000000000000 $t
-     /tmp/ccWe2gFm.s:129    .text.handle_rc_frame:0000000000000000 handle_rc_frame
-     /tmp/ccWe2gFm.s:169    .text.handle_rc_frame:0000000000000030 $d
-     /tmp/ccWe2gFm.s:179    .text.init_fbw:0000000000000000 $t
-     /tmp/ccWe2gFm.s:184    .text.init_fbw:0000000000000000 init_fbw
-     /tmp/ccWe2gFm.s:322    .text.init_fbw:000000000000007c $d
-     /tmp/ccWe2gFm.s:345    .text.event_task_fbw:0000000000000000 $t
-     /tmp/ccWe2gFm.s:350    .text.event_task_fbw:0000000000000000 event_task_fbw
-     /tmp/ccWe2gFm.s:736    .text.event_task_fbw:0000000000000268 $d
-     /tmp/ccWe2gFm.s:767    .text.periodic_task_fbw:0000000000000000 $t
-     /tmp/ccWe2gFm.s:772    .text.periodic_task_fbw:0000000000000000 periodic_task_fbw
-     /tmp/ccWe2gFm.s:1143   .text.periodic_task_fbw:00000000000001f4 $d
-     /tmp/ccWe2gFm.s:1163   .text.periodic_task_fbw:000000000000023c $t
-     /tmp/ccWe2gFm.s:1540   .text.periodic_task_fbw:00000000000004c0 $d
-     /tmp/ccWe2gFm.s:1557   .text.periodic_task_fbw:00000000000004f8 $t
-     /tmp/ccWe2gFm.s:1871   .text.periodic_task_fbw:00000000000006ec $d
-     /tmp/ccWe2gFm.s:1884   .text.periodic_task_fbw:0000000000000718 $t
-     /tmp/ccWe2gFm.s:2020   .text.periodic_task_fbw:00000000000007f4 $d
-     /tmp/ccWe2gFm.s:2035   .text.handle_periodic_tasks_fbw:0000000000000000 $t
-     /tmp/ccWe2gFm.s:2040   .text.handle_periodic_tasks_fbw:0000000000000000 handle_periodic_tasks_fbw
-     /tmp/ccWe2gFm.s:2099   .text.handle_periodic_tasks_fbw:000000000000003c $d
-     /tmp/ccWe2gFm.s:2169   .bss.electrical_tid:0000000000000000 electrical_tid
-     /tmp/ccWe2gFm.s:2138   .bss.fbw_periodic_tid:0000000000000000 fbw_periodic_tid
-     /tmp/ccWe2gFm.s:2150   .bss.fbw_new_actuators:0000000000000000 fbw_new_actuators
-     /tmp/ccWe2gFm.s:2126   .bss.fbw_mode:0000000000000000 fbw_mode
-     /tmp/ccWe2gFm.s:2113   .bss.i120.3581:0000000000000000 i120.3581
-     /tmp/ccWe2gFm.s:2114   .bss.i120.3581:0000000000000000 $d
-     /tmp/ccWe2gFm.s:2116   .bss.i300.3608:0000000000000000 $d
-     /tmp/ccWe2gFm.s:2120   .bss.i300.3608:0000000000000000 i300.3608
-     /tmp/ccWe2gFm.s:2127   .bss.fbw_mode:0000000000000000 $d
-     /tmp/ccWe2gFm.s:2132   .bss.i60.3607:0000000000000000 i60.3607
-     /tmp/ccWe2gFm.s:2133   .bss.i60.3607:0000000000000000 $d
-     /tmp/ccWe2gFm.s:2139   .bss.fbw_periodic_tid:0000000000000000 $d
-     /tmp/ccWe2gFm.s:2144   .bss._1Hz.3375:0000000000000000 _1Hz.3375
-     /tmp/ccWe2gFm.s:2145   .bss._1Hz.3375:0000000000000000 $d
-     /tmp/ccWe2gFm.s:2151   .bss.fbw_new_actuators:0000000000000000 $d
-     /tmp/ccWe2gFm.s:2153   .bss.i300.3582:0000000000000000 $d
-     /tmp/ccWe2gFm.s:2157   .bss.i300.3582:0000000000000000 i300.3582
-     /tmp/ccWe2gFm.s:2163   .bss.i30.3606:0000000000000000 i30.3606
-     /tmp/ccWe2gFm.s:2164   .bss.i30.3606:0000000000000000 $d
-     /tmp/ccWe2gFm.s:2170   .bss.electrical_tid:0000000000000000 $d
+     /tmp/ccjoq7zD.s:18     .text.inter_mcu_fill_fbw_state:0000000000000000 $t
+     /tmp/ccjoq7zD.s:22     .text.inter_mcu_fill_fbw_state:0000000000000000 inter_mcu_fill_fbw_state
+     /tmp/ccjoq7zD.s:116    .text.inter_mcu_fill_fbw_state:0000000000000064 $d
+     /tmp/ccjoq7zD.s:125    .text.handle_rc_frame:0000000000000000 $t
+     /tmp/ccjoq7zD.s:129    .text.handle_rc_frame:0000000000000000 handle_rc_frame
+     /tmp/ccjoq7zD.s:169    .text.handle_rc_frame:0000000000000030 $d
+     /tmp/ccjoq7zD.s:179    .text.init_fbw:0000000000000000 $t
+     /tmp/ccjoq7zD.s:184    .text.init_fbw:0000000000000000 init_fbw
+     /tmp/ccjoq7zD.s:322    .text.init_fbw:000000000000007c $d
+     /tmp/ccjoq7zD.s:345    .text.event_task_fbw:0000000000000000 $t
+     /tmp/ccjoq7zD.s:350    .text.event_task_fbw:0000000000000000 event_task_fbw
+     /tmp/ccjoq7zD.s:736    .text.event_task_fbw:0000000000000268 $d
+     /tmp/ccjoq7zD.s:767    .text.periodic_task_fbw:0000000000000000 $t
+     /tmp/ccjoq7zD.s:772    .text.periodic_task_fbw:0000000000000000 periodic_task_fbw
+     /tmp/ccjoq7zD.s:1143   .text.periodic_task_fbw:00000000000001f4 $d
+     /tmp/ccjoq7zD.s:1163   .text.periodic_task_fbw:000000000000023c $t
+     /tmp/ccjoq7zD.s:1540   .text.periodic_task_fbw:00000000000004c0 $d
+     /tmp/ccjoq7zD.s:1557   .text.periodic_task_fbw:00000000000004f8 $t
+     /tmp/ccjoq7zD.s:1871   .text.periodic_task_fbw:00000000000006ec $d
+     /tmp/ccjoq7zD.s:1884   .text.periodic_task_fbw:0000000000000718 $t
+     /tmp/ccjoq7zD.s:2020   .text.periodic_task_fbw:00000000000007f4 $d
+     /tmp/ccjoq7zD.s:2035   .text.handle_periodic_tasks_fbw:0000000000000000 $t
+     /tmp/ccjoq7zD.s:2040   .text.handle_periodic_tasks_fbw:0000000000000000 handle_periodic_tasks_fbw
+     /tmp/ccjoq7zD.s:2099   .text.handle_periodic_tasks_fbw:000000000000003c $d
+     /tmp/ccjoq7zD.s:2162   .bss.electrical_tid:0000000000000000 electrical_tid
+     /tmp/ccjoq7zD.s:2138   .bss.fbw_periodic_tid:0000000000000000 fbw_periodic_tid
+     /tmp/ccjoq7zD.s:2156   .bss.fbw_new_actuators:0000000000000000 fbw_new_actuators
+     /tmp/ccjoq7zD.s:2132   .bss.fbw_mode:0000000000000000 fbw_mode
+     /tmp/ccjoq7zD.s:2113   .bss.i30.3622:0000000000000000 i30.3622
+     /tmp/ccjoq7zD.s:2114   .bss.i30.3622:0000000000000000 $d
+     /tmp/ccjoq7zD.s:2116   .bss.i300.3624:0000000000000000 $d
+     /tmp/ccjoq7zD.s:2120   .bss.i300.3624:0000000000000000 i300.3624
+     /tmp/ccjoq7zD.s:2126   .bss.i60.3623:0000000000000000 i60.3623
+     /tmp/ccjoq7zD.s:2127   .bss.i60.3623:0000000000000000 $d
+     /tmp/ccjoq7zD.s:2133   .bss.fbw_mode:0000000000000000 $d
+     /tmp/ccjoq7zD.s:2139   .bss.fbw_periodic_tid:0000000000000000 $d
+     /tmp/ccjoq7zD.s:2144   .bss.i120.3597:0000000000000000 i120.3597
+     /tmp/ccjoq7zD.s:2145   .bss.i120.3597:0000000000000000 $d
+     /tmp/ccjoq7zD.s:2150   .bss._1Hz.3375:0000000000000000 _1Hz.3375
+     /tmp/ccjoq7zD.s:2151   .bss._1Hz.3375:0000000000000000 $d
+     /tmp/ccjoq7zD.s:2157   .bss.fbw_new_actuators:0000000000000000 $d
+     /tmp/ccjoq7zD.s:2163   .bss.electrical_tid:0000000000000000 $d
+     /tmp/ccjoq7zD.s:2165   .bss.i300.3598:0000000000000000 $d
+     /tmp/ccjoq7zD.s:2169   .bss.i300.3598:0000000000000000 i300.3598
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

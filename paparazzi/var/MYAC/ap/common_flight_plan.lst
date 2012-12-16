@@ -189,24 +189,24 @@
  149              		.file 3 "./subsystems/navigation/common_flight_plan.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 common_flight_plan.c
-     /tmp/ccTHC2Ms.s:18     .text.nav_init_block:0000000000000000 $t
-     /tmp/ccTHC2Ms.s:23     .text.nav_init_block:0000000000000000 nav_init_block
-     /tmp/ccTHC2Ms.s:53     .text.nav_init_block:000000000000001c $d
-     /tmp/ccTHC2Ms.s:60     .text.nav_goto_block:0000000000000000 $t
-     /tmp/ccTHC2Ms.s:65     .text.nav_goto_block:0000000000000000 nav_goto_block
-     /tmp/ccTHC2Ms.s:96     .text.nav_goto_block:000000000000001c $d
-     /tmp/ccTHC2Ms.s:138    .bss.last_stage:0000000000000000 last_stage
-     /tmp/ccTHC2Ms.s:119    .bss.last_block:0000000000000000 last_block
-     /tmp/ccTHC2Ms.s:132    .bss.nav_block:0000000000000000 nav_block
-     /tmp/ccTHC2Ms.s:144    .bss.nav_stage:0000000000000000 nav_stage
-     /tmp/ccTHC2Ms.s:126    .bss.block_time:0000000000000000 block_time
-     /tmp/ccTHC2Ms.s:113    .bss.stage_time:0000000000000000 stage_time
-     /tmp/ccTHC2Ms.s:110    .bss.stage_time:0000000000000000 $d
-     /tmp/ccTHC2Ms.s:120    .bss.last_block:0000000000000000 $d
-     /tmp/ccTHC2Ms.s:122    .bss.block_time:0000000000000000 $d
-     /tmp/ccTHC2Ms.s:133    .bss.nav_block:0000000000000000 $d
-     /tmp/ccTHC2Ms.s:139    .bss.last_stage:0000000000000000 $d
-     /tmp/ccTHC2Ms.s:145    .bss.nav_stage:0000000000000000 $d
+     /tmp/ccRfzZMM.s:18     .text.nav_init_block:0000000000000000 $t
+     /tmp/ccRfzZMM.s:23     .text.nav_init_block:0000000000000000 nav_init_block
+     /tmp/ccRfzZMM.s:53     .text.nav_init_block:000000000000001c $d
+     /tmp/ccRfzZMM.s:60     .text.nav_goto_block:0000000000000000 $t
+     /tmp/ccRfzZMM.s:65     .text.nav_goto_block:0000000000000000 nav_goto_block
+     /tmp/ccRfzZMM.s:96     .text.nav_goto_block:000000000000001c $d
+     /tmp/ccRfzZMM.s:138    .bss.last_stage:0000000000000000 last_stage
+     /tmp/ccRfzZMM.s:119    .bss.last_block:0000000000000000 last_block
+     /tmp/ccRfzZMM.s:132    .bss.nav_block:0000000000000000 nav_block
+     /tmp/ccRfzZMM.s:144    .bss.nav_stage:0000000000000000 nav_stage
+     /tmp/ccRfzZMM.s:126    .bss.block_time:0000000000000000 block_time
+     /tmp/ccRfzZMM.s:113    .bss.stage_time:0000000000000000 stage_time
+     /tmp/ccRfzZMM.s:110    .bss.stage_time:0000000000000000 $d
+     /tmp/ccRfzZMM.s:120    .bss.last_block:0000000000000000 $d
+     /tmp/ccRfzZMM.s:122    .bss.block_time:0000000000000000 $d
+     /tmp/ccRfzZMM.s:133    .bss.nav_block:0000000000000000 $d
+     /tmp/ccRfzZMM.s:139    .bss.last_stage:0000000000000000 $d
+     /tmp/ccRfzZMM.s:145    .bss.nav_stage:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

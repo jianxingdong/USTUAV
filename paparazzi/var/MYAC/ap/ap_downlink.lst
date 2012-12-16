@@ -21,10 +21,10 @@
   23              		.text
   24              	.Letext0:
   25              		.file 1 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
-  26              		.file 2 "/home/uav/paparazzi/var/MYAC/generated/periodic_telemetry.h"
+  26              		.file 2 "/home/uav/USTUAV/paparazzi/var/MYAC/generated/periodic_telemetry.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 ap_downlink.c
-     /tmp/cchfkJJz.s:21     .bss.telemetry_mode_Ap:0000000000000000 telemetry_mode_Ap
-     /tmp/cchfkJJz.s:22     .bss.telemetry_mode_Ap:0000000000000000 $d
+     /tmp/ccLIQohM.s:21     .bss.telemetry_mode_Ap:0000000000000000 telemetry_mode_Ap
+     /tmp/ccLIQohM.s:22     .bss.telemetry_mode_Ap:0000000000000000 $d
 
 NO UNDEFINED SYMBOLS

@@ -293,16 +293,16 @@
  210              		.file 6 "./commands.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 electrical.c
-     /tmp/ccwanQfA.s:18     .text.electrical_init:0000000000000000 $t
-     /tmp/ccwanQfA.s:23     .text.electrical_init:0000000000000000 electrical_init
-     /tmp/ccwanQfA.s:57     .text.electrical_init:000000000000001c $d
-     /tmp/ccwanQfA.s:74     .text.electrical_periodic:0000000000000000 $t
-     /tmp/ccwanQfA.s:79     .text.electrical_periodic:0000000000000000 electrical_periodic
-     /tmp/ccwanQfA.s:176    .text.electrical_periodic:00000000000000c0 $d
-     /tmp/ccwanQfA.s:202    .bss.electrical:0000000000000000 electrical
-     /tmp/ccwanQfA.s:191    .bss.electrical_priv:0000000000000000 $d
-     /tmp/ccwanQfA.s:195    .bss.electrical_priv:0000000000000000 electrical_priv
-     /tmp/ccwanQfA.s:198    .bss.electrical:0000000000000000 $d
+     /tmp/ccUQ1hpI.s:18     .text.electrical_init:0000000000000000 $t
+     /tmp/ccUQ1hpI.s:23     .text.electrical_init:0000000000000000 electrical_init
+     /tmp/ccUQ1hpI.s:57     .text.electrical_init:000000000000001c $d
+     /tmp/ccUQ1hpI.s:74     .text.electrical_periodic:0000000000000000 $t
+     /tmp/ccUQ1hpI.s:79     .text.electrical_periodic:0000000000000000 electrical_periodic
+     /tmp/ccUQ1hpI.s:176    .text.electrical_periodic:00000000000000c0 $d
+     /tmp/ccUQ1hpI.s:202    .bss.electrical:0000000000000000 electrical
+     /tmp/ccUQ1hpI.s:191    .bss.electrical_priv:0000000000000000 $d
+     /tmp/ccUQ1hpI.s:195    .bss.electrical_priv:0000000000000000 electrical_priv
+     /tmp/ccUQ1hpI.s:198    .bss.electrical:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

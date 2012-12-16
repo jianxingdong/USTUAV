@@ -1664,63 +1664,63 @@
  1440              	.LVL172:
  1441              	.LBB128:
  1442              	.LBB129:
- 1443              		.file 2 "/home/uav/paparazzi/var/MYAC/generated/settings.h"
-   1:/home/uav/paparazzi/var/MYAC/generated/settings.h **** /* This file has been generated from /home/uav/paparazzi/var/MYAC/settings_modules.xml /home/uav/pa
-   2:/home/uav/paparazzi/var/MYAC/generated/settings.h **** /* Please DO NOT EDIT */
-   3:/home/uav/paparazzi/var/MYAC/generated/settings.h **** 
-   4:/home/uav/paparazzi/var/MYAC/generated/settings.h **** #ifndef SETTINGS_H
-   5:/home/uav/paparazzi/var/MYAC/generated/settings.h **** #define SETTINGS_H
-   6:/home/uav/paparazzi/var/MYAC/generated/settings.h **** 
-   7:/home/uav/paparazzi/var/MYAC/generated/settings.h **** #define RCSettings(mode_changed) { \
-   8:/home/uav/paparazzi/var/MYAC/generated/settings.h **** }
-   9:/home/uav/paparazzi/var/MYAC/generated/settings.h **** 
-  10:/home/uav/paparazzi/var/MYAC/generated/settings.h **** #include "autopilot.h"
-  11:/home/uav/paparazzi/var/MYAC/generated/settings.h **** #include "subsystems/gps.h"
-  12:/home/uav/paparazzi/var/MYAC/generated/settings.h **** #include "subsystems/nav.h"
-  13:/home/uav/paparazzi/var/MYAC/generated/settings.h **** #include "generated/modules.h"
-  14:/home/uav/paparazzi/var/MYAC/generated/settings.h **** #include "generated/periodic_telemetry.h"
-  15:/home/uav/paparazzi/var/MYAC/generated/settings.h **** 
-  16:/home/uav/paparazzi/var/MYAC/generated/settings.h **** #define DlSetting(_idx, _value) { \
-  17:/home/uav/paparazzi/var/MYAC/generated/settings.h ****   switch (_idx) { \
-  18:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     case 0: telemetry_mode_Ap = _value; break;\
-  19:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     case 1: telemetry_mode_Fbw = _value; break;\
-  20:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     case 2: flight_altitude = _value; break;\
-  21:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     case 3: nav_course = _value; break;\
-  22:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     case 4: nav_IncreaseShift( _value ); _value = nav_shift; break;\
-  23:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     case 5: autopilot_ResetFlightTimeAndLaunch( _value ); _value = estimator_flight_time; break;\
-  24:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     case 6: nav_SetNavRadius( _value ); _value = nav_radius; break;\
-  25:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     case 7: pprz_mode = _value; break;\
-  26:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     case 8: launch = _value; break;\
-  27:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     case 9: kill_throttle = _value; break;\
-  28:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     case 10: gps_Reset( _value ); _value = gps.reset; break;\
-  29:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     case 11: gps_ubx_gps_ubx_ucenter_periodic_status = _value; break;\
-  30:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     default: break;\
-  31:/home/uav/paparazzi/var/MYAC/generated/settings.h ****   }\
-  32:/home/uav/paparazzi/var/MYAC/generated/settings.h **** }
-  33:/home/uav/paparazzi/var/MYAC/generated/settings.h **** #define PeriodicSendDlValue(_trans, _dev) { \
-  34:/home/uav/paparazzi/var/MYAC/generated/settings.h ****   static uint8_t i;\
-  35:/home/uav/paparazzi/var/MYAC/generated/settings.h ****   float var;\
-  36:/home/uav/paparazzi/var/MYAC/generated/settings.h ****   if (i >= 12) i = 0;\
-  37:/home/uav/paparazzi/var/MYAC/generated/settings.h ****   switch (i) { \
-  38:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     case 0: var = telemetry_mode_Ap; break;\
-  39:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     case 1: var = telemetry_mode_Fbw; break;\
-  40:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     case 2: var = flight_altitude; break;\
-  41:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     case 3: var = nav_course; break;\
-  42:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     case 4: var = nav_shift; break;\
-  43:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     case 5: var = estimator_flight_time; break;\
-  44:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     case 6: var = nav_radius; break;\
-  45:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     case 7: var = pprz_mode; break;\
-  46:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     case 8: var = launch; break;\
-  47:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     case 9: var = kill_throttle; break;\
-  48:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     case 10: var = gps.reset; break;\
-  49:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     case 11: var = gps_ubx_gps_ubx_ucenter_periodic_status; break;\
-  50:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     default: var = 0.; break;\
-  51:/home/uav/paparazzi/var/MYAC/generated/settings.h ****   }\
-  52:/home/uav/paparazzi/var/MYAC/generated/settings.h ****   DOWNLINK_SEND_DL_VALUE(_trans, _dev, &i, &var);\
-  53:/home/uav/paparazzi/var/MYAC/generated/settings.h ****   i++;\
-  54:/home/uav/paparazzi/var/MYAC/generated/settings.h **** }
-  55:/home/uav/paparazzi/var/MYAC/generated/settings.h **** static inline float settings_get_value(uint8_t i) {
-  56:/home/uav/paparazzi/var/MYAC/generated/settings.h ****   switch (i) { \
+ 1443              		.file 2 "/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h"
+   1:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h **** /* This file has been generated from /home/uav/USTUAV/paparazzi/var/MYAC/settings_modules.xml /home
+   2:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h **** /* Please DO NOT EDIT */
+   3:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h **** 
+   4:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h **** #ifndef SETTINGS_H
+   5:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h **** #define SETTINGS_H
+   6:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h **** 
+   7:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h **** #define RCSettings(mode_changed) { \
+   8:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h **** }
+   9:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h **** 
+  10:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h **** #include "autopilot.h"
+  11:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h **** #include "subsystems/gps.h"
+  12:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h **** #include "subsystems/nav.h"
+  13:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h **** #include "generated/modules.h"
+  14:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h **** #include "generated/periodic_telemetry.h"
+  15:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h **** 
+  16:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h **** #define DlSetting(_idx, _value) { \
+  17:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****   switch (_idx) { \
+  18:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     case 0: telemetry_mode_Ap = _value; break;\
+  19:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     case 1: telemetry_mode_Fbw = _value; break;\
+  20:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     case 2: flight_altitude = _value; break;\
+  21:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     case 3: nav_course = _value; break;\
+  22:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     case 4: nav_IncreaseShift( _value ); _value = nav_shift; break;\
+  23:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     case 5: autopilot_ResetFlightTimeAndLaunch( _value ); _value = estimator_flight_time; break;\
+  24:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     case 6: nav_SetNavRadius( _value ); _value = nav_radius; break;\
+  25:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     case 7: pprz_mode = _value; break;\
+  26:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     case 8: launch = _value; break;\
+  27:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     case 9: kill_throttle = _value; break;\
+  28:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     case 10: gps_Reset( _value ); _value = gps.reset; break;\
+  29:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     case 11: gps_ubx_gps_ubx_ucenter_periodic_status = _value; break;\
+  30:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     default: break;\
+  31:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****   }\
+  32:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h **** }
+  33:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h **** #define PeriodicSendDlValue(_trans, _dev) { \
+  34:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****   static uint8_t i;\
+  35:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****   float var;\
+  36:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****   if (i >= 12) i = 0;\
+  37:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****   switch (i) { \
+  38:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     case 0: var = telemetry_mode_Ap; break;\
+  39:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     case 1: var = telemetry_mode_Fbw; break;\
+  40:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     case 2: var = flight_altitude; break;\
+  41:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     case 3: var = nav_course; break;\
+  42:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     case 4: var = nav_shift; break;\
+  43:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     case 5: var = estimator_flight_time; break;\
+  44:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     case 6: var = nav_radius; break;\
+  45:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     case 7: var = pprz_mode; break;\
+  46:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     case 8: var = launch; break;\
+  47:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     case 9: var = kill_throttle; break;\
+  48:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     case 10: var = gps.reset; break;\
+  49:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     case 11: var = gps_ubx_gps_ubx_ucenter_periodic_status; break;\
+  50:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     default: var = 0.; break;\
+  51:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****   }\
+  52:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****   DOWNLINK_SEND_DL_VALUE(_trans, _dev, &i, &var);\
+  53:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****   i++;\
+  54:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h **** }
+  55:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h **** static inline float settings_get_value(uint8_t i) {
+  56:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****   switch (i) { \
  1444              		.loc 2 56 0
  1445 0962 0B2E     		cmp	r6, #11
  1446 0964 4AD8     		bhi	.L51
@@ -1740,68 +1740,68 @@
  1460 0975 20       		.byte	(.L48-.L49)/2
  1461              		.align	1
  1462              	.L37:
-  57:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     case 0: return telemetry_mode_Ap;
+  57:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     case 0: return telemetry_mode_Ap;
  1463              		.loc 2 57 0
  1464 0976 124B     		ldr	r3, .L79+12
  1465 0978 18E0     		b	.L69
  1466              	.L38:
-  58:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     case 1: return telemetry_mode_Fbw;
+  58:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     case 1: return telemetry_mode_Fbw;
  1467              		.loc 2 58 0
  1468 097a 124B     		ldr	r3, .L79+16
  1469 097c 16E0     		b	.L69
  1470              	.L39:
-  59:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     case 2: return flight_altitude;
+  59:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     case 2: return flight_altitude;
  1471              		.loc 2 59 0
  1472 097e 124B     		ldr	r3, .L79+20
  1473 0980 07E0     		b	.L65
  1474              	.L40:
-  60:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     case 3: return nav_course;
+  60:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     case 3: return nav_course;
  1475              		.loc 2 60 0
  1476 0982 124B     		ldr	r3, .L79+24
  1477 0984 05E0     		b	.L65
  1478              	.L41:
-  61:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     case 4: return nav_shift;
+  61:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     case 4: return nav_shift;
  1479              		.loc 2 61 0
  1480 0986 124B     		ldr	r3, .L79+28
  1481 0988 03E0     		b	.L65
  1482              	.L42:
-  62:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     case 5: return estimator_flight_time;
+  62:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     case 5: return estimator_flight_time;
  1483              		.loc 2 62 0
  1484 098a 124B     		ldr	r3, .L79+32
  1485 098c 1888     		ldrh	r0, [r3, #0]
  1486 098e 0EE0     		b	.L64
  1487              	.L43:
-  63:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     case 6: return nav_radius;
+  63:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     case 6: return nav_radius;
  1488              		.loc 2 63 0
  1489 0990 124B     		ldr	r3, .L79+40
  1490              	.L65:
  1491 0992 1868     		ldr	r0, [r3, #0]	@ float
  1492 0994 33E0     		b	.L36
  1493              	.L44:
-  64:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     case 7: return pprz_mode;
+  64:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     case 7: return pprz_mode;
  1494              		.loc 2 64 0
  1495 0996 154B     		ldr	r3, .L79+56
  1496 0998 08E0     		b	.L69
  1497              	.L45:
-  65:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     case 8: return launch;
+  65:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     case 8: return launch;
  1498              		.loc 2 65 0
  1499 099a 0F4B     		ldr	r3, .L79+36
  1500 099c 06E0     		b	.L69
  1501              	.L46:
-  66:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     case 9: return kill_throttle;
+  66:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     case 9: return kill_throttle;
  1502              		.loc 2 66 0
  1503 099e 144B     		ldr	r3, .L79+60
  1504 09a0 04E0     		b	.L69
  1505              	.LVL173:
  1506              	.L47:
-  67:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     case 10: return gps.reset;
+  67:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     case 10: return gps.reset;
  1507              		.loc 2 67 0
  1508 09a2 154B     		ldr	r3, .L79+68
  1509 09a4 B3F8F000 		ldrh	r0, [r3, #240]
  1510 09a8 01E0     		b	.L64
  1511              	.LVL174:
  1512              	.L48:
-  68:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     case 11: return gps_ubx_gps_ubx_ucenter_periodic_status;
+  68:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     case 11: return gps_ubx_gps_ubx_ucenter_periodic_status;
  1513              		.loc 2 68 0
  1514 09aa 124B     		ldr	r3, .L79+64
  1515              	.L69:
@@ -1833,7 +1833,7 @@
  1541 09f8 00000000 		.word	gps
  1542              	.LVL176:
  1543              	.L51:
-  69:/home/uav/paparazzi/var/MYAC/generated/settings.h ****     default: return 0.;
+  69:/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h ****     default: return 0.;
  1544              		.loc 2 69 0
  1545 09fc 0020     		movs	r0, #0
  1546              	.LVL177:
@@ -2061,7 +2061,7 @@
  1733              		.text
  1734              	.Letext0:
  1735              		.file 3 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
- 1736              		.file 4 "/home/uav/paparazzi/sw/include/std.h"
+ 1736              		.file 4 "/home/uav/USTUAV/paparazzi/sw/include/std.h"
  1737              		.file 5 "./subsystems/navigation/traffic_info.h"
  1738              		.file 6 "./subsystems/navigation/common_nav.h"
  1739              		.file 7 "./mcu_periph/sys_time.h"
@@ -2073,38 +2073,38 @@
  1745              		.file 13 "./subsystems/imu.h"
  1746              		.file 14 "./subsystems/imu/imu_aspirin2.h"
  1747              		.file 15 "./subsystems/datalink/datalink.h"
- 1748              		.file 16 "/home/uav/paparazzi/var/MYAC/generated/modules.h"
+ 1748              		.file 16 "/home/uav/USTUAV/paparazzi/var/MYAC/generated/modules.h"
  1749              		.file 17 "./estimator.h"
  1750              		.file 18 "./subsystems/navigation/common_flight_plan.h"
  1751              		.file 19 "./subsystems/nav.h"
  1752              		.file 20 "firmwares/fixedwing/autopilot.h"
- 1753              		.file 21 "/home/uav/paparazzi/var/MYAC/generated/periodic_telemetry.h"
+ 1753              		.file 21 "/home/uav/USTUAV/paparazzi/var/MYAC/generated/periodic_telemetry.h"
  1754              		.file 22 "./subsystems/datalink/pprz_transport.h"
  1755              		.file 23 "./subsystems/datalink/xbee.h"
  1756              		.file 24 "./subsystems/datalink/downlink.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 datalink.c
-     /tmp/ccOPBhlv.s:31     .text.dl_parse_msg:0000000000000000 $t
-     /tmp/ccOPBhlv.s:36     .text.dl_parse_msg:0000000000000000 dl_parse_msg
-     /tmp/ccOPBhlv.s:336    .text.dl_parse_msg:0000000000000220 $d
-     /tmp/ccOPBhlv.s:356    .text.dl_parse_msg:0000000000000260 $t
-     /tmp/ccOPBhlv.s:754    .text.dl_parse_msg:0000000000000550 $d
-     /tmp/ccOPBhlv.s:772    .text.dl_parse_msg:0000000000000588 $t
-     /tmp/ccOPBhlv.s:1193   .text.dl_parse_msg:00000000000007e0 $d
-     /tmp/ccOPBhlv.s:1212   .text.dl_parse_msg:000000000000081c $t
-     /tmp/ccOPBhlv.s:1303   .text.dl_parse_msg:00000000000008a2 $d
-     /tmp/ccOPBhlv.s:1315   .text.dl_parse_msg:00000000000008ae $t
-     /tmp/ccOPBhlv.s:1449   .text.dl_parse_msg:000000000000096a $d
-     /tmp/ccOPBhlv.s:1461   .text.dl_parse_msg:0000000000000976 $t
-     /tmp/ccOPBhlv.s:1524   .text.dl_parse_msg:00000000000009b4 $d
-     /tmp/ccOPBhlv.s:1545   .text.dl_parse_msg:00000000000009fc $t
-     /tmp/ccOPBhlv.s:1702   .text.dl_parse_msg:0000000000000ae8 $d
-     /tmp/ccOPBhlv.s:1724   .bss.dl_buffer:0000000000000000 dl_buffer
-     /tmp/ccOPBhlv.s:1731   .bss.datalink_time:0000000000000000 datalink_time
-     /tmp/ccOPBhlv.s:1717   .bss.dl_msg_available:0000000000000000 dl_msg_available
-     /tmp/ccOPBhlv.s:1718   .bss.dl_msg_available:0000000000000000 $d
-     /tmp/ccOPBhlv.s:1720   .bss.dl_buffer:0000000000000000 $d
-     /tmp/ccOPBhlv.s:1727   .bss.datalink_time:0000000000000000 $d
+     /tmp/ccrDcrtM.s:31     .text.dl_parse_msg:0000000000000000 $t
+     /tmp/ccrDcrtM.s:36     .text.dl_parse_msg:0000000000000000 dl_parse_msg
+     /tmp/ccrDcrtM.s:336    .text.dl_parse_msg:0000000000000220 $d
+     /tmp/ccrDcrtM.s:356    .text.dl_parse_msg:0000000000000260 $t
+     /tmp/ccrDcrtM.s:754    .text.dl_parse_msg:0000000000000550 $d
+     /tmp/ccrDcrtM.s:772    .text.dl_parse_msg:0000000000000588 $t
+     /tmp/ccrDcrtM.s:1193   .text.dl_parse_msg:00000000000007e0 $d
+     /tmp/ccrDcrtM.s:1212   .text.dl_parse_msg:000000000000081c $t
+     /tmp/ccrDcrtM.s:1303   .text.dl_parse_msg:00000000000008a2 $d
+     /tmp/ccrDcrtM.s:1315   .text.dl_parse_msg:00000000000008ae $t
+     /tmp/ccrDcrtM.s:1449   .text.dl_parse_msg:000000000000096a $d
+     /tmp/ccrDcrtM.s:1461   .text.dl_parse_msg:0000000000000976 $t
+     /tmp/ccrDcrtM.s:1524   .text.dl_parse_msg:00000000000009b4 $d
+     /tmp/ccrDcrtM.s:1545   .text.dl_parse_msg:00000000000009fc $t
+     /tmp/ccrDcrtM.s:1702   .text.dl_parse_msg:0000000000000ae8 $d
+     /tmp/ccrDcrtM.s:1724   .bss.dl_buffer:0000000000000000 dl_buffer
+     /tmp/ccrDcrtM.s:1731   .bss.datalink_time:0000000000000000 datalink_time
+     /tmp/ccrDcrtM.s:1717   .bss.dl_msg_available:0000000000000000 dl_msg_available
+     /tmp/ccrDcrtM.s:1718   .bss.dl_msg_available:0000000000000000 $d
+     /tmp/ccrDcrtM.s:1720   .bss.dl_buffer:0000000000000000 $d
+     /tmp/ccrDcrtM.s:1727   .bss.datalink_time:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

@@ -1,4 +1,4 @@
-/* This file has been generated from /home/uav/paparazzi/var/MYAC/settings_modules.xml /home/uav/paparazzi/conf/settings/fixedwing_basic.xml /home/uav/paparazzi/var/MYAC/settings_telemetry.xml */
+/* This file has been generated from /home/uav/USTUAV/paparazzi/var/MYAC/settings_modules.xml /home/uav/USTUAV/paparazzi/conf/settings/fixedwing_basic.xml /home/uav/USTUAV/paparazzi/var/MYAC/settings_telemetry.xml */
 /* Please DO NOT EDIT */
 
 #ifndef SETTINGS_H

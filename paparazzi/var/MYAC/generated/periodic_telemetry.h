@@ -1,4 +1,4 @@
-/* This file has been generated from /home/uav/paparazzi/conf/messages.xml and /home/uav/paparazzi/conf/telemetry/default_fixedwing.xml */
+/* This file has been generated from /home/uav/USTUAV/paparazzi/conf/messages.xml and /home/uav/USTUAV/paparazzi/conf/telemetry/default_fixedwing.xml */
 /* Please DO NOT EDIT */
 
 #ifndef _VAR_PERIODIC_H_

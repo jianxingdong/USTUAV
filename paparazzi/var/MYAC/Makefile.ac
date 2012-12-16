@@ -1,4 +1,4 @@
-# This file has been generated from /home/uav/paparazzi/conf/airframes/examples/LisaM2_Nov26_2012.xml by /home/uav/paparazzi/sw/tools/gen_aircraft.ml
+# This file has been generated from /home/uav/USTUAV/paparazzi/conf/airframes/examples/LisaM2_Nov26_2012.xml by /home/uav/USTUAV/paparazzi/sw/tools/gen_aircraft.ml
 # Please DO NOT EDIT
 
 ####################################################
@@ -37,6 +37,7 @@ else
 	include $(CFG_SHARED)/control.makefile
 endif
 # -subsystem: 'imu'
+$(TARGET).CFLAGS += -DLISA_M_AXIS_SWITCH
 ifneq ($(strip $(wildcard $(CFG_FIXEDWING)/imu_aspirin_v2.1.makefile)),)
 	include $(CFG_FIXEDWING)/imu_aspirin_v2.1.makefile
 else
@@ -91,6 +92,7 @@ else
 	include $(CFG_SHARED)/control.makefile
 endif
 # -subsystem: 'imu'
+$(TARGET).CFLAGS += -DLISA_M_AXIS_SWITCH
 ifneq ($(strip $(wildcard $(CFG_FIXEDWING)/imu_aspirin_v2.1.makefile)),)
 	include $(CFG_FIXEDWING)/imu_aspirin_v2.1.makefile
 else
@@ -123,7 +125,11 @@ endif
 
 # include modules directory for all targets
 $(TARGET).CFLAGS += -I modules -I arch/$(ARCH)/modules
+CORE_DIR = modules/core
 GPS_DIR = modules/gps
 
 # makefile for module gps_ubx in modules/gps
 ap.CFLAGS += -DGPS_UBX_UCENTER=\"modules/gps/gps_ubx_ucenter.c\"
+
+# makefile for module sys_mon in modules/core
+ap.srcs += $(CORE_DIR)/sys_mon.c

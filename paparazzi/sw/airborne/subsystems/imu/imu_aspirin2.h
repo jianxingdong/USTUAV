@@ -136,9 +136,9 @@ static inline uint8_t imu_from_buff(void)
   VECT3_ASSIGN(imu.accel_unscaled, y, -x, z);
   VECT3_ASSIGN(imu.mag_unscaled, -Mx, -Mz, My);
 #else
-  RATES_ASSIGN(imu.gyro_unscaled, p, q, r);
-  VECT3_ASSIGN(imu.accel_unscaled, x, y, z);
-  VECT3_ASSIGN(imu.mag_unscaled, Mz, -Mx, My);
+  RATES_ASSIGN(imu.gyro_unscaled, q, -p, -r);
+  VECT3_ASSIGN(imu.accel_unscaled, -y, -x, z);
+  VECT3_ASSIGN(imu.mag_unscaled, -Mx, -Mz, -My);
 #endif
 
   return 1;

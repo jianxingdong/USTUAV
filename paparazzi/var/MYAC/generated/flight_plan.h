@@ -1,4 +1,4 @@
-/* This file has been generated from /home/uav/paparazzi/conf/flight_plans/basic.xml */
+/* This file has been generated from /home/uav/USTUAV/paparazzi/conf/flight_plans/basic.xml */
 /* Please DO NOT EDIT */
 
 #ifndef FLIGHT_PLAN_H
@@ -9,13 +9,13 @@
 #include "subsystems/navigation/nav_line.h"
 #include "subsystems/datalink/datalink.h"
 #define FLIGHT_PLAN_NAME "Basic"
-#define NAV_UTM_EAST0 360285
-#define NAV_UTM_NORTH0 4813595
-#define NAV_UTM_ZONE0 31
-#define NAV_LAT0 434622300 /* 1e7deg */
-#define NAV_LON0 12728900 /* 1e7deg */
+#define NAV_UTM_EAST0 484701
+#define NAV_UTM_NORTH0 4976360
+#define NAV_UTM_ZONE0 15
+#define NAV_LAT0 449405060 /* 1e7deg */
+#define NAV_LON0 -931939150 /* 1e7deg */
 #define NAV_ALT0 0 /* mm above msl */
-#define NAV_MSL0 51850 /* mm, EGM96 geoid-height (msl) over ellipsoid */
+#define NAV_MSL0 625980 /* mm, EGM96 geoid-height (msl) over ellipsoid */
 #define QFU 0.0
 #define WP_dummy 0
 #define WP_HOME 1
@@ -44,18 +44,18 @@
  {-114.5, 162.3, 75},\
 };
 #define WAYPOINTS_LLA { \
- {434626158, 12733981, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=51.85m) */ \
- {434622299, 12728900, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=51.85m) */ \
- {434631401, 12734759, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=51.85m) */ \
- {434639410, 12729661, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=51.85m) */ \
- {434635066, 12744890, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=51.85m) */ \
- {434621511, 12745857, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=51.85m) */ \
- {434628341, 12713992, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=51.85m) */ \
- {434641667, 12762269, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=51.85m) */ \
- {434626690, 12750704, 3000}, /* 1e7deg, 1e7deg, cm (hmsl=51.85m) */ \
- {434627483, 12732312, 0}, /* 1e7deg, 1e7deg, cm (hmsl=51.85m) */ \
- {434621372, 12749792, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=51.85m) */ \
- {434636693, 12714335, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=51.85m) */ \
+ {449408849, -931933839, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=625.98m) */ \
+ {449405059, -931939149, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=625.98m) */ \
+ {449414081, -931932906, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=625.98m) */ \
+ {449422156, -931937927, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=625.98m) */ \
+ {449417610, -931922423, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=625.98m) */ \
+ {449404045, -931921782, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=625.98m) */ \
+ {449411299, -931954279, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=625.98m) */ \
+ {449423977, -931904432, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=625.98m) */ \
+ {449409157, -931916678, 3000}, /* 1e7deg, 1e7deg, cm (hmsl=625.98m) */ \
+ {449410197, -931935516, 0}, /* 1e7deg, 1e7deg, cm (hmsl=625.98m) */ \
+ {449403853, -931917750, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=625.98m) */ \
+ {449419645, -931953712, 7500}, /* 1e7deg, 1e7deg, cm (hmsl=625.98m) */ \
 };
 #define NB_WAYPOINT 12
 #define NB_BLOCK 17
