@@ -370,20 +370,20 @@
  281              		.file 4 "./mcu_periph/sys_time.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 sys_time.c
-     /tmp/ccCSCMEI.s:22     .text.sys_time_register_timer:0000000000000000 $t
-     /tmp/ccCSCMEI.s:27     .text.sys_time_register_timer:0000000000000000 sys_time_register_timer
-     /tmp/ccCSCMEI.s:105    .text.sys_time_register_timer:0000000000000050 $d
-     /tmp/ccCSCMEI.s:113    .text.sys_time_cancel_timer:0000000000000000 $t
-     /tmp/ccCSCMEI.s:118    .text.sys_time_cancel_timer:0000000000000000 sys_time_cancel_timer
-     /tmp/ccCSCMEI.s:137    .text.sys_time_cancel_timer:0000000000000010 $d
-     /tmp/ccCSCMEI.s:142    .text.sys_time_update_timer:0000000000000000 $t
-     /tmp/ccCSCMEI.s:147    .text.sys_time_update_timer:0000000000000000 sys_time_update_timer
-     /tmp/ccCSCMEI.s:189    .text.sys_time_update_timer:0000000000000038 $d
-     /tmp/ccCSCMEI.s:197    .text.sys_time_init:0000000000000000 $t
-     /tmp/ccCSCMEI.s:202    .text.sys_time_init:0000000000000000 sys_time_init
-     /tmp/ccCSCMEI.s:265    .text.sys_time_init:0000000000000030 $d
-     /tmp/ccCSCMEI.s:275    .bss.sys_time:0000000000000000 sys_time
-     /tmp/ccCSCMEI.s:271    .bss.sys_time:0000000000000000 $d
+     /tmp/ccc3i5MO.s:22     .text.sys_time_register_timer:0000000000000000 $t
+     /tmp/ccc3i5MO.s:27     .text.sys_time_register_timer:0000000000000000 sys_time_register_timer
+     /tmp/ccc3i5MO.s:105    .text.sys_time_register_timer:0000000000000050 $d
+     /tmp/ccc3i5MO.s:113    .text.sys_time_cancel_timer:0000000000000000 $t
+     /tmp/ccc3i5MO.s:118    .text.sys_time_cancel_timer:0000000000000000 sys_time_cancel_timer
+     /tmp/ccc3i5MO.s:137    .text.sys_time_cancel_timer:0000000000000010 $d
+     /tmp/ccc3i5MO.s:142    .text.sys_time_update_timer:0000000000000000 $t
+     /tmp/ccc3i5MO.s:147    .text.sys_time_update_timer:0000000000000000 sys_time_update_timer
+     /tmp/ccc3i5MO.s:189    .text.sys_time_update_timer:0000000000000038 $d
+     /tmp/ccc3i5MO.s:197    .text.sys_time_init:0000000000000000 $t
+     /tmp/ccc3i5MO.s:202    .text.sys_time_init:0000000000000000 sys_time_init
+     /tmp/ccc3i5MO.s:265    .text.sys_time_init:0000000000000030 $d
+     /tmp/ccc3i5MO.s:275    .bss.sys_time:0000000000000000 sys_time
+     /tmp/ccc3i5MO.s:271    .bss.sys_time:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

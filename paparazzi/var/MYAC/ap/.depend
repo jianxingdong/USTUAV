@@ -89,7 +89,8 @@
  firmwares/fixedwing/main_fbw.h subsystems/datalink/downlink.h \
  /home/uav/USTUAV/paparazzi/var/MYAC/generated/modules.h \
  modules/gps/gps_ubx_ucenter.h modules/core/sys_mon.h \
- subsystems/datalink/pprz_transport.h subsystems/datalink/datalink.h \
+ modules/adcs/adc_generic.h subsystems/datalink/pprz_transport.h \
+ subsystems/datalink/datalink.h \
  /home/uav/USTUAV/paparazzi/var/include/dl_protocol.h \
  subsystems/datalink/transport.h subsystems/datalink/xbee.h \
  subsystems/datalink/xbee24.h mcu_periph/i2c.h \
@@ -136,7 +137,8 @@
  /home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h \
  /home/uav/USTUAV/paparazzi/var/MYAC/generated/modules.h \
  modules/gps/gps_ubx_ucenter.h modules/core/sys_mon.h \
- subsystems/navigation/nav_line.h subsystems/datalink/datalink.h \
+ modules/adcs/adc_generic.h subsystems/navigation/nav_line.h \
+ subsystems/datalink/datalink.h \
  /home/uav/USTUAV/paparazzi/var/include/dl_protocol.h \
  subsystems/navigation/traffic_info.h subsystems/settings.h \
  /home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h \
@@ -157,6 +159,7 @@
  subsystems/datalink/downlink.h \
  /home/uav/USTUAV/paparazzi/var/MYAC/generated/modules.h \
  modules/gps/gps_ubx_ucenter.h modules/core/sys_mon.h \
+ modules/adcs/adc_generic.h \
  /home/uav/USTUAV/paparazzi/var/include/messages.h \
  subsystems/datalink/pprz_transport.h subsystems/datalink/datalink.h \
  /home/uav/USTUAV/paparazzi/var/include/dl_protocol.h \
@@ -217,6 +220,7 @@
  subsystems/navigation/common_nav.h \
  /home/uav/USTUAV/paparazzi/var/MYAC/generated/modules.h \
  modules/gps/gps_ubx_ucenter.h modules/core/sys_mon.h \
+ modules/adcs/adc_generic.h \
  /home/uav/USTUAV/paparazzi/var/MYAC/generated/periodic_telemetry.h
 /home/uav/USTUAV/paparazzi/var/MYAC/ap/settings_arch.o: arch/stm32/subsystems/settings_arch.c \
  subsystems/settings.h /home/uav/USTUAV/paparazzi/sw/include/std.h \
@@ -236,6 +240,7 @@
  subsystems/navigation/common_nav.h \
  /home/uav/USTUAV/paparazzi/var/MYAC/generated/modules.h \
  modules/gps/gps_ubx_ucenter.h modules/core/sys_mon.h \
+ modules/adcs/adc_generic.h \
  /home/uav/USTUAV/paparazzi/var/MYAC/generated/periodic_telemetry.h
 /home/uav/USTUAV/paparazzi/var/MYAC/ap/adc_arch.o: arch/stm32/mcu_periph/adc_arch.c mcu_periph/adc.h \
  /home/uav/USTUAV/paparazzi/sw/airborne/arch/stm32/mcu_periph/adc_arch.h \
@@ -294,6 +299,7 @@
  /home/uav/USTUAV/paparazzi/var/include/dl_protocol.h \
  /home/uav/USTUAV/paparazzi/var/MYAC/generated/modules.h \
  modules/gps/gps_ubx_ucenter.h modules/core/sys_mon.h \
+ modules/adcs/adc_generic.h \
  /home/uav/USTUAV/paparazzi/var/include/messages.h \
  /home/uav/USTUAV/paparazzi/var/MYAC/generated/airframe.h \
  subsystems/navigation/traffic_info.h estimator.h subsystems/nav.h \
@@ -397,7 +403,8 @@
  subsystems/datalink/downlink.h \
  /home/uav/USTUAV/paparazzi/var/MYAC/generated/modules.h \
  modules/gps/gps_ubx_ucenter.h modules/core/sys_mon.h \
- subsystems/datalink/pprz_transport.h subsystems/datalink/datalink.h \
+ modules/adcs/adc_generic.h subsystems/datalink/pprz_transport.h \
+ subsystems/datalink/datalink.h \
  /home/uav/USTUAV/paparazzi/var/include/dl_protocol.h \
  subsystems/datalink/transport.h subsystems/datalink/xbee.h \
  subsystems/datalink/xbee24.h estimator.h
@@ -416,6 +423,7 @@
  subsystems/datalink/downlink.h \
  /home/uav/USTUAV/paparazzi/var/MYAC/generated/modules.h \
  modules/gps/gps_ubx_ucenter.h modules/core/sys_mon.h \
+ modules/adcs/adc_generic.h \
  /home/uav/USTUAV/paparazzi/var/include/messages.h \
  /home/uav/USTUAV/paparazzi/var/MYAC/generated/airframe.h \
  subsystems/datalink/pprz_transport.h subsystems/datalink/datalink.h \
@@ -456,7 +464,8 @@
  /home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h \
  /home/uav/USTUAV/paparazzi/var/MYAC/generated/modules.h \
  modules/gps/gps_ubx_ucenter.h modules/core/sys_mon.h \
- subsystems/navigation/nav_line.h subsystems/datalink/datalink.h \
+ modules/adcs/adc_generic.h subsystems/navigation/nav_line.h \
+ subsystems/datalink/datalink.h \
  /home/uav/USTUAV/paparazzi/var/include/dl_protocol.h \
  subsystems/navigation/common_nav.c math/pprz_geodetic_float.h \
  math/pprz_algebra_float.h math/pprz_algebra.h
@@ -466,7 +475,8 @@
  /home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h \
  /home/uav/USTUAV/paparazzi/var/MYAC/generated/modules.h \
  modules/gps/gps_ubx_ucenter.h modules/core/sys_mon.h \
- subsystems/navigation/nav_line.h subsystems/datalink/datalink.h \
+ modules/adcs/adc_generic.h subsystems/navigation/nav_line.h \
+ subsystems/datalink/datalink.h \
  /home/uav/USTUAV/paparazzi/var/include/dl_protocol.h
 /home/uav/USTUAV/paparazzi/var/MYAC/ap/traffic_info.o: subsystems/navigation/traffic_info.c \
  subsystems/navigation/traffic_info.h \
@@ -480,7 +490,8 @@
  /home/uav/USTUAV/paparazzi/var/MYAC/generated/flight_plan.h \
  /home/uav/USTUAV/paparazzi/var/MYAC/generated/modules.h \
  modules/gps/gps_ubx_ucenter.h modules/core/sys_mon.h \
- subsystems/navigation/nav_line.h subsystems/datalink/datalink.h \
+ modules/adcs/adc_generic.h subsystems/navigation/nav_line.h \
+ subsystems/datalink/datalink.h \
  /home/uav/USTUAV/paparazzi/var/include/dl_protocol.h
 /home/uav/USTUAV/paparazzi/var/MYAC/ap/nav_line.o: subsystems/navigation/nav_line.c \
  /home/uav/USTUAV/paparazzi/var/MYAC/generated/airframe.h \
@@ -499,9 +510,25 @@
  /home/uav/USTUAV/paparazzi/var/include/messages.h \
  subsystems/datalink/downlink.h \
  /home/uav/USTUAV/paparazzi/var/MYAC/generated/modules.h \
- modules/gps/gps_ubx_ucenter.h \
+ modules/gps/gps_ubx_ucenter.h modules/adcs/adc_generic.h \
  /home/uav/USTUAV/paparazzi/var/MYAC/generated/airframe.h \
  subsystems/datalink/pprz_transport.h subsystems/datalink/datalink.h \
  /home/uav/USTUAV/paparazzi/var/include/dl_protocol.h \
  subsystems/datalink/transport.h subsystems/datalink/xbee.h \
  subsystems/datalink/xbee24.h
+/home/uav/USTUAV/paparazzi/var/MYAC/ap/adc_generic.o: modules/adcs/adc_generic.c modules/adcs/adc_generic.h \
+ mcu_periph/adc.h \
+ /home/uav/USTUAV/paparazzi/sw/airborne/arch/stm32/mcu_periph/adc_arch.h \
+ mcu_periph/uart.h \
+ /home/uav/USTUAV/paparazzi/sw/airborne/arch/stm32/mcu_periph/uart_arch.h \
+ /home/uav/USTUAV/paparazzi/sw/include/std.h \
+ /home/uav/USTUAV/paparazzi/var/include/messages.h \
+ subsystems/datalink/downlink.h \
+ /home/uav/USTUAV/paparazzi/var/MYAC/generated/modules.h \
+ modules/gps/gps_ubx_ucenter.h modules/core/sys_mon.h \
+ modules/adcs/adc_generic.h \
+ /home/uav/USTUAV/paparazzi/var/MYAC/generated/airframe.h \
+ subsystems/datalink/pprz_transport.h subsystems/datalink/datalink.h \
+ /home/uav/USTUAV/paparazzi/var/include/dl_protocol.h \
+ subsystems/datalink/transport.h subsystems/datalink/xbee.h \
+ subsystems/datalink/xbee24.h boards/lisa_m_2.0.h

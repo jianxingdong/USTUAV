@@ -39,13 +39,13 @@
   47              		.file 3 "mcu_periph/spi.c"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 spi.c
-     /tmp/ccb3z98n.s:35     .bss.spi_message_received:0000000000000000 spi_message_received
-     /tmp/ccb3z98n.s:24     .bss.spi_buffer_length:0000000000000000 spi_buffer_length
-     /tmp/ccb3z98n.s:41     .bss.spi_buffer_output:0000000000000000 spi_buffer_output
-     /tmp/ccb3z98n.s:30     .bss.spi_buffer_input:0000000000000000 spi_buffer_input
-     /tmp/ccb3z98n.s:25     .bss.spi_buffer_length:0000000000000000 $d
-     /tmp/ccb3z98n.s:27     .bss.spi_buffer_input:0000000000000000 $d
-     /tmp/ccb3z98n.s:36     .bss.spi_message_received:0000000000000000 $d
-     /tmp/ccb3z98n.s:38     .bss.spi_buffer_output:0000000000000000 $d
+     /tmp/ccR3n9fn.s:35     .bss.spi_message_received:0000000000000000 spi_message_received
+     /tmp/ccR3n9fn.s:24     .bss.spi_buffer_length:0000000000000000 spi_buffer_length
+     /tmp/ccR3n9fn.s:41     .bss.spi_buffer_output:0000000000000000 spi_buffer_output
+     /tmp/ccR3n9fn.s:30     .bss.spi_buffer_input:0000000000000000 spi_buffer_input
+     /tmp/ccR3n9fn.s:25     .bss.spi_buffer_length:0000000000000000 $d
+     /tmp/ccR3n9fn.s:27     .bss.spi_buffer_input:0000000000000000 $d
+     /tmp/ccR3n9fn.s:36     .bss.spi_message_received:0000000000000000 $d
+     /tmp/ccR3n9fn.s:38     .bss.spi_buffer_output:0000000000000000 $d
 
 NO UNDEFINED SYMBOLS

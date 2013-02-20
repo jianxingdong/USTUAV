@@ -6458,7 +6458,7 @@
  6460              		.file 2 "math/pprz_trig_int.c"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 pprz_trig_int.c
-     /tmp/ccmhYXMp.s:22     .data.pprz_trig_int:0000000000000000 pprz_trig_int
-     /tmp/ccmhYXMp.s:19     .data.pprz_trig_int:0000000000000000 $d
+     /tmp/ccHCFOgm.s:22     .data.pprz_trig_int:0000000000000000 pprz_trig_int
+     /tmp/ccHCFOgm.s:19     .data.pprz_trig_int:0000000000000000 $d
 
 NO UNDEFINED SYMBOLS

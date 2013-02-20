@@ -14,6 +14,10 @@ AHRS_CORRECT_FREQUENCY = 100
 $(TARGET).CFLAGS += -DALT_KALMAN
 $(TARGET).CFLAGS += -DUSE_MAGNETOMETER=FALSE
 $(TARGET).CFLAGS += -DAHRS_TRIGGERED_ATTITUDE_LOOP
+$(TARGET).CFLAGS += -DADC_CHANNEL_GENERIC1=ADC_3
+$(TARGET).CFLAGS += -DADC_CHANNEL_GENERIC2=ADC_2
+$(TARGET).CFLAGS += -DUSE_ADC_3
+$(TARGET).CFLAGS += -DUSE_ADC_2
 include $(PAPARAZZI_SRC)/conf/boards/lisa_m_2.0.makefile
 include $(PAPARAZZI_SRC)/conf/firmwares/fixedwing.makefile
 # -subsystem: 'radio_control'
@@ -125,6 +129,7 @@ endif
 
 # include modules directory for all targets
 $(TARGET).CFLAGS += -I modules -I arch/$(ARCH)/modules
+ADCS_DIR = modules/adcs
 CORE_DIR = modules/core
 GPS_DIR = modules/gps
 
@@ -133,3 +138,14 @@ ap.CFLAGS += -DGPS_UBX_UCENTER=\"modules/gps/gps_ubx_ucenter.c\"
 
 # makefile for module sys_mon in modules/core
 ap.srcs += $(CORE_DIR)/sys_mon.c
+
+# makefile for module adc_generic in modules/adcs
+ADC_CHANNEL_GENERIC1 = ADC_3
+ADC_CHANNEL_GENERIC2 = ADC_2
+ap.srcs += $(ADCS_DIR)/adc_generic.c
+ifneq ($(ADC_CHANNEL_GENERIC1),)
+ap.CFLAGS += -DADC_CHANNEL_GENERIC1=$(ADC_CHANNEL_GENERIC1) -DUSE_$(ADC_CHANNEL_GENERIC1)
+endif
+ifneq ($(ADC_CHANNEL_GENERIC2),)
+ap.CFLAGS += -DADC_CHANNEL_GENERIC2=$(ADC_CHANNEL_GENERIC2) -DUSE_$(ADC_CHANNEL_GENERIC2)
+endif

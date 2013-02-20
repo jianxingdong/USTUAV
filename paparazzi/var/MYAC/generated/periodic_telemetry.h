@@ -295,45 +295,46 @@ extern uint8_t telemetry_mode_Fbw;
 #define TELEMETRY_MODE_Fbw_default 0
 #define PERIOD_COMMANDS_Fbw_0 (5)
 #define PERIOD_FBW_STATUS_Fbw_0 (2)
-#define PERIOD_ACTUATORS_Fbw_0 (5)
+#define PERIOD_ACTUATORS_Fbw_0 (0.0625)
 #define TELEMETRY_MODE_Fbw_debug 1
 #define PERIOD_PPM_Fbw_1 (0.5)
 #define PERIOD_RC_Fbw_1 (0.5)
 #define PERIOD_COMMANDS_Fbw_1 (0.5)
 #define PERIOD_FBW_STATUS_Fbw_1 (1)
-#define PERIOD_ACTUATORS_Fbw_1 (5)
+#define PERIOD_ACTUATORS_Fbw_1 (0.0625)
 #define PeriodicSendFbw(_trans, _dev) {  /* 60Hz */ \
   if (telemetry_mode_Fbw == TELEMETRY_MODE_Fbw_default) {\
+    static uint8_t i3 = 0; i3++; if (i3>=3) i3=0;\
     static uint8_t i120 = 0; i120++; if (i120>=120) i120=0;\
     static uint16_t i300 = 0; i300++; if (i300>=300) i300=0;\
-    if (i120 == 0) {\
+    if (i3 == 0) {\
+      PERIODIC_SEND_ACTUATORS(_trans, _dev);\
+    } \
+    if (i120 == 6) {\
       PERIODIC_SEND_FBW_STATUS(_trans, _dev);\
     } \
-    if (i300 == 6) {\
+    if (i300 == 12) {\
       PERIODIC_SEND_COMMANDS(_trans, _dev);\
-    } \
-    else if (i300 == 12) {\
-      PERIODIC_SEND_ACTUATORS(_trans, _dev);\
     } \
   }\
   if (telemetry_mode_Fbw == TELEMETRY_MODE_Fbw_debug) {\
+    static uint8_t i3 = 0; i3++; if (i3>=3) i3=0;\
     static uint8_t i30 = 0; i30++; if (i30>=30) i30=0;\
     static uint8_t i60 = 0; i60++; if (i60>=60) i60=0;\
-    static uint16_t i300 = 0; i300++; if (i300>=300) i300=0;\
-    if (i30 == 0) {\
+    if (i3 == 0) {\
+      PERIODIC_SEND_ACTUATORS(_trans, _dev);\
+    } \
+    if (i30 == 6) {\
       PERIODIC_SEND_PPM(_trans, _dev);\
     } \
-    else if (i30 == 6) {\
+    else if (i30 == 12) {\
       PERIODIC_SEND_RC(_trans, _dev);\
     } \
-    else if (i30 == 12) {\
+    else if (i30 == 18) {\
       PERIODIC_SEND_COMMANDS(_trans, _dev);\
     } \
-    if (i60 == 18) {\
+    if (i60 == 24) {\
       PERIODIC_SEND_FBW_STATUS(_trans, _dev);\
-    } \
-    if (i300 == 24) {\
-      PERIODIC_SEND_ACTUATORS(_trans, _dev);\
     } \
   }\
 }

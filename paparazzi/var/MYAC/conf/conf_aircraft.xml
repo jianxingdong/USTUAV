@@ -104,6 +104,10 @@
             <configure name="AHRS_PROPAGATE_FREQUENCY" value="100"/>
             <configure name="AHRS_CORRECT_FREQUENCY" value="100"/>
             <define name="AHRS_TRIGGERED_ATTITUDE_LOOP"/>
+            <define name="ADC_CHANNEL_GENERIC1" value="ADC_3"/>
+            <define name="ADC_CHANNEL_GENERIC2" value="ADC_2"/>
+            <define name="USE_ADC_3"/>
+            <define name="USE_ADC_2"/>
           </target>
           <target name="sim" board="pc"/>
           <define name="ALT_KALMAN"/>
@@ -219,6 +223,10 @@
         <modules>
           <load name="gps_ubx_ucenter.xml"/>
           <load name="sys_mon.xml"/>
+          <load name="adc_generic.xml">
+            <configure name="ADC_CHANNEL_GENERIC1" value="ADC_3"/>
+            <configure name="ADC_CHANNEL_GENERIC2" value="ADC_2"/>
+          </load>
         </modules>
       </airframe>
       <telemetry>
@@ -288,14 +296,14 @@
           <mode name="default">
             <message name="COMMANDS" period="5"/>
             <message name="FBW_STATUS" period="2"/>
-            <message name="ACTUATORS" period="5"/>
+            <message name="ACTUATORS" period="0.0625"/>
           </mode>
           <mode name="debug">
             <message name="PPM" period="0.5"/>
             <message name="RC" period="0.5"/>
             <message name="COMMANDS" period="0.5"/>
             <message name="FBW_STATUS" period="1"/>
-            <message name="ACTUATORS" period="5"/>
+            <message name="ACTUATORS" period="0.0625"/>
           </mode>
         </process>
       </telemetry>

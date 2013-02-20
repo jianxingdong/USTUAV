@@ -56,10 +56,10 @@
   46              		.file 2 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 servos_direct_hw.c
-     /tmp/ccdEfGjl.s:18     .text.actuators_init:0000000000000000 $t
-     /tmp/ccdEfGjl.s:23     .text.actuators_init:0000000000000000 actuators_init
-     /tmp/ccdEfGjl.s:42     .bss.actuators_pwm_values:0000000000000000 actuators_pwm_values
-     /tmp/ccdEfGjl.s:39     .bss.actuators_pwm_values:0000000000000000 $d
+     /tmp/cclurzso.s:18     .text.actuators_init:0000000000000000 $t
+     /tmp/cclurzso.s:23     .text.actuators_init:0000000000000000 actuators_init
+     /tmp/cclurzso.s:42     .bss.actuators_pwm_values:0000000000000000 actuators_pwm_values
+     /tmp/cclurzso.s:39     .bss.actuators_pwm_values:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

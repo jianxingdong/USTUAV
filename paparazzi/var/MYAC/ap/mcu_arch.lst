@@ -161,8 +161,8 @@
   49              		.file 2 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 mcu_arch.c
-     /tmp/ccvY2I4z.s:18     .text.mcu_arch_init:0000000000000000 $t
-     /tmp/ccvY2I4z.s:23     .text.mcu_arch_init:0000000000000000 mcu_arch_init
+     /tmp/ccGvnzeK.s:18     .text.mcu_arch_init:0000000000000000 $t
+     /tmp/ccGvnzeK.s:23     .text.mcu_arch_init:0000000000000000 mcu_arch_init
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

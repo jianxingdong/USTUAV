@@ -17,6 +17,7 @@
 #include "std.h"
 #include "gps/gps_ubx_ucenter.h"
 #include "core/sys_mon.h"
+#include "adcs/adc_generic.h"
 
 #define GPS_UBX_UCENTER_PERIODIC_PERIOD 0.250000
 #define GPS_UBX_UCENTER_PERIODIC_FREQ 4.000000
@@ -24,6 +25,8 @@
 #define PERIODIC_REPORT_SYSMON_FREQ 1.000000
 #define PERIODIC_SYSMON_PERIOD 0.016667
 #define PERIODIC_SYSMON_FREQ 60.000000
+#define ADC_GENERIC_PERIODIC_PERIOD 0.250000
+#define ADC_GENERIC_PERIODIC_FREQ 4.000000
 
 EXTERN_MODULES uint8_t gps_ubx_gps_ubx_ucenter_periodic_status;
 
@@ -33,6 +36,7 @@ static inline void modules_init(void) {
   gps_ubx_ucenter_init();
   gps_ubx_gps_ubx_ucenter_periodic_status = MODULES_START;
   init_sysmon();
+  adc_generic_init();
 }
 
 static inline void modules_periodic_task(void) {
@@ -44,11 +48,15 @@ static inline void modules_periodic_task(void) {
   if (gps_ubx_gps_ubx_ucenter_periodic_status == MODULES_STOP) { ; gps_ubx_gps_ubx_ucenter_periodic_status = MODULES_IDLE; }
 
 
+
   periodic_sysmon();
   if (i15 == 0 && gps_ubx_gps_ubx_ucenter_periodic_status == MODULES_RUN) {
     gps_ubx_ucenter_periodic();
   }
-  if (i60 == 7) {
+  else if (i15 == 5) {
+    adc_generic_periodic();
+  }
+  if (i60 == 10) {
     periodic_report_sysmon();
   }
 }

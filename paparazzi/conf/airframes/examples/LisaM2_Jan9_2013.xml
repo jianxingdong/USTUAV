@@ -23,18 +23,24 @@
       <define name="USE_ADC_2"/>
     </target>
 
-    <target name="sim" 			board="pc"/>
+    <target name="sim" 			board="pc">
+      <define name="AHRS_TRIGGERED_ATTITUDE_LOOP"/>
+      <define name="ADC_CHANNEL_GENERIC1" value="ADC_3"/>
+      <define name="ADC_CHANNEL_GENERIC2" value="ADC_2"/>
+      <define name="USE_ADC_3"/>
+      <define name="USE_ADC_2"/>
+    </target>
+
+    <target name="jsbsim"		board="pc" />
 
     <define name="ALT_KALMAN"/>
     <define name="USE_MAGNETOMETER" value="FALSE"/>
 
-    <!-- <subsystem name="radio_control"    type="ppm"/> -->
     <subsystem name="radio_control" type="spektrum">
       <!-- Make an alias for channels 5 and 6 to have a MODE switch and a KILL switch -->
       <define name="RADIO_MODE" value="RADIO_AUX1"/>
       <define name="RADIO_KILL_SWITCH" value="RADIO_AUX2"/>
     </subsystem>
-    <!-- Need to figure out how to get simulation building wtith spektrum instead of PPM -->
     <subsystem name="telemetry" type="transparent"/>
     <subsystem name="control"/>
     <subsystem name="imu" type="aspirin_v2.1">
@@ -45,6 +51,7 @@
     <subsystem name="navigation"/>
   </firmware>
 
+  
   <!-- SERVOS
     *  min/neutral/max values for pwm set in microseconds.
     *  Pulse widths are generally sent, 1 pulse every 50Hz.
@@ -182,6 +189,13 @@
     <define name="DEFAULT_PITCH" value="0" unit="deg"/>
     <define name="HOME_RADIUS" value="90" unit="m"/>
   </section>
+  
+  <!--JSBSIM -->
+  <section name="SIMU">
+   <define name="JSBSIM_MODEL" value="&quot;Malolo1&quot;"/>
+   <define name="JSBSIM_IR_ROLL_NEUTRAL" value="RadOfDeg(0.)"/>
+   <define name="JSBSIM_IR_PITCH_NEUTRAL" value="RadOfDeg(0.)"/>
+ </section>
 
   <modules>
     <load name="gps_ubx_ucenter.xml"/>
@@ -191,5 +205,11 @@
       <configure name="ADC_CHANNEL_GENERIC2" value="ADC_2"/>
     </load>
   </modules>
+  
+  <!--Including the flags pointing to the JSBSim include files and libraries-->
+  <makefile location="after">
+    jsbsim.CFLAGS += -I/usr/local/include/JSBSim
+    jsbsim.LDFLAGS += -L/usr/local/lib
+  </makefile>
 
 </airframe>

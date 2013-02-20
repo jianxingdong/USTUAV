@@ -155,18 +155,18 @@
  111              		.file 3 "./subsystems/navigation/traffic_info.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 traffic_info.c
-     /tmp/ccsW4IUO.s:18     .text.traffic_info_init:0000000000000000 $t
-     /tmp/ccsW4IUO.s:23     .text.traffic_info_init:0000000000000000 traffic_info_init
-     /tmp/ccsW4IUO.s:50     .text.traffic_info_init:0000000000000018 $d
-     /tmp/ccsW4IUO.s:57     .text.get_ac_info:0000000000000000 $t
-     /tmp/ccsW4IUO.s:62     .text.get_ac_info:0000000000000000 get_ac_info
-     /tmp/ccsW4IUO.s:81     .text.get_ac_info:000000000000000c $d
-     /tmp/ccsW4IUO.s:94     .bss.the_acs:0000000000000000 the_acs
-     /tmp/ccsW4IUO.s:106    .bss.the_acs_id:0000000000000000 the_acs_id
-     /tmp/ccsW4IUO.s:100    .bss.acs_idx:0000000000000000 acs_idx
-     /tmp/ccsW4IUO.s:90     .bss.the_acs:0000000000000000 $d
-     /tmp/ccsW4IUO.s:101    .bss.acs_idx:0000000000000000 $d
-     /tmp/ccsW4IUO.s:107    .bss.the_acs_id:0000000000000000 $d
+     /tmp/ccMxxjeF.s:18     .text.traffic_info_init:0000000000000000 $t
+     /tmp/ccMxxjeF.s:23     .text.traffic_info_init:0000000000000000 traffic_info_init
+     /tmp/ccMxxjeF.s:50     .text.traffic_info_init:0000000000000018 $d
+     /tmp/ccMxxjeF.s:57     .text.get_ac_info:0000000000000000 $t
+     /tmp/ccMxxjeF.s:62     .text.get_ac_info:0000000000000000 get_ac_info
+     /tmp/ccMxxjeF.s:81     .text.get_ac_info:000000000000000c $d
+     /tmp/ccMxxjeF.s:94     .bss.the_acs:0000000000000000 the_acs
+     /tmp/ccMxxjeF.s:106    .bss.the_acs_id:0000000000000000 the_acs_id
+     /tmp/ccMxxjeF.s:100    .bss.acs_idx:0000000000000000 acs_idx
+     /tmp/ccMxxjeF.s:90     .bss.the_acs:0000000000000000 $d
+     /tmp/ccMxxjeF.s:101    .bss.acs_idx:0000000000000000 $d
+     /tmp/ccMxxjeF.s:107    .bss.the_acs_id:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 NO UNDEFINED SYMBOLS
