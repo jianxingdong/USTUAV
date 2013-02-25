@@ -144,16 +144,16 @@
  113              	.Letext0:
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 stm32_exceptions.c
-     /tmp/cchrS7dk.s:18     .text.nmi_exception:0000000000000000 $t
-     /tmp/cchrS7dk.s:23     .text.nmi_exception:0000000000000000 nmi_exception
-     /tmp/cchrS7dk.s:37     .text.hard_fault_exception:0000000000000000 $t
-     /tmp/cchrS7dk.s:42     .text.hard_fault_exception:0000000000000000 hard_fault_exception
-     /tmp/cchrS7dk.s:56     .text.mem_manage_exception:0000000000000000 $t
-     /tmp/cchrS7dk.s:61     .text.mem_manage_exception:0000000000000000 mem_manage_exception
-     /tmp/cchrS7dk.s:75     .text.bus_fault_exception:0000000000000000 $t
-     /tmp/cchrS7dk.s:80     .text.bus_fault_exception:0000000000000000 bus_fault_exception
-     /tmp/cchrS7dk.s:94     .text.usage_fault_exception:0000000000000000 $t
-     /tmp/cchrS7dk.s:99     .text.usage_fault_exception:0000000000000000 usage_fault_exception
+     /tmp/cc73OXaW.s:18     .text.nmi_exception:0000000000000000 $t
+     /tmp/cc73OXaW.s:23     .text.nmi_exception:0000000000000000 nmi_exception
+     /tmp/cc73OXaW.s:37     .text.hard_fault_exception:0000000000000000 $t
+     /tmp/cc73OXaW.s:42     .text.hard_fault_exception:0000000000000000 hard_fault_exception
+     /tmp/cc73OXaW.s:56     .text.mem_manage_exception:0000000000000000 $t
+     /tmp/cc73OXaW.s:61     .text.mem_manage_exception:0000000000000000 mem_manage_exception
+     /tmp/cc73OXaW.s:75     .text.bus_fault_exception:0000000000000000 $t
+     /tmp/cc73OXaW.s:80     .text.bus_fault_exception:0000000000000000 bus_fault_exception
+     /tmp/cc73OXaW.s:94     .text.usage_fault_exception:0000000000000000 $t
+     /tmp/cc73OXaW.s:99     .text.usage_fault_exception:0000000000000000 usage_fault_exception
                      .debug_frame:0000000000000010 $d
 
 NO UNDEFINED SYMBOLS

@@ -697,22 +697,22 @@
  478              		.file 12 "./mcu_periph/spi.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 spi_arch.c
-     /tmp/cczFSrAB.s:18     .text.spi_arch_int_enable:0000000000000000 $t
-     /tmp/cczFSrAB.s:23     .text.spi_arch_int_enable:0000000000000000 spi_arch_int_enable
-     /tmp/cczFSrAB.s:50     .text.spi_arch_int_enable:0000000000000014 $d
-     /tmp/cczFSrAB.s:55     .text.spi_arch_int_disable:0000000000000000 $t
-     /tmp/cczFSrAB.s:60     .text.spi_arch_int_disable:0000000000000000 spi_arch_int_disable
-     /tmp/cczFSrAB.s:91     .text.spi_init:0000000000000000 $t
-     /tmp/cczFSrAB.s:96     .text.spi_init:0000000000000000 spi_init
-     /tmp/cczFSrAB.s:217    .text.spi_init:00000000000000b0 $d
-     /tmp/cczFSrAB.s:223    .text.spi_rw:0000000000000000 $t
-     /tmp/cczFSrAB.s:228    .text.spi_rw:0000000000000000 spi_rw
-     /tmp/cczFSrAB.s:361    .text.spi_rw:00000000000000c8 $d
-     /tmp/cczFSrAB.s:371    .text.dma1_c4_irq_handler:0000000000000000 $t
-     /tmp/cczFSrAB.s:376    .text.dma1_c4_irq_handler:0000000000000000 dma1_c4_irq_handler
-     /tmp/cczFSrAB.s:442    .text.dma1_c4_irq_handler:0000000000000060 $d
-     /tmp/cczFSrAB.s:464    .bss.slave0:0000000000000000 slave0
-     /tmp/cczFSrAB.s:460    .bss.slave0:0000000000000000 $d
+     /tmp/cccW0fFt.s:18     .text.spi_arch_int_enable:0000000000000000 $t
+     /tmp/cccW0fFt.s:23     .text.spi_arch_int_enable:0000000000000000 spi_arch_int_enable
+     /tmp/cccW0fFt.s:50     .text.spi_arch_int_enable:0000000000000014 $d
+     /tmp/cccW0fFt.s:55     .text.spi_arch_int_disable:0000000000000000 $t
+     /tmp/cccW0fFt.s:60     .text.spi_arch_int_disable:0000000000000000 spi_arch_int_disable
+     /tmp/cccW0fFt.s:91     .text.spi_init:0000000000000000 $t
+     /tmp/cccW0fFt.s:96     .text.spi_init:0000000000000000 spi_init
+     /tmp/cccW0fFt.s:217    .text.spi_init:00000000000000b0 $d
+     /tmp/cccW0fFt.s:223    .text.spi_rw:0000000000000000 $t
+     /tmp/cccW0fFt.s:228    .text.spi_rw:0000000000000000 spi_rw
+     /tmp/cccW0fFt.s:361    .text.spi_rw:00000000000000c8 $d
+     /tmp/cccW0fFt.s:371    .text.dma1_c4_irq_handler:0000000000000000 $t
+     /tmp/cccW0fFt.s:376    .text.dma1_c4_irq_handler:0000000000000000 dma1_c4_irq_handler
+     /tmp/cccW0fFt.s:442    .text.dma1_c4_irq_handler:0000000000000060 $d
+     /tmp/cccW0fFt.s:464    .bss.slave0:0000000000000000 slave0
+     /tmp/cccW0fFt.s:460    .bss.slave0:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

@@ -46,11 +46,11 @@
   44              		.file 5 "subsystems/ahrs.c"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 ahrs.c
-     /tmp/cceubJ3L.s:24     .bss.ahrs_mag_offset:0000000000000000 ahrs_mag_offset
-     /tmp/cceubJ3L.s:36     .bss.ahrs_float:0000000000000000 ahrs_float
-     /tmp/cceubJ3L.s:30     .bss.ahrs:0000000000000000 ahrs
-     /tmp/cceubJ3L.s:21     .bss.ahrs_mag_offset:0000000000000000 $d
-     /tmp/cceubJ3L.s:27     .bss.ahrs:0000000000000000 $d
-     /tmp/cceubJ3L.s:33     .bss.ahrs_float:0000000000000000 $d
+     /tmp/ccPHpWYz.s:24     .bss.ahrs_mag_offset:0000000000000000 ahrs_mag_offset
+     /tmp/ccPHpWYz.s:36     .bss.ahrs_float:0000000000000000 ahrs_float
+     /tmp/ccPHpWYz.s:30     .bss.ahrs:0000000000000000 ahrs
+     /tmp/ccPHpWYz.s:21     .bss.ahrs_mag_offset:0000000000000000 $d
+     /tmp/ccPHpWYz.s:27     .bss.ahrs:0000000000000000 $d
+     /tmp/ccPHpWYz.s:33     .bss.ahrs_float:0000000000000000 $d
 
 NO UNDEFINED SYMBOLS

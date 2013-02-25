@@ -34,11 +34,11 @@
   40              		.file 2 "subsystems/datalink/downlink.c"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 downlink.c
-     /tmp/ccRsQlL6.s:24     .bss.downlink_nb_msgs:0000000000000000 downlink_nb_msgs
-     /tmp/ccRsQlL6.s:35     .bss.downlink_nb_bytes:0000000000000000 downlink_nb_bytes
-     /tmp/ccRsQlL6.s:29     .bss.downlink_nb_ovrn:0000000000000000 downlink_nb_ovrn
-     /tmp/ccRsQlL6.s:21     .bss.downlink_nb_msgs:0000000000000000 $d
-     /tmp/ccRsQlL6.s:30     .bss.downlink_nb_ovrn:0000000000000000 $d
-     /tmp/ccRsQlL6.s:32     .bss.downlink_nb_bytes:0000000000000000 $d
+     /tmp/ccc55MwL.s:24     .bss.downlink_nb_msgs:0000000000000000 downlink_nb_msgs
+     /tmp/ccc55MwL.s:35     .bss.downlink_nb_bytes:0000000000000000 downlink_nb_bytes
+     /tmp/ccc55MwL.s:29     .bss.downlink_nb_ovrn:0000000000000000 downlink_nb_ovrn
+     /tmp/ccc55MwL.s:21     .bss.downlink_nb_msgs:0000000000000000 $d
+     /tmp/ccc55MwL.s:30     .bss.downlink_nb_ovrn:0000000000000000 $d
+     /tmp/ccc55MwL.s:32     .bss.downlink_nb_bytes:0000000000000000 $d
 
 NO UNDEFINED SYMBOLS

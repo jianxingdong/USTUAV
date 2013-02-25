@@ -293,16 +293,16 @@
  210              		.file 6 "./commands.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 electrical.c
-     /tmp/ccefhapg.s:18     .text.electrical_init:0000000000000000 $t
-     /tmp/ccefhapg.s:23     .text.electrical_init:0000000000000000 electrical_init
-     /tmp/ccefhapg.s:57     .text.electrical_init:000000000000001c $d
-     /tmp/ccefhapg.s:74     .text.electrical_periodic:0000000000000000 $t
-     /tmp/ccefhapg.s:79     .text.electrical_periodic:0000000000000000 electrical_periodic
-     /tmp/ccefhapg.s:176    .text.electrical_periodic:00000000000000c0 $d
-     /tmp/ccefhapg.s:202    .bss.electrical:0000000000000000 electrical
-     /tmp/ccefhapg.s:191    .bss.electrical_priv:0000000000000000 $d
-     /tmp/ccefhapg.s:195    .bss.electrical_priv:0000000000000000 electrical_priv
-     /tmp/ccefhapg.s:198    .bss.electrical:0000000000000000 $d
+     /tmp/cc2cXrV0.s:18     .text.electrical_init:0000000000000000 $t
+     /tmp/cc2cXrV0.s:23     .text.electrical_init:0000000000000000 electrical_init
+     /tmp/cc2cXrV0.s:57     .text.electrical_init:000000000000001c $d
+     /tmp/cc2cXrV0.s:74     .text.electrical_periodic:0000000000000000 $t
+     /tmp/cc2cXrV0.s:79     .text.electrical_periodic:0000000000000000 electrical_periodic
+     /tmp/cc2cXrV0.s:176    .text.electrical_periodic:00000000000000c0 $d
+     /tmp/cc2cXrV0.s:202    .bss.electrical:0000000000000000 electrical
+     /tmp/cc2cXrV0.s:191    .bss.electrical_priv:0000000000000000 $d
+     /tmp/cc2cXrV0.s:195    .bss.electrical_priv:0000000000000000 electrical_priv
+     /tmp/cc2cXrV0.s:198    .bss.electrical:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS
