@@ -40,11 +40,11 @@
   42              		.file 6 "subsystems/datalink/pprz_transport.c"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 pprz_transport.c
-     /tmp/cc1DlcbC.s:23     .bss.pprz_tp:0000000000000000 pprz_tp
-     /tmp/cc1DlcbC.s:33     .bss.ck_b:0000000000000000 ck_b
-     /tmp/cc1DlcbC.s:28     .bss.ck_a:0000000000000000 ck_a
-     /tmp/cc1DlcbC.s:24     .bss.pprz_tp:0000000000000000 $d
-     /tmp/cc1DlcbC.s:29     .bss.ck_a:0000000000000000 $d
-     /tmp/cc1DlcbC.s:34     .bss.ck_b:0000000000000000 $d
+     /tmp/ccfSiIn6.s:23     .bss.pprz_tp:0000000000000000 pprz_tp
+     /tmp/ccfSiIn6.s:33     .bss.ck_b:0000000000000000 ck_b
+     /tmp/ccfSiIn6.s:28     .bss.ck_a:0000000000000000 ck_a
+     /tmp/ccfSiIn6.s:24     .bss.pprz_tp:0000000000000000 $d
+     /tmp/ccfSiIn6.s:29     .bss.ck_a:0000000000000000 $d
+     /tmp/ccfSiIn6.s:34     .bss.ck_b:0000000000000000 $d
 
 NO UNDEFINED SYMBOLS

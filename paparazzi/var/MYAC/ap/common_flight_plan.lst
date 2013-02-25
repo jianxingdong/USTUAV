@@ -189,24 +189,24 @@
  149              		.file 3 "./subsystems/navigation/common_flight_plan.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 common_flight_plan.c
-     /tmp/ccLwtyQC.s:18     .text.nav_init_block:0000000000000000 $t
-     /tmp/ccLwtyQC.s:23     .text.nav_init_block:0000000000000000 nav_init_block
-     /tmp/ccLwtyQC.s:53     .text.nav_init_block:000000000000001c $d
-     /tmp/ccLwtyQC.s:60     .text.nav_goto_block:0000000000000000 $t
-     /tmp/ccLwtyQC.s:65     .text.nav_goto_block:0000000000000000 nav_goto_block
-     /tmp/ccLwtyQC.s:96     .text.nav_goto_block:000000000000001c $d
-     /tmp/ccLwtyQC.s:138    .bss.last_stage:0000000000000000 last_stage
-     /tmp/ccLwtyQC.s:119    .bss.last_block:0000000000000000 last_block
-     /tmp/ccLwtyQC.s:132    .bss.nav_block:0000000000000000 nav_block
-     /tmp/ccLwtyQC.s:144    .bss.nav_stage:0000000000000000 nav_stage
-     /tmp/ccLwtyQC.s:126    .bss.block_time:0000000000000000 block_time
-     /tmp/ccLwtyQC.s:113    .bss.stage_time:0000000000000000 stage_time
-     /tmp/ccLwtyQC.s:110    .bss.stage_time:0000000000000000 $d
-     /tmp/ccLwtyQC.s:120    .bss.last_block:0000000000000000 $d
-     /tmp/ccLwtyQC.s:122    .bss.block_time:0000000000000000 $d
-     /tmp/ccLwtyQC.s:133    .bss.nav_block:0000000000000000 $d
-     /tmp/ccLwtyQC.s:139    .bss.last_stage:0000000000000000 $d
-     /tmp/ccLwtyQC.s:145    .bss.nav_stage:0000000000000000 $d
+     /tmp/ccCFl9Y5.s:18     .text.nav_init_block:0000000000000000 $t
+     /tmp/ccCFl9Y5.s:23     .text.nav_init_block:0000000000000000 nav_init_block
+     /tmp/ccCFl9Y5.s:53     .text.nav_init_block:000000000000001c $d
+     /tmp/ccCFl9Y5.s:60     .text.nav_goto_block:0000000000000000 $t
+     /tmp/ccCFl9Y5.s:65     .text.nav_goto_block:0000000000000000 nav_goto_block
+     /tmp/ccCFl9Y5.s:96     .text.nav_goto_block:000000000000001c $d
+     /tmp/ccCFl9Y5.s:138    .bss.last_stage:0000000000000000 last_stage
+     /tmp/ccCFl9Y5.s:119    .bss.last_block:0000000000000000 last_block
+     /tmp/ccCFl9Y5.s:132    .bss.nav_block:0000000000000000 nav_block
+     /tmp/ccCFl9Y5.s:144    .bss.nav_stage:0000000000000000 nav_stage
+     /tmp/ccCFl9Y5.s:126    .bss.block_time:0000000000000000 block_time
+     /tmp/ccCFl9Y5.s:113    .bss.stage_time:0000000000000000 stage_time
+     /tmp/ccCFl9Y5.s:110    .bss.stage_time:0000000000000000 $d
+     /tmp/ccCFl9Y5.s:120    .bss.last_block:0000000000000000 $d
+     /tmp/ccCFl9Y5.s:122    .bss.block_time:0000000000000000 $d
+     /tmp/ccCFl9Y5.s:133    .bss.nav_block:0000000000000000 $d
+     /tmp/ccCFl9Y5.s:139    .bss.last_stage:0000000000000000 $d
+     /tmp/ccCFl9Y5.s:145    .bss.nav_stage:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

@@ -27,7 +27,7 @@
   27              		.file 2 "actuators.c"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 actuators.c
-     /tmp/ccGwDxeI.s:22     .bss.actuators:0000000000000000 actuators
-     /tmp/ccGwDxeI.s:19     .bss.actuators:0000000000000000 $d
+     /tmp/cc1lyTq9.s:22     .bss.actuators:0000000000000000 actuators
+     /tmp/cc1lyTq9.s:19     .bss.actuators:0000000000000000 $d
 
 NO UNDEFINED SYMBOLS

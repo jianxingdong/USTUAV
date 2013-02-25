@@ -74,7 +74,7 @@
    ac_id="1"
    airframe="airframes/examples/LisaM2_Nov26_2012.xml"
    radio="radios/SpektrumDX6i_Nov12.xml"
-   telemetry="telemetry/default_fixedwing.xml"
+   telemetry="telemetry/default_fixedwing_imu.xml"
    flight_plan="flight_plans/basic.xml"
    settings=" settings/fixedwing_basic.xml"
    gui_color="#354fd3428d54"

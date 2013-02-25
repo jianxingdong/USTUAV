@@ -1490,12 +1490,12 @@
  199              		.file 6 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 sys_time_arch.c
-     /tmp/ccAMIF6Q.s:18     .text.sys_time_arch_init:0000000000000000 $t
-     /tmp/ccAMIF6Q.s:23     .text.sys_time_arch_init:0000000000000000 sys_time_arch_init
-     /tmp/ccAMIF6Q.s:80     .text.sys_time_arch_init:000000000000001c $d
-     /tmp/ccAMIF6Q.s:87     .text.sys_tick_irq_handler:0000000000000000 $t
-     /tmp/ccAMIF6Q.s:92     .text.sys_tick_irq_handler:0000000000000000 sys_tick_irq_handler
-     /tmp/ccAMIF6Q.s:187    .text.sys_tick_irq_handler:0000000000000070 $d
+     /tmp/ccqjWlKk.s:18     .text.sys_time_arch_init:0000000000000000 $t
+     /tmp/ccqjWlKk.s:23     .text.sys_time_arch_init:0000000000000000 sys_time_arch_init
+     /tmp/ccqjWlKk.s:80     .text.sys_time_arch_init:000000000000001c $d
+     /tmp/ccqjWlKk.s:87     .text.sys_tick_irq_handler:0000000000000000 $t
+     /tmp/ccqjWlKk.s:92     .text.sys_tick_irq_handler:0000000000000000 sys_tick_irq_handler
+     /tmp/ccqjWlKk.s:187    .text.sys_tick_irq_handler:0000000000000070 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

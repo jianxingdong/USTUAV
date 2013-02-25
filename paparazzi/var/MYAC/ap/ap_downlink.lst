@@ -24,7 +24,7 @@
   26              		.file 2 "/home/uav/USTUAV/paparazzi/var/MYAC/generated/periodic_telemetry.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 ap_downlink.c
-     /tmp/cc8bIooP.s:21     .bss.telemetry_mode_Ap:0000000000000000 telemetry_mode_Ap
-     /tmp/cc8bIooP.s:22     .bss.telemetry_mode_Ap:0000000000000000 $d
+     /tmp/ccMlzFQk.s:21     .bss.telemetry_mode_Ap:0000000000000000 telemetry_mode_Ap
+     /tmp/ccMlzFQk.s:22     .bss.telemetry_mode_Ap:0000000000000000 $d
 
 NO UNDEFINED SYMBOLS

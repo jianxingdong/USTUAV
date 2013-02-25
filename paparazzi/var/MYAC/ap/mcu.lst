@@ -341,9 +341,9 @@
  170              		.file 9 "subsystems/radio_control.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 mcu.c
-     /tmp/cc93TNdC.s:18     .text.mcu_init:0000000000000000 $t
-     /tmp/cc93TNdC.s:23     .text.mcu_init:0000000000000000 mcu_init
-     /tmp/cc93TNdC.s:157    .text.mcu_init:00000000000000dc $d
+     /tmp/ccRvMXi3.s:18     .text.mcu_init:0000000000000000 $t
+     /tmp/ccRvMXi3.s:23     .text.mcu_init:0000000000000000 mcu_init
+     /tmp/ccRvMXi3.s:157    .text.mcu_init:00000000000000dc $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

@@ -45,13 +45,13 @@
   52              		.file 3 "commands.c"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 commands.c
-     /tmp/ccqMkZWS.s:37     .rodata.commands_failsafe:0000000000000000 commands_failsafe
-     /tmp/ccqMkZWS.s:25     .bss.commands:0000000000000000 commands
-     /tmp/ccqMkZWS.s:46     .bss.command_pitch_trim:0000000000000000 command_pitch_trim
-     /tmp/ccqMkZWS.s:31     .bss.command_roll_trim:0000000000000000 command_roll_trim
-     /tmp/ccqMkZWS.s:22     .bss.commands:0000000000000000 $d
-     /tmp/ccqMkZWS.s:28     .bss.command_roll_trim:0000000000000000 $d
-     /tmp/ccqMkZWS.s:34     .rodata.commands_failsafe:0000000000000000 $d
-     /tmp/ccqMkZWS.s:43     .bss.command_pitch_trim:0000000000000000 $d
+     /tmp/cc7Im5yi.s:37     .rodata.commands_failsafe:0000000000000000 commands_failsafe
+     /tmp/cc7Im5yi.s:25     .bss.commands:0000000000000000 commands
+     /tmp/cc7Im5yi.s:46     .bss.command_pitch_trim:0000000000000000 command_pitch_trim
+     /tmp/cc7Im5yi.s:31     .bss.command_roll_trim:0000000000000000 command_roll_trim
+     /tmp/cc7Im5yi.s:22     .bss.commands:0000000000000000 $d
+     /tmp/cc7Im5yi.s:28     .bss.command_roll_trim:0000000000000000 $d
+     /tmp/cc7Im5yi.s:34     .rodata.commands_failsafe:0000000000000000 $d
+     /tmp/cc7Im5yi.s:43     .bss.command_pitch_trim:0000000000000000 $d
 
 NO UNDEFINED SYMBOLS

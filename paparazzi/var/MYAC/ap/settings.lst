@@ -91,13 +91,13 @@
   77              		.file 12 "/home/uav/USTUAV/paparazzi/var/MYAC/generated/settings.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 settings.c
-     /tmp/ccojdmd9.s:18     .text.settings_init:0000000000000000 $t
-     /tmp/ccojdmd9.s:23     .text.settings_init:0000000000000000 settings_init
-     /tmp/ccojdmd9.s:37     .text.settings_store:0000000000000000 $t
-     /tmp/ccojdmd9.s:42     .text.settings_store:0000000000000000 settings_store
-     /tmp/ccojdmd9.s:59     .bss.settings_store_now:0000000000000000 settings_store_now
-     /tmp/ccojdmd9.s:64     .bss.pers_settings:0000000000000000 pers_settings
-     /tmp/ccojdmd9.s:60     .bss.settings_store_now:0000000000000000 $d
+     /tmp/cchNX7aw.s:18     .text.settings_init:0000000000000000 $t
+     /tmp/cchNX7aw.s:23     .text.settings_init:0000000000000000 settings_init
+     /tmp/cchNX7aw.s:37     .text.settings_store:0000000000000000 $t
+     /tmp/cchNX7aw.s:42     .text.settings_store:0000000000000000 settings_store
+     /tmp/cchNX7aw.s:59     .bss.settings_store_now:0000000000000000 settings_store_now
+     /tmp/cchNX7aw.s:64     .bss.pers_settings:0000000000000000 pers_settings
+     /tmp/cchNX7aw.s:60     .bss.settings_store_now:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 NO UNDEFINED SYMBOLS

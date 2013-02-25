@@ -1,0 +1,10 @@
+./sw/airborne/arch/sim/subsystems/radio_control/ppm_arch.c:value send_ppm(value unit) {
+./sw/airborne/arch/sim/subsystems/radio_control/ppm_arch.c:value send_ppm(value unit) {return unit;}
+./sw/airborne/arch/sim/subsystems/radio_control/rc_datalink.c:value send_ppm(value unit) {
+Binary file ./sw/simulator/sitl.cmo matches
+Binary file ./sw/simulator/sitl.cma matches
+./sw/simulator/sitl.ml:  external send_ppm : unit -> unit = "send_ppm"
+./sw/simulator/sitl.ml:    let send_ppm = fun () ->
+./sw/simulator/sitl.ml:      if on_off#active then send_ppm () in
+./sw/simulator/sitl.ml:    Stdlib.timer rc_period send_ppm; (** FIXME: should use time_scale *)
+Binary file ./var/Microjet/sim/arch/sim/subsystems/radio_control/ppm_arch.o matches

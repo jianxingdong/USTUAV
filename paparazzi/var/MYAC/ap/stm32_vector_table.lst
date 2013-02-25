@@ -577,18 +577,18 @@
  247              		.file 5 "./mcu_periph/sys_time.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 stm32_vector_table.c
-     /tmp/cc9yHYIQ.s:18     .text.null_handler:0000000000000000 $t
-     /tmp/cc9yHYIQ.s:23     .text.null_handler:0000000000000000 null_handler
-     /tmp/cc9yHYIQ.s:37     .text.reset_handler_stage2:0000000000000000 $t
-     /tmp/cc9yHYIQ.s:42     .text.reset_handler_stage2:0000000000000000 reset_handler_stage2
-     /tmp/cc9yHYIQ.s:88     .text.reset_handler_stage2:0000000000000028 $d
-     /tmp/cc9yHYIQ.s:97     .text.reset_handler_stage1:0000000000000000 $t
-     /tmp/cc9yHYIQ.s:102    .text.reset_handler_stage1:0000000000000000 reset_handler_stage1
-     /tmp/cc9yHYIQ.s:138    .text.reset_handler_stage1:0000000000000020 $d
-     /tmp/cc9yHYIQ.s:143    .text.assert_param:0000000000000000 $t
-     /tmp/cc9yHYIQ.s:148    .text.assert_param:0000000000000000 assert_param
-     /tmp/cc9yHYIQ.s:165    .isr_vector:0000000000000000 vector_table
-     /tmp/cc9yHYIQ.s:162    .isr_vector:0000000000000000 $d
+     /tmp/ccSIDoMf.s:18     .text.null_handler:0000000000000000 $t
+     /tmp/ccSIDoMf.s:23     .text.null_handler:0000000000000000 null_handler
+     /tmp/ccSIDoMf.s:37     .text.reset_handler_stage2:0000000000000000 $t
+     /tmp/ccSIDoMf.s:42     .text.reset_handler_stage2:0000000000000000 reset_handler_stage2
+     /tmp/ccSIDoMf.s:88     .text.reset_handler_stage2:0000000000000028 $d
+     /tmp/ccSIDoMf.s:97     .text.reset_handler_stage1:0000000000000000 $t
+     /tmp/ccSIDoMf.s:102    .text.reset_handler_stage1:0000000000000000 reset_handler_stage1
+     /tmp/ccSIDoMf.s:138    .text.reset_handler_stage1:0000000000000020 $d
+     /tmp/ccSIDoMf.s:143    .text.assert_param:0000000000000000 $t
+     /tmp/ccSIDoMf.s:148    .text.assert_param:0000000000000000 assert_param
+     /tmp/ccSIDoMf.s:165    .isr_vector:0000000000000000 vector_table
+     /tmp/ccSIDoMf.s:162    .isr_vector:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

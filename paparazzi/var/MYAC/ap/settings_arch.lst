@@ -876,16 +876,16 @@
  552              		.file 12 "/home/uav/USTUAV/paparazzi/var/MYAC/generated/periodic_telemetry.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 settings_arch.c
-     /tmp/ccqpTv7b.s:18     .text.pflash_checksum:0000000000000000 $t
-     /tmp/ccqpTv7b.s:22     .text.pflash_checksum:0000000000000000 pflash_checksum
-     /tmp/ccqpTv7b.s:159    .text.pflash_checksum:0000000000000090 $d
-     /tmp/ccqpTv7b.s:165    .text.flash_detect:0000000000000000 $t
-     /tmp/ccqpTv7b.s:169    .text.flash_detect:0000000000000000 flash_detect
-     /tmp/ccqpTv7b.s:245    .text.flash_detect:000000000000006c $d
-     /tmp/ccqpTv7b.s:250    .text.persistent_write:0000000000000000 $t
-     /tmp/ccqpTv7b.s:255    .text.persistent_write:0000000000000000 persistent_write
-     /tmp/ccqpTv7b.s:446    .text.persistent_read:0000000000000000 $t
-     /tmp/ccqpTv7b.s:451    .text.persistent_read:0000000000000000 persistent_read
+     /tmp/ccD1xaLx.s:18     .text.pflash_checksum:0000000000000000 $t
+     /tmp/ccD1xaLx.s:22     .text.pflash_checksum:0000000000000000 pflash_checksum
+     /tmp/ccD1xaLx.s:159    .text.pflash_checksum:0000000000000090 $d
+     /tmp/ccD1xaLx.s:165    .text.flash_detect:0000000000000000 $t
+     /tmp/ccD1xaLx.s:169    .text.flash_detect:0000000000000000 flash_detect
+     /tmp/ccD1xaLx.s:245    .text.flash_detect:000000000000006c $d
+     /tmp/ccD1xaLx.s:250    .text.persistent_write:0000000000000000 $t
+     /tmp/ccD1xaLx.s:255    .text.persistent_write:0000000000000000 persistent_write
+     /tmp/ccD1xaLx.s:446    .text.persistent_read:0000000000000000 $t
+     /tmp/ccD1xaLx.s:451    .text.persistent_read:0000000000000000 persistent_read
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

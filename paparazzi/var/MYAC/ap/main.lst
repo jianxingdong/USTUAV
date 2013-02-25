@@ -104,8 +104,8 @@
   54              	.Letext0:
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 main.c
-     /tmp/ccXXJy3Y.s:18     .text.startup.main:0000000000000000 $t
-     /tmp/ccXXJy3Y.s:23     .text.startup.main:0000000000000000 main
+     /tmp/ccNeRKEj.s:18     .text.startup.main:0000000000000000 $t
+     /tmp/ccNeRKEj.s:23     .text.startup.main:0000000000000000 main
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

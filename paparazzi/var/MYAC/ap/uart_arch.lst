@@ -800,24 +800,24 @@
  529              		.file 7 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 uart_arch.c
-     /tmp/cczmzzd1.s:18     .text.usart_irq_handler:0000000000000000 $t
-     /tmp/cczmzzd1.s:22     .text.usart_irq_handler:0000000000000000 usart_irq_handler
-     /tmp/cczmzzd1.s:109    .text.uart_periph_set_baudrate:0000000000000000 $t
-     /tmp/cczmzzd1.s:114    .text.uart_periph_set_baudrate:0000000000000000 uart_periph_set_baudrate
-     /tmp/cczmzzd1.s:178    .text.uart_transmit:0000000000000000 $t
-     /tmp/cczmzzd1.s:183    .text.uart_transmit:0000000000000000 uart_transmit
-     /tmp/cczmzzd1.s:254    .text.uart2_init:0000000000000000 $t
-     /tmp/cczmzzd1.s:259    .text.uart2_init:0000000000000000 uart2_init
-     /tmp/cczmzzd1.s:351    .text.uart2_init:000000000000007c $d
-     /tmp/cczmzzd1.s:358    .text.usart2_irq_handler:0000000000000000 $t
-     /tmp/cczmzzd1.s:363    .text.usart2_irq_handler:0000000000000000 usart2_irq_handler
-     /tmp/cczmzzd1.s:376    .text.usart2_irq_handler:0000000000000008 $d
-     /tmp/cczmzzd1.s:381    .text.uart3_init:0000000000000000 $t
-     /tmp/cczmzzd1.s:386    .text.uart3_init:0000000000000000 uart3_init
-     /tmp/cczmzzd1.s:492    .text.uart3_init:0000000000000090 $d
-     /tmp/cczmzzd1.s:500    .text.usart3_irq_handler:0000000000000000 $t
-     /tmp/cczmzzd1.s:505    .text.usart3_irq_handler:0000000000000000 usart3_irq_handler
-     /tmp/cczmzzd1.s:518    .text.usart3_irq_handler:0000000000000008 $d
+     /tmp/ccr5Tl8n.s:18     .text.usart_irq_handler:0000000000000000 $t
+     /tmp/ccr5Tl8n.s:22     .text.usart_irq_handler:0000000000000000 usart_irq_handler
+     /tmp/ccr5Tl8n.s:109    .text.uart_periph_set_baudrate:0000000000000000 $t
+     /tmp/ccr5Tl8n.s:114    .text.uart_periph_set_baudrate:0000000000000000 uart_periph_set_baudrate
+     /tmp/ccr5Tl8n.s:178    .text.uart_transmit:0000000000000000 $t
+     /tmp/ccr5Tl8n.s:183    .text.uart_transmit:0000000000000000 uart_transmit
+     /tmp/ccr5Tl8n.s:254    .text.uart2_init:0000000000000000 $t
+     /tmp/ccr5Tl8n.s:259    .text.uart2_init:0000000000000000 uart2_init
+     /tmp/ccr5Tl8n.s:351    .text.uart2_init:000000000000007c $d
+     /tmp/ccr5Tl8n.s:358    .text.usart2_irq_handler:0000000000000000 $t
+     /tmp/ccr5Tl8n.s:363    .text.usart2_irq_handler:0000000000000000 usart2_irq_handler
+     /tmp/ccr5Tl8n.s:376    .text.usart2_irq_handler:0000000000000008 $d
+     /tmp/ccr5Tl8n.s:381    .text.uart3_init:0000000000000000 $t
+     /tmp/ccr5Tl8n.s:386    .text.uart3_init:0000000000000000 uart3_init
+     /tmp/ccr5Tl8n.s:492    .text.uart3_init:0000000000000090 $d
+     /tmp/ccr5Tl8n.s:500    .text.usart3_irq_handler:0000000000000000 $t
+     /tmp/ccr5Tl8n.s:505    .text.usart3_irq_handler:0000000000000000 usart3_irq_handler
+     /tmp/ccr5Tl8n.s:518    .text.usart3_irq_handler:0000000000000008 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

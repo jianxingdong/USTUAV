@@ -625,22 +625,22 @@
  369              		.file 6 "./mcu_periph/spi.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 imu_aspirin2.c
-     /tmp/ccC4I1K9.s:18     .text.mpu_wait_slave4_ready:0000000000000000 $t
-     /tmp/ccC4I1K9.s:22     .text.mpu_wait_slave4_ready:0000000000000000 mpu_wait_slave4_ready
-     /tmp/ccC4I1K9.s:80     .text.mpu_wait_slave4_ready:0000000000000030 $d
-     /tmp/ccC4I1K9.s:85     .text.mpu_set:0000000000000000 $t
-     /tmp/ccC4I1K9.s:89     .text.mpu_set:0000000000000000 mpu_set
-     /tmp/ccC4I1K9.s:125    .text.mpu_set:000000000000001c $d
-     /tmp/ccC4I1K9.s:130    .text.imu_impl_init:0000000000000000 $t
-     /tmp/ccC4I1K9.s:135    .text.imu_impl_init:0000000000000000 imu_impl_init
-     /tmp/ccC4I1K9.s:168    .text.imu_impl_init:0000000000000020 $d
-     /tmp/ccC4I1K9.s:174    .text.imu_periodic:0000000000000000 $t
-     /tmp/ccC4I1K9.s:179    .text.imu_periodic:0000000000000000 imu_periodic
-     /tmp/ccC4I1K9.s:343    .text.imu_periodic:00000000000000f0 $d
-     /tmp/ccC4I1K9.s:361    .bss.aspirin2_mpu60x0:0000000000000000 aspirin2_mpu60x0
-     /tmp/ccC4I1K9.s:354    .bss.imu_aspirin2:0000000000000000 imu_aspirin2
-     /tmp/ccC4I1K9.s:355    .bss.imu_aspirin2:0000000000000000 $d
-     /tmp/ccC4I1K9.s:357    .bss.aspirin2_mpu60x0:0000000000000000 $d
+     /tmp/ccIQiI0v.s:18     .text.mpu_wait_slave4_ready:0000000000000000 $t
+     /tmp/ccIQiI0v.s:22     .text.mpu_wait_slave4_ready:0000000000000000 mpu_wait_slave4_ready
+     /tmp/ccIQiI0v.s:80     .text.mpu_wait_slave4_ready:0000000000000030 $d
+     /tmp/ccIQiI0v.s:85     .text.mpu_set:0000000000000000 $t
+     /tmp/ccIQiI0v.s:89     .text.mpu_set:0000000000000000 mpu_set
+     /tmp/ccIQiI0v.s:125    .text.mpu_set:000000000000001c $d
+     /tmp/ccIQiI0v.s:130    .text.imu_impl_init:0000000000000000 $t
+     /tmp/ccIQiI0v.s:135    .text.imu_impl_init:0000000000000000 imu_impl_init
+     /tmp/ccIQiI0v.s:168    .text.imu_impl_init:0000000000000020 $d
+     /tmp/ccIQiI0v.s:174    .text.imu_periodic:0000000000000000 $t
+     /tmp/ccIQiI0v.s:179    .text.imu_periodic:0000000000000000 imu_periodic
+     /tmp/ccIQiI0v.s:343    .text.imu_periodic:00000000000000f0 $d
+     /tmp/ccIQiI0v.s:361    .bss.aspirin2_mpu60x0:0000000000000000 aspirin2_mpu60x0
+     /tmp/ccIQiI0v.s:354    .bss.imu_aspirin2:0000000000000000 imu_aspirin2
+     /tmp/ccIQiI0v.s:355    .bss.imu_aspirin2:0000000000000000 $d
+     /tmp/ccIQiI0v.s:357    .bss.aspirin2_mpu60x0:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

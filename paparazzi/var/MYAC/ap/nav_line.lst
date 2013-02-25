@@ -1843,24 +1843,24 @@
  1654              		.file 6 "./subsystems/nav.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 nav_line.c
-     /tmp/ccTOs8kS.s:18     .text.nav_line_init:0000000000000000 $t
-     /tmp/ccTOs8kS.s:23     .text.nav_line_init:0000000000000000 nav_line_init
-     /tmp/ccTOs8kS.s:40     .text.nav_line_init:0000000000000008 $d
-     /tmp/ccTOs8kS.s:57     .text.nav_line:0000000000000000 $t
-     /tmp/ccTOs8kS.s:62     .text.nav_line:0000000000000000 nav_line
-     /tmp/ccTOs8kS.s:311    .text.nav_line:0000000000000182 $d
-     /tmp/ccTOs8kS.s:321    .text.nav_line:0000000000000192 $t
-     /tmp/ccTOs8kS.s:435    .text.nav_line:0000000000000268 $d
-     /tmp/ccTOs8kS.s:460    .text.nav_line:00000000000002c0 $t
-     /tmp/ccTOs8kS.s:851    .text.nav_line:0000000000000538 $d
-     /tmp/ccTOs8kS.s:863    .text.nav_line:000000000000055c $t
-     /tmp/ccTOs8kS.s:1192   .text.nav_line:0000000000000758 $d
-     /tmp/ccTOs8kS.s:1207   .text.nav_line:0000000000000788 $t
-     /tmp/ccTOs8kS.s:1628   .text.nav_line:0000000000000a30 $d
-     /tmp/ccTOs8kS.s:1646   .bss.line_status:0000000000000000 line_status
-     /tmp/ccTOs8kS.s:1647   .bss.line_status:0000000000000000 $d
+     /tmp/ccoyP6Wj.s:18     .text.nav_line_init:0000000000000000 $t
+     /tmp/ccoyP6Wj.s:23     .text.nav_line_init:0000000000000000 nav_line_init
+     /tmp/ccoyP6Wj.s:40     .text.nav_line_init:0000000000000008 $d
+     /tmp/ccoyP6Wj.s:57     .text.nav_line:0000000000000000 $t
+     /tmp/ccoyP6Wj.s:62     .text.nav_line:0000000000000000 nav_line
+     /tmp/ccoyP6Wj.s:311    .text.nav_line:0000000000000182 $d
+     /tmp/ccoyP6Wj.s:321    .text.nav_line:0000000000000192 $t
+     /tmp/ccoyP6Wj.s:435    .text.nav_line:0000000000000268 $d
+     /tmp/ccoyP6Wj.s:460    .text.nav_line:00000000000002c0 $t
+     /tmp/ccoyP6Wj.s:851    .text.nav_line:0000000000000538 $d
+     /tmp/ccoyP6Wj.s:863    .text.nav_line:000000000000055c $t
+     /tmp/ccoyP6Wj.s:1192   .text.nav_line:0000000000000758 $d
+     /tmp/ccoyP6Wj.s:1207   .text.nav_line:0000000000000788 $t
+     /tmp/ccoyP6Wj.s:1628   .text.nav_line:0000000000000a30 $d
+     /tmp/ccoyP6Wj.s:1646   .bss.line_status:0000000000000000 line_status
+     /tmp/ccoyP6Wj.s:1647   .bss.line_status:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
-     /tmp/ccTOs8kS.s:1642   .text.nav_line:0000000000000a5c $t
+     /tmp/ccoyP6Wj.s:1642   .text.nav_line:0000000000000a5c $t
 
 UNDEFINED SYMBOLS
 __aeabi_fsub

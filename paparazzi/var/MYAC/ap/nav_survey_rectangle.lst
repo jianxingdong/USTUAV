@@ -1557,31 +1557,31 @@
  1366              		.file 8 "./estimator.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 nav_survey_rectangle.c
-     /tmp/ccNwIC3I.s:27     .text.nav_survey_rectangle_init:0000000000000000 $t
-     /tmp/ccNwIC3I.s:32     .text.nav_survey_rectangle_init:0000000000000000 nav_survey_rectangle_init
-     /tmp/ccNwIC3I.s:332    .text.nav_survey_rectangle_init:0000000000000230 $d
-     /tmp/ccNwIC3I.s:352    .text.nav_survey_rectangle_init:0000000000000278 $t
-     /tmp/ccNwIC3I.s:374    .text.nav_survey_rectangle_init:0000000000000294 $d
-     /tmp/ccNwIC3I.s:386    .text.nav_survey_rectangle:0000000000000000 $t
-     /tmp/ccNwIC3I.s:391    .text.nav_survey_rectangle:0000000000000000 nav_survey_rectangle
-     /tmp/ccNwIC3I.s:753    .text.nav_survey_rectangle:0000000000000238 $d
-     /tmp/ccNwIC3I.s:773    .text.nav_survey_rectangle:0000000000000274 $t
-     /tmp/ccNwIC3I.s:1123   .text.nav_survey_rectangle:00000000000004b8 $d
-     /tmp/ccNwIC3I.s:1142   .text.nav_survey_rectangle:00000000000004f8 $t
-     /tmp/ccNwIC3I.s:1305   .text.nav_survey_rectangle:00000000000005f8 $d
-     /tmp/ccNwIC3I.s:1326   .bss.survey_from:0000000000000000 $d
-     /tmp/ccNwIC3I.s:1330   .bss.survey_from:0000000000000000 survey_from
-     /tmp/ccNwIC3I.s:1336   .bss.survey_orientation:0000000000000000 survey_orientation
-     /tmp/ccNwIC3I.s:1337   .bss.survey_orientation:0000000000000000 $d
-     /tmp/ccNwIC3I.s:1339   .bss.survey_radius.2256:0000000000000000 $d
-     /tmp/ccNwIC3I.s:1343   .bss.survey_radius.2256:0000000000000000 survey_radius.2256
-     /tmp/ccNwIC3I.s:1346   .bss.survey_to:0000000000000000 $d
-     /tmp/ccNwIC3I.s:1350   .bss.survey_to:0000000000000000 survey_to
-     /tmp/ccNwIC3I.s:1356   .bss.survey_uturn:0000000000000000 survey_uturn
-     /tmp/ccNwIC3I.s:1357   .bss.survey_uturn:0000000000000000 $d
+     /tmp/cc4X8tXd.s:27     .text.nav_survey_rectangle_init:0000000000000000 $t
+     /tmp/cc4X8tXd.s:32     .text.nav_survey_rectangle_init:0000000000000000 nav_survey_rectangle_init
+     /tmp/cc4X8tXd.s:332    .text.nav_survey_rectangle_init:0000000000000230 $d
+     /tmp/cc4X8tXd.s:352    .text.nav_survey_rectangle_init:0000000000000278 $t
+     /tmp/cc4X8tXd.s:374    .text.nav_survey_rectangle_init:0000000000000294 $d
+     /tmp/cc4X8tXd.s:386    .text.nav_survey_rectangle:0000000000000000 $t
+     /tmp/cc4X8tXd.s:391    .text.nav_survey_rectangle:0000000000000000 nav_survey_rectangle
+     /tmp/cc4X8tXd.s:753    .text.nav_survey_rectangle:0000000000000238 $d
+     /tmp/cc4X8tXd.s:773    .text.nav_survey_rectangle:0000000000000274 $t
+     /tmp/cc4X8tXd.s:1123   .text.nav_survey_rectangle:00000000000004b8 $d
+     /tmp/cc4X8tXd.s:1142   .text.nav_survey_rectangle:00000000000004f8 $t
+     /tmp/cc4X8tXd.s:1305   .text.nav_survey_rectangle:00000000000005f8 $d
+     /tmp/cc4X8tXd.s:1326   .bss.survey_from:0000000000000000 $d
+     /tmp/cc4X8tXd.s:1330   .bss.survey_from:0000000000000000 survey_from
+     /tmp/cc4X8tXd.s:1336   .bss.survey_orientation:0000000000000000 survey_orientation
+     /tmp/cc4X8tXd.s:1337   .bss.survey_orientation:0000000000000000 $d
+     /tmp/cc4X8tXd.s:1339   .bss.survey_radius.2256:0000000000000000 $d
+     /tmp/cc4X8tXd.s:1343   .bss.survey_radius.2256:0000000000000000 survey_radius.2256
+     /tmp/cc4X8tXd.s:1346   .bss.survey_to:0000000000000000 $d
+     /tmp/cc4X8tXd.s:1350   .bss.survey_to:0000000000000000 survey_to
+     /tmp/cc4X8tXd.s:1356   .bss.survey_uturn:0000000000000000 survey_uturn
+     /tmp/cc4X8tXd.s:1357   .bss.survey_uturn:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
-     /tmp/ccNwIC3I.s:385    .text.nav_survey_rectangle_init:00000000000002a4 $t
-     /tmp/ccNwIC3I.s:1325   .text.nav_survey_rectangle:000000000000063c $t
+     /tmp/cc4X8tXd.s:385    .text.nav_survey_rectangle_init:00000000000002a4 $t
+     /tmp/cc4X8tXd.s:1325   .text.nav_survey_rectangle:000000000000063c $t
 
 UNDEFINED SYMBOLS
 __aeabi_fcmplt
