@@ -475,12 +475,12 @@
  276              		.file 6 "./firmwares/rotorcraft/actuators/actuators_pwm.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 actuators_pwm_arch.c
-     /tmp/ccyZy4Qy.s:18     .text.actuators_pwm_arch_init:0000000000000000 $t
-     /tmp/ccyZy4Qy.s:23     .text.actuators_pwm_arch_init:0000000000000000 actuators_pwm_arch_init
-     /tmp/ccyZy4Qy.s:203    .text.actuators_pwm_arch_init:0000000000000120 $d
-     /tmp/ccyZy4Qy.s:212    .text.actuators_pwm_commit:0000000000000000 $t
-     /tmp/ccyZy4Qy.s:217    .text.actuators_pwm_commit:0000000000000000 actuators_pwm_commit
-     /tmp/ccyZy4Qy.s:265    .text.actuators_pwm_commit:0000000000000040 $d
+     /tmp/ccztfRWH.s:18     .text.actuators_pwm_arch_init:0000000000000000 $t
+     /tmp/ccztfRWH.s:23     .text.actuators_pwm_arch_init:0000000000000000 actuators_pwm_arch_init
+     /tmp/ccztfRWH.s:203    .text.actuators_pwm_arch_init:0000000000000120 $d
+     /tmp/ccztfRWH.s:212    .text.actuators_pwm_commit:0000000000000000 $t
+     /tmp/ccztfRWH.s:217    .text.actuators_pwm_commit:0000000000000000 actuators_pwm_commit
+     /tmp/ccztfRWH.s:265    .text.actuators_pwm_commit:0000000000000040 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

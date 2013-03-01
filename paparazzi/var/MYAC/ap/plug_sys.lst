@@ -195,22 +195,22 @@
  187              		.file 5 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 plug_sys.c
-     /tmp/cc58EnX3.s:18     .text._lseek:0000000000000000 $t
-     /tmp/cc58EnX3.s:23     .text._lseek:0000000000000000 _lseek
-     /tmp/cc58EnX3.s:40     .text.abort:0000000000000000 $t
-     /tmp/cc58EnX3.s:45     .text.abort:0000000000000000 abort
-     /tmp/cc58EnX3.s:59     .text.getpid:0000000000000000 $t
-     /tmp/cc58EnX3.s:64     .text.getpid:0000000000000000 getpid
-     /tmp/cc58EnX3.s:78     .text.kill:0000000000000000 $t
-     /tmp/cc58EnX3.s:83     .text.kill:0000000000000000 kill
-     /tmp/cc58EnX3.s:99     .text._sbrk:0000000000000000 $t
-     /tmp/cc58EnX3.s:104    .text._sbrk:0000000000000000 _sbrk
-     /tmp/cc58EnX3.s:120    .text._write:0000000000000000 $t
-     /tmp/cc58EnX3.s:125    .text._write:0000000000000000 _write
-     /tmp/cc58EnX3.s:141    .text._close:0000000000000000 $t
-     /tmp/cc58EnX3.s:146    .text._close:0000000000000000 _close
-     /tmp/cc58EnX3.s:162    .text._read:0000000000000000 $t
-     /tmp/cc58EnX3.s:167    .text._read:0000000000000000 _read
+     /tmp/ccyVKqsm.s:18     .text._lseek:0000000000000000 $t
+     /tmp/ccyVKqsm.s:23     .text._lseek:0000000000000000 _lseek
+     /tmp/ccyVKqsm.s:40     .text.abort:0000000000000000 $t
+     /tmp/ccyVKqsm.s:45     .text.abort:0000000000000000 abort
+     /tmp/ccyVKqsm.s:59     .text.getpid:0000000000000000 $t
+     /tmp/ccyVKqsm.s:64     .text.getpid:0000000000000000 getpid
+     /tmp/ccyVKqsm.s:78     .text.kill:0000000000000000 $t
+     /tmp/ccyVKqsm.s:83     .text.kill:0000000000000000 kill
+     /tmp/ccyVKqsm.s:99     .text._sbrk:0000000000000000 $t
+     /tmp/ccyVKqsm.s:104    .text._sbrk:0000000000000000 _sbrk
+     /tmp/ccyVKqsm.s:120    .text._write:0000000000000000 $t
+     /tmp/ccyVKqsm.s:125    .text._write:0000000000000000 _write
+     /tmp/ccyVKqsm.s:141    .text._close:0000000000000000 $t
+     /tmp/ccyVKqsm.s:146    .text._close:0000000000000000 _close
+     /tmp/ccyVKqsm.s:162    .text._read:0000000000000000 $t
+     /tmp/ccyVKqsm.s:167    .text._read:0000000000000000 _read
                      .debug_frame:0000000000000010 $d
 
 NO UNDEFINED SYMBOLS

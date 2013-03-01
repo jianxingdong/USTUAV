@@ -69,7 +69,7 @@
   36:mcu_periph/sys_time.c **** 
   37:mcu_periph/sys_time.c ****   uint32_t start_time = sys_time.nb_tick;
   35              		.loc 1 37 0
-  36 0000 154B     		ldr	r3, .L6+8
+  36 0000 134B     		ldr	r3, .L6
   35:mcu_periph/sys_time.c **** int sys_time_register_timer(float duration, sys_time_cb cb) {
   37              		.loc 1 35 0
   38 0002 70B5     		push	{r4, r5, r6, lr}
@@ -107,10 +107,10 @@
   64              		.loc 1 42 0
   65 0018 FFF7FEFF 		bl	__aeabi_f2d
   66              	.LVL3:
-  67 001c 0CA3     		adr	r3, .L6
-  68 001e D3E90023 		ldrd	r2, [r3]
+  67 001c 4FF01132 		mov	r2, #286331153
+  68 0020 0C4B     		ldr	r3, .L6+4
   69 0022 FFF7FEFF 		bl	__aeabi_ddiv
-  70 0026 0D4B     		ldr	r3, .L6+12
+  70 0026 0C4B     		ldr	r3, .L6+8
   71 0028 0022     		movs	r2, #0
   72 002a FFF7FEFF 		bl	__aeabi_dadd
   73 002e FFF7FEFF 		bl	__aeabi_d2uiz
@@ -153,36 +153,35 @@
  100 004a 2046     		mov	r0, r4
  101 004c 70BD     		pop	{r4, r5, r6, pc}
  102              	.L7:
- 103 004e 00BF     		.align	3
+ 103 004e 00BF     		.align	2
  104              	.L6:
- 105 0050 11111111 		.word	286331153
- 106 0054 1111813F 		.word	1065423121
- 107 0058 00000000 		.word	.LANCHOR0
- 108 005c 0000E03F 		.word	1071644672
- 109              		.cfi_endproc
- 110              	.LFE26:
- 112              		.section	.text.sys_time_cancel_timer,"ax",%progbits
- 113              		.align	1
- 114              		.global	sys_time_cancel_timer
- 115              		.thumb
- 116              		.thumb_func
- 118              	sys_time_cancel_timer:
- 119              	.LFB27:
+ 105 0050 00000000 		.word	.LANCHOR0
+ 106 0054 1111913F 		.word	1066471697
+ 107 0058 0000E03F 		.word	1071644672
+ 108              		.cfi_endproc
+ 109              	.LFE26:
+ 111              		.section	.text.sys_time_cancel_timer,"ax",%progbits
+ 112              		.align	1
+ 113              		.global	sys_time_cancel_timer
+ 114              		.thumb
+ 115              		.thumb_func
+ 117              	sys_time_cancel_timer:
+ 118              	.LFB27:
   50:mcu_periph/sys_time.c **** 
   51:mcu_periph/sys_time.c **** void sys_time_cancel_timer(tid_t id) {
- 120              		.loc 1 51 0
- 121              		.cfi_startproc
- 122              		@ args = 0, pretend = 0, frame = 0
- 123              		@ frame_needed = 0, uses_anonymous_args = 0
- 124              		@ link register save eliminated.
- 125              	.LVL8:
+ 119              		.loc 1 51 0
+ 120              		.cfi_startproc
+ 121              		@ args = 0, pretend = 0, frame = 0
+ 122              		@ frame_needed = 0, uses_anonymous_args = 0
+ 123              		@ link register save eliminated.
+ 124              	.LVL8:
   52:mcu_periph/sys_time.c ****   sys_time.timer[id].in_use     = FALSE;
- 126              		.loc 1 52 0
- 127 0000 034B     		ldr	r3, .L9
- 128 0002 1422     		movs	r2, #20
- 129 0004 02FB0033 		mla	r3, r2, r0, r3
- 130 0008 0022     		movs	r2, #0
- 131 000a 1A73     		strb	r2, [r3, #12]
+ 125              		.loc 1 52 0
+ 126 0000 034B     		ldr	r3, .L9
+ 127 0002 1422     		movs	r2, #20
+ 128 0004 02FB0033 		mla	r3, r2, r0, r3
+ 129 0008 0022     		movs	r2, #0
+ 130 000a 1A73     		strb	r2, [r3, #12]
   53:mcu_periph/sys_time.c **** #if 0
   54:mcu_periph/sys_time.c ****   sys_time.timer[id].cb         = NULL;
   55:mcu_periph/sys_time.c ****   sys_time.timer[id].elapsed    = FALSE;
@@ -190,200 +189,199 @@
   57:mcu_periph/sys_time.c ****   sys_time.timer[id].duration   = 0;
   58:mcu_periph/sys_time.c **** #endif
   59:mcu_periph/sys_time.c **** }
- 132              		.loc 1 59 0
- 133 000c 7047     		bx	lr
- 134              	.L10:
- 135 000e 00BF     		.align	2
- 136              	.L9:
- 137 0010 00000000 		.word	.LANCHOR0
- 138              		.cfi_endproc
- 139              	.LFE27:
- 141              		.section	.text.sys_time_update_timer,"ax",%progbits
- 142              		.align	1
- 143              		.global	sys_time_update_timer
- 144              		.thumb
- 145              		.thumb_func
- 147              	sys_time_update_timer:
- 148              	.LFB28:
+ 131              		.loc 1 59 0
+ 132 000c 7047     		bx	lr
+ 133              	.L10:
+ 134 000e 00BF     		.align	2
+ 135              	.L9:
+ 136 0010 00000000 		.word	.LANCHOR0
+ 137              		.cfi_endproc
+ 138              	.LFE27:
+ 140              		.section	.text.sys_time_update_timer,"ax",%progbits
+ 141              		.align	1
+ 142              		.global	sys_time_update_timer
+ 143              		.thumb
+ 144              		.thumb_func
+ 146              	sys_time_update_timer:
+ 147              	.LFB28:
   60:mcu_periph/sys_time.c **** 
   61:mcu_periph/sys_time.c **** // FIXME: race condition ??
   62:mcu_periph/sys_time.c **** void sys_time_update_timer(tid_t id, float duration) {
- 149              		.loc 1 62 0
- 150              		.cfi_startproc
- 151              		@ args = 0, pretend = 0, frame = 0
- 152              		@ frame_needed = 0, uses_anonymous_args = 0
- 153              	.LVL9:
- 154 0000 10B5     		push	{r4, lr}
- 155              	.LCFI1:
- 156              		.cfi_def_cfa_offset 8
- 157              		.cfi_offset 14, -4
- 158              		.cfi_offset 4, -8
- 159              		.loc 1 62 0
- 160 0002 0446     		mov	r4, r0
+ 148              		.loc 1 62 0
+ 149              		.cfi_startproc
+ 150              		@ args = 0, pretend = 0, frame = 0
+ 151              		@ frame_needed = 0, uses_anonymous_args = 0
+ 152              	.LVL9:
+ 153 0000 10B5     		push	{r4, lr}
+ 154              	.LCFI1:
+ 155              		.cfi_def_cfa_offset 8
+ 156              		.cfi_offset 14, -4
+ 157              		.cfi_offset 4, -8
+ 158              		.loc 1 62 0
+ 159 0002 0446     		mov	r4, r0
   63:mcu_periph/sys_time.c ****   mcu_int_disable();
   64:mcu_periph/sys_time.c ****   sys_time.timer[id].end_time -= (sys_time.timer[id].duration - SYS_TIME_TICKS_OF_SEC(duration));
- 161              		.loc 1 64 0
- 162 0004 0846     		mov	r0, r1
- 163              	.LVL10:
- 164 0006 FFF7FEFF 		bl	__aeabi_f2d
- 165              	.LVL11:
- 166 000a 0BA3     		adr	r3, .L12
- 167 000c D3E90023 		ldrd	r2, [r3]
- 168 0010 FFF7FEFF 		bl	__aeabi_ddiv
- 169 0014 0022     		movs	r2, #0
- 170 0016 0A4B     		ldr	r3, .L12+8
- 171 0018 FFF7FEFF 		bl	__aeabi_dadd
- 172 001c FFF7FEFF 		bl	__aeabi_d2uiz
- 173 0020 084B     		ldr	r3, .L12+12
- 174 0022 1422     		movs	r2, #20
- 175 0024 02FB0434 		mla	r4, r2, r4, r3
- 176 0028 A269     		ldr	r2, [r4, #24]
- 177 002a E369     		ldr	r3, [r4, #28]
+ 160              		.loc 1 64 0
+ 161 0004 0846     		mov	r0, r1
+ 162              	.LVL10:
+ 163 0006 FFF7FEFF 		bl	__aeabi_f2d
+ 164              	.LVL11:
+ 165 000a 4FF01132 		mov	r2, #286331153
+ 166 000e 0A4B     		ldr	r3, .L12
+ 167 0010 FFF7FEFF 		bl	__aeabi_ddiv
+ 168 0014 0022     		movs	r2, #0
+ 169 0016 094B     		ldr	r3, .L12+4
+ 170 0018 FFF7FEFF 		bl	__aeabi_dadd
+ 171 001c FFF7FEFF 		bl	__aeabi_d2uiz
+ 172 0020 074B     		ldr	r3, .L12+8
+ 173 0022 1422     		movs	r2, #20
+ 174 0024 02FB0434 		mla	r4, r2, r4, r3
+ 175 0028 A269     		ldr	r2, [r4, #24]
+ 176 002a E369     		ldr	r3, [r4, #28]
   65:mcu_periph/sys_time.c ****   sys_time.timer[id].duration = SYS_TIME_TICKS_OF_SEC(duration);
- 178              		.loc 1 65 0
- 179 002c E061     		str	r0, [r4, #28]
+ 177              		.loc 1 65 0
+ 178 002c E061     		str	r0, [r4, #28]
   64:mcu_periph/sys_time.c ****   sys_time.timer[id].end_time -= (sys_time.timer[id].duration - SYS_TIME_TICKS_OF_SEC(duration));
- 180              		.loc 1 64 0
- 181 002e D31A     		subs	r3, r2, r3
- 182 0030 1B18     		adds	r3, r3, r0
- 183 0032 A361     		str	r3, [r4, #24]
+ 179              		.loc 1 64 0
+ 180 002e D31A     		subs	r3, r2, r3
+ 181 0030 1B18     		adds	r3, r3, r0
+ 182 0032 A361     		str	r3, [r4, #24]
   66:mcu_periph/sys_time.c ****   mcu_int_enable();
   67:mcu_periph/sys_time.c **** }
- 184              		.loc 1 67 0
- 185 0034 10BD     		pop	{r4, pc}
- 186              	.L13:
- 187 0036 00BF     		.align	3
- 188              	.L12:
- 189 0038 11111111 		.word	286331153
- 190 003c 1111813F 		.word	1065423121
- 191 0040 0000E03F 		.word	1071644672
- 192 0044 00000000 		.word	.LANCHOR0
- 193              		.cfi_endproc
- 194              	.LFE28:
- 196              		.section	.text.sys_time_init,"ax",%progbits
- 197              		.align	1
- 198              		.global	sys_time_init
- 199              		.thumb
- 200              		.thumb_func
- 202              	sys_time_init:
- 203              	.LFB29:
+ 183              		.loc 1 67 0
+ 184 0034 10BD     		pop	{r4, pc}
+ 185              	.L13:
+ 186 0036 00BF     		.align	2
+ 187              	.L12:
+ 188 0038 1111913F 		.word	1066471697
+ 189 003c 0000E03F 		.word	1071644672
+ 190 0040 00000000 		.word	.LANCHOR0
+ 191              		.cfi_endproc
+ 192              	.LFE28:
+ 194              		.section	.text.sys_time_init,"ax",%progbits
+ 195              		.align	1
+ 196              		.global	sys_time_init
+ 197              		.thumb
+ 198              		.thumb_func
+ 200              	sys_time_init:
+ 201              	.LFB29:
   68:mcu_periph/sys_time.c **** 
   69:mcu_periph/sys_time.c **** void sys_time_init( void ) {
- 204              		.loc 1 69 0
- 205              		.cfi_startproc
- 206              		@ args = 0, pretend = 0, frame = 0
- 207              		@ frame_needed = 0, uses_anonymous_args = 0
- 208 0000 38B5     		push	{r3, r4, r5, lr}
- 209              	.LCFI2:
- 210              		.cfi_def_cfa_offset 16
- 211              		.cfi_offset 14, -4
- 212              		.cfi_offset 5, -8
- 213              		.cfi_offset 4, -12
- 214              		.cfi_offset 3, -16
+ 202              		.loc 1 69 0
+ 203              		.cfi_startproc
+ 204              		@ args = 0, pretend = 0, frame = 0
+ 205              		@ frame_needed = 0, uses_anonymous_args = 0
+ 206 0000 38B5     		push	{r3, r4, r5, lr}
+ 207              	.LCFI2:
+ 208              		.cfi_def_cfa_offset 16
+ 209              		.cfi_offset 14, -4
+ 210              		.cfi_offset 5, -8
+ 211              		.cfi_offset 4, -12
+ 212              		.cfi_offset 3, -16
   70:mcu_periph/sys_time.c ****   sys_time_arch_init();
- 215              		.loc 1 70 0
- 216 0002 FFF7FEFF 		bl	sys_time_arch_init
+ 213              		.loc 1 70 0
+ 214 0002 FFF7FEFF 		bl	sys_time_arch_init
   71:mcu_periph/sys_time.c **** 
   72:mcu_periph/sys_time.c ****   sys_time.nb_sec     = 0;
- 217              		.loc 1 72 0
- 218 0006 0A4B     		ldr	r3, .L17
- 219 0008 0021     		movs	r1, #0
- 220 000a 1960     		str	r1, [r3, #0]
- 221              	.LBB3:
+ 215              		.loc 1 72 0
+ 216 0006 0A4B     		ldr	r3, .L17
+ 217 0008 0021     		movs	r1, #0
+ 218 000a 1960     		str	r1, [r3, #0]
+ 219              	.LBB3:
   73:mcu_periph/sys_time.c ****   sys_time.nb_sec_rem = 0;
   74:mcu_periph/sys_time.c ****   sys_time.nb_tick    = 0;
   75:mcu_periph/sys_time.c **** 
   76:mcu_periph/sys_time.c ****   for (unsigned int i=0; i<SYS_TIME_NB_TIMER; i++) {
   77:mcu_periph/sys_time.c ****     sys_time.timer[i].in_use     = FALSE;
- 222              		.loc 1 77 0
- 223 000c 0A46     		mov	r2, r1
- 224              	.LBE3:
+ 220              		.loc 1 77 0
+ 221 000c 0A46     		mov	r2, r1
+ 222              	.LBE3:
   73:mcu_periph/sys_time.c ****   sys_time.nb_sec_rem = 0;
- 225              		.loc 1 73 0
- 226 000e 5960     		str	r1, [r3, #4]
- 227              	.LBB4:
+ 223              		.loc 1 73 0
+ 224 000e 5960     		str	r1, [r3, #4]
+ 225              	.LBB4:
   78:mcu_periph/sys_time.c ****     sys_time.timer[i].cb         = NULL;
   79:mcu_periph/sys_time.c ****     sys_time.timer[i].elapsed    = FALSE;
- 228              		.loc 1 79 0
- 229 0010 1C46     		mov	r4, r3
- 230              	.LBE4:
+ 226              		.loc 1 79 0
+ 227 0010 1C46     		mov	r4, r3
+ 228              	.LBE4:
   74:mcu_periph/sys_time.c ****   sys_time.nb_tick    = 0;
- 231              		.loc 1 74 0
- 232 0012 9960     		str	r1, [r3, #8]
- 233              	.LVL12:
- 234              	.LBB5:
- 235              		.loc 1 79 0
- 236 0014 1420     		movs	r0, #20
- 237              	.LVL13:
- 238              	.L15:
- 239              		.loc 1 79 0 is_stmt 0 discriminator 2
- 240 0016 00FB0145 		mla	r5, r0, r1, r4
+ 229              		.loc 1 74 0
+ 230 0012 9960     		str	r1, [r3, #8]
+ 231              	.LVL12:
+ 232              	.LBB5:
+ 233              		.loc 1 79 0
+ 234 0014 1420     		movs	r0, #20
+ 235              	.LVL13:
+ 236              	.L15:
+ 237              		.loc 1 79 0 is_stmt 0 discriminator 2
+ 238 0016 00FB0145 		mla	r5, r0, r1, r4
   76:mcu_periph/sys_time.c ****   for (unsigned int i=0; i<SYS_TIME_NB_TIMER; i++) {
- 241              		.loc 1 76 0 is_stmt 1 discriminator 2
- 242 001a 0131     		adds	r1, r1, #1
- 243              	.LVL14:
+ 239              		.loc 1 76 0 is_stmt 1 discriminator 2
+ 240 001a 0131     		adds	r1, r1, #1
+ 241              	.LVL14:
   77:mcu_periph/sys_time.c ****     sys_time.timer[i].in_use     = FALSE;
- 244              		.loc 1 77 0 discriminator 2
- 245 001c 1A73     		strb	r2, [r3, #12]
+ 242              		.loc 1 77 0 discriminator 2
+ 243 001c 1A73     		strb	r2, [r3, #12]
   78:mcu_periph/sys_time.c ****     sys_time.timer[i].cb         = NULL;
- 246              		.loc 1 78 0 discriminator 2
- 247 001e 1A61     		str	r2, [r3, #16]
- 248              		.loc 1 79 0 discriminator 2
- 249 0020 2A75     		strb	r2, [r5, #20]
- 250 0022 1035     		adds	r5, r5, #16
+ 244              		.loc 1 78 0 discriminator 2
+ 245 001e 1A61     		str	r2, [r3, #16]
+ 246              		.loc 1 79 0 discriminator 2
+ 247 0020 2A75     		strb	r2, [r5, #20]
+ 248 0022 1035     		adds	r5, r5, #16
   80:mcu_periph/sys_time.c ****     sys_time.timer[i].end_time   = 0;
- 251              		.loc 1 80 0 discriminator 2
- 252 0024 9A61     		str	r2, [r3, #24]
+ 249              		.loc 1 80 0 discriminator 2
+ 250 0024 9A61     		str	r2, [r3, #24]
   81:mcu_periph/sys_time.c ****     sys_time.timer[i].duration   = 0;
- 253              		.loc 1 81 0 discriminator 2
- 254 0026 DA61     		str	r2, [r3, #28]
+ 251              		.loc 1 81 0 discriminator 2
+ 252 0026 DA61     		str	r2, [r3, #28]
   76:mcu_periph/sys_time.c ****   for (unsigned int i=0; i<SYS_TIME_NB_TIMER; i++) {
- 255              		.loc 1 76 0 discriminator 2
- 256 0028 1433     		adds	r3, r3, #20
- 257 002a 0829     		cmp	r1, #8
- 258 002c F3D1     		bne	.L15
- 259              	.LBE5:
+ 253              		.loc 1 76 0 discriminator 2
+ 254 0028 1433     		adds	r3, r3, #20
+ 255 002a 0829     		cmp	r1, #8
+ 256 002c F3D1     		bne	.L15
+ 257              	.LBE5:
   82:mcu_periph/sys_time.c ****   }
   83:mcu_periph/sys_time.c **** }
- 260              		.loc 1 83 0
- 261 002e 38BD     		pop	{r3, r4, r5, pc}
- 262              	.L18:
- 263              		.align	2
- 264              	.L17:
- 265 0030 00000000 		.word	.LANCHOR0
- 266              		.cfi_endproc
- 267              	.LFE29:
- 269              		.global	sys_time
- 270              		.section	.bss.sys_time,"aw",%nobits
- 271              		.align	2
- 272              		.set	.LANCHOR0,. + 0
- 275              	sys_time:
- 276 0000 00000000 		.space	172
- 276      00000000 
- 276      00000000 
- 276      00000000 
- 276      00000000 
- 277              		.text
- 278              	.Letext0:
- 279              		.file 2 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
- 280              		.file 3 "/home/uav/USTUAV/paparazzi/sw/include/std.h"
- 281              		.file 4 "./mcu_periph/sys_time.h"
+ 258              		.loc 1 83 0
+ 259 002e 38BD     		pop	{r3, r4, r5, pc}
+ 260              	.L18:
+ 261              		.align	2
+ 262              	.L17:
+ 263 0030 00000000 		.word	.LANCHOR0
+ 264              		.cfi_endproc
+ 265              	.LFE29:
+ 267              		.global	sys_time
+ 268              		.section	.bss.sys_time,"aw",%nobits
+ 269              		.align	2
+ 270              		.set	.LANCHOR0,. + 0
+ 273              	sys_time:
+ 274 0000 00000000 		.space	172
+ 274      00000000 
+ 274      00000000 
+ 274      00000000 
+ 274      00000000 
+ 275              		.text
+ 276              	.Letext0:
+ 277              		.file 2 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
+ 278              		.file 3 "/home/uav/USTUAV/paparazzi/sw/include/std.h"
+ 279              		.file 4 "./mcu_periph/sys_time.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 sys_time.c
-     /tmp/cc9uR24X.s:22     .text.sys_time_register_timer:0000000000000000 $t
-     /tmp/cc9uR24X.s:27     .text.sys_time_register_timer:0000000000000000 sys_time_register_timer
-     /tmp/cc9uR24X.s:105    .text.sys_time_register_timer:0000000000000050 $d
-     /tmp/cc9uR24X.s:113    .text.sys_time_cancel_timer:0000000000000000 $t
-     /tmp/cc9uR24X.s:118    .text.sys_time_cancel_timer:0000000000000000 sys_time_cancel_timer
-     /tmp/cc9uR24X.s:137    .text.sys_time_cancel_timer:0000000000000010 $d
-     /tmp/cc9uR24X.s:142    .text.sys_time_update_timer:0000000000000000 $t
-     /tmp/cc9uR24X.s:147    .text.sys_time_update_timer:0000000000000000 sys_time_update_timer
-     /tmp/cc9uR24X.s:189    .text.sys_time_update_timer:0000000000000038 $d
-     /tmp/cc9uR24X.s:197    .text.sys_time_init:0000000000000000 $t
-     /tmp/cc9uR24X.s:202    .text.sys_time_init:0000000000000000 sys_time_init
-     /tmp/cc9uR24X.s:265    .text.sys_time_init:0000000000000030 $d
-     /tmp/cc9uR24X.s:275    .bss.sys_time:0000000000000000 sys_time
-     /tmp/cc9uR24X.s:271    .bss.sys_time:0000000000000000 $d
+     /tmp/cc5aQxj6.s:22     .text.sys_time_register_timer:0000000000000000 $t
+     /tmp/cc5aQxj6.s:27     .text.sys_time_register_timer:0000000000000000 sys_time_register_timer
+     /tmp/cc5aQxj6.s:105    .text.sys_time_register_timer:0000000000000050 $d
+     /tmp/cc5aQxj6.s:112    .text.sys_time_cancel_timer:0000000000000000 $t
+     /tmp/cc5aQxj6.s:117    .text.sys_time_cancel_timer:0000000000000000 sys_time_cancel_timer
+     /tmp/cc5aQxj6.s:136    .text.sys_time_cancel_timer:0000000000000010 $d
+     /tmp/cc5aQxj6.s:141    .text.sys_time_update_timer:0000000000000000 $t
+     /tmp/cc5aQxj6.s:146    .text.sys_time_update_timer:0000000000000000 sys_time_update_timer
+     /tmp/cc5aQxj6.s:188    .text.sys_time_update_timer:0000000000000038 $d
+     /tmp/cc5aQxj6.s:195    .text.sys_time_init:0000000000000000 $t
+     /tmp/cc5aQxj6.s:200    .text.sys_time_init:0000000000000000 sys_time_init
+     /tmp/cc5aQxj6.s:263    .text.sys_time_init:0000000000000030 $d
+     /tmp/cc5aQxj6.s:273    .bss.sys_time:0000000000000000 sys_time
+     /tmp/cc5aQxj6.s:269    .bss.sys_time:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

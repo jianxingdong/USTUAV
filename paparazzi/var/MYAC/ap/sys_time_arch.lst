@@ -1338,7 +1338,7 @@
   78              		.align	2
   79              	.L2:
   80 001c 10E000E0 		.word	-536813552
-  81 0020 BE270900 		.word	599998
+  81 0020 7E4F1200 		.word	1199998
   82 0024 00ED00E0 		.word	-536810240
   83              		.cfi_endproc
   84              	.LFE27:
@@ -1383,8 +1383,8 @@
   58:arch/stm32/mcu_periph/sys_time_arch.c ****   sys_time.nb_sec_rem += SYS_TIME_RESOLUTION_CPU_TICKS;
  114              		.loc 1 58 0
  115 000c 5A68     		ldr	r2, [r3, #4]
- 116 000e 02F51222 		add	r2, r2, #598016
- 117 0012 02F5F862 		add	r2, r2, #1984
+ 116 000e 02F59212 		add	r2, r2, #1196032
+ 117 0012 02F57862 		add	r2, r2, #3968
  118 0016 5A60     		str	r2, [r3, #4]
   59:arch/stm32/mcu_periph/sys_time_arch.c ****   if (sys_time.nb_sec_rem >= CPU_TICKS_PER_SEC) {
  119              		.loc 1 59 0
@@ -1490,12 +1490,12 @@
  199              		.file 6 "/opt/paparazzi/arm-multilib/lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/include
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 sys_time_arch.c
-     /tmp/ccOatC82.s:18     .text.sys_time_arch_init:0000000000000000 $t
-     /tmp/ccOatC82.s:23     .text.sys_time_arch_init:0000000000000000 sys_time_arch_init
-     /tmp/ccOatC82.s:80     .text.sys_time_arch_init:000000000000001c $d
-     /tmp/ccOatC82.s:87     .text.sys_tick_irq_handler:0000000000000000 $t
-     /tmp/ccOatC82.s:92     .text.sys_tick_irq_handler:0000000000000000 sys_tick_irq_handler
-     /tmp/ccOatC82.s:187    .text.sys_tick_irq_handler:0000000000000070 $d
+     /tmp/ccWdbUZc.s:18     .text.sys_time_arch_init:0000000000000000 $t
+     /tmp/ccWdbUZc.s:23     .text.sys_time_arch_init:0000000000000000 sys_time_arch_init
+     /tmp/ccWdbUZc.s:80     .text.sys_time_arch_init:000000000000001c $d
+     /tmp/ccWdbUZc.s:87     .text.sys_tick_irq_handler:0000000000000000 $t
+     /tmp/ccWdbUZc.s:92     .text.sys_tick_irq_handler:0000000000000000 sys_tick_irq_handler
+     /tmp/ccWdbUZc.s:187    .text.sys_tick_irq_handler:0000000000000070 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS
