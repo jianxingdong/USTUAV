@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ParserConfiguration>
+  <FlightLog>
+    <LogSourcePath>C:\USTUAV/mat/12_11_02__16_41_08.data</LogSourcePath>
+    <SampleTime>0.01</SampleTime>
+    <Folder>test1OutputFiles</Folder>
+    <AircraftNumber>1</AircraftNumber>
+    <StartTime>3</StartTime>
+    <EndTime>18</EndTime>
+    <FlightCaptureMode>1</FlightCaptureMode>
+  </FlightLog>
+  <OutputFiles>
+    <OutputFile>
+      <Name>lateral_inputs.data</Name>
+      <Columns>
+        <Column>
+          <MessageName>NAVIGATION</MessageName>
+          <MessageColumn>4</MessageColumn>
+        </Column>
+        <Column>
+          <MessageName>ALIVE</MessageName>
+          <MessageColumn>1</MessageColumn>
+        </Column>
+      </Columns>
+    </OutputFile>
+    <OutputFile>
+      <Name>lateral_outputs.data</Name>
+      <Columns>
+        <Column>
+          <MessageName>GPS</MessageName>
+          <MessageColumn>7</MessageColumn>
+        </Column>
+      </Columns>
+    </OutputFile>
+  </OutputFiles>
+</ParserConfiguration>

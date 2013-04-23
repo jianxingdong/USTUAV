@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ParserConfiguration>
+  <FlightLog>
+    <LogSourcePath>C:\\Users/Neil/Desktop/Google Drive/ENGR480_481/Flight Logs/13_04_12__17_19_41.data</LogSourcePath>
+    <SampleTime>0.01</SampleTime>
+    <Folder>test2Folder</Folder>
+    <AircraftNumber>1</AircraftNumber>
+    <FlightCaptureMode>1</FlightCaptureMode>
+    <StartTime>6</StartTime>
+    <EndTime>300</EndTime>
+  </FlightLog>
+  <OutputFiles>
+    <OutputFile>
+      <Name>long_i.data</Name>
+      <Columns>
+        <Column>
+          <MessageName>ACTUATORS</MessageName>
+          <MessageColumn>0</MessageColumn>
+        </Column>
+        <Column>
+          <MessageName>ACTUATORS</MessageName>
+          <MessageColumn>1</MessageColumn>
+        </Column>
+		<Column>
+          <MessageName>ACTUATORS</MessageName>
+          <MessageColumn>2</MessageColumn>
+        </Column>
+				<Column>
+          <MessageName>ACTUATORS</MessageName>
+          <MessageColumn>3</MessageColumn>
+        </Column>
+		<Column>
+          <MessageName>ACTUATORS</MessageName>
+          <MessageColumn>4</MessageColumn>
+        </Column>
+		<Column>
+          <MessageName>ACTUATORS</MessageName>
+          <MessageColumn>5</MessageColumn>
+        </Column>
+      </Columns>
+    </OutputFile>
+  </OutputFiles>
+</ParserConfiguration>
