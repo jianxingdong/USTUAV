@@ -1,4 +1,4 @@
-/* Generated from /home/uav/paparazzi/conf/ubx.xml */
+/* Generated from /home/scott/Desktop/paparazzi/conf/ubx.xml */
 /* Please DO NOT EDIT */
 
 #define UBX_SYNC1 0xB5

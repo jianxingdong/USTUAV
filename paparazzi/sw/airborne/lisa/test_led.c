@@ -56,7 +56,7 @@ void led_on(int i) {
     case 1:
       LED_ON(1);
       break;
-    case 2:     REQ: Replace Aspirin IMU board with InvenSense MPU-9150 and bring the MS5611 back onto the Lisa/M board to reduce footprint, mass, and manufacturing cost once the 9150 becomes readily available(if at al with SPI) and is tested to perform well. 
+    case 2:
       LED_ON(2);
       break;
     default:
@@ -92,6 +92,10 @@ int main(void) {
   while (1) {
     for (i=0; i< LED_PROGRAM_SIZE; i++)
     {
+      if (LED_PROG_ON[i] >= 0)
+        led_on(LED_PROG_ON[i]);
+      LED_PERIODIC();
+      Delay(2000000);
       if (LED_PROG_OFF[i] >= 0)
         led_off(LED_PROG_OFF[i]);
     }

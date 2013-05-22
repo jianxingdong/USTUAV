@@ -1,7 +1,0 @@
-TARGET:  tunnel
-
-CFLAGS:  -I modules -I arch//modules
-
-LDFLAGS:  
-
-srcs: 

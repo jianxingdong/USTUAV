@@ -3,7 +3,7 @@
 <control_panel name="paparazzi control panel">
 
   <section name="variables">
-    <variable name="downlink_serial_port" value="/dev/ttyS0"/>
+    <variable name="downlink_serial_port" value="/dev/ttyUSB0"/>
     <variable name="fbw_serial_port"      value="/dev/ttyS1"/>
     <variable name="ap_serial_port"       value="/dev/ttyS0"/>
     <variable name="ivy_bus"              value="127:2010"/>
@@ -72,7 +72,7 @@
 
     <program name="Weather Station" command="sw/ground_segment/misc/davis2ivy">
       <arg flag="-b" variable="ivy_bus"/>
-      <arg flag="-d" constant="/dev/ttyS1"/>
+      <arg flag="-d" constant="/dev/ttyUSB1"/>
     </program>
  </section>
 
@@ -83,8 +83,7 @@
 
    <session name="Flight USB-serial@9600">
       <program name="Data Link">
-        <arg flag="-d" constant="/dev/ttyS0"/>
-        <arg flag="-s" constant="9600"/>
+        <arg flag="-d" constant="/dev/ttyUSB0"/>
       </program>
       <program name="Server"/>
       <program name="GCS"/>
@@ -102,7 +101,6 @@
    <session name="Flight USB-XBee-API@57600">
       <program name="Data Link">
         <arg flag="-d" constant="/dev/ttyUSB0"/>
-        <arg flag="" constant="xbee"/>
         <arg flag="-s" constant="57600"/>
       </program>
       <program name="Server"/>
@@ -111,13 +109,12 @@
 
     <session name="HITL">
       <program name="Hardware in the Loop">
-        <arg flag="-a" constant="MYAC"/>
+        <arg flag="-a" constant="HITL"/>
         <arg flag="-noground"/>
         <arg flag="-boot"/>
       </program>
       <program name="GCS"/>
       <program name="Data Link">
-	<arg flag="-d" constant="/dev/ttyS0"/>
         <arg flag="-s" constant="57600"/>
       </program>
       <program name="Server"/>

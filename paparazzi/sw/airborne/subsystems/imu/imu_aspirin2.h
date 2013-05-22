@@ -131,27 +131,35 @@ static inline uint8_t imu_from_buff(void)
   My = (int16_t) ((imu_aspirin2.imu_rx_buf[2+MPU_OFFSET_MAG] << 8) | imu_aspirin2.imu_rx_buf[3+MPU_OFFSET_MAG]);
   Mz = (int16_t) ((imu_aspirin2.imu_rx_buf[4+MPU_OFFSET_MAG] << 8) | imu_aspirin2.imu_rx_buf[5+MPU_OFFSET_MAG]);
 
-#ifdef LISA_M_LONGITUDINAL_X
-  RATES_ASSIGN(imu.gyro_unscaled, q, -p, r);
-  VECT3_ASSIGN(imu.accel_unscaled, y, -x, z);
-  VECT3_ASSIGN(imu.mag_unscaled, -Mx, -Mz, My);
+#ifdef SET_IMU_ORIENTATION
+  #ifdef SIG_RASCAL
+    RATES_ASSIGN(imu.gyro_unscaled, q, -p, r);
+    VECT3_ASSIGN(imu.accel_unscaled, y, -x, z);
+    VECT3_ASSIGN(imu.mag_unscaled, -Mx, -Mz, My);
+  #endif
+  #ifdef BIXLER
+    RATES_ASSIGN(imu.gyro_unscaled, -q, p, r);
+    VECT3_ASSIGN(imu.accel_unscaled, -y, x, z);
+    VECT3_ASSIGN(imu.mag_unscaled, Mx, Mz, My);
+  #endif
 #else
-  /* ORIGINAL
   RATES_ASSIGN(imu.gyro_unscaled, p, q, r);
   VECT3_ASSIGN(imu.accel_unscaled, x, y, z);
-  VECT3_ASSIGN(imu.mag_unscaled, Mz, -Mx, My);*/
-
-/* DONT DO THIS
-  RATES_ASSIGN(imu.gyro_unscaled, r, q, p);
-  VECT3_ASSIGN(imu.accel_unscaled, z, y, x);
-  VECT3_ASSIGN(imu.mag_unscaled, My, -Mx, Mz);
-*/
-
-/* working */
-  RATES_ASSIGN(imu.gyro_unscaled, q, -p, r);
-  VECT3_ASSIGN(imu.accel_unscaled, y, -x, z);
-  VECT3_ASSIGN(imu.mag_unscaled, -Mx, -Mz, My);
+  VECT3_ASSIGN(imu.mag_unscaled, Mz, -Mx, My);
 #endif
+
+/*#ifdef LISA_M_LONGITUDINAL_X
+  //RATES_ASSIGN(imu.gyro_unscaled, q, -p, r);
+  VECT3_ASSIGN(imu.accel_unscaled, y, -x, z);
+  VECT3_ASSIGN(imu.mag_unscaled, -Mx, -Mz, My);//
+  RATES_ASSIGN(imu.gyro_unscaled, -q, p, r);
+  VECT3_ASSIGN(imu.accel_unscaled, -y, x, z);
+  VECT3_ASSIGN(imu.mag_unscaled, Mx, Mz, My);
+#else
+  RATES_ASSIGN(imu.gyro_unscaled, p, q, r);
+  VECT3_ASSIGN(imu.accel_unscaled, x, y, z);
+  VECT3_ASSIGN(imu.mag_unscaled, Mz, -Mx, My);
+#endif*/
 
   return 1;
 }

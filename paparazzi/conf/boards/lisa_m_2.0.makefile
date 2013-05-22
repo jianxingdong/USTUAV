@@ -72,7 +72,6 @@ endif
 ifndef MODEM_PORT
 MODEM_PORT=UART2
 endif
-
 ifndef MODEM_BAUD
 MODEM_BAUD=B57600
 endif
@@ -102,3 +101,4 @@ endif
 ifndef ADC_IR_NB_SAMPLES
 ADC_IR_NB_SAMPLES = 16
 endif
+

@@ -1,4 +1,4 @@
-/* Generated from /home/uav/paparazzi/conf/mtk.xml */
+/* Generated from /home/scott/Desktop/paparazzi/conf/mtk.xml */
 /* Please DO NOT EDIT */
 
 #define MTK_DIY14_SYNC1 0xB5

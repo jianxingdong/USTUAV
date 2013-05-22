@@ -1,4 +1,4 @@
-/* Automatically generated from /home/uav/paparazzi/conf/messages.xml */
+/* Automatically generated from /home/scott/Desktop/paparazzi/conf/messages.xml */
 /* Please DO NOT EDIT */
 /* Macros to send and receive messages of class datalink */
 #ifndef _VAR_MESSAGES2_datalink_H_

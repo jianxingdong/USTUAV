@@ -1,8 +1,8 @@
 <gconf>
-  <entry name="left_pane_width" value="403" application="paparazzi center"/>
-  <entry name="height" value="876" application="paparazzi center"/>
-  <entry name="width" value="1551" application="paparazzi center"/>
+  <entry name="left_pane_width" value="388" application="paparazzi center"/>
+  <entry name="height" value="744" application="paparazzi center"/>
+  <entry name="width" value="1301" application="paparazzi center"/>
   <entry name="last target" value="ap" application="paparazzi center"/>
-  <entry name="last session" value="Flight USB-XBee-API@57600" application="paparazzi center"/>
-  <entry name="last A/C" value="MYAC" application="paparazzi center"/>
+  <entry name="last session" value="Flight USB-serial@57600" application="paparazzi center"/>
+  <entry name="last A/C" value="UST_AC" application="paparazzi center"/>
 </gconf>
